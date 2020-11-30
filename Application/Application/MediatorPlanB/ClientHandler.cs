@@ -26,42 +26,42 @@ namespace Tier2.MediatorPlanB
 
         public async void HandleClient(TcpClient client)
         {
-            while (true)
-            {
-                try
-                {
-                    NetworkStream stream = client.GetStream();
-                    //read
-                    byte[] dataFromClient = new byte[1024];
-
-                    int bytesRead = stream.Read(dataFromClient, 0, dataFromClient.Length);
-
-                    Console.WriteLine("Message Received");
-
-                    string s = Encoding.ASCII.GetString(dataFromClient, 0, bytesRead);
-
-                    Packeged inc = JsonSerializer.Deserialize<Packeged>(s);
-                    
-                    if (inc.type.Equals("request"))
-                    {
-                        IList<Message> messages = await model.getMessages();
-                        Packeged packeged = new Packeged {type = "list", messages = messages};
-                        string packageserial = JsonSerializer.Serialize(packeged);
-                        byte[] dataToClient = Encoding.ASCII.GetBytes(packageserial);
-                        stream.Write(dataToClient, 0, dataToClient.Length);
-                    }
-                    else if(inc.type.Equals("message"))
-                    {
-                        Packeged packeged = JsonSerializer.Deserialize<Packeged>(s);
-                        await model.SendReceived(packeged.Message);
-                        ClientConnector.BroadCastReceivedMessage(packeged.Message);
-                    }
-                }
-                catch (Exception)
-                {
-                    Client.Close();
-                }
-            }
+            // while (true)
+            // {
+            //     try
+            //     {
+            //         NetworkStream stream = client.GetStream();
+            //         //read
+            //         byte[] dataFromClient = new byte[1024];
+            //
+            //         int bytesRead = stream.Read(dataFromClient, 0, dataFromClient.Length);
+            //
+            //         Console.WriteLine("Message Received");
+            //
+            //         string s = Encoding.ASCII.GetString(dataFromClient, 0, bytesRead);
+            //
+            //         Packeged inc = JsonSerializer.Deserialize<Packeged>(s);
+            //         
+            //         if (inc.type.Equals("request"))
+            //         {
+            //             IList<Message> messages = await model.getMessages();
+            //             Packeged packeged = new Packeged {type = "list", messages = messages};
+            //             string packageserial = JsonSerializer.Serialize(packeged);
+            //             byte[] dataToClient = Encoding.ASCII.GetBytes(packageserial);
+            //             stream.Write(dataToClient, 0, dataToClient.Length);
+            //         }
+            //         else if(inc.type.Equals("message"))
+            //         {
+            //             Packeged packeged = JsonSerializer.Deserialize<Packeged>(s);
+            //             await model.SendReceived(packeged.Message);
+            //             ClientConnector.BroadCastReceivedMessage(packeged.Message);
+            //         }
+            //     }
+            //     catch (Exception)
+            //     {
+            //         Client.Close();
+            //     }
+            // }
         }
 
         public async void ReceiveBroadcastMessage(Message message)

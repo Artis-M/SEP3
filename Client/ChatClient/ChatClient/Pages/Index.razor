@@ -1,0 +1,52 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.SignalR.Client
+@using Models
+@using Services
+@inject ChatService chatService;
+
+<div class="row">
+    <div class="col-12">
+        <input type="number" @bind="@username">
+        <EditForm Model="@newMessage" OnSubmit="@sendMessage">
+            <InputText @bind-Value="newMessage.message"/>
+        </EditForm>
+        <button @onclick="sendMessage">Send Message</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        @if (Messages.Any())
+        {
+            @foreach (var item in Messages)
+            {
+                <p>@item.authorID : @item.message</p>
+            }
+        }
+    </div>
+</div>
+
+@code
+{
+    private int username;
+    private Message newMessage = new Message();
+    private List<Message> Messages = new List<Message>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        chatService.ConnectToServer();
+        chatService.newMessage += this.DisplayNewMessage;
+    }
+
+    public void sendMessage()
+    {
+        newMessage.authorID = username;
+        chatService.SendMessage(newMessage);
+        newMessage.message = "";
+    }
+
+    public async void DisplayNewMessage(Message message)
+    {
+        Messages.Add(message);
+        await InvokeAsync(() => StateHasChanged());
+    }
+}

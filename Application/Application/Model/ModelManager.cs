@@ -21,7 +21,8 @@ namespace Tier2.Model
         public async Task<IList<Chatroom>> getChatrooms()
         {
             //get Chatrooms
-            return await connection.GetMessages();
+            //return await connection.GetMessages();
+            return null;
         }
 
         public async Task sendMessage(Message message, int chatroomId)

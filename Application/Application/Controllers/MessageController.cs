@@ -60,24 +60,24 @@ namespace Application.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Message>> sendMessage([FromBody] Message message, [FromBody] int chatRoomId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                Message sentMessage =  await MessageService.sendMessage(message, chatRoomId);
-                return Created($"/{sentMessage.Id}", sentMessage);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return StatusCode(500, e.Message);
-            }
-        }
+        // [HttpPost]
+        // public async Task<ActionResult<Message>> sendMessage([FromBody] Message message, [FromBody] int chatRoomId)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return BadRequest(ModelState);
+        //     }
+        //
+        //     try
+        //     {
+        //         Message sentMessage =  await MessageService.sendMessage(message, chatRoomId);
+        //         return Created($"/{sentMessage.Id}", sentMessage);
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         Console.WriteLine(e);
+        //         return StatusCode(500, e.Message);
+        //     }
+        // }
     }
 }
