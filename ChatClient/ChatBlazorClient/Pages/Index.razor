@@ -1,0 +1,83 @@
+﻿@page "/"
+@using ChatClient.Models
+@using ChatClient.Services
+@inject ChatServiceImp ChatService
+<div class="row">
+    <div class="col-3">
+        @if (chatRooms.Any())
+        {
+            @foreach (var item in chatRooms)
+            {
+                <button class="btn-toolbar">Join Chat Room: @item.id</button>
+            }
+        }
+    </div>
+    <div class="col-9">
+        @if (MessageHistory.Any())
+        {
+            @foreach (var item in MessageHistory)
+            {
+                <p>@item.authorID: @item.message</p>
+            }
+        }
+        @if (NewMessages.Any())
+        {
+            @foreach (var item in NewMessages)
+            {
+                <p>@item.authorID: @item.message</p>
+            }
+        }
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <EditForm Model="@newMessage" OnValidSubmit="@sendMessage">
+                <InputText @bind-Value="newMessage.message"></InputText>
+                <button type="submit">Send</button>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code{
+    private IList<Message> MessageHistory;
+    private List<Message> NewMessages;
+    private List<ChatRoom> chatRooms;
+    private Message newMessage = new Message();
+
+    protected override void OnInitialized()
+    {
+        MessageHistory = new List<Message>();
+        NewMessages = new List<Message>();
+        chatRooms = new List<ChatRoom>();
+        ChatService.getMessageHistory();
+        ChatService.newMessage += this.DisplayNewMessage;
+        ChatService.messageHistory += displayHistory;
+    }
+
+    private async Task sendMessage()
+    {
+        ChatService.sendMessage(newMessage);
+        Console.WriteLine(newMessage.message);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+
+    public async void displayHistory(IList<Message> messages)
+    {
+        MessageHistory = messages;
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+    public async void DisplayNewMessage(Message message)
+    {
+        Console.WriteLine("Received message from server");
+        NewMessages.Add(message);
+        Console.WriteLine(NewMessages.Count);
+        Console.WriteLine(message.message);
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+}
