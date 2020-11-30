@@ -4,8 +4,9 @@ namespace Tier2.Model
 {
     public class Chatroom
     {
-        private IList<Message> Messages;
-        private int ID { get; set; }
+        public IList<Message> Messages;
+        public int ID { get; set; }
+        public string Name { get; set; }
 
         public Chatroom()
         {

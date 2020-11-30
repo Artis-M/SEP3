@@ -16,15 +16,16 @@ namespace Tier2.Model
 
         }
 
-        public async Task<IList<Message>> getMessages()
+       
+
+        public async Task<IList<Chatroom>> getChatrooms()
         {
-           return await connection.GetMessages();
+            //get Chatrooms
+            return await connection.GetMessages();
         }
-        
 
-
-        public async Task SendReceived(Message message)
-        {
+        public async Task sendMessage(Message message, int chatroomId)
+        {//put in the selected chatRooms list
             await connection.SaveMessage(message);
         }
     }
