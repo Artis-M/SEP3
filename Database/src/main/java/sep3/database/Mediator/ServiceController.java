@@ -2,10 +2,12 @@ package sep3.database.Mediator;
 
 
 import com.google.gson.Gson;
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties;
 import org.springframework.ui.Model;
 import sep3.database.Persistance.MessageDAO;
 import sep3.database.Persistance.PersistanceInterface;
 
+import javax.net.ssl.SSLServerSocketFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,7 +30,6 @@ public class ServiceController implements Runnable
         DAO = new MessageDAO();
         gson = new Gson();
         this.running = true;
-        this.socket = socket;
         in = new BufferedReader(
                 new InputStreamReader(this.socket.getInputStream()));
         out = new PrintWriter(this.socket.getOutputStream(), true);
@@ -38,8 +39,11 @@ public class ServiceController implements Runnable
     public void run() {
 
         try {
+            System.setProperty("javax.net.ssl.trustStore","chatsep.store");
+            System.setProperty("javax.net.ssl.keyStorePassword","password");
             running = true;
-            welcomeSocket = new ServerSocket(PORT);
+            welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
+            System.out.println("ServerSocket is ready for connection...");
             Socket socket = welcomeSocket.accept();
             while(running)
             {
