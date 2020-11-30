@@ -39,7 +39,7 @@ public class ServiceController implements Runnable
     public void run() {
 
         try {
-            System.setProperty("javax.net.ssl.trustStore","chatsep.store");
+            System.setProperty("javax.net.ssl.keyStore","chatsep.store");
             System.setProperty("javax.net.ssl.keyStorePassword","password");
             running = true;
             welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
