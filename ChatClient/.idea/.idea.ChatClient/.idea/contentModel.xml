@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\jambo\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\jambo\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_ChatClient.357997198.00" t="ExcludeRecursive" />
-    <e p="C:\Users\jambo\AppData\Roaming\JetBrains\Rider2020.2\consoles\db" t="IncludeRecursive" />
-    <e p="C:\Users\jambo\Desktop\School\Semester 3\SEP3\SEP3-ChatSystem\Client\ChatClient" t="IncludeFlat">
+    <e p="C:\Users\ioncr\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\ioncr\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_ChatClient.851891921.00" t="ExcludeRecursive" />
+    <e p="F:\SEP3\ChatClient" t="IncludeFlat">
       <e p="ChatBlazorClient" t="IncludeRecursive">
         <e p="_Imports.razor" t="Include" />
         <e p="App.razor" t="Include" />

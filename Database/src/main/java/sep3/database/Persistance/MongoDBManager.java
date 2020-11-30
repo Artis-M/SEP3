@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 @Service
 public class MongoDBManager implements PersistanceInterface {
-    private  MessageDAO messageDAO = new MessageDAO("mongodb+srv://admin:password@test.b0aui.mongodb.net/SEP3?retryWrites=true&w=majority");
+    private  MessageDAO messageDAO = new MessageDAO();
     @Override
     public ArrayList<Message> getAllMessages() {
         return messageDAO.getMessages();
