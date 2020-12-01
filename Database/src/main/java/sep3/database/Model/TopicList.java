@@ -21,6 +21,13 @@ public class TopicList {
         topics.remove(topic);
     }
 
+    @Override
+    public String toString() {
+        return "TopicList{" +
+                "topics=" + topics +
+                '}';
+    }
+
     public ArrayList<Topic> getTopics() {
         return topics;
     }

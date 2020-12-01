@@ -29,4 +29,11 @@ public class UserList {
     public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
+
+    @Override
+    public String toString() {
+        return "UserList{" +
+                "users=" + users +
+                '}';
+    }
 }

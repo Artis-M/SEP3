@@ -13,6 +13,21 @@ public class Account extends User{
     private TopicList topics;
 
 
+    @Override
+    public String toString() {
+        return "Account{" +
+                "ID='" + get_id() + '\'' +
+                "Username='" + getUsername() + '\'' +
+                "FirstName='" + getFname() + '\'' +
+                "LastName='" + getLname() + '\'' +
+                "role='" + role + '\'' +
+                ", Pass='" + Pass + '\'' +
+                ", email='" + email + '\'' +
+                ", friends=" + friends +
+                ", topics=" + topics +
+
+                '}';
+    }
 
     public Account(String role, String Pass, ObjectId _id, String username, String fname, String lname, String email) {
         super(_id, username, fname, lname);
@@ -71,8 +86,18 @@ public class Account extends User{
         return Pass;
     }
 
+    public void addTopic(Topic topic)
+    {
+        topics.addTopic(topic);
+    }
+
+    public void addFriend(User friend)
+    {
+        friends.addUser(friend);
+    }
 
     public void setPass(String pass) {
         Pass = pass;
     }
+
 }

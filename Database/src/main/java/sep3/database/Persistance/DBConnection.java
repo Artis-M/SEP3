@@ -16,8 +16,8 @@ public class DBConnection {
     private DBConnection()
     {
         mongoClient = MongoClients.create(
-                "mongodb+srv://admin:admin@test.b0aui.mongodb.net/SEP?retryWrites=true&w=majority");
-        database = mongoClient.getDatabase("SEP");
+                "mongodb+srv://admin:admin@sep.b0aui.mongodb.net/ChatSystem?retryWrites=true&w=majority");
+        database = mongoClient.getDatabase("ChatSystem");
     }
     public static DBConnection setConnection()
     {

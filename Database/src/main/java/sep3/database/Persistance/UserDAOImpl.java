@@ -8,91 +8,159 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import sep3.database.Model.Account;
-import sep3.database.Model.User;
-import sep3.database.Model.UserList;
+import sep3.database.Model.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+import static com.mongodb.client.model.Projections.exclude;
 import static com.mongodb.client.model.Projections.include;
 
-public class UserDAOImpl implements UserDAO{
+public class UserDAOImpl implements UserDAO {
     private MongoCollection<Document> collection;
     private DBConnection connection;
-    Gson gson;
-    public UserDAOImpl()
-    {
+    private Gson gson;
+    private TopicDAO topicDAO;
+
+    public UserDAOImpl() {
         connection = DBConnection.setConnection();
         collection = connection.getDatabase().getCollection("Users");
         gson = new Gson();
+        topicDAO = new TopicDAOImpl();
     }
 
-    public MongoCursor<Document> cursor(String key,Object obj)
-    {
+    private MongoCursor<Document> cursor(String key, Object obj) {
         BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.append(key,obj);
+        whereQuery.append(key, obj);
         return collection.find(whereQuery).iterator();
+    }
+
+    public Account createAccount(Document document) {
+        ObjectId _id = new ObjectId(document.get("_id").toString());
+        Account account = new Account(
+                document.get("role").toString(), document.get("Pass").toString()
+                , _id, document.get("Username").toString(),
+                document.get("Fname").toString(), document.get("Lname").toString(), document.get("email").toString()
+        );
+        account.setTopics(topicDAO.getUserTopics(_id));
+        account.setFriends(getUserFriends(_id));
+        return account;
+
     }
 
     @Override
     public Account getAccount(ObjectId userId) {
-        MongoCursor<Document> cursor = cursor("_id",userId);
-        String json = cursor.next().toJson();
-        return gson.fromJson(json,Account.class);
+        MongoCursor<Document> cursor = cursor("_id", userId);
+        var document = cursor.next();
+        return createAccount(document);
     }
 
     @Override
     public Account getAccount(String username) {
-        BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.append("username",username);
-        MongoCursor<Document> cursor = collection.find(whereQuery).iterator();
-        String json = cursor.next().toJson();
-        return gson.fromJson(json,Account.class);
+        MongoCursor<Document> cursor = cursor("username", username);
+        var document = cursor.next();
+        return createAccount(document);
     }
 
     @Override
     public User getUser(ObjectId userID) {
         BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.append("_id",userID);
+        whereQuery.append("_id", userID);
         MongoCursor<Document> cursor = collection.find(whereQuery).iterator();
         String json = cursor.next().toJson();
-        return gson.fromJson(json,User.class);
+        return gson.fromJson(json, User.class);
     }
 
     @Override
     public UserList getUserFriends(ObjectId userId) {
+        UserList list = new UserList();
         BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.append("_id",userId);
-        FindIterable findIterable = collection.find(whereQuery).projection(include("friends"));
-        System.out.println(findIterable.cursor().next());
-        return null;
+        whereQuery.append("_id", userId);
+        FindIterable<Document> findIterable = collection.find(whereQuery).projection(include("friends"));
+        var document = findIterable.cursor().next();
+        var friends = document.getList("friends", ObjectId.class);
+        if (friends != null) {
+            for (ObjectId id : friends
+            ) {
+                User friend = getUser(id);
+                list.addUser(friend);
+            }
+        }
+        return list;
     }
 
     @Override
-    public void addFriend(User user) {
+    public void addFriend(User friend,ObjectId userId) {
+        BasicDBObject newDocument = new BasicDBObject();
+        newDocument.append("$push", new BasicDBObject().append("friends", friend.get_id()));
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.append("_id", userId);
+        collection.updateOne(searchQuery,newDocument);
+
 
     }
 
     @Override
-    public void removeUser(User user) {
-
+    public void removeFriend(User user,ObjectId userId) {
+        BasicDBObject update = new BasicDBObject("friends",user.get_id());
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.append("_id", userId);
+        collection.updateOne(searchQuery,new BasicDBObject("$pull",update));
     }
 
     @Override
     public void addTopicToUser(String Topic, ObjectId userId) {
+        BasicDBObject newDocument = new BasicDBObject();
+        newDocument.append("$push", new BasicDBObject().append("topics",topicDAO.getTopic(Topic).get_id()));
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.append("_id", userId);
+        collection.updateOne(searchQuery,newDocument);
 
     }
 
     @Override
     public void removeUserTopic(String Topic, ObjectId userId) {
-
+        BasicDBObject update = new BasicDBObject("friends",topicDAO.getTopic(Topic).get_id());
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.append("_id", userId);
+        collection.updateOne(searchQuery,new BasicDBObject("$pull",update));
     }
 
     @Override
     public void addAccount(Account account) {
 
+
+    Document add = new Document();
+    add.append("_id",account.get_id());
+    add.append("Username",account.getUsername());
+    add.append("Pass",account.getPass());
+    add.append("Fname",account.getFname());
+    add.append("Lname",account.getLname());
+    add.append("role",account.getRole());
+    add.append("email",account.getEmail());
+        if(account.getTopics().getTopics().size()!=0) {
+            Document topics = new Document();
+            for (var topic : account.getTopics().getTopics()
+            ) {
+                topics.append("$set", new BasicDBObject().append("topics", topic.get_id()));
+            }
+            add.append("topics", Arrays.asList(topics));
+        }
+        if(account.getFriends().getUsers().size()!=0) {
+            Document friends = new Document();
+            for (var friend : account.getFriends().getUsers()
+            ) {
+                friends.append("$set", new BasicDBObject().append("topics", friend.get_id()));
+            }
+            add.append("friends",Arrays.asList(friends));
+        }
+    collection.insertOne(add);
     }
 
     @Override
     public Account getUserByName(String firstName, String LastName) {
         return null;
     }
+
 }

@@ -31,4 +31,12 @@ public class Topic {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "_id=" + _id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

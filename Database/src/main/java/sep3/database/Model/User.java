@@ -53,4 +53,14 @@ public class User {
     public void setLname(String lname) {
         Lname = lname;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "_id=" + _id +
+                ", Username='" + Username + '\'' +
+                ", Fname='" + Fname + '\'' +
+                ", Lname='" + Lname + '\'' +
+                '}';
+    }
 }

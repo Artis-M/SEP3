@@ -10,8 +10,8 @@ public interface UserDAO {
     Account getAccount(String username);
     User getUser(ObjectId userID);
     UserList getUserFriends(ObjectId userId);
-    void addFriend(User user);
-    void removeUser(User user);
+    void addFriend(User user,ObjectId userId);
+    void removeFriend(User user,ObjectId userId);
     void addTopicToUser(String Topic,ObjectId userId);
     void removeUserTopic(String Topic,ObjectId userId);
     void addAccount(Account account);
