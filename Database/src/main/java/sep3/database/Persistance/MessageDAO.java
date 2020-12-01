@@ -15,7 +15,7 @@ public class MessageDAO {
     private MongoClientURI uri;
     private MongoDatabase database;
 
-    public MessageDAO(String uri) {
+    public MessageDAO() {
         mongoClient = MongoClients.create(
                 "mongodb+srv://admin:admin@test.b0aui.mongodb.net/SEP?retryWrites=true&w=majority");
         database = mongoClient.getDatabase("SEP");
