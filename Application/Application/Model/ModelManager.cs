@@ -1,18 +1,17 @@
 ﻿﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Tier2.Http;
-using Tier2.MediatorPlanB;
+ using System.Threading.Tasks;
+ using Tier2.MediatorPlanB;
 
 namespace Tier2.Model
 {
     public class ModelManager : Model
     {
         
-        private IHttpConnect connection;
+       
 
         public ModelManager()
         {
-            connection = new HttpConnect(); 
+          
 
         }
 
@@ -27,7 +26,7 @@ namespace Tier2.Model
 
         public async Task sendMessage(Message message, int chatroomId)
         {//put in the selected chatRooms list
-            await connection.SaveMessage(message);
+            
         }
     }
 }
