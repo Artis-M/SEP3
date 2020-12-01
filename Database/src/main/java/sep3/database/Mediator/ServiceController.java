@@ -13,7 +13,7 @@ import java.net.Socket;
 
 public class ServiceController implements Runnable
 {
-    private int PORT = 1234;
+    private int PORT = 8443;
     private boolean running;
     private ServerSocket welcomeSocket;
 
@@ -24,8 +24,6 @@ public class ServiceController implements Runnable
     public ServiceController() throws IOException {
         gson = new Gson();
         this.running = true;
-        System.setProperty("javax.net.ssl.keyStore","chatsep.store");
-       System.setProperty("javax.net.ssl.keyStorePassword","password");
         running = true;
         welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
     }
