@@ -3,6 +3,7 @@ package sep3.database.Mediator;
 
 import com.google.gson.Gson;
 
+import javax.net.ssl.SSLServerSocketFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,7 +24,6 @@ public class ServiceController implements Runnable
     public ServiceController() throws IOException {
         gson = new Gson();
         this.running = true;
-        this.socket = socket;
         in = new BufferedReader(
                 new InputStreamReader(this.socket.getInputStream()));
         out = new PrintWriter(this.socket.getOutputStream(), true);
@@ -33,8 +33,11 @@ public class ServiceController implements Runnable
     public void run() {
 
         try {
+            System.setProperty("javax.net.ssl.keyStore","chatsep.store");
+            System.setProperty("javax.net.ssl.keyStorePassword","password");
             running = true;
-            welcomeSocket = new ServerSocket(PORT);
+            welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
+            System.out.println("ServerSocket is ready for connection...");
             Socket socket = welcomeSocket.accept();
             while(running)
             {
@@ -49,6 +52,6 @@ public class ServiceController implements Runnable
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
     }
 }
