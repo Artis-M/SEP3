@@ -1,13 +1,16 @@
 package sep3.database;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+import sep3.database.Mediator.ServiceController;
+
+import java.io.IOException;
+
 public class DatabaseApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(DatabaseApplication.class, args);
+    public static void main(String[] args) throws IOException {
+        ServiceController controller = new ServiceController();
+        Thread t1 = new Thread(controller);
+        t1.start();
     }
 
 }

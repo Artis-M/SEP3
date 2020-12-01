@@ -16,7 +16,7 @@ public class ServiceController implements Runnable
     private int PORT = 1234;
     private boolean running;
     private ServerSocket welcomeSocket;
-    private Socket socket;
+
     private BufferedReader in;
     private PrintWriter out;
     private Gson gson;
@@ -24,21 +24,24 @@ public class ServiceController implements Runnable
     public ServiceController() throws IOException {
         gson = new Gson();
         this.running = true;
-        in = new BufferedReader(
-                new InputStreamReader(this.socket.getInputStream()));
-        out = new PrintWriter(this.socket.getOutputStream(), true);
+        System.setProperty("javax.net.ssl.keyStore","chatsep.store");
+       System.setProperty("javax.net.ssl.keyStorePassword","password");
+        running = true;
+        welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
     }
+
 
     @Override
     public void run() {
 
+
         try {
-            System.setProperty("javax.net.ssl.keyStore","chatsep.store");
-            System.setProperty("javax.net.ssl.keyStorePassword","password");
-            running = true;
-            welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
             System.out.println("ServerSocket is ready for connection...");
             Socket socket = welcomeSocket.accept();
+            in = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+            System.out.println("Client Connected");
             while(running)
             {
                 String request = in.readLine();
