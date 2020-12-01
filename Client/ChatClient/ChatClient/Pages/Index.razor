@@ -1,16 +1,13 @@
 ﻿@page "/"
-@using Microsoft.AspNetCore.SignalR.Client
-@using Models
 @using Services
+@using global::Models
+@using ChatClient.Models
 @inject ChatService chatService;
 
 <div class="row">
     <div class="col-12">
         <input type="number" @bind="@username">
-        <EditForm Model="@newMessage" OnSubmit="@sendMessage">
-            <InputText @bind-Value="newMessage.message"/>
-        </EditForm>
-        <button @onclick="sendMessage">Send Message</button>
+        <input type="text" @onkeyup="@KeyDown" @bind:event="oninput" @bind="@messageText"/>
     </div>
 </div>
 <div class="row">
@@ -27,8 +24,11 @@
 
 @code
 {
-    private int username;
+    private string messageText;
+    private string username;
+    private User user = new User();
     private Message newMessage = new Message();
+    private MessageFragment newMessageFragment = new MessageFragment();
     private List<Message> Messages = new List<Message>();
 
     protected override async Task OnInitializedAsync()
@@ -39,14 +39,47 @@
 
     public void sendMessage()
     {
-        newMessage.authorID = username;
+        user.username = username;
+        newMessage.message = messageText;
+        newMessage.authorID = user.userId;
         chatService.SendMessage(newMessage);
         newMessage.message = "";
+    }
+
+    public void sendMessageFragment()
+    {
+        user.username = username;
+        newMessageFragment.message = messageText;
+        newMessageFragment.authorID = user.userId;
+        chatService.SendMessageFragment(newMessageFragment);
     }
 
     public async void DisplayNewMessage(Message message)
     {
         Messages.Add(message);
         await InvokeAsync(() => StateHasChanged());
+    }
+    public async void DisplayNewMessageFragment(MessageFragment messageFragment)
+    {
+ 
+        await InvokeAsync(() => StateHasChanged());
+    }
+    protected void KeyDown(KeyboardEventArgs e)
+    {
+        //@onkeydown="@KeyDown"
+        // if (e.Key.Equals(" "))
+        // {
+        //     Console.WriteLine("yeet");
+        //     sendMessageFragment();
+        // }
+        if (e.Key.Equals("Enter"))
+        {
+            sendMessage();
+        }
+        else
+        {
+            Console.WriteLine("yeet");
+            sendMessageFragment();
+        }
     }
 }

@@ -23,23 +23,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="600c31c9-aca4-4d62-aa3f-ad4a91ee65c6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Application/SignalR/ChatHub.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Client/ChatClient/.idea/.idea.ChatClient/.idea/contentModel.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Client/ChatClient/.idea/.idea.ChatClient/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Client/ChatClient/.idea/.idea.ChatClient/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Client/ChatClient/.idea/.idea.ChatClient/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Client/ChatClient/.idea/.idea.ChatClient/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Client/ChatClient/.idea/.idea.ChatClient/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/Models/Message.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/Services/ChatService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Client/ChatClient/global.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Model/MessageFragment.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/Models/Chatroom.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/Models/MessageFragment.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/Models/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Application/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Application/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Application/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Application/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Controllers/MessageController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Controllers/MessageController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/MediatorPlanB/ClientHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/MediatorPlanB/ClientHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/MediatorPlanB/ClientConnector.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/MediatorPlanB/ClientHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/MediatorPlanB/Packeged.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Model/Chatroom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Model/Chatroom.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Model/ModelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Model/ModelManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/SignalR/ChatHub.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/SignalR/ChatHub.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/ChatClient/.idea/.idea.ChatClient/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/ChatClient/.idea/.idea.ChatClient/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/ChatClient/.idea/.idea.ChatClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/ChatClient/.idea/.idea.ChatClient/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/ChatClient.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/ChatClient.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/Models/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/Models/Message.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/Pages/Index.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/Services/ChatService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/ChatClient/ChatClient/Services/ChatService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,25 +53,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Application/HTTPConnections/IHttpConnect.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Application/HTTPConnections/HttpConnect.cs" root0="FORCE_HIGHLIGHTING" />
-  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Application/Program.cs" />
         <option value="$PROJECT_DIR$/Application/Model/Message.cs" />
         <option value="$PROJECT_DIR$/Application/Model/Model.cs" />
         <option value="$PROJECT_DIR$/Application/Services/MessageService.cs" />
-        <option value="$PROJECT_DIR$/Application/Model/Chatroom.cs" />
         <option value="$PROJECT_DIR$/Application/Services/IMessageService.cs" />
-        <option value="$PROJECT_DIR$/Application/Model/ModelManager.cs" />
         <option value="$PROJECT_DIR$/Application/MediatorPlanB/ClientHandler.cs" />
-        <option value="$PROJECT_DIR$/Application/SignalR/ChatHub.cs" />
         <option value="$PROJECT_DIR$/Application/Startup.cs" />
-        <option value="$PROJECT_DIR$/Application/Controllers/MessageController.cs" />
         <option value="$PROJECT_DIR$/Application/Properties/launchSettings.json" />
+        <option value="$PROJECT_DIR$/Application/Model/ModelManager.cs" />
+        <option value="$PROJECT_DIR$/Application/Program.cs" />
+        <option value="$PROJECT_DIR$/Application/Model/Chatroom.cs" />
+        <option value="$PROJECT_DIR$/Application/Controllers/MessageController.cs" />
+        <option value="$PROJECT_DIR$/Application/SignalR/ChatHub.cs" />
       </list>
     </option>
   </component>
@@ -135,6 +135,8 @@
       <workItem from="1606776316782" duration="217000" />
       <workItem from="1606776545223" duration="441000" />
       <workItem from="1606777630875" duration="2541000" />
+      <workItem from="1606820988788" duration="431000" />
+      <workItem from="1606854507411" duration="1903000" />
     </task>
     <servers />
   </component>
@@ -159,26 +161,26 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1606780403054">
+    <state width="1877" height="281" key="GridCell.Tab.0.bottom" timestamp="1606855922148">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="217" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606732681677" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606780403054" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1606780403054">
+    <state width="1877" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606855922148" />
+    <state width="1877" height="281" key="GridCell.Tab.0.center" timestamp="1606855922147">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="217" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606732681676" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606780403054" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1606780403054">
+    <state width="1877" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606855922147" />
+    <state width="1877" height="281" key="GridCell.Tab.0.left" timestamp="1606855922147">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="217" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606732681676" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606780403054" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1606780403054">
+    <state width="1877" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606855922147" />
+    <state width="1877" height="281" key="GridCell.Tab.0.right" timestamp="1606855922147">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="217" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606732681677" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606780403054" />
+    <state width="1877" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606855922147" />
     <state x="552" y="251" key="Rider.ProjectTemplateDialog.Size" timestamp="1606779188147">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -191,10 +193,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1606776612218" />
-    <state x="92" y="92" width="1736" height="856" key="VCS.FileHistoryDialog" timestamp="1606778047867">
+    <state x="92" y="92" width="1736" height="856" key="VCS.FileHistoryDialog" timestamp="1606855099130">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="VCS.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1606778047867" />
+    <state x="92" y="92" width="1736" height="856" key="VCS.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1606855099130" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1606733917213">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
