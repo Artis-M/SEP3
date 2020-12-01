@@ -1,4 +1,4 @@
-﻿﻿namespace Tier2.Model
+﻿namespace Models
 {
     public class Message
     {

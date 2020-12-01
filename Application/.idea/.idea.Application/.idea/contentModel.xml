@@ -12,11 +12,8 @@
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="MessageController.cs" t="Include" />
           <e p="WeatherForecastController.cs" t="Include" />
-        </e>
-        <e p="HTTPConnections" t="Include">
-          <e p="HttpConnect.cs" t="Include" />
-          <e p="IHttpConnect.cs" t="Include" />
         </e>
         <e p="MediatorPlanB" t="Include">
           <e p="ClientConnector.cs" t="Include" />
@@ -39,6 +36,13 @@
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">
           <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Services" t="Include">
+          <e p="IMessageService.cs" t="Include" />
+          <e p="MessageService.cs" t="Include" />
+        </e>
+        <e p="SignalR" t="Include">
+          <e p="ChatHub.cs" t="Include" />
         </e>
         <e p="Startup.cs" t="Include" />
         <e p="WeatherForecast.cs" t="Include" />
