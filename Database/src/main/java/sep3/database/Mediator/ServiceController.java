@@ -2,10 +2,6 @@ package sep3.database.Mediator;
 
 
 import com.google.gson.Gson;
-import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties;
-import org.springframework.ui.Model;
-import sep3.database.Persistance.MessageDAO;
-import sep3.database.Persistance.PersistanceInterface;
 
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.BufferedReader;
@@ -20,31 +16,30 @@ public class ServiceController implements Runnable
     private int PORT = 8443;
     private boolean running;
     private ServerSocket welcomeSocket;
-    private MessageDAO DAO;
-    private Socket socket;
+
     private BufferedReader in;
     private PrintWriter out;
     private Gson gson;
 
     public ServiceController() throws IOException {
-        DAO = new MessageDAO();
         gson = new Gson();
         this.running = true;
-        in = new BufferedReader(
-                new InputStreamReader(this.socket.getInputStream()));
-        out = new PrintWriter(this.socket.getOutputStream(), true);
+        running = true;
+        welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
     }
+
 
     @Override
     public void run() {
 
+
         try {
-            System.setProperty("javax.net.ssl.keyStore",".keystore");
-            System.setProperty("javax.net.ssl.keyStorePassword","password");
-            running = true;
-            welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
             System.out.println("ServerSocket is ready for connection...");
             Socket socket = welcomeSocket.accept();
+            in = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+            System.out.println("Client Connected");
             while(running)
             {
                 String request = in.readLine();
