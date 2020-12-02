@@ -13,6 +13,7 @@ namespace Application.SCMediator {
         public TcpClient Client;
         public NetworkStream netStream;
         public ChatServiceImp ServiceImp;
+        public Model model;
 
 
         public ClientHandler(NetworkStream stream, TcpClient client, ChatServiceImp service) {
@@ -34,13 +35,16 @@ namespace Application.SCMediator {
                 UPSBox upsdelivery = JsonSerializer.Deserialize<UPSBox>(response);
                 Console.WriteLine("UPSBox " + upsdelivery.type + "  =>>>  " + upsdelivery.type);
                 if (upsdelivery.type.Equals("Chatroom")) {
-                   
+                    model.GetChatroom(upsdelivery.JSonThing);
+                }
+                else if (upsdelivery.type.Equals("ChatroomList")) {
+                    
                 }
                 else if (upsdelivery.type.Equals("UCredentials")) {
-                    // do a thing
+                    // call login functions
                 }
                 else if (upsdelivery.type.Equals("UList")) {
-                    // do a thing
+                    // pass list to model manager
                 }
                 else {
                     //error 

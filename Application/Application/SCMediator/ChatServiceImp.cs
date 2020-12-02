@@ -82,5 +82,9 @@ namespace Application.SCMediator {
             CommandLine command = new CommandLine { Command = "REQUEST-UserCredentials" };
             await Send(command);
         }
+        public async Task requestChatrooms() {
+            CommandLine command = new CommandLine { Command = "REQUEST-Chatroom-ALL"};
+            await Send(command);
+        }
     }
 }
