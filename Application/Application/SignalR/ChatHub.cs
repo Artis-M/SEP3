@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ChatClient.Models;
 using Microsoft.AspNetCore.SignalR;
 using Tier2.Model;
 
@@ -13,18 +14,10 @@ namespace WebApplication.SignalR
             Console.WriteLine("message sent?");
             return Clients.All.SendAsync("ReceiveMessage", message);
         }
-
-        /*public void sendLoop()
+        public Task sendMessageFragment(MessageFragment messageFragment)
         {
-            while (true)
-            {
-                Thread.Sleep(2000);
-                Message msg1 = new Message
-                {
-                    text = "dasdasdas"
-                };
-                sendMessage(msg1);
-            }
-        }*/
+            Console.WriteLine("messageFragment sent?");
+            return Clients.All.SendAsync("ReceiveMessageFragment", messageFragment);
+        }
     }
 }

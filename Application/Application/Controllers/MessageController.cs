@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using Tier2.Model;
 
 namespace Application.Controllers
@@ -37,7 +38,7 @@ namespace Application.Controllers
 
         [HttpGet]
         [Route("groupId")]
-        public async Task<ActionResult<Chatroom>> getMessagesByRoomId([FromBody] int Id)
+        public async Task<ActionResult<Chatroom>> getMessagesByRoomId([FromBody] ObjectId Id)
         {
             Chatroom chatroom = new Chatroom();
             IList<Chatroom> chatrooms = await MessageService.getChatrooms();
@@ -45,7 +46,7 @@ namespace Application.Controllers
             {
                 foreach (var Chatroom in chatrooms)
                 {
-                    if (Chatroom.ID == Id)
+                    if (Chatroom.ID.Equals(Id))
                     {
                         chatroom = Chatroom;
                     }

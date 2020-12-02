@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Tier2.MediatorPlanB;
 
 namespace Application
 {
@@ -15,8 +14,6 @@ namespace Application
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
-            ClientConnector client = new ClientConnector();
-            client.StartServer();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

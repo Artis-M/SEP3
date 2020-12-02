@@ -1,5 +1,6 @@
-﻿﻿using System.Collections.Generic;
- using MongoDB.Bson;
+﻿﻿﻿using System.Collections.Generic;
+  using Models;
+  using MongoDB.Bson;
 
  namespace Tier2.Model
 {
