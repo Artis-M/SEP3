@@ -2,55 +2,93 @@
 @using Services
 @using global::Models
 @using ChatClient.Models
+@using MongoDB.Bson
 @inject ChatService chatService;
 
 <div class="row">
-    <div class="col-12">
-        <input type="number" @bind="@username">
-        <input type="text" @onkeyup="@KeyDown" @bind:event="oninput" @bind="@messageText"/>
+    <div class="col-3">
+                   <input style="width: 50%" type="number" @bind="@username">
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        @if (Messages.Any())
-        {
-            @foreach (var item in Messages)
+    <div class="col-6">
+        <div style="overflow-y: scroll"> 
+            @if (Messages.Any())
             {
-                <p>@item.authorID : @item.message</p>
+                @foreach (var item in Messages)
+                {
+                    <p>@item.authorIdString: @item.message</p>
+                }
             }
-        }
+        </div>
+        <div style=" position: fixed; bottom: 40px; width: 100%;">
+            @if (MessageFragments.Any())
+            {
+                @foreach (var item in MessageFragments)
+                {
+                      <div style="width: 50%;">
+                          <p style="overflow-x: fragments;">User @item.authorIdString.ToString() is typing: @item.message ......</p>
+                      </div>
+                  }
+            }
+        </div>
+        <div style=" position: fixed; bottom: 0; width: 100%;">
+            <input type="text" style="height: 40px; width: 50%;" @onkeyup="@KeyDown" @bind:event="oninput" @bind="@messageText"/>
+        </div>
+    </div>
+    <div class="col-3">
+        
     </div>
 </div>
-
 @code
 {
     private string messageText;
     private string username;
-    private User user = new User();
+    private User user;
     private Message newMessage = new Message();
     private MessageFragment newMessageFragment = new MessageFragment();
+    private List<MessageFragment> MessageFragments = new List<MessageFragment>();
     private List<Message> Messages = new List<Message>();
 
     protected override async Task OnInitializedAsync()
     {
+        user = new User
+        {
+            username = "Test User",
+            userId = ObjectId.GenerateNewId()
+        };
+        // ObjectId test = ObjectId.GenerateNewId();
+        // User testUser = new User
+        // {
+        //     username = "asdasd",
+        //     userId = test
+        // };
+        // List<User> AAAAAAH = new List<User>();
+        // AAAAAAH.Add(testUser);
+        //
+        // Console.WriteLine(AAAAAAH.Last().userId.ToString());
+        
+        Console.WriteLine(user.userId.ToString());
         chatService.ConnectToServer();
         chatService.newMessage += this.DisplayNewMessage;
+        chatService.newMessageFragment += this.DisplayNewMessageFragment;
     }
 
     public void sendMessage()
     {
         user.username = username;
         newMessage.message = messageText;
-        newMessage.authorID = user.userId;
+        newMessage.authorIdString = user.userId.ToString();
         chatService.SendMessage(newMessage);
+        messageText = "";
         newMessage.message = "";
+        newMessageFragment.message = "";
+        sendMessageFragment();
     }
 
     public void sendMessageFragment()
     {
         user.username = username;
         newMessageFragment.message = messageText;
-        newMessageFragment.authorID = user.userId;
+        newMessageFragment.authorIdString = user.userId.ToString();
         chatService.SendMessageFragment(newMessageFragment);
     }
 
@@ -61,24 +99,45 @@
     }
     public async void DisplayNewMessageFragment(MessageFragment messageFragment)
     {
- 
+        Console.WriteLine("I feel offended that the id is : " + messageFragment.authorID.ToString());
+        try
+        {
+            MessageFragments.Remove(MessageFragments.First(fragment => fragment.authorIdString.Equals(messageFragment.authorIdString)));
+        }
+        catch (Exception e)
+        {
+
+        }
+        MessageFragments.Add(messageFragment);
+        if (messageFragment.message.Equals(""))
+        {
+            try
+            {
+                MessageFragments.Remove(MessageFragments.First(fragment => fragment.authorIdString.Equals(messageFragment.authorIdString)));
+            }
+            catch (Exception e)
+            {
+                
+            }
+        }
+        try
+        {
+            Console.WriteLine(MessageFragments.Last().authorID.ToString());
+        }
+        catch (Exception e)
+        {
+            
+        }
         await InvokeAsync(() => StateHasChanged());
     }
     protected void KeyDown(KeyboardEventArgs e)
     {
-        //@onkeydown="@KeyDown"
-        // if (e.Key.Equals(" "))
-        // {
-        //     Console.WriteLine("yeet");
-        //     sendMessageFragment();
-        // }
         if (e.Key.Equals("Enter"))
         {
             sendMessage();
         }
-        else
+        else if(e.Key.Equals(" ") || e.Key.Equals("Backspace"))
         {
-            Console.WriteLine("yeet");
             sendMessageFragment();
         }
     }

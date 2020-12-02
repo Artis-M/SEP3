@@ -9,12 +9,12 @@ namespace WebApplication.SignalR
 {
     public class ChatHub : Hub
     {
-        public Task sendMessage(Message message)
+        public Task sendMessage(string message)
         {
             Console.WriteLine("message sent?");
             return Clients.All.SendAsync("ReceiveMessage", message);
         }
-        public Task sendMessageFragment(MessageFragment messageFragment)
+        public Task sendMessageFragment(string messageFragment)
         {
             Console.WriteLine("messageFragment sent?");
             return Clients.All.SendAsync("ReceiveMessageFragment", messageFragment);

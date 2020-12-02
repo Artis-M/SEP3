@@ -23,27 +23,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../Application/Application/Model/MessageFragment.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatClient/Models/MessageFragment.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatClient/Models/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Controllers/MessageController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Controllers/MessageController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/MediatorPlanB/ClientConnector.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/MediatorPlanB/ClientHandler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/MediatorPlanB/Packeged.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Application/Application/Model/Chatroom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Model/Chatroom.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Model/ModelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Model/ModelManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Model/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Model/Message.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Model/MessageFragment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Model/MessageFragment.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Application/Application/SignalR/ChatHub.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/SignalR/ChatHub.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatClient/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatClient/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatClient/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatClient/ChatClient.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/ChatClient.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatClient/Models/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Models/Message.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatClient/Models/MessageFragment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Models/MessageFragment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatClient/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Models/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatClient/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Pages/Index.razor" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChatClient/Services/ChatService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Services/ChatService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ChatClient/Shared/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Shared/MainLayout.razor" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,11 +56,12 @@
         <option value="$PROJECT_DIR$/ChatClient/Shared/SurveyPrompt.razor" />
         <option value="$PROJECT_DIR$/ChatClient/Shared/NavMenu.razor" />
         <option value="$PROJECT_DIR$/ChatClient/Program.cs" />
+        <option value="$PROJECT_DIR$/ChatClient/Shared/MainLayout.razor" />
+        <option value="$PROJECT_DIR$/ChatClient/Services/ChatService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" />
+        <option value="$PROJECT_DIR$/ChatClient/Models/MessageFragment.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/Message.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/User.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Models/MessageFragment.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Services/ChatService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/Index.razor" />
       </list>
     </option>
@@ -126,7 +119,8 @@
       <workItem from="1606779197461" duration="1322000" />
       <workItem from="1606816826998" duration="124000" />
       <workItem from="1606821054938" duration="368000" />
-      <workItem from="1606852976026" duration="3382000" />
+      <workItem from="1606852976026" duration="3739000" />
+      <workItem from="1606900455616" duration="6827000" />
     </task>
     <servers />
   </component>
@@ -151,22 +145,22 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1606856638881">
+    <state width="1877" height="33" key="GridCell.Tab.0.bottom" timestamp="1606907239925">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606856638881" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1606856638881">
+    <state width="1877" height="33" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606907239925" />
+    <state width="1877" height="33" key="GridCell.Tab.0.center" timestamp="1606907239925">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606856638881" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1606856638881">
+    <state width="1877" height="33" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606907239925" />
+    <state width="1877" height="33" key="GridCell.Tab.0.left" timestamp="1606907239925">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606856638881" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1606856638881">
+    <state width="1877" height="33" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606907239925" />
+    <state width="1877" height="33" key="GridCell.Tab.0.right" timestamp="1606907239925">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606856638881" />
+    <state width="1877" height="33" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606907239925" />
     <state x="552" y="251" key="Rider.ProjectTemplateDialog.Size" timestamp="1606854494127">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

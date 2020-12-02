@@ -7,7 +7,7 @@
     public class Chatroom
     {
         public IList<Message> Messages;
-        public ObjectId ID { get; set; }
+        public string ID { get; set; }
         public string Name { get; set; }
 
         public Chatroom()

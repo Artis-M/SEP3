@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using ChatClient.Models;
 using Microsoft.AspNetCore.SignalR.Client;
 using Models;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 
 namespace Services
 {
@@ -23,24 +26,28 @@ namespace Services
                 Console.WriteLine(e);
                 await _hubConnection.StartAsync();
             };
-            _hubConnection.On<Message>("ReceiveMessage", message =>
+            _hubConnection.On<string>("ReceiveMessage", messageString =>
             {
+                Message message = JsonSerializer.Deserialize<Message>(messageString);
                 Console.WriteLine(message.message);
                 newMessage?.Invoke(message);
             });
-            _hubConnection.On<MessageFragment>("ReceiveMessageFragment", messageFragment =>
+            _hubConnection.On<string>("ReceiveMessageFragment", messageFragmentString =>
             {
+                MessageFragment messageFragment = JsonSerializer.Deserialize<MessageFragment>(messageFragmentString);
                 Console.WriteLine(messageFragment.message);
                 newMessageFragment?.Invoke(messageFragment);
             });
         }
         public async Task SendMessage(Message message)
         {
-            await _hubConnection.SendAsync("sendMessage", message);
+            Console.WriteLine(JsonSerializer.Serialize(message));
+            await _hubConnection.SendAsync("sendMessage", JsonSerializer.Serialize(message));
         }
         public async Task SendMessageFragment(MessageFragment messageFragment)
         {
-            await _hubConnection.SendAsync("sendMessageFragment", messageFragment);
+            Console.WriteLine(JsonSerializer.Serialize(messageFragment));
+            await _hubConnection.SendAsync("sendMessageFragment", JsonSerializer.Serialize(messageFragment));
         }
     }
 }
