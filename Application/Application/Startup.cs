@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Tier2.Model;
 using WebApplication.SignalR;
 
 namespace Application
@@ -30,7 +31,7 @@ namespace Application
         {
             services.AddSignalR();
             services.AddControllers();
-            services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IChatroomService, ChatroomServiceImpl>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
