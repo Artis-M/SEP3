@@ -35,7 +35,7 @@ namespace Application.Controllers
         }
 
         [HttpGet]
-        [Route("{id:string}")]
+        [Route("{id")]
         public async Task<ActionResult<Topic>> GetTopicByID([FromRoute] string id)
         {
             try
@@ -72,7 +72,7 @@ namespace Application.Controllers
         }
 
         [HttpDelete]
-        [Route("{id:string}")]
+        [Route("{id}")]
         public async Task<ActionResult> DeleteChatroom([FromRoute] Topic topic)
         {
             try

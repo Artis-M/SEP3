@@ -34,8 +34,8 @@ namespace Application.Controllers
         }
 
         [HttpGet]
-        [Route("{id:string}")]
-        public async Task<ActionResult<Account>> LogIn([FromBody] string username, [FromBody] string password)
+        [Route("{username}")]
+        public async Task<ActionResult<Account>> LogIn([FromRoute] string username, [FromBody] string password)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Application.Controllers
         }
 
         [HttpDelete]
-        [Route("{id:string}")]
+        [Route("{id}")]
         public async Task<ActionResult> DeleteAccount([FromBody] Account account)
         {
             try
