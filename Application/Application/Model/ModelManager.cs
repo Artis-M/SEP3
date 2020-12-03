@@ -1,14 +1,17 @@
 ﻿﻿using System.Collections.Generic;
- using System.Threading.Tasks;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
  using Application.Model;
- 
+using Application.SCMediator;
+using Application.Services;
 
 namespace Tier2.Model
 {
     public class ModelManager : Model
     {
-        
-       
+        ChatServiceImp chatServiceImp;
+        private AccountsServiceImpl accountService;
 
         public ModelManager()
         {
@@ -31,14 +34,14 @@ namespace Tier2.Model
             throw new System.NotImplementedException();
         }
 
-        public Task SendMessage(Message message, string chatroomId)
+        public async Task SendMessage(Message message, string chatroomId)
         {
-            throw new System.NotImplementedException();
+            chatServiceImp.sendMessage(message, chatroomId);
         }
 
         public Task Register(Account account)
         {
-            throw new System.NotImplementedException();
+            chatServiceImp.sendNewUser(account);
         }
 
         public Task<List<Chatroom>> RecieveChatrooms()
@@ -54,6 +57,9 @@ namespace Tier2.Model
         public Task<List<Topic>> RecieveTopics()
         {
             throw new System.NotImplementedException();
+        }
+        public async Task ProcessCredentials(string credentialsJson) {
+            accountService.Accounts = JsonSerializer.Deserialize<List<Account>>(credentialsJson);
         }
     }
 }

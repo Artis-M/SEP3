@@ -41,7 +41,7 @@ namespace Application.SCMediator {
                     
                 }
                 else if (upsdelivery.type.Equals("UserCredentials")) {
-                    model.ProcessCredentials(upsdelivery.user, upsdelivery.JSonThing);
+                    model.ProcessCredentials(upsdelivery.JSonThing);
                 }
                 else if (upsdelivery.type.Equals("UList")) {
                     // pass list to model manager

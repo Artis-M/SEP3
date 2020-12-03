@@ -7,6 +7,7 @@ namespace Application.Services
     public class AccountsServiceImpl : IAccountService
     {
         public List<Account> Accounts { get; set; }
+        public Tier2.Model.Model model;
 
         public AccountsServiceImpl()
         {
@@ -16,6 +17,7 @@ namespace Application.Services
         public async Task Register(Account account)
         {
             this.Accounts.Add(account);
+            await model.Register(account);
         }
 
         public async Task<Account> LogIn(string username, string password)
