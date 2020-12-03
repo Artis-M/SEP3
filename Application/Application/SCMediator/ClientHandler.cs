@@ -35,13 +35,13 @@ namespace Application.SCMediator {
                 UPSBox upsdelivery = JsonSerializer.Deserialize<UPSBox>(response);
                 Console.WriteLine("UPSBox " + upsdelivery.type + "  =>>>  " + upsdelivery.type);
                 if (upsdelivery.type.Equals("Chatroom")) {
-                    model.GetChatroom(upsdelivery.JSonThing);
+                    model.getChatroom(upsdelivery.JSonThing);
                 }
                 else if (upsdelivery.type.Equals("ChatroomList")) {
                     
                 }
-                else if (upsdelivery.type.Equals("UCredentials")) {
-                    // call login functions
+                else if (upsdelivery.type.Equals("UserCredentials")) {
+                    model.ProcessCredentials(upsdelivery.user, upsdelivery.JSonThing);
                 }
                 else if (upsdelivery.type.Equals("UList")) {
                     // pass list to model manager
