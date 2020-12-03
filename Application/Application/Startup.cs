@@ -34,6 +34,7 @@ namespace Application
             services.AddScoped<IChatroomService, ChatroomServiceImpl>();
             services.AddScoped<ITopicsService, TopicsService>();
             services.AddScoped<IAccountService, AccountsServiceImpl>();
+            services.AddSingleton<Tier2.Model.Model, ModelManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
