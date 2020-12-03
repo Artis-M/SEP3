@@ -15,7 +15,7 @@ namespace Application.SCMediator {
         private ClientHandler clientHandler;
         public Action<Message> newMessage;
         public Action<IList<Message>> messageHistory;
-        private int PORT = 8888888;
+        private int PORT = 8443;
 
         public ChatServiceImp() {
              connectToServer("localhost", PORT);
@@ -43,13 +43,13 @@ namespace Application.SCMediator {
         // ------------------- //
         //        send         //
         // ------------------- //
-        public async Task sendMessage(Message message, ObjectId chatroomID) {
+        public async Task sendMessage(Message message, string chatroomID) {
             //to be changed
             CommandLine command = new CommandLine { Command = "Message", variableUser = message.authorID, variableChatroom = chatroomID, SpecificOrder = message.message};
             await Send(command);
         }
 
-        public async Task sendNewChatroom(ObjectId userID, ObjectId chatroomID, String name) {
+        public async Task sendNewChatroom(string userID, string chatroomID, String name) {
             CommandLine command = new CommandLine { Command = "ChatroomNew", variableUser = userID, variableChatroom = chatroomID, SpecificOrder = name };
             await Send(command);
         }
@@ -70,11 +70,11 @@ namespace Application.SCMediator {
         // ------------------- //
         //      requests       //
         // ------------------- //
-        public async Task requestUser(ObjectId userID) {
+        public async Task requestUser(string userID) {
             CommandLine command = new CommandLine { Command = "REQUEST-User", variableUser = userID };
             await Send(command);
         }
-        public async Task requestChatroom(ObjectId chatroomID) {
+        public async Task requestChatroom(string chatroomID) {
             CommandLine command = new CommandLine { Command = "REQUEST-Chatroom", variableChatroom = chatroomID };
             await Send(command);
         }

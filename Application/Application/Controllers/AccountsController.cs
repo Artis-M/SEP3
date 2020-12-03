@@ -32,25 +32,8 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-
-        [HttpGet]
-        [Route("{id:string}")]
-        public async Task<ActionResult<Account>> LogIn([FromBody] string username, [FromBody] string password)
-        {
-            try
-            {
-                Account account = await AccountService.LogIn(username, password);
-                return Ok(account);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return StatusCode(500, e.Message);
-            }
-        }
-
+        
         [HttpPost]
-        [Route("Add")]
         public async Task<ActionResult> Register([FromBody] Account account)
         {
             if (!ModelState.IsValid)
@@ -71,12 +54,12 @@ namespace Application.Controllers
         }
 
         [HttpDelete]
-        [Route("{id:string}")]
-        public async Task<ActionResult> DeleteAccount([FromBody] Account account)
+       
+        public async Task<ActionResult> DeleteAccount([FromRoute] String id)
         {
             try
             {
-                await AccountService.RemoveAccount(account);
+                //await AccountService.RemoveAccount(account);
                 return Ok();
             }
             catch (Exception e)

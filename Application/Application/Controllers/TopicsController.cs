@@ -35,8 +35,8 @@ namespace Application.Controllers
         }
 
         [HttpGet]
-        [Route("{id:string}")]
-        public async Task<ActionResult<Topic>> GetTopicByID([FromRoute] string id)
+        
+        public async Task<ActionResult<Topic>> GetTopicByID( string id)
         {
             try
             {
@@ -51,7 +51,6 @@ namespace Application.Controllers
         }
 
         [HttpPost]
-        [Route("Add")]
         public async Task<ActionResult> AddNewChatroom([FromBody] Topic topic)
         {
             if (!ModelState.IsValid)
@@ -72,7 +71,6 @@ namespace Application.Controllers
         }
 
         [HttpDelete]
-        [Route("{id:string}")]
         public async Task<ActionResult> DeleteChatroom([FromRoute] Topic topic)
         {
             try
