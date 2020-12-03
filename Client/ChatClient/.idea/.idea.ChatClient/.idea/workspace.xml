@@ -22,21 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Model/Chatroom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Model/Chatroom.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Model/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Model/Message.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Model/MessageFragment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Model/MessageFragment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/SignalR/ChatHub.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/SignalR/ChatHub.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ChatClient/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChatClient/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatClient/Models/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Models/Message.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatClient/Models/MessageFragment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Models/MessageFragment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatClient/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Models/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatClient/Pages/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Pages/Index.razor" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatClient/Services/ChatService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Services/ChatService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ChatClient/Shared/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/ChatClient/Shared/MainLayout.razor" afterDir="false" />
-    </list>
+    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,11 +43,11 @@
         <option value="$PROJECT_DIR$/ChatClient/Shared/NavMenu.razor" />
         <option value="$PROJECT_DIR$/ChatClient/Program.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Shared/MainLayout.razor" />
-        <option value="$PROJECT_DIR$/ChatClient/Services/ChatService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/MessageFragment.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Models/Message.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/User.cs" />
+        <option value="$PROJECT_DIR$/ChatClient/Services/ChatService.cs" />
+        <option value="$PROJECT_DIR$/ChatClient/Models/Message.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/Index.razor" />
       </list>
     </option>
@@ -75,6 +61,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ChatClient">
     <configuration name="ChatClient" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
@@ -84,6 +71,7 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
+      <browser name="b2a9dca7-9d0b-4e1e-98a8-afb19c1328d2" />
       <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
       <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
       <option name="SEND_DEBUG_REQUEST" value="1" />
@@ -107,6 +95,10 @@
         <option name="Build" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue=".NET Launch Settings Profile.ChatClient" />
+      <item itemvalue=".NET Launch Settings Profile.ChatClient: IIS Express" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -121,6 +113,8 @@
       <workItem from="1606821054938" duration="368000" />
       <workItem from="1606852976026" duration="3739000" />
       <workItem from="1606900455616" duration="6827000" />
+      <workItem from="1607011386125" duration="1005000" />
+      <workItem from="1607013009340" duration="5085000" />
     </task>
     <servers />
   </component>
@@ -145,25 +139,41 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1877" height="33" key="GridCell.Tab.0.bottom" timestamp="1606907239925">
+    <state x="757" y="308" key="#Web_Browsers" timestamp="1607018703285">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="33" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606907239925" />
-    <state width="1877" height="33" key="GridCell.Tab.0.center" timestamp="1606907239925">
+    <state x="757" y="308" key="#Web_Browsers/0.0.1920.1040@0.0.1920.1040" timestamp="1607018703285" />
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607018705663">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="33" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606907239925" />
-    <state width="1877" height="33" key="GridCell.Tab.0.left" timestamp="1606907239925">
+    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607018705663" />
+    <state width="1877" height="212" key="GridCell.Tab.0.bottom" timestamp="1607019715250">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="33" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606907239925" />
-    <state width="1877" height="33" key="GridCell.Tab.0.right" timestamp="1606907239925">
+    <state width="1877" height="212" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607019715250" />
+    <state width="1877" height="212" key="GridCell.Tab.0.center" timestamp="1607019715250">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="33" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606907239925" />
+    <state width="1877" height="212" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607019715250" />
+    <state width="1877" height="212" key="GridCell.Tab.0.left" timestamp="1607019715250">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="212" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607019715250" />
+    <state width="1877" height="212" key="GridCell.Tab.0.right" timestamp="1607019715250">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="212" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607019715250" />
     <state x="552" y="251" key="Rider.ProjectTemplateDialog.Size" timestamp="1606854494127">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="251" key="Rider.ProjectTemplateDialog.Size/0.0.1920.1040@0.0.1920.1040" timestamp="1606854494127" />
+    <state x="461" y="164" key="SettingsEditor" timestamp="1607012924976">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607012924976" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1607012756697">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607012756697" />
   </component>
 </project>

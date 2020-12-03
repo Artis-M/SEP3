@@ -9,15 +9,24 @@ namespace WebApplication.SignalR
 {
     public class ChatHub : Hub
     {
-        public Task sendMessage(string message)
+        public Task JoinChatRoom(string ChatRoomId)
+        {
+            Console.WriteLine($"User:{Context.ConnectionId} joined the chatroom:{ChatRoomId}");
+            return Groups.AddToGroupAsync(Context.ConnectionId, ChatRoomId);
+        }
+        public Task LeaveChatRoom(string ChatRoomId)
+        {
+            return Groups.RemoveFromGroupAsync(Context.ConnectionId, ChatRoomId);
+        }
+        public Task SendMessage(Message message, string activeChatRoomId)
         {
             Console.WriteLine("message sent?");
-            return Clients.All.SendAsync("ReceiveMessage", message);
+            return Clients.Group(activeChatRoomId).SendAsync("ReceiveChatRoomMessage", message);
         }
-        public Task sendMessageFragment(string messageFragment)
+        public Task SendMessageFragment(MessageFragment messageFragment, string activeChatRoomId)
         {
             Console.WriteLine("messageFragment sent?");
-            return Clients.All.SendAsync("ReceiveMessageFragment", messageFragment);
+            return Clients.Group(activeChatRoomId).SendAsync("ReceiveChatRoomMessageFragment", messageFragment);
         }
     }
 }

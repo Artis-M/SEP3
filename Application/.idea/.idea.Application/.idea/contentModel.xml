@@ -10,15 +10,23 @@
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
-          <e p="MessageController.cs" t="Include" />
+          <e p="AccountsController.cs" t="Include" />
+          <e p="ChatroomsController.cs" t="Include" />
+          <e p="TopicsController.cs" t="Include" />
           <e p="WeatherForecastController.cs" t="Include" />
         </e>
         <e p="Model" t="Include">
+          <e p="Account.cs" t="Include" />
           <e p="Chatroom.cs" t="Include" />
           <e p="Message.cs" t="Include" />
           <e p="MessageFragment.cs" t="Include" />
+          <e p="MessageList.cs" t="Include" />
           <e p="Model.cs" t="Include" />
           <e p="ModelManager.cs" t="Include" />
+          <e p="Topic.cs" t="Include" />
+          <e p="TopicList.cs" t="Include" />
+          <e p="User.cs" t="Include" />
+          <e p="UserList.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -35,11 +43,16 @@
           <e p="ChatServiceImp.cs" t="Include" />
           <e p="ClientHandler.cs" t="Include" />
           <e p="CommandLine.cs" t="Include" />
+          <e p="LoginBox.cs" t="Include" />
           <e p="UPSBox.cs" t="Include" />
         </e>
         <e p="Services" t="Include">
-          <e p="IMessageService.cs" t="Include" />
-          <e p="MessageService.cs" t="Include" />
+          <e p="AccountsServiceImpl.cs" t="Include" />
+          <e p="ChatroomServiceImpl.cs" t="Include" />
+          <e p="IAccountService.cs" t="Include" />
+          <e p="IChatroomService.cs" t="Include" />
+          <e p="ITopicsService.cs" t="Include" />
+          <e p="TopicsService.cs" t="Include" />
         </e>
         <e p="SignalR" t="Include">
           <e p="ChatHub.cs" t="Include" />

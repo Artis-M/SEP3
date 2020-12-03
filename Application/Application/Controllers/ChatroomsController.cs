@@ -38,7 +38,7 @@ namespace Application.Controllers
         }
 
         [HttpGet]
-        [Route("{id:string}")]
+        [Route("{id}")]
         public async Task<ActionResult<Chatroom>> GetChatRoomById([FromRoute] string id)
         {
             try
@@ -75,7 +75,7 @@ namespace Application.Controllers
         }
 
         [HttpDelete]
-        [Route("{id:string}")]
+        [Route("{id}")]
         public async Task<ActionResult> DeleteChatroom([FromRoute] string id)
         {
             try
@@ -91,7 +91,7 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
-        [Route("{id:string}")]
+        [Route("{id}")]
         public async Task<ActionResult<Message>> SendMessage([FromBody] Message message, [FromRoute] string chatRoomId)
         {
             try
@@ -107,7 +107,7 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
-        [Route("{id:string}")]
+        [Route("{id}")]
         public async Task<ActionResult<Message>> AddUser([FromBody] User user, [FromRoute] string chatRoomId)
         {
             try
@@ -123,7 +123,7 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
-        [Route("{id:string}")]
+        [Route("{id}")]
         public async Task<ActionResult<Message>> RemoveUser([FromBody] User user, [FromRoute] string chatRoomId)
         {
             try

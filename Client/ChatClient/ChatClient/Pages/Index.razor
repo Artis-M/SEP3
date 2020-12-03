@@ -7,7 +7,8 @@
 
 <div class="row">
     <div class="col-3">
-                   <input style="width: 50%" type="number" @bind="@username">
+        <input style="width: 50%" type="text" @bind="@ChatRoomIdTemp">
+        <button @onclick="@JoinChatRoom">Join ChatRoom</button>
     </div>
     <div class="col-6">
         <div style="overflow-y: scroll"> 
@@ -15,7 +16,7 @@
             {
                 @foreach (var item in Messages)
                 {
-                    <p>@item.authorIdString: @item.message</p>
+                    <p>@item.authorID: @item.message</p>
                 }
             }
         </div>
@@ -41,9 +42,10 @@
 @code
 {
     private string messageText;
-    private string username;
+    private string ChatRoomIdTemp;
+    private bool isConnectedToChatRoom = false;
     private User user;
-    private Message newMessage = new Message();
+    private Message newMessage = new Message(null, null, null);
     private MessageFragment newMessageFragment = new MessageFragment();
     private List<MessageFragment> MessageFragments = new List<MessageFragment>();
     private List<Message> Messages = new List<Message>();
@@ -55,41 +57,44 @@
             username = "Test User",
             userId = ObjectId.GenerateNewId()
         };
-        // ObjectId test = ObjectId.GenerateNewId();
-        // User testUser = new User
-        // {
-        //     username = "asdasd",
-        //     userId = test
-        // };
-        // List<User> AAAAAAH = new List<User>();
-        // AAAAAAH.Add(testUser);
-        //
-        // Console.WriteLine(AAAAAAH.Last().userId.ToString());
-        
         Console.WriteLine(user.userId.ToString());
         chatService.ConnectToServer();
         chatService.newMessage += this.DisplayNewMessage;
         chatService.newMessageFragment += this.DisplayNewMessageFragment;
     }
 
+    public async Task JoinChatRoom()
+    {
+        if (!(ChatRoomIdTemp.Equals("")))
+        {
+            Console.WriteLine("what");
+            await chatService.JoinChatRoom(ChatRoomIdTemp);
+            isConnectedToChatRoom = true;
+        }
+    }
     public void sendMessage()
     {
-        user.username = username;
-        newMessage.message = messageText;
-        newMessage.authorIdString = user.userId.ToString();
-        chatService.SendMessage(newMessage);
-        messageText = "";
-        newMessage.message = "";
-        newMessageFragment.message = "";
-        sendMessageFragment();
+        if (isConnectedToChatRoom)
+        {
+            Console.WriteLine("Sending message:" + messageText);
+            newMessage.message = messageText;
+            newMessage.authorID = user.userId.ToString();
+            chatService.SendMessage(newMessage, ChatRoomIdTemp);
+            messageText = "";
+            newMessage.message = "";
+            newMessageFragment.message = "";
+            sendMessageFragment();
+        }
     }
 
     public void sendMessageFragment()
     {
-        user.username = username;
-        newMessageFragment.message = messageText;
-        newMessageFragment.authorIdString = user.userId.ToString();
-        chatService.SendMessageFragment(newMessageFragment);
+        if (isConnectedToChatRoom)
+        {
+            newMessageFragment.message = messageText;
+            newMessageFragment.authorIdString = user.userId.ToString();
+            chatService.SendMessageFragment(newMessageFragment, ChatRoomIdTemp);  
+        }
     }
 
     public async void DisplayNewMessage(Message message)
@@ -99,7 +104,6 @@
     }
     public async void DisplayNewMessageFragment(MessageFragment messageFragment)
     {
-        Console.WriteLine("I feel offended that the id is : " + messageFragment.authorID.ToString());
         try
         {
             MessageFragments.Remove(MessageFragments.First(fragment => fragment.authorIdString.Equals(messageFragment.authorIdString)));
@@ -119,14 +123,6 @@
             {
                 
             }
-        }
-        try
-        {
-            Console.WriteLine(MessageFragments.Last().authorID.ToString());
-        }
-        catch (Exception e)
-        {
-            
         }
         await InvokeAsync(() => StateHasChanged());
     }

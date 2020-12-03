@@ -23,31 +23,38 @@ namespace Services
 
             _hubConnection.Closed += async (e) =>
             {
-                Console.WriteLine(e);
+                Console.WriteLine("Exception:" + e.ToString());
                 await _hubConnection.StartAsync();
             };
-            _hubConnection.On<string>("ReceiveMessage", messageString =>
+            _hubConnection.On<Message>("ReceiveChatRoomMessage", message =>
             {
-                Message message = JsonSerializer.Deserialize<Message>(messageString);
-                Console.WriteLine(message.message);
+                Console.WriteLine("What the fuck");
+                Console.WriteLine($"Received message: {message.message}");
                 newMessage?.Invoke(message);
             });
-            _hubConnection.On<string>("ReceiveMessageFragment", messageFragmentString =>
+            _hubConnection.On<MessageFragment>("ReceiveChatRoomMessageFragment", messageFragment =>
             {
-                MessageFragment messageFragment = JsonSerializer.Deserialize<MessageFragment>(messageFragmentString);
                 Console.WriteLine(messageFragment.message);
                 newMessageFragment?.Invoke(messageFragment);
             });
         }
-        public async Task SendMessage(Message message)
+        public async Task SendMessage(Message message, string activeChatRoomId)
         {
-            Console.WriteLine(JsonSerializer.Serialize(message));
-            await _hubConnection.SendAsync("sendMessage", JsonSerializer.Serialize(message));
+            Console.WriteLine("Sending message:" + message.ToString());
+            await _hubConnection.SendAsync("SendMessage", message, activeChatRoomId);
         }
-        public async Task SendMessageFragment(MessageFragment messageFragment)
+        public async Task SendMessageFragment(MessageFragment messageFragment, string activeChatRoomId)
         {
-            Console.WriteLine(JsonSerializer.Serialize(messageFragment));
-            await _hubConnection.SendAsync("sendMessageFragment", JsonSerializer.Serialize(messageFragment));
+            await _hubConnection.SendAsync("SendMessageFragment", messageFragment, activeChatRoomId);
+        }
+
+        public async Task JoinChatRoom(string ChatRoomId)
+        {
+            await _hubConnection.SendAsync("JoinChatRoom", ChatRoomId);
+        }
+        public async Task LeaveChatRoom(string ChatRoomId)
+        {
+            await _hubConnection.SendAsync("LeaveChatRoom", ChatRoomId);
         }
     }
 }

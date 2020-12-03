@@ -39,9 +39,14 @@ namespace Tier2.Model
             chatServiceImp.sendMessage(message, chatroomId);
         }
 
-        public Task Register(Account account)
+        public async Task Register(Account account)
         {
             chatServiceImp.sendNewUser(account);
+        }
+
+        public Task Login(string username, string password)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Task<List<Chatroom>> RecieveChatrooms()
