@@ -17,11 +17,11 @@ namespace Application.Services
             this.Accounts = new List<Account>();
         }
 
-        public async Task Register(string account)
+        public async Task Register(Account account)
         {
-            //this.Accounts.Add(account);
-            await service.requestUser(account);
-            //await model.Register(account);
+            this.Accounts.Add(account);
+            
+            await model.Register(account);
         }
 
         public async Task<Account> LogIn(string username, string password)

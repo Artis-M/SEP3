@@ -57,7 +57,7 @@ namespace Application.Controllers
         // }
 
         [HttpPost]
-        public async Task<ActionResult> Register([FromBody] string account)
+        public async Task<ActionResult> Register([FromBody] Account account)
         {
             if (!ModelState.IsValid)
             {
@@ -66,9 +66,7 @@ namespace Application.Controllers
 
             try
             {
-                ChatServiceImp serviceImp = new ChatServiceImp();
-                
-                await serviceImp.requestUser(account);
+                await AccountService.Register(account);
                 
                 return Created($"/{account}", account);
             }

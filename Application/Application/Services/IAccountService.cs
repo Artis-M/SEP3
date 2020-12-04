@@ -7,7 +7,7 @@ namespace Application.Services
 {
     public interface IAccountService
     {
-        public Task Register(string account);
+        public Task Register(Account account);
         public Task<Account> LogIn(string username, string password);
         public Task RemoveAccount(Account account);
         public Task<IList<Account>> GetAllAccounts();
