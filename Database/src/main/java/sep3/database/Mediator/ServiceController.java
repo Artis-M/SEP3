@@ -9,16 +9,13 @@ import sep3.database.Persistance.UserDAO;
 import sep3.database.Persistance.UserDAOImpl;
 
 import javax.net.ssl.SSLServerSocketFactory;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServiceController implements Runnable
 {
-    private int PORT = 8443;
+    private int PORT = 1234;
     private boolean running;
     private ServerSocket welcomeSocket;
 
@@ -32,7 +29,7 @@ public class ServiceController implements Runnable
         gson = new Gson();
         this.running = true;
         running = true;
-        welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
+        welcomeSocket = new ServerSocket(PORT);
         userDAO = new UserDAOImpl();
     }
 
@@ -42,32 +39,53 @@ public class ServiceController implements Runnable
 
 
         try {
-            System.out.println("ServerSocket is ready for connection...");
-            Socket socket = welcomeSocket.accept();
-            in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
-            System.out.println("Client Connected");
+            ServerSocket welcomeSocket = new ServerSocket(2910);
+            System.out.println("Server started..");
+            Socket socketToClient = welcomeSocket.accept();
+            System.out.println("Client connected..");
+            InputStream inputStream = socketToClient.getInputStream();
+            OutputStream outputStream = socketToClient.getOutputStream();
+
             while(running)
             {
-                String json = in.readLine();
-                CommandLine request = gson.fromJson(json,CommandLine.class);
-                if(request.getCommand().equals("REQUEST-User"))
+                try {
+                    System.out.println("1");
+                    byte[] lenBytes = new byte[4];
+                    System.out.println("2");
+                    inputStream.readAllBytes();
+                  //  inputStream.read(lenBytes, 0, 4);
+                    System.out.println("3");
+                    int len = (((lenBytes[3] & 0xff) << 24) | ((lenBytes[2] & 0xff) << 16) |
+                            ((lenBytes[1] & 0xff) << 8) | (lenBytes[0] & 0xff));
+                    byte[] receivedBytes = new byte[len];
+                    inputStream.read(receivedBytes, 0, len);
+                    System.out.println("Read");
+
+                    String receivedFromClient = new String(receivedBytes, 0, len);
+                    CommandLine line = gson.fromJson(receivedFromClient,CommandLine.class);
+
+                if(line.getCommand().equals("REQUEST-User"))
                 {
                     System.out.println("Here");
                     CommandLine send = new CommandLine();
                     send.setCommand("UserCredentials");
-                    Account account = userDAO.getAccount(request.getVariableUser());
-                    send.setSpecificOrder(gson.toJson(account));
-                    send.setVariableChatroom("");
-                    send.setVariableUser("");
+                    Account account = userDAO.getAccount(line.getJson());
                     String sendJson = gson.toJson(send);
-                    out.write(sendJson);
+                    byte[] toSendBytes = sendJson.getBytes();
+                    int toSendLen = toSendBytes.length;
+                    byte[] toSendLenBytes = new byte[4];
+                    toSendLenBytes[0] = (byte) (toSendLen & 0xff);
+                    toSendLenBytes[1] = (byte) ((toSendLen >> 8) & 0xff);
+                    toSendLenBytes[2] = (byte) ((toSendLen >> 16) & 0xff);
+                    toSendLenBytes[3] = (byte) ((toSendLen >> 24) & 0xff);
+                    outputStream.write(toSendLenBytes);
+                    outputStream.write(toSendBytes);
 
                 }
-               else  if(request.getCommand().equals(""))
-                {
 
+                }catch (Exception e)
+                {
+                    System.out.println(e.getMessage());
                 }
 
             }

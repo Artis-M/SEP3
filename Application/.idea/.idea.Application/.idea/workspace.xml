@@ -23,20 +23,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="600c31c9-aca4-4d62-aa3f-ad4a91ee65c6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Database/src/main/java/sep3/database/Mediator/CommandLine.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/SCMediator/ServiceImpl.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Application/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Application/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Application/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Application/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Controllers/AccountsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Controllers/AccountsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Controllers/ChatroomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Controllers/ChatroomsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Controllers/TopicsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Controllers/TopicsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Controllers/WeatherForecastController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Properties/launchSettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/SCMediator/ChatServiceImp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/SCMediator/ChatServiceImp.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/SCMediator/ClientHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/SCMediator/ClientHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/SCMediator/CommandLine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/SCMediator/CommandLine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/SCMediator/UPSBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/SCMediator/UPSBox.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Database/src/main/java/sep3/database/DatabaseApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Database/src/main/java/sep3/database/DatabaseApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Database/src/main/java/sep3/database/Mediator/ServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Database/src/main/java/sep3/database/Mediator/ServiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Services/AccountsServiceImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/AccountsServiceImpl.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Services/IAccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Services/IAccountService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +39,10 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F3DD31A3-D437-4D7D-9525-D887480DAE95/2b/b1fd0fc3/AsyncValueTaskMethodBuilder`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ABD8126B-966E-414A-9571-A6B06E3B4A28/ee/4f075a50/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -63,12 +61,15 @@
         <option value="$PROJECT_DIR$/Application/SignalR/ChatHub.cs" />
         <option value="$PROJECT_DIR$/Application/SCMediator/UPSBox.cs" />
         <option value="$PROJECT_DIR$/Application/SCMediator/ClientHandler.cs" />
-        <option value="$PROJECT_DIR$/Application/SCMediator/CommandLine.cs" />
-        <option value="$PROJECT_DIR$/Application/SCMediator/ChatServiceImp.cs" />
         <option value="$PROJECT_DIR$/Application/Controllers/ChatroomsController.cs" />
         <option value="$PROJECT_DIR$/Application/Controllers/TopicsController.cs" />
         <option value="$PROJECT_DIR$/Application/Properties/launchSettings.json" />
+        <option value="$PROJECT_DIR$/Application/Services/IAccountService.cs" />
+        <option value="$PROJECT_DIR$/Application/SCMediator/CommandLine.cs" />
+        <option value="$PROJECT_DIR$/Application/SCMediator/ChatServiceImp.cs" />
         <option value="$PROJECT_DIR$/Application/Controllers/AccountsController.cs" />
+        <option value="$PROJECT_DIR$/Application/Services/AccountsServiceImpl.cs" />
+        <option value="$PROJECT_DIR$/Application/SCMediator/ServiceImpl.cs" />
       </list>
     </option>
   </component>
@@ -140,6 +141,7 @@
       <workItem from="1606820988788" duration="431000" />
       <workItem from="1606854507411" duration="2183000" />
       <workItem from="1606900650888" duration="3191000" />
+      <workItem from="1607069090359" duration="7879000" />
     </task>
     <servers />
   </component>
@@ -164,25 +166,25 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1606997639683">
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1607077188573">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1606997639683" />
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607077188573" />
     <state width="1877" height="281" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1606907250252" />
-    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1606997639683">
+    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1607077188573">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1606997639683" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1607077188573" />
     <state width="1877" height="281" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1606907250252" />
-    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1606997639682">
+    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1607077188573">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1606997639682" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1607077188573" />
     <state width="1877" height="281" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1606907250252" />
-    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1606997639683">
+    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1607077188573">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1606997639683" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1607077188573" />
     <state width="1877" height="281" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1606907250252" />
     <state x="552" y="251" key="Rider.ProjectTemplateDialog.Size" timestamp="1606779188147">
       <screen x="0" y="0" width="1920" height="1040" />

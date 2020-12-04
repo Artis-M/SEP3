@@ -1,21 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Model;
+using Application.SCMediator;
 
 namespace Application.Services
 {
     public class AccountsServiceImpl : IAccountService
     {
         public List<Account> Accounts { get; set; }
+        private ServiceImpl service;
 
         public AccountsServiceImpl()
         {
             this.Accounts = new List<Account>();
+            service = new ServiceImpl();
         }
 
-        public async Task Register(Account account)
+        public async Task Register(string username)
         {
-            this.Accounts.Add(account);
+           await service.requestUser(username);
+            //this.Accounts.Add(account);
         }
 
         public async Task<Account> LogIn(string username, string password)

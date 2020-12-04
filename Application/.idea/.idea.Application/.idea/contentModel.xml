@@ -43,6 +43,7 @@
           <e p="ClientHandler.cs" t="Include" />
           <e p="CommandLine.cs" t="Include" />
           <e p="LoginBox.cs" t="Include" />
+          <e p="ServiceImpl.cs" t="Include" />
           <e p="UPSBox.cs" t="Include" />
         </e>
         <e p="Services" t="Include">

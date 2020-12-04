@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Application.Model;
 using MongoDB.Bson;
 using Tier2.Model;
 
@@ -24,7 +25,7 @@ namespace Application.SCMediator {
         public async Task connectToServer(string ip, int port) {
             try {
                 Client = new TcpClient(ip, port);
-                clientHandler = new ClientHandler(stream, Client, this);
+              //  clientHandler = new ClientHandler(stream, Client, this);
             }
             catch (Exception e) {
                 Console.WriteLine("Connecting to server. Retrying.");
@@ -45,13 +46,13 @@ namespace Application.SCMediator {
         // ------------------- //
         public async Task sendMessage(Message message, string chatroomID) {
             //to be changed
-            CommandLine command = new CommandLine { Command = "Message", variableUser = message.authorID, variableChatroom = chatroomID, SpecificOrder = message.message};
-            await Send(command);
+           // CommandLine command = new CommandLine { Command = "Message", variableUser = message.authorID, variableChatroom = chatroomID, SpecificOrder = message.message};
+           // await Send(command);
         }
 
         public async Task sendNewChatroom(string userID, string chatroomID, String name) {
-            CommandLine command = new CommandLine { Command = "ChatroomNew", variableUser = userID, variableChatroom = chatroomID, SpecificOrder = name };
-            await Send(command);
+            //CommandLine command = new CommandLine { Command = "ChatroomNew", variableUser = userID, variableChatroom = chatroomID, SpecificOrder = name };
+           // await Send(command);
         }
 
         public async Task sendChatroomUpdate() {
@@ -70,13 +71,19 @@ namespace Application.SCMediator {
         // ------------------- //
         //      requests       //
         // ------------------- //
-        public async Task requestUser(string userID) {
-            CommandLine command = new CommandLine { Command = "REQUEST-User", variableUser = userID };
-            await Send(command);
+        public async Task<Account> requestUser(string userID) {
+          //  CommandLine command = new CommandLine { Command = "REQUEST-User", variableUser = userID };
+            //await Send(command);
+            byte[] dataFromServer = new byte[1024];
+            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
+            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
+            Console.WriteLine(response);
+            Account account = JsonSerializer.Deserialize<Account>(response);
+            return account;
         }
         public async Task requestChatroom(string chatroomID) {
-            CommandLine command = new CommandLine { Command = "REQUEST-Chatroom", variableChatroom = chatroomID };
-            await Send(command);
+           // CommandLine command = new CommandLine { Command = "REQUEST-Chatroom", variableChatroom = chatroomID };
+            //await Send(command);
         }
         public async Task requestUserCredentials(ObjectId userID) {
             CommandLine command = new CommandLine { Command = "REQUEST-UserCredentials" };
