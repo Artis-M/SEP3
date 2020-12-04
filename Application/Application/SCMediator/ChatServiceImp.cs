@@ -45,6 +45,7 @@ namespace Application.SCMediator {
         // ------------------- //
         public async Task sendMessage(Message message, string chatroomID) {
             //to be changed
+            
             CommandLine command = new CommandLine { Command = "Message", variableUser = message.authorID, variableChatroom = chatroomID, SpecificOrder = message.message};
             await Send(command);
         }

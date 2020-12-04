@@ -23,7 +23,7 @@ public class ServiceController implements Runnable
         this.running = true;
         running = true;
         //removed ssl
-        // welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
+        //welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
         welcomeSocket  = new ServerSocket(PORT);
     }
 
