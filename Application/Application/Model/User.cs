@@ -9,6 +9,10 @@ namespace Application.Model
         public string Fname { get; set; }
         public string Lname { get; set; }
 
+        public User()
+        {
+            
+        }
         public User(string id, string username, string fname, string lname)
         {
             this.Id = id;

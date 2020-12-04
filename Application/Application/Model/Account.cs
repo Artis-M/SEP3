@@ -1,18 +1,25 @@
 ﻿namespace Application.Model
 {
-    public class Account:User
+    public class Account : User
     {
         public string role { get; set; }
         public string password { get; set; }
         public string email { get; set; }
 
-        public Account(string role, string pass,string email,string id, string username, string fname, string lname) : base(id, username, fname, lname)
-        { this.email = email;
+        public Account()
+        {
+        }
+
+        public Account(string role, string pass, string email, string id, string username, string fname, string lname) :
+            base(id, username, fname, lname)
+        {
+            this.email = email;
             this.password = pass;
             this.role = role;
         }
 
-        public Account(string role, string pass,string email,string username, string fname, string lname) : base(username, fname, lname)
+        public Account(string role, string pass, string email, string username, string fname, string lname) : base(
+            username, fname, lname)
         {
             this.email = email;
             this.password = pass;

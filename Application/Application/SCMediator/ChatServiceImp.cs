@@ -14,21 +14,21 @@ namespace Application.SCMediator {
         private TcpClient Client;
         private NetworkStream stream;
         private ClientHandler clientHandler;
-        private int PORT = 8443;
+        private int PORT = 2000;
 
-        public ChatServiceImp() {
-             connectToServer("localhost", PORT);
+        public ChatServiceImp(ModelManager modelManager) {
+             connectToServer("localhost", PORT,modelManager);
              
         }
 
-        public async Task connectToServer(string ip, int port) {
+        public async Task connectToServer(string ip, int port,ModelManager modelManager) {
             try {
                 Client = new TcpClient(ip, port);
-                clientHandler = new ClientHandler(stream, Client, this);
+                clientHandler = new ClientHandler(stream, Client,modelManager);
             }
             catch (Exception e) {
                 Console.WriteLine("Connecting to server. Retrying.");
-                connectToServer("localhost", PORT);
+                connectToServer("localhost", PORT,modelManager);
             }
 
             stream = Client.GetStream();

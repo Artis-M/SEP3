@@ -12,5 +12,6 @@ namespace Application.Services
         public Task RemoveAccount(string accountID);
         public Task<IList<Account>> GetAllAccounts();
         public Task RequestAccounts();
+        public Task SetListOfAccounts(List<Account> accounts);
     }
 }

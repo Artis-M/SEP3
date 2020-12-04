@@ -11,9 +11,9 @@ namespace Application.Services
         public List<Account> Accounts { get; set; }
         public Tier2.Model.Model model;
 
-        public AccountsServiceImpl()
+        public AccountsServiceImpl(ModelManager modelManager)
         {
-            this.model=new ModelManager();
+            this.model = modelManager;
             this.Accounts = new List<Account>();
         }
 
@@ -57,6 +57,11 @@ namespace Application.Services
         public async Task RequestAccounts()
         {
             await model.RequestUsers();
+        }
+
+        public async Task SetListOfAccounts(List<Account> accounts)
+        {
+            this.Accounts = accounts;
         }
     }
 }

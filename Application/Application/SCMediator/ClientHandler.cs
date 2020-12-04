@@ -12,18 +12,18 @@ namespace Application.SCMediator {
     public class ClientHandler {
         public TcpClient Client;
         public NetworkStream netStream;
-        public ChatServiceImp ServiceImp;
         public Tier2.Model.Model model;
 
 
-        public ClientHandler(NetworkStream stream, TcpClient client, ChatServiceImp service) {
+        public ClientHandler(NetworkStream stream, TcpClient client, ModelManager modelManager) {
             Console.WriteLine("Client Handler Starting!");
+            
             Client = client;
-            this.model = new ModelManager();
+            
             netStream = stream;
-            ServiceImp = service;
             Thread t1 = new Thread(MessageHandler);
             t1.Start();
+            this.model = modelManager;
         }
 
         public void MessageHandler() {

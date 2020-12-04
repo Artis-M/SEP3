@@ -11,12 +11,15 @@ namespace Tier2.Model
     public class ModelManager : Model
     {
         private ChatServiceImp chatServiceImp;
-        private AccountsServiceImpl accountService;
-        private ChatroomServiceImpl chatroomService;
-        private TopicsService topicService;
+        private IAccountService accountService;
+        private IChatroomService chatroomService;
+        private ITopicsService topicService;
         public ModelManager()
         {
-          this.chatServiceImp= new ChatServiceImp();
+          this.chatServiceImp= new ChatServiceImp(this);
+          this.accountService=new AccountsServiceImpl(this);
+          this.topicService=new TopicsService(this);
+          this.chatroomService=new ChatroomServiceImpl(this);
 
         }
 
@@ -65,14 +68,15 @@ namespace Tier2.Model
             await chatServiceImp.sendNewUser(account);
         }
 
-        public void ProcessCredentials(string credentialsJson) {
-            accountService.Accounts = JsonSerializer.Deserialize<List<Account>>(credentialsJson);
+        public void ProcessCredentials(string credentialsJson)
+        {
+            accountService.SetListOfAccounts(JsonSerializer.Deserialize<List<Account>>(credentialsJson));
         }
         public void ProcessChatrooms(string credentialsJson) {
-            chatroomService.Chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(credentialsJson);
+            //chatroomService.Chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(credentialsJson);
         }
         public void ProcessTopics(string credentialsJson) {
-            topicService.Topics = JsonSerializer.Deserialize<List<Topic>>(credentialsJson);
+            //topicService.Topics = JsonSerializer.Deserialize<List<Topic>>(credentialsJson);
         }
 
     }

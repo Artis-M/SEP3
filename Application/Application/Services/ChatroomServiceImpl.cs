@@ -13,9 +13,10 @@ namespace Application.Services
         public List<Chatroom> Chatrooms { get; set; }
         public Tier2.Model.Model model;
 
-        public ChatroomServiceImpl()
+        public ChatroomServiceImpl(ModelManager modelManager)
         {
             this.Chatrooms = new List<Chatroom>();
+            this.model = modelManager;
         }
 
         public async Task<Chatroom> GetChatroomByID(string ID)

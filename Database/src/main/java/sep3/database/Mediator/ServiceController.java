@@ -12,7 +12,7 @@ import java.net.Socket;
 
 public class ServiceController implements Runnable
 {
-    private int PORT = 8443;
+    private int PORT = 2000;
     private boolean running;
     private ServerSocket welcomeSocket;
     private UserDAO userDAO;

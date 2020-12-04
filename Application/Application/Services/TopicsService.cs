@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Model;
+using Tier2.Model;
 
 namespace Application.Services
 {
     public class TopicsService : ITopicsService
     {
         public List<Topic> Topics { get; set; }
+        public Tier2.Model.Model Model;
 
-        public TopicsService()
+        public TopicsService(ModelManager modelManager)
         {
             this.Topics = new List<Topic>();
+            this.Model = modelManager;
         }
 
         public async Task AddTopic(Topic topic)
