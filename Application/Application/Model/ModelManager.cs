@@ -10,7 +10,7 @@ namespace Tier2.Model
 {
     public class ModelManager : Model
     {
-        ChatServiceImp chatServiceImp;
+        private ChatServiceImp chatServiceImp;
         private AccountsServiceImpl accountService;
         private ChatroomServiceImpl chatroomService;
         private TopicsService topicService;
@@ -20,57 +20,38 @@ namespace Tier2.Model
 
         }
 
-        public Task RequestChatrooms()
+        public async Task RequestChatrooms()
         {
-            throw new System.NotImplementedException();
+            await chatServiceImp.requestChatrooms();
         }
 
-        public Task RequestUsers()
+        public async Task RequestUsers()
         {
-            throw new System.NotImplementedException();
+            await chatServiceImp.requestUserCredentials();
         }
 
-        public Task RequestTopics()
+        public async Task RequestTopics()
         {
-            throw new System.NotImplementedException();
+            await chatServiceImp.requestTopics();
         }
 
         public async Task SendMessage(Message message, string chatroomId)
         {
-            chatServiceImp.sendMessage(message, chatroomId);
+            await chatServiceImp.sendMessage(message, chatroomId);
         }
 
         public async Task Register(Account account)
         {
-            chatServiceImp.sendNewUser(account);
+            await chatServiceImp.sendNewUser(account);
         }
 
-        public Task Login(string username, string password)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<List<Chatroom>> RecieveChatrooms()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<List<User>> RecieveUsers()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<List<Topic>> RecieveTopics()
-        {
-            throw new System.NotImplementedException();
-        }
-        public async Task ProcessCredentials(string credentialsJson) {
+        public void ProcessCredentials(string credentialsJson) {
             accountService.Accounts = JsonSerializer.Deserialize<List<Account>>(credentialsJson);
         }
-        public async Task ProcessChatrooms(string credentialsJson) {
+        public void ProcessChatrooms(string credentialsJson) {
             chatroomService.Chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(credentialsJson);
         }
-        public async Task ProcessTopics(string credentialsJson) {
+        public void ProcessTopics(string credentialsJson) {
             topicService.Topics = JsonSerializer.Deserialize<List<Topic>>(credentialsJson);
         }
 
