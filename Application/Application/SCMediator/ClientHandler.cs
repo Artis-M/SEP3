@@ -37,8 +37,7 @@ namespace Application.SCMediator {
                 if (upsdelivery.type.Equals("Chatroom")) {
                     // model.getChatroom(upsdelivery.JSonThing);
                 }
-                else if (upsdelivery.type.Equals("ChatroomList")) {
-                    model.ProcessChatrooms(upsdelivery.JSonThing);
+                else if (upsdelivery.type.Equals("ChatroomList")) { model.ProcessChatrooms(upsdelivery.JSonThing);
                 }
                 else if (upsdelivery.type.Equals("UserCredentials")) {
                     model.ProcessCredentials(upsdelivery.JSonThing);

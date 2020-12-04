@@ -27,6 +27,7 @@ namespace Application.Controllers
         {
             try
             {
+                //await chatroomService.requestChatrooms();
                 IList<Chatroom> chatrooms = await chatroomService.GetAllChatrooms();
                 return Ok(chatrooms);
             }
@@ -54,7 +55,6 @@ namespace Application.Controllers
         }
 
         [HttpPost]
-        [Route("Add")]
         public async Task<ActionResult> AddNewChatroom([FromBody] Chatroom chatroom)
         {
             if (!ModelState.IsValid)

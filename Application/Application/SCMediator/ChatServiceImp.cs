@@ -80,6 +80,14 @@ namespace Application.SCMediator {
             CommandLine command = new CommandLine { Command = "TopicUpdate", SpecificOrder = serialTopic };
             await Send(command);
         }
+        // ------------------- //
+        //      deletes       //
+        // ------------------- //
+        public async Task DeleteChatroom(string chatroomID)
+        {
+            CommandLine command = new CommandLine { Command = "DELETE-Chatroom", SpecificOrder = chatroomID };
+            await Send(command);
+        }
 
         // ------------------- //
         //      requests       //

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Application.Model;
 using MongoDB.Bson;
 
@@ -44,7 +45,7 @@ namespace Tier2.Model
             this.participants = new UserList();
         }
 
-        public void removeUser(User user)
+        public async Task removeUser(User user)
         {
 
         }

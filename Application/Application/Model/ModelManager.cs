@@ -40,6 +40,21 @@ namespace Tier2.Model
             await chatServiceImp.sendMessage(message, chatroomId);
         }
 
+        public async Task AddNewChatroom(Chatroom chatroom)
+        {
+            await chatServiceImp.sendNewChatroom(chatroom);
+        }
+
+        public async Task UpdateChatroom(Chatroom chatroom)
+        {
+            await chatServiceImp.sendChatroomUpdate(chatroom);
+        }
+
+        public async Task DeleteChatroom(string ChatroomID)
+        {
+            //
+        }
+
         public async Task Register(Account account)
         {
             await chatServiceImp.sendNewUser(account);
