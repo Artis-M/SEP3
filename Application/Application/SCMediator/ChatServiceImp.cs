@@ -39,59 +39,70 @@ namespace Application.SCMediator {
             stream = Client.GetStream();
             byte[] dataToServer = Encoding.ASCII.GetBytes(upsdelivery);
             stream.Write(dataToServer, 0, dataToServer.Length);
-            Console.Out.WriteLine("Send");
         }
         // ------------------- //
         //        send         //
         // ------------------- //
-        public async Task sendMessage(Message message, string chatroomID) {
-            //to be changed
-            //await Send(message);
+        public async Task sendMessage(Message message, string chatroomID) {    
+            CommandLine command = new CommandLine { Command = "Message", variableUser = message.authorID, variableChatroom = chatroomID, SpecificOrder = message.message};
+            await Send(command);
         }
 
-        public async Task sendNewChatroom(string userID, string chatroomID, String name) {
-            CommandLine command = new CommandLine { Command = "ChatroomNew", variableUser = userID, variableChatroom = chatroomID, SpecificOrder = name };
-           // aait Send(command);
+        public async Task sendNewChatroom(Chatroom chatroom) {
+            string serialChatroom = JsonSerializer.Serialize(chatroom);
+            CommandLine command = new CommandLine { Command = "ChatroomNew", SpecificOrder = serialChatroom };
+            await Send(command);
         }
 
-        public async Task sendChatroomUpdate() {
-            CommandLine command = new CommandLine { Command = "ChatroomUpdate" };
-           // await Send(command);
+        public async Task sendChatroomUpdate(Chatroom chatroom) {
+            string serialChatroom = JsonSerializer.Serialize(chatroom);
+            CommandLine command = new CommandLine { Command = "ChatroomUpdate", SpecificOrder = serialChatroom };
+            await Send(command);
         }
 
         public async Task sendNewUser(Account account) {
             string serialUser = JsonSerializer.Serialize(account);
-            CommandLine command = new CommandLine { Command = "UserNew", variableUser = serialUser };
-          //  await Send(command);
+            CommandLine command = new CommandLine { Command = "UserNew", SpecificOrder = serialUser };
+            await Send(command);
         }
-        public async Task sendUserUpdate() {
-            CommandLine command = new CommandLine { Command = "UserUpdate" };
-          //  await Send(command);
+        public async Task sendUserUpdate(Account account) {
+            string serialUserUpdate = JsonSerializer.Serialize(account);
+            CommandLine command = new CommandLine { Command = "UserUpdate", SpecificOrder = serialUserUpdate };
+            await Send(command);
         }
+        public async Task sendNewTopic(Topic topic) {
+            string serialTopic = JsonSerializer.Serialize(topic);
+            CommandLine command = new CommandLine { Command = "TopicNew", SpecificOrder = serialTopic };
+            await Send(command);
+        }
+        public async Task sendTopicUpdate(Topic topic) {
+            string serialTopic = JsonSerializer.Serialize(topic);
+            CommandLine command = new CommandLine { Command = "TopicUpdate", SpecificOrder = serialTopic };
+            await Send(command);
+        }
+        // ------------------- //
+        //      deletes       //
+        // ------------------- //
+        public async Task DeleteChatroom(string chatroomID)
+        {
+            CommandLine command = new CommandLine { Command = "DELETE-Chatroom", SpecificOrder = chatroomID };
+            await Send(command);
+        }
+
         // ------------------- //
         //      requests       //
         // ------------------- //
-        public async Task requestUser(string userID) {
-            
-            CommandLine command = new CommandLine { Command = "REQUEST-User", variableUser = userID };
-            await Send(command);
-            Console.Out.WriteLine("Send");
-            byte[] dataFromServer = new byte[1024];
-            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
-            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
-            Console.WriteLine(response);
-        }
-        public async Task requestChatroom(string chatroomID) {
-            CommandLine command = new CommandLine { Command = "REQUEST-Chatroom", variableChatroom = chatroomID };
-           // await Send(command);
-        }
         public async Task requestUserCredentials() {
             CommandLine command = new CommandLine { Command = "REQUEST-UserCredentials" };
-           // await Send(command);
+            await Send(command);
         }
         public async Task requestChatrooms() {
             CommandLine command = new CommandLine { Command = "REQUEST-Chatroom-ALL" };
-            //await Send(command);
+            await Send(command);
+        }
+        public async Task requestTopics() {
+            CommandLine command = new CommandLine { Command = "REQUEST-Topic-ALL" };
+            await Send(command);
         }
     }
 }

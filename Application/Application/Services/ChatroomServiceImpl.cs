@@ -11,6 +11,7 @@ namespace Application.Services
     public class ChatroomServiceImpl : IChatroomService
     {
         public List<Chatroom> Chatrooms { get; set; }
+        public Tier2.Model.Model model;
 
         public ChatroomServiceImpl()
         {
@@ -30,17 +31,23 @@ namespace Application.Services
             return null;
         }
 
+        public async Task requestChatrooms()
+        {
+            await model.RequestChatrooms();
+        }
+
         public async Task<IList<Chatroom>> GetAllChatrooms()
         {
             return Chatrooms;
         }
 
-        public  async Task  AddNewChatroom(Chatroom chatroom)
+        public async Task AddNewChatroom(Chatroom chatroom)
         {
             Chatrooms.Add(chatroom);
+            await model.AddNewChatroom(chatroom);
         }
 
-        public  async Task  DeleteChatRoom(string ChatroomID)
+        public async Task DeleteChatRoom(string ChatroomID)
         {
             foreach (var VARIABLE in Chatrooms)
             {
@@ -49,6 +56,8 @@ namespace Application.Services
                     Chatrooms.Remove(VARIABLE);
                 }
             }
+
+            await model.DeleteChatroom(ChatroomID);
         }
 
         public async Task SendMessage(string ChatroomID, Message message)
@@ -60,6 +69,8 @@ namespace Application.Services
                     VARIABLE.addMessage(message);
                 }
             }
+
+            await model.SendMessage(message, ChatroomID);
         }
 
         public async Task AddUser(string ChatRoomID, User user)
@@ -69,8 +80,10 @@ namespace Application.Services
                 if (VARIABLE.id.Equals(ChatRoomID))
                 {
                     VARIABLE.addUser(user);
+                    await model.UpdateChatroom(VARIABLE);
                 }
             }
+           
         }
 
         public async Task RemoveUser(string ChatRoomID, User user)
@@ -79,7 +92,8 @@ namespace Application.Services
             {
                 if (VARIABLE.id.Equals(ChatRoomID))
                 {
-                    VARIABLE.removeUser(user);
+                    await VARIABLE.removeUser(user);
+                    await model.UpdateChatroom(VARIABLE);
                 }
             }
         }

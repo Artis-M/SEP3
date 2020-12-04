@@ -11,11 +11,12 @@ namespace Tier2.Model
         public Task RequestUsers();
         public Task RequestTopics();
         public Task SendMessage(Message message, string chatroomId);
+        public Task AddNewChatroom(Chatroom chatroom);
+        public Task UpdateChatroom(Chatroom chatroom);
+        public Task DeleteChatroom(string ChatroomID);
         public Task Register(Account account);
-        public Task Login(string username, string password);
-        public Task<List<Chatroom>> RecieveChatrooms();
-        public Task<List<User>> RecieveUsers();
-        public Task<List<Topic>> RecieveTopics();
-
+        public void ProcessCredentials(string credentialsJson);
+        public void ProcessChatrooms(string credentialsJson);
+        public void ProcessTopics(string credentialsJson);
     }
 }
