@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Models;
 using Application.SCMediator;
@@ -51,16 +52,19 @@ namespace Application.Services
 
         public async Task<IList<Account>> GetAllAccounts()
         {
+            await RequestAccounts();
+            Console.Out.WriteLine(Accounts.Count);
             return Accounts;
         }
-        public async Task RequestAccounts()
+        public async Task<List<Account>> RequestAccounts()
         {
-            await model.RequestUsers();
+            return await model.RequestUsers();
         }
 
         public async Task SetListOfAccounts(List<Account> accounts)
         {
             this.Accounts = accounts;
+
         }
     }
 }

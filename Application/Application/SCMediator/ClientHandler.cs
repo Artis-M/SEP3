@@ -32,16 +32,16 @@ namespace Application.SCMediator {
                 byte[] dataFromServer = new byte[4048];
                 int bytesRead = netStream.Read(dataFromServer, 0, dataFromServer.Length);
                 string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
-                Console.WriteLine(response);
+               // Console.WriteLine(response);
                 CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
-                Console.WriteLine("UPSBox " + upsdelivery.Command + "  =>>>  " + upsdelivery.Command);
+               // Console.WriteLine("UPSBox " + upsdelivery.Command + "  =>>>  " + upsdelivery.Command);
                 if (upsdelivery.Command.Equals("Chatroom")) {
                     // model.getChatroom(upsdelivery.JSonThing);
                 }
                 else if (upsdelivery.Command.Equals("ChatroomList")) { model.ProcessChatrooms(upsdelivery.SpecificOrder);
                 }
                 else if (upsdelivery.Command.Equals("UserCredentials")) {
-                    Console.Out.WriteLine(upsdelivery.SpecificOrder);
+                  //  Console.Out.WriteLine(upsdelivery.SpecificOrder);
                     model.ProcessCredentials(upsdelivery.SpecificOrder);
                 }
                 else if (upsdelivery.Command.Equals("TopicList")) {

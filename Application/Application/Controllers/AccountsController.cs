@@ -24,8 +24,7 @@ namespace Application.Controllers
         {
             try
             {
-                await AccountService.RequestAccounts();
-                IList<Account> topics = await AccountService.GetAllAccounts();
+                IList<Account> topics = await AccountService.RequestAccounts();
                 return Ok(topics);
             }
             catch (Exception e)
@@ -39,7 +38,7 @@ namespace Application.Controllers
          eter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be b
          ound from body:" */
        
-        [HttpGet]
+        /*[HttpGet]
         [Route("{username, password}")]
          public async Task<ActionResult<Account>> LogIn([FromRoute] string username, [FromRoute] string password)
          {
@@ -53,7 +52,7 @@ namespace Application.Controllers
                  Console.WriteLine(e);
                  return StatusCode(500, e.Message);
              }
-         }
+         }*/
 
         [HttpPost]
         public async Task<ActionResult> Register([FromBody] Account account)
