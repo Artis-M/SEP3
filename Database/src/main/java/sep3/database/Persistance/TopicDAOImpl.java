@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import sep3.database.Model.Topic;
 import sep3.database.Model.TopicList;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class TopicDAOImpl implements TopicDAO {
@@ -45,7 +46,7 @@ public class TopicDAOImpl implements TopicDAO {
         Topic topic = gson.fromJson(document,Topic.class);
         return topic;
     }
-    public TopicList getUserTopics(ObjectId userId)
+    public ArrayList<Topic> getUserTopics(ObjectId userId)
     {
         collection = connection.getDatabase().getCollection("Users");
         TopicList topicList = new TopicList();
@@ -62,7 +63,7 @@ public class TopicDAOImpl implements TopicDAO {
             }
         }
 
-        return topicList;
+        return topicList.getTopics();
     }
 
     @Override
