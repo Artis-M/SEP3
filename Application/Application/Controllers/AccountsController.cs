@@ -13,11 +13,9 @@ namespace Application.Controllers
     public class AccountsController : ControllerBase
     {
         private IAccountService AccountService;
-        
 
         public AccountsController(IAccountService accountService)
         {
-            
             this.AccountService = accountService;
         }
 
@@ -26,6 +24,7 @@ namespace Application.Controllers
         {
             try
             {
+                await AccountService.RequestAccounts();
                 IList<Account> topics = await AccountService.GetAllAccounts();
                 return Ok(topics);
             }
@@ -40,21 +39,21 @@ namespace Application.Controllers
          eter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be b
          ound from body:" */
        
-        // [HttpGet]
-        // [Route("{id:string}")]
-        // public async Task<ActionResult<Account>> LogIn([FromBody] string username, [FromBody] string password)
-        // {
-        //     try
-        //     {
-        //         Account account = await AccountService.LogIn(username, password);
-        //         return Ok(account);
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         Console.WriteLine(e);
-        //         return StatusCode(500, e.Message);
-        //     }
-        // }
+        /*[HttpGet]
+        [Route("{username}")]
+         public async Task<ActionResult<Account>> LogIn([FromBody] string username, [FromBody] string password)
+         {
+             try
+             {
+                 Account account = await AccountService.LogIn(username, password);
+                 return Ok(account);
+             }
+             catch (Exception e)
+             {
+                 Console.WriteLine(e);
+                 return StatusCode(500, e.Message);
+             }
+         }*/
 
         [HttpPost]
         public async Task<ActionResult> Register([FromBody] Account account)
@@ -67,8 +66,7 @@ namespace Application.Controllers
             try
             {
                 await AccountService.Register(account);
-                
-                return Created($"/{account}", account);
+                return Created($"/{account.Id}", account);
             }
             catch (Exception e)
             {
@@ -78,11 +76,12 @@ namespace Application.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> DeleteAccount([FromBody] Account account)
+        [Route("{id}")]
+        public async Task<ActionResult> DeleteAccount([FromRoute] string accountID)
         {
             try
             {
-                await AccountService.RemoveAccount(account);
+                await AccountService.RemoveAccount(accountID);
                 return Ok();
             }
             catch (Exception e)

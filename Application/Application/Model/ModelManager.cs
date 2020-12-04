@@ -55,6 +55,11 @@ namespace Tier2.Model
             //
         }
 
+        public async Task RemoveUser(string userID)
+        {
+            await chatServiceImp.DeleteUser(userID);
+        }
+
         public async Task Register(Account account)
         {
             await chatServiceImp.sendNewUser(account);

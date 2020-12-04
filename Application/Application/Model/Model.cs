@@ -14,6 +14,7 @@ namespace Tier2.Model
         public Task AddNewChatroom(Chatroom chatroom);
         public Task UpdateChatroom(Chatroom chatroom);
         public Task DeleteChatroom(string ChatroomID);
+        public Task RemoveUser(string userID);
         public Task Register(Account account);
         public void ProcessCredentials(string credentialsJson);
         public void ProcessChatrooms(string credentialsJson);

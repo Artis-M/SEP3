@@ -13,14 +13,13 @@ namespace Application.Services
 
         public AccountsServiceImpl()
         {
-            service = new ChatServiceImp();
+            
             this.Accounts = new List<Account>();
         }
 
         public async Task Register(Account account)
         {
             this.Accounts.Add(account);
-            
             await model.Register(account);
         }
 
@@ -38,20 +37,26 @@ namespace Application.Services
             return account;
         }
 
-        public async Task RemoveAccount(Account account)
+        public async Task RemoveAccount(string accountID)
         {
             foreach (var VARIABLE in Accounts)
             {
-                if (VARIABLE.Id.Equals(account.Id))
+                if (VARIABLE.Id.Equals(accountID))
                 {
                     Accounts.Remove(VARIABLE);
                 }
             }
+
+            await model.RemoveUser(accountID);
         }
 
         public async Task<IList<Account>> GetAllAccounts()
         {
             return Accounts;
+        }
+        public async Task RequestAccounts()
+        {
+            await model.RequestUsers();
         }
     }
 }

@@ -9,7 +9,8 @@ namespace Application.Services
     {
         public Task Register(Account account);
         public Task<Account> LogIn(string username, string password);
-        public Task RemoveAccount(Account account);
+        public Task RemoveAccount(string accountID);
         public Task<IList<Account>> GetAllAccounts();
+        public Task RequestAccounts();
     }
 }
