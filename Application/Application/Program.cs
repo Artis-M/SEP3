@@ -15,9 +15,7 @@ namespace Application
     public class Program
     {
         public static void Main(string[] args)
-        {ChatServiceImp chatServiceImp = new ChatServiceImp();
-            Message message = null;
-            chatServiceImp.sendMessage(message, "hi");
+        {
             CreateHostBuilder(args).Build().Run();
             
         }

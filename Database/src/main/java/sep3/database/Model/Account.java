@@ -9,8 +9,8 @@ public class Account extends User{
     private String role;
     private String Pass;
     private String email;
-    private UserList friends;
-    private TopicList topics;
+    private ArrayList<User> friends;
+    private ArrayList<Topic> topics;
 
 
     @Override
@@ -31,8 +31,8 @@ public class Account extends User{
 
     public Account(String role, String Pass, ObjectId _id, String username, String fname, String lname, String email) {
         super(_id, username, fname, lname);
-        friends = new UserList();
-        this.topics = new TopicList();
+        friends = new ArrayList<>();
+        this.topics = new ArrayList<>();
         this.email=email;
         this.role=role;
         this.Pass=Pass;
@@ -43,8 +43,8 @@ public class Account extends User{
         this.role=role;
         this.Pass=Pass;
         this.email=email;
-        friends = new UserList();
-        this.topics = new TopicList();
+        friends = new ArrayList<>();
+        this.topics = new ArrayList<>();
 
     }
 
@@ -56,19 +56,19 @@ public class Account extends User{
         this.email = email;
     }
 
-    public UserList getFriends() {
+    public ArrayList<User> getFriends() {
         return friends;
     }
 
-    public void setFriends(UserList friends) {
+    public void setFriends(ArrayList<User> friends) {
         this.friends = friends;
     }
 
-    public TopicList getTopics() {
+    public ArrayList<Topic> getTopics() {
         return topics;
     }
 
-    public void setTopics(TopicList topics) {
+    public void setTopics(ArrayList<Topic> topics) {
         this.topics = topics;
     }
 
@@ -88,12 +88,12 @@ public class Account extends User{
 
     public void addTopic(Topic topic)
     {
-        topics.addTopic(topic);
+        topics.add(topic);
     }
 
     public void addFriend(User friend)
     {
-        friends.addUser(friend);
+        friends.add(friend);
     }
 
     public void setPass(String pass) {

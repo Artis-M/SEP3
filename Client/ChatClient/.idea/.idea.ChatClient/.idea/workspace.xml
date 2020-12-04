@@ -22,7 +22,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="" />
+    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Controllers/AccountsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Controllers/AccountsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Model/ModelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Model/ModelManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/SCMediator/ChatServiceImp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/SCMediator/ChatServiceImp.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Services/AccountsServiceImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Services/AccountsServiceImpl.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,9 +39,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/ChatClient/Models/Message.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Models/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Models/User.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Models/Message.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -62,6 +69,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ChatClient">
     <configuration name="ChatClient" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
@@ -115,6 +123,7 @@
       <workItem from="1606900455616" duration="6827000" />
       <workItem from="1607011386125" duration="1005000" />
       <workItem from="1607013009340" duration="5085000" />
+      <workItem from="1607082158256" duration="603000" />
     </task>
     <servers />
   </component>

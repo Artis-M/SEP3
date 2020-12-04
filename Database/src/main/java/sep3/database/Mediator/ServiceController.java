@@ -2,6 +2,9 @@ package sep3.database.Mediator;
 
 
 import com.google.gson.Gson;
+import sep3.database.Model.Account;
+import sep3.database.Persistance.UserDAO;
+import sep3.database.Persistance.UserDAOImpl;
 
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.*;
@@ -17,13 +20,13 @@ public class ServiceController implements Runnable
     private BufferedReader in;
     private PrintWriter out;
     private Gson gson;
+    private UserDAO userDAO;
 
     public ServiceController() throws IOException {
         gson = new Gson();
         this.running = true;
         running = true;
-        //removed ssl
-        // welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
+        userDAO = new UserDAOImpl();
         welcomeSocket  = new ServerSocket(PORT);
     }
 
@@ -37,19 +40,26 @@ public class ServiceController implements Runnable
             Socket socket = welcomeSocket.accept();
             InputStream inputStream = socket.getInputStream();
 
-
-            out = new PrintWriter(socket.getOutputStream(), true);
             System.out.println("Client Connected");
             while(running)
             {
                 byte[] lenbytes = new byte[1024];
                 int read = inputStream.read(lenbytes,0,lenbytes.length);
                 String request = new String(lenbytes,0,read);
-
+                CommandLine line = gson.fromJson(request,CommandLine.class);
                 System.out.println("Received from client: " + request);
 
-                if(request.equals(""))
+                OutputStream outputStream = socket.getOutputStream();
+                if(request.equals("REQUEST-User"))
                 {
+                   Account account =  userDAO.getAccount(line.getVariableUser());
+                   String accountToJson = gson.toJson(account);
+                   CommandLine sendLine = new CommandLine();
+                   sendLine.setCommand("REQUEST-User");
+                   sendLine.setVariableUser(accountToJson);
+                   String send = gson.toJson(sendLine);
+                    byte[] responseAsBytes = send.getBytes();
+                    outputStream.write(responseAsBytes, 0, responseAsBytes.length);
 
                 }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Model;
+using Application.SCMediator;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,9 +13,11 @@ namespace Application.Controllers
     public class AccountsController : ControllerBase
     {
         private IAccountService AccountService;
+        
 
         public AccountsController(IAccountService accountService)
         {
+            
             this.AccountService = accountService;
         }
 
@@ -54,8 +57,7 @@ namespace Application.Controllers
         // }
 
         [HttpPost]
-        [Route("Add")]
-        public async Task<ActionResult> Register([FromBody] Account account)
+        public async Task<ActionResult> Register([FromBody] string account)
         {
             if (!ModelState.IsValid)
             {
@@ -64,8 +66,11 @@ namespace Application.Controllers
 
             try
             {
-                await AccountService.Register(account);
-                return Created($"/{account.Id}", account);
+                ChatServiceImp serviceImp = new ChatServiceImp();
+                
+                await serviceImp.requestUser(account);
+                
+                return Created($"/{account}", account);
             }
             catch (Exception e)
             {
@@ -75,7 +80,6 @@ namespace Application.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
         public async Task<ActionResult> DeleteAccount([FromBody] Account account)
         {
             try

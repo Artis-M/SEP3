@@ -63,6 +63,23 @@ public class UserDAOImpl implements UserDAO {
         return createAccount(document);
     }
 
+    public ArrayList<Account> getAllAccount()
+    {
+        ArrayList<Account> accounts = new ArrayList<>();
+        MongoCursor<Document> cursor = collection.find().iterator();
+        try {
+            while (cursor.hasNext()) {
+                String json = cursor.next().toJson();
+                System.out.println(json);
+                Account account = gson.fromJson(json,Account.class);
+                accounts.add(account);
+            }
+        } finally {
+            cursor.close();
+        }
+        return accounts;
+
+    }
     @Override
     public User getUser(ObjectId userID) {
         BasicDBObject whereQuery = new BasicDBObject();
@@ -73,7 +90,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public UserList getUserFriends(ObjectId userId) {
+    public ArrayList<User> getUserFriends(ObjectId userId) {
         UserList list = new UserList();
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.append("_id", userId);
@@ -87,7 +104,7 @@ public class UserDAOImpl implements UserDAO {
                 list.addUser(friend);
             }
         }
-        return list;
+        return list.getUsers();
     }
 
     @Override
@@ -139,17 +156,17 @@ public class UserDAOImpl implements UserDAO {
     add.append("Lname",account.getLname());
     add.append("role",account.getRole());
     add.append("email",account.getEmail());
-        if(account.getTopics().getTopics().size()!=0) {
+        if(account.getTopics().size()!=0) {
             Document topics = new Document();
-            for (var topic : account.getTopics().getTopics()
+            for (var topic : account.getTopics()
             ) {
                 topics.append("$set", new BasicDBObject().append("topics", topic.get_id()));
             }
             add.append("topics", Arrays.asList(topics));
         }
-        if(account.getFriends().getUsers().size()!=0) {
+        if(account.getFriends().size()!=0) {
             Document friends = new Document();
-            for (var friend : account.getFriends().getUsers()
+            for (var friend : account.getFriends()
             ) {
                 friends.append("$set", new BasicDBObject().append("topics", friend.get_id()));
             }

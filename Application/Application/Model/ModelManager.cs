@@ -36,7 +36,7 @@ namespace Tier2.Model
 
         public async Task SendMessage(Message message, string chatroomId)
         {
-            chatServiceImp.sendMessage(message, chatroomId);
+          //  chatServiceImp.sendMessage(message, chatroomId);
         }
 
         public async Task Register(Account account)
