@@ -1,6 +1,6 @@
 ﻿using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Application.Model
+namespace Application.Models
 {
     public class User
     {

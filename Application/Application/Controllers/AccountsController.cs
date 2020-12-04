@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Model;
+using Application.Models;
 using Application.SCMediator;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -39,9 +39,9 @@ namespace Application.Controllers
          eter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be b
          ound from body:" */
        
-        /*[HttpGet]
-        [Route("{username}")]
-         public async Task<ActionResult<Account>> LogIn([FromBody] string username, [FromBody] string password)
+        [HttpGet]
+        [Route("{username, password}")]
+         public async Task<ActionResult<Account>> LogIn([FromRoute] string username, [FromRoute] string password)
          {
              try
              {
@@ -53,7 +53,7 @@ namespace Application.Controllers
                  Console.WriteLine(e);
                  return StatusCode(500, e.Message);
              }
-         }*/
+         }
 
         [HttpPost]
         public async Task<ActionResult> Register([FromBody] Account account)

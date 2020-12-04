@@ -2,18 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Model;
+using Application.Models;
 using Application.SCMediator;
-using Tier2.Model;
 
 namespace Application.Services
 {
     public class ChatroomServiceImpl : IChatroomService
     {
         public List<Chatroom> Chatrooms { get; set; }
-        public Tier2.Model.Model model;
+        public Application.Models.Model model;
 
-        public ChatroomServiceImpl(ModelManager modelManager)
+        public ChatroomServiceImpl(Model modelManager)
         {
             this.Chatrooms = new List<Chatroom>();
             this.model = modelManager;

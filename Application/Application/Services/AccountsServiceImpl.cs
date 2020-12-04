@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Model;
+using Application.Models;
 using Application.SCMediator;
-using Tier2.Model;
 
 namespace Application.Services
 {
     public class AccountsServiceImpl : IAccountService
     {
         public List<Account> Accounts { get; set; }
-        public Tier2.Model.Model model;
+        public Model model;
 
-        public AccountsServiceImpl(ModelManager modelManager)
+        public AccountsServiceImpl(Model modelManager)
         {
             this.model = modelManager;
             this.Accounts = new List<Account>();

@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 
-namespace Tier2.Model
+namespace Application.Models
 {
     public class Message
     {

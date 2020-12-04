@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Model;
-using Tier2.Model;
+using Application.Models;
 
 namespace Application.Services
 {
     public class TopicsService : ITopicsService
     {
         public List<Topic> Topics { get; set; }
-        public Tier2.Model.Model Model;
+        public Application.Models.Model Model;
 
-        public TopicsService(ModelManager modelManager)
+        public TopicsService(Model modelManager)
         {
             this.Topics = new List<Topic>();
             this.Model = modelManager;

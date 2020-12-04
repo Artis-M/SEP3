@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Model;
+using Application.Models;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
-using Tier2.Model;
 
 namespace Application.Controllers
 {

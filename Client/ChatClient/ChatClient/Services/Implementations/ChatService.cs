@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Text.Json;
 using System.Threading.Tasks;
 using ChatClient.Models;
 using Microsoft.AspNetCore.SignalR.Client;
 using Models;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 
 namespace Services
 {

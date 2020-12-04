@@ -6,13 +6,13 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Tier2.Model;
+using Application.Models;
 
 namespace Application.SCMediator {
     public class ClientHandler {
         public TcpClient Client;
         public NetworkStream netStream;
-        public Tier2.Model.Model model;
+        public Application.Models.Model model;
 
 
         public ClientHandler(NetworkStream stream, TcpClient client, ModelManager modelManager) {

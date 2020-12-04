@@ -2,11 +2,11 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
- using Application.Model;
+ using Application.Models;
 using Application.SCMediator;
 using Application.Services;
 
-namespace Tier2.Model
+namespace Application.Models
 {
     public class ModelManager : Model
     {

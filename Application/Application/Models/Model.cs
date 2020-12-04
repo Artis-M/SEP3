@@ -1,9 +1,9 @@
 ﻿﻿using System.Collections.Generic;
 using System.Threading.Tasks;
- using Application.Model;
+ using Application.Models;
  using MongoDB.Bson;
 
-namespace Tier2.Model
+namespace Application.Models
 {
     public interface Model
     {

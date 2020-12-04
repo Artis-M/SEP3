@@ -5,9 +5,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Application.Model;
+using Application.Models;
 using MongoDB.Bson;
-using Tier2.Model;
 
 namespace Application.SCMediator {
     public class ChatServiceImp {

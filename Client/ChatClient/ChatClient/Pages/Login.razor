@@ -1,0 +1,18 @@
+﻿@page "/Login"
+@using Services
+@inject LoginService LoginService
+<h3>Login</h3>
+<input type="text" @bind="@username"/>
+<input type="password" @bind="@password"/>
+<button @onclick="@LoginRequest">HashPassword</button>
+<p>@hashedPassword</p>
+@code {
+    string username;
+    string password;
+    string hashedPassword;
+
+    private async Task LoginRequest()
+    {
+        hashedPassword = await LoginService.Login(username, password);
+    }
+}

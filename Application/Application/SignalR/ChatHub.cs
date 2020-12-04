@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ChatClient.Models;
 using Microsoft.AspNetCore.SignalR;
-using Tier2.Model;
+using Application.Models;
 
 namespace WebApplication.SignalR
 {
