@@ -19,6 +19,7 @@ namespace Application.SCMediator {
         public ClientHandler(NetworkStream stream, TcpClient client, ChatServiceImp service) {
             Console.WriteLine("Client Handler Starting!");
             Client = client;
+            this.model = new ModelManager();
             netStream = stream;
             ServiceImp = service;
             Thread t1 = new Thread(MessageHandler);
@@ -28,22 +29,23 @@ namespace Application.SCMediator {
         public void MessageHandler() {
             while (true) {
                 netStream = Client.GetStream();
-                byte[] dataFromServer = new byte[1024];
+                byte[] dataFromServer = new byte[4048];
                 int bytesRead = netStream.Read(dataFromServer, 0, dataFromServer.Length);
                 string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
                 Console.WriteLine(response);
-                UPSBox upsdelivery = JsonSerializer.Deserialize<UPSBox>(response);
-                Console.WriteLine("UPSBox " + upsdelivery.type + "  =>>>  " + upsdelivery.type);
-                if (upsdelivery.type.Equals("Chatroom")) {
+                CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+                Console.WriteLine("UPSBox " + upsdelivery.Command + "  =>>>  " + upsdelivery.Command);
+                if (upsdelivery.Command.Equals("Chatroom")) {
                     // model.getChatroom(upsdelivery.JSonThing);
                 }
-                else if (upsdelivery.type.Equals("ChatroomList")) { model.ProcessChatrooms(upsdelivery.JSonThing);
+                else if (upsdelivery.Command.Equals("ChatroomList")) { model.ProcessChatrooms(upsdelivery.SpecificOrder);
                 }
-                else if (upsdelivery.type.Equals("UserCredentials")) {
-                    model.ProcessCredentials(upsdelivery.JSonThing);
+                else if (upsdelivery.Command.Equals("UserCredentials")) {
+                    Console.Out.WriteLine(upsdelivery.SpecificOrder);
+                    model.ProcessCredentials(upsdelivery.SpecificOrder);
                 }
-                else if (upsdelivery.type.Equals("TopicList")) {
-                    model.ProcessTopics(upsdelivery.JSonThing);
+                else if (upsdelivery.Command.Equals("TopicList")) {
+                    model.ProcessTopics(upsdelivery.SpecificOrder);
                 }
                 else {
                     //error 

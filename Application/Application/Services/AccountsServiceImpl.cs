@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Application.Model;
 using Application.SCMediator;
+using Tier2.Model;
 
 namespace Application.Services
 {
@@ -9,11 +10,10 @@ namespace Application.Services
     {
         public List<Account> Accounts { get; set; }
         public Tier2.Model.Model model;
-        private ChatServiceImp service;
 
         public AccountsServiceImpl()
         {
-            
+            this.model=new ModelManager();
             this.Accounts = new List<Account>();
         }
 

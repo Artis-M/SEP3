@@ -24,7 +24,7 @@ namespace Application.SCMediator {
         public async Task connectToServer(string ip, int port) {
             try {
                 Client = new TcpClient(ip, port);
-                //clientHandler = new ClientHandler(stream, Client, this);
+                clientHandler = new ClientHandler(stream, Client, this);
             }
             catch (Exception e) {
                 Console.WriteLine("Connecting to server. Retrying.");

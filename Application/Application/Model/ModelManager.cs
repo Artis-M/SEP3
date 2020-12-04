@@ -16,7 +16,7 @@ namespace Tier2.Model
         private TopicsService topicService;
         public ModelManager()
         {
-          
+          this.chatServiceImp= new ChatServiceImp();
 
         }
 

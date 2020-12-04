@@ -16,15 +16,10 @@ public class DatabaseApplication
 
     public static void main(String[] args) throws IOException
     {
-//        ServiceController controller = new ServiceController();
-//        Thread t1 = new Thread(controller);
-//        t1.start();
-        UserDAO user = new UserDAOImpl();
-        ArrayList<Account> acc = user.getAllAccount();
-        for (var account: acc
-             ) {
-            System.out.println(account);
-        }
+        ServiceController controller = new ServiceController();
+        Thread t1 = new Thread(controller);
+        t1.start();
+
 
     }
 
