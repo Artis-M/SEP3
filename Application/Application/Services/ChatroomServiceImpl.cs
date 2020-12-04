@@ -11,6 +11,7 @@ namespace Application.Services
     public class ChatroomServiceImpl : IChatroomService
     {
         public List<Chatroom> Chatrooms { get; set; }
+        public Tier2.Model.Model model;
 
         public ChatroomServiceImpl()
         {
@@ -38,6 +39,7 @@ namespace Application.Services
         public  async Task  AddNewChatroom(Chatroom chatroom)
         {
             Chatrooms.Add(chatroom);
+            await model.
         }
 
         public  async Task  DeleteChatRoom(string ChatroomID)

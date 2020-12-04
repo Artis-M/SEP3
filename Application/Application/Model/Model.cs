@@ -16,6 +16,8 @@ namespace Tier2.Model
         public Task<List<Chatroom>> RecieveChatrooms();
         public Task<List<User>> RecieveUsers();
         public Task<List<Topic>> RecieveTopics();
-
+        public Task ProcessCredentials(string credentialsJson);
+        public Task ProcessChatrooms(string credentialsJson);
+        public Task ProcessTopics(string credentialsJson);
     }
 }

@@ -12,7 +12,8 @@ namespace Tier2.Model
     {
         ChatServiceImp chatServiceImp;
         private AccountsServiceImpl accountService;
-
+        private ChatroomServiceImpl chatroomService;
+        private TopicsService topicService;
         public ModelManager()
         {
           
@@ -66,5 +67,12 @@ namespace Tier2.Model
         public async Task ProcessCredentials(string credentialsJson) {
             accountService.Accounts = JsonSerializer.Deserialize<List<Account>>(credentialsJson);
         }
+        public async Task ProcessChatrooms(string credentialsJson) {
+            chatroomService.Chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(credentialsJson);
+        }
+        public async Task ProcessTopics(string credentialsJson) {
+            topicService.Topics = JsonSerializer.Deserialize<List<Topic>>(credentialsJson);
+        }
+
     }
 }

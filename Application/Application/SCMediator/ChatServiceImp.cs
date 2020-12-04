@@ -43,50 +43,57 @@ namespace Application.SCMediator {
         // ------------------- //
         //        send         //
         // ------------------- //
-        public async Task sendMessage(Message message, string chatroomID) {
-            //to be changed
-            
+        public async Task sendMessage(Message message, string chatroomID) {    
             CommandLine command = new CommandLine { Command = "Message", variableUser = message.authorID, variableChatroom = chatroomID, SpecificOrder = message.message};
             await Send(command);
         }
 
-        public async Task sendNewChatroom(string userID, string chatroomID, String name) {
-            CommandLine command = new CommandLine { Command = "ChatroomNew", variableUser = userID, variableChatroom = chatroomID, SpecificOrder = name };
+        public async Task sendNewChatroom(Chatroom chatroom) {
+            string serialChatroom = JsonSerializer.Serialize(chatroom);
+            CommandLine command = new CommandLine { Command = "ChatroomNew", SpecificOrder = serialChatroom };
             await Send(command);
         }
 
-        public async Task sendChatroomUpdate() {
-            CommandLine command = new CommandLine { Command = "ChatroomUpdate" };
+        public async Task sendChatroomUpdate(Chatroom chatroom) {
+            string serialChatroom = JsonSerializer.Serialize(chatroom);
+            CommandLine command = new CommandLine { Command = "ChatroomUpdate", SpecificOrder = serialChatroom };
             await Send(command);
         }
 
         public async Task sendNewUser(Account account) {
             string serialUser = JsonSerializer.Serialize(account);
-            CommandLine command = new CommandLine { Command = "UserNew", variableUser = serialUser };
+            CommandLine command = new CommandLine { Command = "UserNew", SpecificOrder = serialUser };
             await Send(command);
         }
-        public async Task sendUserUpdate() {
-            CommandLine command = new CommandLine { Command = "UserUpdate" };
+        public async Task sendUserUpdate(Account account) {
+            string serialUserUpdate = JsonSerializer.Serialize(account);
+            CommandLine command = new CommandLine { Command = "UserUpdate", SpecificOrder = serialUserUpdate };
             await Send(command);
         }
+        public async Task sendNewTopic(Topic topic) {
+            string serialTopic = JsonSerializer.Serialize(topic);
+            CommandLine command = new CommandLine { Command = "TopicNew", SpecificOrder = serialTopic };
+            await Send(command);
+        }
+        public async Task sendTopicUpdate(Topic topic) {
+            string serialTopic = JsonSerializer.Serialize(topic);
+            CommandLine command = new CommandLine { Command = "TopicUpdate", SpecificOrder = serialTopic };
+            await Send(command);
+        }
+
         // ------------------- //
         //      requests       //
         // ------------------- //
-        public async Task requestUser(string userID) {
-            
-            CommandLine command = new CommandLine { Command = "REQUEST-User", variableUser = userID };
-            await Send(command);
-        }
-        public async Task requestChatroom(string chatroomID) {
-            CommandLine command = new CommandLine { Command = "REQUEST-Chatroom", variableChatroom = chatroomID };
-            await Send(command);
-        }
         public async Task requestUserCredentials() {
             CommandLine command = new CommandLine { Command = "REQUEST-UserCredentials" };
             await Send(command);
         }
         public async Task requestChatrooms() {
             CommandLine command = new CommandLine { Command = "REQUEST-Chatroom-ALL" };
+            await Send(command);
+        }
+        public async Task requestTopics() {
+            CommandLine command = new CommandLine { Command = "REQUEST-Topic-ALL" };
             await Send(command);
         }
     }

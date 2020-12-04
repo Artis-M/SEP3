@@ -38,13 +38,13 @@ namespace Application.SCMediator {
                     // model.getChatroom(upsdelivery.JSonThing);
                 }
                 else if (upsdelivery.type.Equals("ChatroomList")) {
-                    
+                    model.ProcessChatrooms(upsdelivery.JSonThing);
                 }
                 else if (upsdelivery.type.Equals("UserCredentials")) {
-                    // model.ProcessCredentials(upsdelivery.JSonThing);
+                    model.ProcessCredentials(upsdelivery.JSonThing);
                 }
-                else if (upsdelivery.type.Equals("UList")) {
-                    // pass list to model manager
+                else if (upsdelivery.type.Equals("TopicList")) {
+                    model.ProcessTopics(upsdelivery.JSonThing);
                 }
                 else {
                     //error 
