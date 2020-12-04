@@ -22,7 +22,9 @@ public class ServiceController implements Runnable
         gson = new Gson();
         this.running = true;
         running = true;
-        welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
+        //removed ssl
+        // welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
+        welcomeSocket  = new ServerSocket(PORT);
     }
 
 

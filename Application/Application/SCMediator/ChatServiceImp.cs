@@ -14,8 +14,6 @@ namespace Application.SCMediator {
         private TcpClient Client;
         private NetworkStream stream;
         private ClientHandler clientHandler;
-        public Action<Message> newMessage;
-        public Action<IList<Message>> messageHistory;
         private int PORT = 8443;
 
         public ChatServiceImp() {
