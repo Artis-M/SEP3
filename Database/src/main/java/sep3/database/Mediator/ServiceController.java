@@ -4,10 +4,7 @@ package sep3.database.Mediator;
 import com.google.gson.Gson;
 
 import javax.net.ssl.SSLServerSocketFactory;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -36,14 +33,19 @@ public class ServiceController implements Runnable
         try {
             System.out.println("ServerSocket is ready for connection...");
             Socket socket = welcomeSocket.accept();
-            in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
+            InputStream inputStream = socket.getInputStream();
+
+
             out = new PrintWriter(socket.getOutputStream(), true);
             System.out.println("Client Connected");
             while(running)
             {
-                String request = in.readLine();
-                String json = in.readLine();
+                byte[] lenbytes = new byte[1024];
+                int read = inputStream.read(lenbytes,0,lenbytes.length);
+                String request = new String(lenbytes,0,read);
+
+                System.out.println("Received from client: " + request);
+
                 if(request.equals(""))
                 {
 

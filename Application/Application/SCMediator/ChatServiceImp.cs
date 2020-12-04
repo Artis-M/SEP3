@@ -20,12 +20,13 @@ namespace Application.SCMediator {
 
         public ChatServiceImp() {
              connectToServer("localhost", PORT);
+             
         }
 
         public async Task connectToServer(string ip, int port) {
             try {
                 Client = new TcpClient(ip, port);
-                clientHandler = new ClientHandler(stream, Client, this);
+                //clientHandler = new ClientHandler(stream, Client, this);
             }
             catch (Exception e) {
                 Console.WriteLine("Connecting to server. Retrying.");
@@ -73,6 +74,7 @@ namespace Application.SCMediator {
         //      requests       //
         // ------------------- //
         public async Task requestUser(string userID) {
+            
             CommandLine command = new CommandLine { Command = "REQUEST-User", variableUser = userID };
             await Send(command);
         }

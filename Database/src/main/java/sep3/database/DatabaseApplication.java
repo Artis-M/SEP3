@@ -10,16 +10,15 @@ import sep3.database.Persistance.UserDAOImpl;
 
 import java.io.IOException;
 
-public class DatabaseApplication {
+public class DatabaseApplication
+{
 
-    public static void main(String[] args) throws IOException {
-//        ServiceController controller = new ServiceController();
-//        Thread t1 = new Thread(controller);
-//        t1.start();
-        UserDAO userDAO = new UserDAOImpl();
-        ObjectId query1 = new ObjectId("5fc61e753be97f142192ac87");
-        User friend = new User(query1,"usernew23","No name","No name");
-        userDAO.removeFriend(friend,new ObjectId("5fc61dd93be97f142192ac85"));
+    public static void main(String[] args) throws IOException
+    {
+        ServiceController controller = new ServiceController();
+        Thread t1 = new Thread(controller);
+        t1.start();
+
     }
 
 }
