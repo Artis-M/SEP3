@@ -3,11 +3,11 @@ package sep3.database.Model;
 import org.bson.types.ObjectId;
 
 public class Message {
-    private ObjectId _id;
+    private String _id;
     private String message;
-    private int authorID;
+    private String authorID;
 
-    public Message(String message, int authorID,ObjectId _id) {
+    public Message(String message, String authorID,String _id) {
         this.message = message;
         this.authorID = authorID;
         this._id=_id;
@@ -17,15 +17,15 @@ public class Message {
         return message;
     }
 
-    public ObjectId get_id() {
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(ObjectId _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
 
-    public void setAuthorID(int authorID) {
+    public void setAuthorID(String authorID) {
         this.authorID = authorID;
     }
 
@@ -41,7 +41,7 @@ public class Message {
                 '}';
     }
 
-    public int getAuthorID() {
+    public String getAuthorID() {
         return authorID;
     }
 }

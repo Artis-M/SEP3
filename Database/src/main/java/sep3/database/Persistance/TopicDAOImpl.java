@@ -37,13 +37,14 @@ public class TopicDAOImpl implements TopicDAO {
 
 
     }
+
     public Topic getTopic(ObjectId id)
     {
         collection = connection.getDatabase().getCollection("Topics");
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.append("_id",id);
-        String document = (Objects.requireNonNull(collection.find(whereQuery).first())).toJson();
-        Topic topic = gson.fromJson(document,Topic.class);
+        Document document = (Objects.requireNonNull(collection.find(whereQuery).first()));
+        Topic topic = new Topic(document.get("_id").toString(), document.getString("name"));
         return topic;
     }
     public ArrayList<Topic> getUserTopics(ObjectId userId)
@@ -76,11 +77,11 @@ public class TopicDAOImpl implements TopicDAO {
         {
             ObjectId id = new ObjectId();
 
-            addTopic(new Topic(id,topic));
+            addTopic(new Topic(id.toString(),topic));
             document = collection.find(whereQuery).first();
         }
         ObjectId id = new ObjectId(document.get("_id").toString());
-        Topic topic1 = new Topic(id,document.get("name").toString());
+        Topic topic1 = new Topic(id.toString(),document.get("name").toString());
         return topic1;
     }
 }
