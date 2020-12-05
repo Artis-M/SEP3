@@ -40,7 +40,7 @@ public class UserDAOImpl implements UserDAO {
         ObjectId _id = new ObjectId(document.get("_id").toString());
         Account account = new Account(
                 document.get("role").toString(), document.get("Pass").toString()
-                , _id, document.get("Username").toString(),
+                , _id.toString(), document.get("Username").toString(),
                 document.get("Fname").toString(), document.get("Lname").toString(), document.get("email").toString()
         );
         account.setTopics(topicDAO.getUserTopics(_id));
@@ -69,9 +69,10 @@ public class UserDAOImpl implements UserDAO {
         MongoCursor<Document> cursor = collection.find().iterator();
         try {
             while (cursor.hasNext()) {
-                String json = cursor.next().toJson();
-                System.out.println(json);
-                Account account = gson.fromJson(json,Account.class);
+
+                Document document = cursor.next();
+               // System.out.println(json);
+                Account account = createAccount(document);
                 accounts.add(account);
             }
         } finally {
@@ -85,9 +86,13 @@ public class UserDAOImpl implements UserDAO {
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.append("_id", userID);
         MongoCursor<Document> cursor = collection.find(whereQuery).iterator();
-        String json = cursor.next().toJson();
-        return gson.fromJson(json, User.class);
+      //  String json = cursor.next().toJson();
+        Document document = cursor.next();
+        User user = new User(document.get("_id").toString(),document.get("Username").toString(),
+                                document.get("Fname").toString(),document.get("Lname").toString());
+        return user;
     }
+
 
     @Override
     public ArrayList<User> getUserFriends(ObjectId userId) {

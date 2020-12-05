@@ -3,7 +3,7 @@
     public class Account : User
     {
         public string role { get; set; }
-        public string password { get; set; }
+        public string Pass { get; set; }
         public string email { get; set; }
 
         public Account()
@@ -14,7 +14,7 @@
             base(id, username, fname, lname)
         {
             this.email = email;
-            this.password = pass;
+            this.Pass = pass;
             this.role = role;
         }
 
@@ -22,7 +22,7 @@
             username, fname, lname)
         {
             this.email = email;
-            this.password = pass;
+            this.Pass = pass;
             this.role = role;
         }
     }

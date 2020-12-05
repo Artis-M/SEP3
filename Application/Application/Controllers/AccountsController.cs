@@ -65,7 +65,7 @@ namespace Application.Controllers
             try
             {
                 await AccountService.Register(account);
-                return Created($"/{account.Id}", account);
+                return Created($"/{account._id}", account);
             }
             catch (Exception e)
             {

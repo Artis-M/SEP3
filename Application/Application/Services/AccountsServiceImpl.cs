@@ -28,7 +28,7 @@ namespace Application.Services
             Account account = null;
             foreach (var VARIABLE in Accounts)
             {
-                if (VARIABLE.password.Equals(password) & VARIABLE.Username.Equals(username))
+                if (VARIABLE.Pass.Equals(password) & VARIABLE.Username.Equals(username))
                 {
                     account = VARIABLE;
                 }
@@ -41,7 +41,7 @@ namespace Application.Services
         {
             foreach (var VARIABLE in Accounts)
             {
-                if (VARIABLE.Id.Equals(accountID))
+                if (VARIABLE._id.Equals(accountID))
                 {
                     Accounts.Remove(VARIABLE);
                 }

@@ -1,8 +1,5 @@
 package sep3.database.Model;
 
-import org.bson.types.ObjectId;
-
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class Account extends User{
@@ -29,7 +26,7 @@ public class Account extends User{
                 '}';
     }
 
-    public Account(String role, String Pass, ObjectId _id, String username, String fname, String lname, String email) {
+    public Account(String role, String Pass, String _id, String username, String fname, String lname, String email) {
         super(_id, username, fname, lname);
         friends = new ArrayList<>();
         this.topics = new ArrayList<>();
