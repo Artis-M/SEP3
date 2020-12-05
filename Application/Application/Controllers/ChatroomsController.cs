@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Model;
+using Application.Models;
 using Application.SCMediator;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
-using Tier2.Model;
 
 namespace Application.Controllers
 {
@@ -27,6 +26,7 @@ namespace Application.Controllers
         {
             try
             {
+                //await chatroomService.requestChatrooms();
                 IList<Chatroom> chatrooms = await chatroomService.GetAllChatrooms();
                 return Ok(chatrooms);
             }
@@ -38,8 +38,8 @@ namespace Application.Controllers
         }
 
         [HttpGet]
-        
-        public async Task<ActionResult<Chatroom>> GetChatRoomById(string id)
+        [Route("{id}")]
+        public async Task<ActionResult<Chatroom>> GetChatRoomById([FromRoute] string id)
         {
             try
             {
@@ -74,6 +74,7 @@ namespace Application.Controllers
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public async Task<ActionResult> DeleteChatroom([FromRoute] string id)
         {
             try
@@ -89,6 +90,7 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
+        [Route("{id}")]
         public async Task<ActionResult<Message>> SendMessage([FromBody] Message message, [FromRoute] string chatRoomId)
         {
             try
@@ -104,6 +106,7 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
+        [Route("{id}")]
         public async Task<ActionResult<Message>> AddUser([FromBody] User user, [FromRoute] string chatRoomId)
         {
             try
@@ -119,6 +122,7 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
+        [Route("{id}")]
         public async Task<ActionResult<Message>> RemoveUser([FromBody] User user, [FromRoute] string chatRoomId)
         {
             try

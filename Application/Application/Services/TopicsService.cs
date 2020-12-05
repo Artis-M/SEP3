@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Model;
+using Application.Models;
 
 namespace Application.Services
 {
     public class TopicsService : ITopicsService
     {
         public List<Topic> Topics { get; set; }
+        public Application.Models.Model Model;
 
-        public TopicsService()
+        public TopicsService(Model modelManager)
         {
             this.Topics = new List<Topic>();
+            this.Model = modelManager;
         }
 
         public async Task AddTopic(Topic topic)
@@ -32,7 +34,7 @@ namespace Application.Services
         {
             foreach (var VARIABLE in Topics)
             {
-                if (VARIABLE.ID.Equals(id))
+                if (VARIABLE._id.Equals(id))
                 {
                     return VARIABLE;
                 }

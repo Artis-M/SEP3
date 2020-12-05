@@ -40,7 +40,7 @@ public class UserDAOImpl implements UserDAO {
         ObjectId _id = new ObjectId(document.get("_id").toString());
         Account account = new Account(
                 document.get("role").toString(), document.get("Pass").toString()
-                , _id, document.get("Username").toString(),
+                , _id.toString(), document.get("Username").toString(),
                 document.get("Fname").toString(), document.get("Lname").toString(), document.get("email").toString()
         );
         account.setTopics(topicDAO.getUserTopics(_id));
@@ -63,17 +63,38 @@ public class UserDAOImpl implements UserDAO {
         return createAccount(document);
     }
 
+    public ArrayList<Account> getAllAccount()
+    {
+        ArrayList<Account> accounts = new ArrayList<>();
+        MongoCursor<Document> cursor = collection.find().iterator();
+        try {
+            while (cursor.hasNext()) {
+
+                Document document = cursor.next();
+                Account account = createAccount(document);
+                accounts.add(account);
+            }
+        } finally {
+            cursor.close();
+        }
+        return accounts;
+
+    }
+
     @Override
     public User getUser(ObjectId userID) {
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.append("_id", userID);
         MongoCursor<Document> cursor = collection.find(whereQuery).iterator();
-        String json = cursor.next().toJson();
-        return gson.fromJson(json, User.class);
+        Document document = cursor.next();
+        return new User(document.get("_id").toString(),document.get("Username").toString(),
+                                document.get("Fname").toString(),document.get("Lname").toString());
     }
 
+
     @Override
-    public UserList getUserFriends(ObjectId userId) {
+    public ArrayList<User> getUserFriends(ObjectId userId) {
+        //ChangeTo arrayList and remove UserList class
         UserList list = new UserList();
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.append("_id", userId);
@@ -87,7 +108,7 @@ public class UserDAOImpl implements UserDAO {
                 list.addUser(friend);
             }
         }
-        return list;
+        return list.getUsers();
     }
 
     @Override
@@ -103,7 +124,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void removeFriend(User user,ObjectId userId) {
-        BasicDBObject update = new BasicDBObject("friends",user.get_id());
+        ObjectId user_id = new ObjectId(user.get_id());
+        BasicDBObject update = new BasicDBObject("friends",user_id);
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.append("_id", userId);
         collection.updateOne(searchQuery,new BasicDBObject("$pull",update));
@@ -112,7 +134,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void addTopicToUser(String Topic, ObjectId userId) {
         BasicDBObject newDocument = new BasicDBObject();
-        newDocument.append("$push", new BasicDBObject().append("topics",topicDAO.getTopic(Topic).get_id()));
+        ObjectId topicID = new ObjectId(topicDAO.getTopic(Topic).get_id());
+        newDocument.append("$push", new BasicDBObject().append("topics",topicID));
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.append("_id", userId);
         collection.updateOne(searchQuery,newDocument);
@@ -121,7 +144,8 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void removeUserTopic(String Topic, ObjectId userId) {
-        BasicDBObject update = new BasicDBObject("friends",topicDAO.getTopic(Topic).get_id());
+        ObjectId topicID = new ObjectId(topicDAO.getTopic(Topic).get_id());
+        BasicDBObject update = new BasicDBObject("friends",topicID);
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.append("_id", userId);
         collection.updateOne(searchQuery,new BasicDBObject("$pull",update));
@@ -139,19 +163,21 @@ public class UserDAOImpl implements UserDAO {
     add.append("Lname",account.getLname());
     add.append("role",account.getRole());
     add.append("email",account.getEmail());
-        if(account.getTopics().getTopics().size()!=0) {
+        if(account.getTopics().size()!=0) {
             Document topics = new Document();
-            for (var topic : account.getTopics().getTopics()
+            for (var topic : account.getTopics()
             ) {
-                topics.append("$set", new BasicDBObject().append("topics", topic.get_id()));
+                ObjectId topicID = new ObjectId(topic.get_id());
+                topics.append("$set", new BasicDBObject().append("topics", topicID));
             }
             add.append("topics", Arrays.asList(topics));
         }
-        if(account.getFriends().getUsers().size()!=0) {
+        if(account.getFriends().size()!=0) {
             Document friends = new Document();
-            for (var friend : account.getFriends().getUsers()
+            for (var friend : account.getFriends()
             ) {
-                friends.append("$set", new BasicDBObject().append("topics", friend.get_id()));
+                ObjectId friendId = new ObjectId(friend.get_id());
+                friends.append("$set", new BasicDBObject().append("topics", friendId));
             }
             add.append("friends",Arrays.asList(friends));
         }

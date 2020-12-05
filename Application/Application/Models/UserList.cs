@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Connections;
 
-namespace Application.Model
+namespace Application.Models
 {
     public class UserList
     {

@@ -2,10 +2,8 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Text.Json;
+
 using System.Threading.Tasks;
-using Application.Model;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Application.SCMediator
 {

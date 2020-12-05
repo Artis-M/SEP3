@@ -2,9 +2,6 @@ package sep3.database.Mediator;
 
 
 import com.google.gson.Gson;
-import org.bson.types.ObjectId;
-import sep3.database.Model.Account;
-import sep3.database.Persistance.ChatroomDAO;
 import sep3.database.Persistance.UserDAO;
 import sep3.database.Persistance.UserDAOImpl;
 
@@ -15,81 +12,64 @@ import java.net.Socket;
 
 public class ServiceController implements Runnable
 {
-    private int PORT = 1234;
+    private int PORT = 2000;
     private boolean running;
     private ServerSocket welcomeSocket;
-
+    private UserDAO userDAO;
     private BufferedReader in;
     private PrintWriter out;
     private Gson gson;
-    private ChatroomDAO chatroomDAO;
-    private UserDAO userDAO;
 
-    public ServiceController() throws IOException {
+    public ServiceController() throws IOException
+    {
         gson = new Gson();
+        this.userDAO = new UserDAOImpl();
         this.running = true;
         running = true;
+        //removed ssl
+        //welcomeSocket = (SSLServerSocketFactory.getDefault()).createServerSocket(PORT);
         welcomeSocket = new ServerSocket(PORT);
-        userDAO = new UserDAOImpl();
     }
 
 
     @Override
-    public void run() {
+    public void run()
+    {
 
 
-        try {
-            ServerSocket welcomeSocket = new ServerSocket(2910);
-            System.out.println("Server started..");
-            Socket socketToClient = welcomeSocket.accept();
-            System.out.println("Client connected..");
-            InputStream inputStream = socketToClient.getInputStream();
-            OutputStream outputStream = socketToClient.getOutputStream();
+        try
+        {
+            System.out.println("ServerSocket is ready for connection...");
+            Socket socket = welcomeSocket.accept();
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
 
-            while(running)
+            out = new PrintWriter(socket.getOutputStream(), true);
+            System.out.println("Client Connected");
+            while (running)
             {
-                try {
-                    System.out.println("1");
-                    byte[] lenBytes = new byte[4];
-                    System.out.println("2");
-                    inputStream.readAllBytes();
-                  //  inputStream.read(lenBytes, 0, 4);
-                    System.out.println("3");
-                    int len = (((lenBytes[3] & 0xff) << 24) | ((lenBytes[2] & 0xff) << 16) |
-                            ((lenBytes[1] & 0xff) << 8) | (lenBytes[0] & 0xff));
-                    byte[] receivedBytes = new byte[len];
-                    inputStream.read(receivedBytes, 0, len);
-                    System.out.println("Read");
+                byte[] lenbytes = new byte[1024];
+                int read = inputStream.read(lenbytes, 0, lenbytes.length);
+                String request = new String(lenbytes, 0, read);
 
-                    String receivedFromClient = new String(receivedBytes, 0, len);
-                    CommandLine line = gson.fromJson(receivedFromClient,CommandLine.class);
-
-                if(line.getCommand().equals("REQUEST-User"))
+                System.out.println("Received from client: " + request);
+                CommandLine commandLine = gson.fromJson(request, CommandLine.class);
+                System.out.println(commandLine.getCommand());
+                if (commandLine.getCommand().equals("REQUEST-UserCredentials"))
                 {
-                    System.out.println("Here");
-                    CommandLine send = new CommandLine();
-                    send.setCommand("UserCredentials");
-                    Account account = userDAO.getAccount(line.getJson());
-                    String sendJson = gson.toJson(send);
-                    byte[] toSendBytes = sendJson.getBytes();
-                    int toSendLen = toSendBytes.length;
-                    byte[] toSendLenBytes = new byte[4];
-                    toSendLenBytes[0] = (byte) (toSendLen & 0xff);
-                    toSendLenBytes[1] = (byte) ((toSendLen >> 8) & 0xff);
-                    toSendLenBytes[2] = (byte) ((toSendLen >> 16) & 0xff);
-                    toSendLenBytes[3] = (byte) ((toSendLen >> 24) & 0xff);
-                    outputStream.write(toSendLenBytes);
-                    outputStream.write(toSendBytes);
-
-                }
-
-                }catch (Exception e)
-                {
-                    System.out.println(e.getMessage());
+                    CommandLine commandLine1 = new CommandLine();
+                    String response = gson.toJson(userDAO.getAllAccount());
+                    commandLine1.setSpecificOrder(response);
+                    commandLine1.setCommand("UserCredentials");
+                    String sendBack = gson.toJson(commandLine1);
+                    byte[] responseAsBytes = sendBack.getBytes();
+                    outputStream.write(responseAsBytes, 0, responseAsBytes.length);
+                    System.out.println("Done sending user credentials");
                 }
 
             }
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
 

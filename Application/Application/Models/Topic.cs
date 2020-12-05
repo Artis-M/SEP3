@@ -1,20 +1,23 @@
-﻿namespace Application.Model
+﻿namespace Application.Models
 {
     public class Topic
     {
-        public string ID { get; set; }
+        public string _id { get; set; }
         public string name { get; set; }
 
         public Topic(string id, string name)
         {
             this.name = name;
-            this.ID = id;
+            this._id = id;
         }
 
         public Topic(string name)
         {
             this.name = name;
         }
-        
+
+        public Topic()
+        {
+        }
     }
 }

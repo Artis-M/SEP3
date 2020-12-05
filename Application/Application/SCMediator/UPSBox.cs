@@ -8,6 +8,7 @@ namespace Application.SCMediator {
     [Serializable]
     public class UPSBox {
         public string type { get; set; }
-        public string JSonThing{ get; set; }
+        public string user;
+        public string JSonThing;
     }
 }
