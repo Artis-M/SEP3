@@ -12,6 +12,7 @@ namespace Application.Services
         public List<Account> Accounts { get; set; }
         public Model model;
         private bool wait=false;
+        private AutoResetEvent waiter = new AutoResetEvent(false);
 
         public AccountsServiceImpl(Model modelManager)
         {
@@ -65,18 +66,13 @@ namespace Application.Services
         public async Task<IList<Account>> GetAllAccounts()
         {
             await RequestAccounts();
-            while (wait == false)
-            {
-                Task.Delay(25);
-                
-            }
+            waiter.WaitOne();
             return Accounts;
         }
         public async Task SetListOfAccounts(List<Account> accounts)
         { 
             this.Accounts = accounts;
-            wait = true;
-
+            waiter.Set();
         }
     }
 }
