@@ -19,5 +19,6 @@ namespace Application.Models
         public void ProcessCredentials(string credentialsJson);
         public void ProcessChatrooms(string credentialsJson);
         public void ProcessTopics(string credentialsJson);
+        public Task<Account> requestAccount(string username);
     }
 }

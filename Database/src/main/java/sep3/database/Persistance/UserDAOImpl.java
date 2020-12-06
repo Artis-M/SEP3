@@ -13,6 +13,7 @@ import sep3.database.Model.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.NoSuchElementException;
 
 import static com.mongodb.client.model.Projections.exclude;
 import static com.mongodb.client.model.Projections.include;
@@ -58,8 +59,16 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Account getAccount(String username) {
-        MongoCursor<Document> cursor = cursor("username", username);
-        var document = cursor.next();
+        MongoCursor<Document> cursor = cursor("Username", username);
+        Document document = null;
+        try {
+            document = cursor.next();
+        }catch (NoSuchElementException e)
+        {
+            System.out.println(e.getMessage());
+            return null;
+
+        }
         return createAccount(document);
     }
 

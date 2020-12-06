@@ -71,5 +71,10 @@ namespace Application.Services
             this.Accounts = accounts;
 
         }
+
+        public async Task<Account> RequestAccount(string username)
+        {
+            return await model.requestAccount(username);
+        }
     }
 }
