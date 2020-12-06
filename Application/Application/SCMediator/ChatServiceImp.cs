@@ -23,7 +23,7 @@ namespace Application.SCMediator {
         public async Task connectToServer(string ip, int port,ModelManager modelManager) {
             try {
                 Client = new TcpClient(ip, port);
-               // clientHandler = new ClientHandler(stream, Client,modelManager);
+               clientHandler = new ClientHandler(stream, Client,modelManager);
             }
             catch (Exception e) {
                 Console.WriteLine("Connecting to server. Retrying.");
@@ -96,17 +96,9 @@ namespace Application.SCMediator {
         // ------------------- //
         //      requests       //
         // ------------------- //
-        public async Task<List<Account>> requestUserCredentials() {
+        public async Task requestUserCredentials() {
             CommandLine command = new CommandLine { Command = "REQUEST-UserCredentials" };
             await Send(command);
-            
-            byte[] dataFromServer = new byte[4048];
-            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
-            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
-             Console.WriteLine(response);
-            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
-            List<Account> accounts = JsonSerializer.Deserialize<List<Account>>(upsdelivery.SpecificOrder);
-            return accounts;
         }
         public async Task requestChatrooms() {
             CommandLine command = new CommandLine { Command = "REQUEST-Chatroom-ALL" };

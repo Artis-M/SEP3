@@ -41,7 +41,6 @@ namespace Application.SCMediator {
                 else if (upsdelivery.Command.Equals("ChatroomList")) { model.ProcessChatrooms(upsdelivery.SpecificOrder);
                 }
                 else if (upsdelivery.Command.Equals("UserCredentials")) {
-                  //  Console.Out.WriteLine(upsdelivery.SpecificOrder);
                     model.ProcessCredentials(upsdelivery.SpecificOrder);
                 }
                 else if (upsdelivery.Command.Equals("TopicList")) {

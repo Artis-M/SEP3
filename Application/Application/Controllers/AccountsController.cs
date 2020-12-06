@@ -24,8 +24,8 @@ namespace Application.Controllers
         {
             try
             {
-                IList<Account> topics = await AccountService.RequestAccounts();
-                return Ok(topics);
+              await AccountService.RequestAccounts();
+                return Ok(AccountService.GetAllAccounts());
             }
             catch (Exception e)
             {

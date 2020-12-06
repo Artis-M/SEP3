@@ -28,9 +28,8 @@ namespace Application.Models
             await chatServiceImp.requestChatrooms();
         }
 
-        public async Task<List<Account>> RequestUsers()
-        {
-            return await chatServiceImp.requestUserCredentials();
+        public async Task RequestUsers()
+        { await chatServiceImp.requestUserCredentials();
         }
 
         public async Task RequestTopics()
