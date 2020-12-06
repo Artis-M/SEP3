@@ -1,17 +1,19 @@
 package sep3.database.Model;
 
-import org.bson.types.ObjectId;
-
 import java.util.ArrayList;
 
 public class Chatroom {
-    private ObjectId _id;
+    private String _id;
     private String name;
-    private UserList participants;
-    private MessageList messages;
-    private TopicList topics;
+    private ArrayList<User> participants;
+    private ArrayList<Message> messages;
+    private ArrayList<Topic> topics;
 
-    public Chatroom(ObjectId _id, String name, UserList participants, MessageList messages, TopicList topics) {
+
+    public Chatroom() {
+    }
+
+    public Chatroom(String _id, String name, ArrayList<User> participants, ArrayList<Message> messages, ArrayList<Topic> topics) {
         this._id = _id;
         this.name = name;
         this.participants = participants;
@@ -19,51 +21,44 @@ public class Chatroom {
         this.topics = topics;
     }
 
-    public Chatroom(ObjectId _id, String name, UserList participants, MessageList messages) {
-        this._id = _id;
-        this.name = name;
-        this.participants = participants;
-        this.messages = messages;
-    }
-
-    public Chatroom(ObjectId _id, String name, UserList participants, TopicList topics) {
+    public Chatroom(String _id, String name, ArrayList<User> participants, ArrayList<Topic> topics) {
         this._id = _id;
         this.name = name;
         this.participants = participants;
         this.topics = topics;
     }
 
-    public Chatroom(ObjectId _id, String name, UserList participants) {
+    public Chatroom(String _id, String name, ArrayList<User> participants) {
         this._id = _id;
         this.name = name;
         this.participants = participants;
     }
     public void removeUser(User user)
     {
-        participants.removeUser(user);
+        participants.remove(user);
     }
     public void addUser(User user)
     {
-        participants.addUser(user);
+        participants.add(user);
     }
     public void addMessage(Message message)
     {
-        messages.addMessage(message);
+        messages.add(message);
     }
     public void addTopic(Topic topic)
     {
-        topics.addTopic(topic);
+        topics.add(topic);
     }
     public void removeTopic(Topic topic)
     {
-        topics.removeTopic(topic);
+        topics.remove(topic);
     }
 
-    public ObjectId get_id() {
+    public String get_id() {
         return _id;
     }
 
-    public void set_id(ObjectId _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
 
@@ -75,27 +70,27 @@ public class Chatroom {
         this.name = name;
     }
 
-    public UserList getParticipants() {
+    public ArrayList<User> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(UserList participants) {
+    public void setParticipants(ArrayList<User> participants) {
         this.participants = participants;
     }
 
-    public MessageList getMessages() {
+    public ArrayList<Message> getMessages() {
         return messages;
     }
 
-    public void setMessages(MessageList messages) {
+    public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
     }
 
-    public TopicList getTopics() {
+    public ArrayList<Topic> getTopics() {
         return topics;
     }
 
-    public void setTopics(TopicList topics) {
+    public void setTopics(ArrayList<Topic> topics) {
         this.topics = topics;
     }
 }

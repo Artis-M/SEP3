@@ -1,17 +1,22 @@
-﻿using Swashbuckle.AspNetCore.SwaggerGen;
+﻿using MongoDB.Bson;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Application.Model
+namespace Application.Models
 {
     public class User
     {
-        public string Id { get; set; }
+        public string _id { get; set; }
         public string Username { get; set; }
         public string Fname { get; set; }
         public string Lname { get; set; }
 
-        public User(string id, string username, string fname, string lname)
+        public User()
         {
-            this.Id = id;
+            
+        }
+        public User(string _id, string username, string fname, string lname)
+        {
+            this._id = _id;
             this.Username = username;
             this.Fname = fname;
             this.Lname = lname;

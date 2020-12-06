@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Model;
+using Application.Models;
 using Application.SCMediator;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
-using Tier2.Model;
 
 namespace Application.Controllers
 {
@@ -27,6 +26,7 @@ namespace Application.Controllers
         {
             try
             {
+                //await chatroomService.requestChatrooms();
                 IList<Chatroom> chatrooms = await chatroomService.GetAllChatrooms();
                 return Ok(chatrooms);
             }

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Model;
+using Application.Models;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
-using Tier2.Model;
 
 namespace Application.Controllers
 {
@@ -35,7 +34,7 @@ namespace Application.Controllers
         }
 
         [HttpGet]
-        [Route("{id")]
+        [Route("{id}")]
         public async Task<ActionResult<Topic>> GetTopicByID([FromRoute] string id)
         {
             try
@@ -62,7 +61,7 @@ namespace Application.Controllers
             try
             {
                 await TopicsService.AddTopic(topic);
-                return Created($"/{topic.ID}", topic);
+                return Created($"/{topic._id}", topic);
             }
             catch (Exception e)
             {

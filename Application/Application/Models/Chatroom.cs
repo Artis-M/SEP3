@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using Application.Model;
+using System.Threading.Tasks;
+using Application.Models;
 using MongoDB.Bson;
 
-namespace Tier2.Model
+namespace Application.Models
 {
     public class Chatroom
     {
@@ -44,7 +45,7 @@ namespace Tier2.Model
             this.participants = new UserList();
         }
 
-        public void removeUser(User user)
+        public async Task removeUser(User user)
         {
 
         }

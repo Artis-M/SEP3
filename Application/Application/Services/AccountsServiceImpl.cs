@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Model;
+using Application.Models;
+using Application.SCMediator;
 
 namespace Application.Services
 {
     public class AccountsServiceImpl : IAccountService
     {
         public List<Account> Accounts { get; set; }
-        public Tier2.Model.Model model;
+        public Model model;
 
-        public AccountsServiceImpl()
+        public AccountsServiceImpl(Model modelManager)
         {
+            this.model = modelManager;
             this.Accounts = new List<Account>();
         }
 
@@ -20,12 +23,17 @@ namespace Application.Services
             await model.Register(account);
         }
 
+        public Task Register(string account)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Account> LogIn(string username, string password)
         {
             Account account = null;
             foreach (var VARIABLE in Accounts)
             {
-                if (VARIABLE.password.Equals(password) & VARIABLE.Username.Equals(username))
+                if (VARIABLE.Pass.Equals(password) & VARIABLE.Username.Equals(username))
                 {
                     account = VARIABLE;
                 }
@@ -34,20 +42,34 @@ namespace Application.Services
             return account;
         }
 
-        public async Task RemoveAccount(Account account)
+        public async Task RemoveAccount(string accountID)
         {
             foreach (var VARIABLE in Accounts)
             {
-                if (VARIABLE.Id.Equals(account.Id))
+                if (VARIABLE._id.Equals(accountID))
                 {
                     Accounts.Remove(VARIABLE);
                 }
             }
+
+            await model.RemoveUser(accountID);
         }
 
         public async Task<IList<Account>> GetAllAccounts()
         {
+            await RequestAccounts();
+            Console.Out.WriteLine(Accounts.Count);
             return Accounts;
+        }
+        public async Task<List<Account>> RequestAccounts()
+        {
+            return await model.RequestUsers();
+        }
+
+        public async Task SetListOfAccounts(List<Account> accounts)
+        {
+            this.Accounts = accounts;
+
         }
     }
 }

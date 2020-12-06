@@ -14,7 +14,7 @@
           <e p="ChatroomsController.cs" t="Include" />
           <e p="TopicsController.cs" t="Include" />
         </e>
-        <e p="Model" t="Include">
+        <e p="Models" t="Include">
           <e p="Account.cs" t="Include" />
           <e p="Chatroom.cs" t="Include" />
           <e p="Message.cs" t="Include" />
@@ -57,7 +57,6 @@
           <e p="ChatHub.cs" t="Include" />
         </e>
         <e p="Startup.cs" t="Include" />
-        <e p="WeatherForecast.cs" t="Include" />
       </e>
       <e p="Application.sln" t="IncludeFlat" />
       <e p="packages" t="ExcludeRecursive" />

@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Tier2.Model;
+using Application.Models;
 
-namespace Application.Model
+namespace Application.Models
 {
     public class MessageList
     {

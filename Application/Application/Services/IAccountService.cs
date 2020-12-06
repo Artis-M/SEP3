@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Model;
+using Application.Models;
 
 namespace Application.Services
 {
@@ -9,7 +9,9 @@ namespace Application.Services
     {
         public Task Register(Account account);
         public Task<Account> LogIn(string username, string password);
-        public Task RemoveAccount(Account account);
+        public Task RemoveAccount(string accountID);
         public Task<IList<Account>> GetAllAccounts();
+        public Task<List<Account>> RequestAccounts();
+        public Task SetListOfAccounts(List<Account> accounts);
     }
 }

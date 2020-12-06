@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Application.Model
+namespace Application.Models
 {
     public class TopicList
     {

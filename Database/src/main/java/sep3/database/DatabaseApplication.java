@@ -9,13 +9,18 @@ import sep3.database.Persistance.UserDAO;
 import sep3.database.Persistance.UserDAOImpl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class DatabaseApplication {
+public class DatabaseApplication
+{
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException
+    {
         ServiceController controller = new ServiceController();
         Thread t1 = new Thread(controller);
         t1.start();
+
+
     }
 
 }

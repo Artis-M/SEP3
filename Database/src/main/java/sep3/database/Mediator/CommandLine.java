@@ -1,8 +1,7 @@
 package sep3.database.Mediator;
 
-import org.bson.types.ObjectId;
-
-public class CommandLine {
+public class CommandLine
+{
     private String Command;
     private String variableUser;
     private String variableChatroom;
