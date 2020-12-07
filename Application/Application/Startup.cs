@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Application.Models;
+using Application.Services.Implementations;
 using WebApplication.SignalR;
 
 namespace Application

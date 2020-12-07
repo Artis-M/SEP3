@@ -35,21 +35,32 @@ namespace Application.Controllers
         }
         
         [HttpGet]
-        [Route("{username}")]
-        public async Task<ActionResult<IList<Account>>> GetAccount([FromRoute] string username)
+        [Route("login/")]
+        public async Task<ActionResult<Account>> GetAccount([FromQuery] string username, [FromQuery] string password)
         {
-            try
+            // try
+            // {
+            //     Account account = await AccountService.RequestAccount(username);
+            //     IList<Account> accounts = new List<Account>();
+            //     accounts.Add(account);
+            //     return Ok(accounts);
+            // }
+            // catch (Exception e)
+            // {
+            //     Console.WriteLine(e);
+            //     return StatusCode(500, e.Message);
+            // }
+            Console.WriteLine("Sanity Check");
+            Account account = await AccountService.RequestAccount(username);
+            if (account == null)
             {
-                Account account = await AccountService.RequestAccount(username);
-                IList<Account> accounts = new List<Account>();
-                accounts.Add(account);
-                return Ok(accounts);
+                return NotFound();
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return StatusCode(500, e.Message);
+            if (account.Pass != password)
+            {   
+                return NotFound();
             }
+            return Ok(account);
         }
         
         
