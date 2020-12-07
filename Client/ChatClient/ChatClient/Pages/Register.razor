@@ -1,5 +1,7 @@
 ﻿@page "/Register"
 @using Application.Models
+@using global::Models
+@using MongoDB.Bson
 @using Services
 @inject IAccountService AccountService;
 @inject NavigationManager NavigationManager;
@@ -45,8 +47,11 @@
     private void RegisterNewAccount()
     {
         newAccount.role = "User";
+        newAccount._id = ObjectId.GenerateNewId().ToString();
+        newAccount.friends = new List<User>();
+        newAccount.topics= new List<Topic>();
         AccountService.Register(newAccount);
-        NavigationManager.NavigateTo("login", true);
+       // NavigationManager.NavigateTo("login", true);
     }
 
 }

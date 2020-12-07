@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Account extends User{
     private String role;
-    private String Pass;
+    private String pass;
     private String email;
     private ArrayList<User> friends;
     private ArrayList<Topic> topics;
@@ -18,7 +18,7 @@ public class Account extends User{
                 "FirstName='" + getFname() + '\'' +
                 "LastName='" + getLname() + '\'' +
                 "role='" + role + '\'' +
-                ", Pass='" + Pass + '\'' +
+                ", Pass='" + pass + '\'' +
                 ", email='" + email + '\'' +
                 ", friends=" + friends +
                 ", topics=" + topics +
@@ -32,13 +32,13 @@ public class Account extends User{
         this.topics = new ArrayList<>();
         this.email=email;
         this.role=role;
-        this.Pass=Pass;
+        this.pass =Pass;
     }
 
     public Account(String role,String Pass,String username, String fname, String lname,String email) {
         super(username, fname, lname);
         this.role=role;
-        this.Pass=Pass;
+        this.pass =Pass;
         this.email=email;
         friends = new ArrayList<>();
         this.topics = new ArrayList<>();
@@ -80,7 +80,7 @@ public class Account extends User{
 
 
     public String getPass() {
-        return Pass;
+        return pass;
     }
 
     public void addTopic(Topic topic)
@@ -94,7 +94,7 @@ public class Account extends User{
     }
 
     public void setPass(String pass) {
-        Pass = pass;
+        this.pass = pass;
     }
 
 }

@@ -19,6 +19,7 @@
           <e p="Chatroom.cs" t="Include" />
           <e p="Message.cs" t="Include" />
           <e p="MessageFragment.cs" t="Include" />
+          <e p="Topic.cs" t="Include" />
           <e p="User.cs" t="Include" />
           <e p="UserList.cs" t="Include" />
         </e>

@@ -55,7 +55,7 @@ namespace Services
             string serialized = JsonSerializer.Serialize(account);
             StringContent content = new StringContent(serialized,Encoding.UTF8,"application/json");
 
-            HttpResponseMessage responseMessage = await http.PostAsync(uri, content);
+            HttpResponseMessage responseMessage = await http.PostAsync(uri+"register", content);
             Console.WriteLine(responseMessage.ToString());
         }
     }

@@ -40,7 +40,7 @@ public class UserDAOImpl implements UserDAO {
     public Account createAccount(Document document) {
         ObjectId _id = new ObjectId(document.get("_id").toString());
         Account account = new Account(
-                document.get("role").toString(), document.get("Pass").toString()
+                document.get("role").toString(), document.get("pass").toString()
                 , _id.toString(), document.get("Username").toString(),
                 document.get("Fname").toString(), document.get("Lname").toString(), document.get("email").toString()
         );
@@ -167,7 +167,7 @@ public class UserDAOImpl implements UserDAO {
     Document add = new Document();
     add.append("_id",account.get_id());
     add.append("Username",account.getUsername());
-    add.append("Pass",account.getPass());
+    add.append("pass",account.getPass());
     add.append("Fname",account.getFname());
     add.append("Lname",account.getLname());
     add.append("role",account.getRole());
