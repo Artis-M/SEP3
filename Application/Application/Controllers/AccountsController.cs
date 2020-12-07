@@ -5,6 +5,7 @@ using Application.Models;
 using Application.SCMediator;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace Application.Controllers
 {
@@ -33,30 +34,43 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-        
+
         [HttpGet]
-        [Route("{username}")]
-        public async Task<ActionResult<IList<Account>>> GetAccount([FromRoute] string username)
+        [Route("login/")]
+        public async Task<ActionResult<Account>> GetAccount([FromQuery] string username, [FromQuery] string password)
         {
-            try
+            // try
+            // {
+            //     Account account = await AccountService.RequestAccount(username);
+            //     IList<Account> accounts = new List<Account>();
+            //     accounts.Add(account);
+            //     return Ok(accounts);
+            // }
+            // catch (Exception e)
+            // {
+            //     Console.WriteLine(e);
+            //     return StatusCode(500, e.Message);
+            // }
+            Console.WriteLine("Sanity Check");
+            Account account = await AccountService.RequestAccount(username);
+            if (account == null)
             {
-                Console.Out.WriteLine("ROUTE");
-                Account account = await AccountService.RequestAccount(username);
-                return Ok(account);
+                return NotFound();
             }
-            catch (Exception e)
+
+            if (account.Pass != password)
             {
-                Console.WriteLine(e);
-                return StatusCode(500, e.Message);
+                return NotFound();
             }
+
+            return Ok(account);
         }
-        
-        
+
 
         /* Gives an error when launching - Application.Controllers.AccountsController.LogIn (Application)' has more than one parameter that was specified or inferred as bound from request body. Only one param
          eter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be b
          ound from body:" */
-       
+
         /*[HttpGet]
         [Route("{username, password}")]
          public async Task<ActionResult<Account>> LogIn([FromRoute] string username, [FromRoute] string password)
@@ -74,6 +88,7 @@ namespace Application.Controllers
          }*/
 
         [HttpPost]
+        [Route("register")]
         public async Task<ActionResult> Register([FromBody] Account account)
         {
             if (!ModelState.IsValid)
@@ -83,6 +98,7 @@ namespace Application.Controllers
 
             try
             {
+                Console.Out.WriteLine(account.email);
                 await AccountService.Register(account);
                 return Created($"/{account._id}", account);
             }

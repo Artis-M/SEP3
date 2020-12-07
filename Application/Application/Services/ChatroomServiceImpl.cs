@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Models;
-using Application.SCMediator;
 
-namespace Application.Services
+namespace Application.Services.Implementations
 {
     public class ChatroomServiceImpl : IChatroomService
     {

@@ -108,7 +108,14 @@ public class UserDAOImpl implements UserDAO {
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.append("_id", userId);
         FindIterable<Document> findIterable = collection.find(whereQuery).projection(include("friends"));
-        var document = findIterable.cursor().next();
+        Document document;
+        try {
+            document = findIterable.cursor().next();
+        }
+        catch(NoSuchElementException e)
+        {
+            return null;
+        }
         var friends = document.getList("friends", ObjectId.class);
         if (friends != null) {
             for (ObjectId id : friends

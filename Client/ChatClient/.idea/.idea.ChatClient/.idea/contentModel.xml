@@ -7,13 +7,19 @@
       <e p="ChatClient" t="IncludeRecursive">
         <e p="_Imports.razor" t="Include" />
         <e p="App.razor" t="Include" />
+        <e p="Authentication" t="Include">
+          <e p="AuthenticationProvider.cs" t="Include" />
+        </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="ChatClient.csproj" t="IncludeRecursive" />
         <e p="Models" t="Include">
+          <e p="Account.cs" t="Include" />
           <e p="Chatroom.cs" t="Include" />
           <e p="Message.cs" t="Include" />
           <e p="MessageFragment.cs" t="Include" />
+          <e p="Topic.cs" t="Include" />
           <e p="User.cs" t="Include" />
+          <e p="UserList.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -25,17 +31,19 @@
         <e p="Pages" t="Include">
           <e p="Index.razor" t="Include" />
           <e p="Login.razor" t="Include" />
+          <e p="LoginRedirect.razor" t="Include" />
+          <e p="Register.razor" t="Include" />
         </e>
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">
           <e p="launchSettings.json" t="Include" />
         </e>
         <e p="Services" t="Include">
+          <e p="IAccountService.cs" t="Include" />
           <e p="Implementations" t="Include">
+            <e p="AccountServiceImp.cs" t="Include" />
             <e p="ChatService.cs" t="Include" />
-            <e p="LoginServiceImp.cs" t="Include" />
           </e>
-          <e p="LoginService.cs" t="Include" />
         </e>
         <e p="Shared" t="Include">
           <e p="MainLayout.razor" t="Include" />

@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿﻿using System.Collections.Generic;
+ using System.Text.Json.Serialization;
+ using Models;
 
-namespace Application.Models
+ namespace Application.Models
 {
     public class Account : User
     {
         public string role { get; set; }
-        [JsonPropertyName("pass")]
+       [JsonPropertyName("pass")]
         public string Pass { get; set; }
         public string email { get; set; }
         public List<User> friends { get; set; }

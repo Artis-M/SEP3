@@ -1,18 +1,45 @@
-﻿@page "/Login"
-@using Services
-@inject LoginService LoginService
-<h3>Login</h3>
-<input type="text" @bind="@username"/>
-<input type="password" @bind="@password"/>
-<button @onclick="@LoginRequest">HashPassword</button>
-<p>@hashedPassword</p>
-@code {
-    string username;
-    string password;
-    string hashedPassword;
+﻿@page "/login"
+@namespace LoginComponent
+@using Microsoft.AspNetCore.Components.Authorization
+@using Application.Authentication
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager navigation;
 
-    private async Task LoginRequest()
+<AuthorizeView>
+<NotAuthorized>
+    <h3>Login</h3>
+    <input type="text" @bind="@username"/>
+    <input type="password" @bind="@password"/>
+    <button @onclick="@LoginRequest">Login</button>
+    <label>@errorMessage</label>
+    <button @onclick="@register">Register</button>
+</NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private string username;
+    private string password;
+    private string errorMessage;
+
+    public async Task LoginRequest()
     {
-        hashedPassword = await LoginService.Login(username, password);
+        errorMessage = "";
+        try
+        {
+            await ((AuthenticationProvider)AuthenticationStateProvider).ValidateLogin(username, password);
+            username = "";
+            password = "";
+            navigation.NavigateTo("");
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.Message;
+        }
     }
+
+    public async Task register()
+    {
+        navigation.NavigateTo("register", true);
+    }
+        
 }
