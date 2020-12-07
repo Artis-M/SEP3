@@ -36,8 +36,8 @@ namespace Application.Controllers
         }
 
         [HttpGet]
-        [Route("login/")]
-        public async Task<ActionResult<Account>> GetAccount([FromQuery] string username, [FromQuery] string password)
+        [Route("login/{username}/{password}")]
+        public async Task<ActionResult<Account>> GetAccount([FromRoute] string username, [FromRoute] string password)
         {
             // try
             // {
@@ -50,14 +50,15 @@ namespace Application.Controllers
             // {
             //     Console.WriteLine(e);
             //     return StatusCode(500, e.Message);
-            // }
-            Console.WriteLine("Sanity Check");
             Account account = await AccountService.RequestAccount(username);
             if (account == null)
             {
                 return NotFound();
             }
 
+            Console.Out.WriteLine(account.Pass);
+            Console.Out.WriteLine(password);
+            Console.Out.WriteLine(account.Pass == password);
             if (account.Pass != password)
             {
                 return NotFound();

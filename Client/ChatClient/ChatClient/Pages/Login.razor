@@ -29,11 +29,11 @@
             await ((AuthenticationProvider)AuthenticationStateProvider).ValidateLogin(username, password);
             username = "";
             
-           // navigation.NavigateTo("");
+            navigation.NavigateTo("");
         }
         catch (Exception e)
         {
-            Console.Out.WriteLine("error");
+            //Console.Out.WriteLine("error");
             errorMessage = e.Message;
             
         }

@@ -6,7 +6,8 @@ namespace Application.Models
     public class Account : User
     {
         public string role { get; set; }
-        [JsonPropertyName("pass")]
+        
+        [JsonPropertyName("Pass")]
         public string Pass { get; set; }
         public string email { get; set; }
         public List<User> friends { get; set; }

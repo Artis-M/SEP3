@@ -9,6 +9,7 @@
 <div>
 
     <EditForm Model="@newAccount" OnValidSubmit="@RegisterNewAccount">
+     <DataAnnotationsValidator/> <ValidationSummary/>
         <div class="form-group">
             E-mail: <br/>
             <InputTextArea rows="1" cols="50" @bind-Value="newAccount.email"></InputTextArea>
@@ -50,9 +51,8 @@
         newAccount._id = ObjectId.GenerateNewId().ToString();
         newAccount.friends = new List<User>();
         newAccount.topics= new List<Topic>();
-       // Console.Out.WriteLine("Send");
         AccountService.Register(newAccount);
-       // NavigationManager.NavigateTo("login", true);
+       NavigationManager.NavigateTo("login", true);
     }
 
 }
