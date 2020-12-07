@@ -19,6 +19,7 @@ namespace Application.SCMediator {
              connectToServer("localhost", PORT,modelManager);
              
         }
+        
 
         public async Task connectToServer(string ip, int port,ModelManager modelManager) {
             try {
@@ -99,6 +100,19 @@ namespace Application.SCMediator {
         public async Task requestUserCredentials() {
             CommandLine command = new CommandLine { Command = "REQUEST-UserCredentials" };
             await Send(command);
+        }
+        
+        public async Task<Account> requestUser(string username) {
+            CommandLine command = new CommandLine { Command = "REQUEST-User",variableUser = username};
+            await Send(command);
+            
+            byte[] dataFromServer = new byte[4048];
+            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
+            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
+            Console.WriteLine(response);
+            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+            Account account = JsonSerializer.Deserialize<Account>(upsdelivery.SpecificOrder);
+            return account;
         }
         public async Task requestChatrooms() {
             CommandLine command = new CommandLine { Command = "REQUEST-Chatroom-ALL" };

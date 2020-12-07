@@ -5,8 +5,9 @@ using System.Threading.Tasks;
  using Application.Models;
 using Application.SCMediator;
 using Application.Services;
+ using Microsoft.AspNetCore.Identity;
 
-namespace Application.Models
+ namespace Application.Models
 {
     public class ModelManager : Model
     {
@@ -78,5 +79,9 @@ namespace Application.Models
             //topicService.Topics = JsonSerializer.Deserialize<List<Topic>>(credentialsJson);
         }
 
+        public async Task<Account> requestAccount(string username)
+        {
+            return await chatServiceImp.requestUser(username);
+        }
     }
 }

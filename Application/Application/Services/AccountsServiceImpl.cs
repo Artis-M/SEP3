@@ -79,5 +79,10 @@ namespace Application.Services
             waiter.Set();
             Console.WriteLine("After waiter reset");
         }
+
+        public async Task<Account> RequestAccount(string username)
+        {
+            return await model.requestAccount(username);
+        }
     }
 }

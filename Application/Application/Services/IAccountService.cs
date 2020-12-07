@@ -13,5 +13,6 @@ namespace Application.Services
         public Task<IList<Account>> GetAllAccounts();
         public Task RequestAccounts();
         public Task SetListOfAccounts(List<Account> accounts);
+        public Task<Account> RequestAccount(string username);
     }
 }
