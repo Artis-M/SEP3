@@ -35,11 +35,12 @@ namespace Application.Controllers
         }
         
         [HttpGet]
-        [Route("{username}")]
-        public async Task<ActionResult<IList<Account>>> GetAccount([FromRoute] string username)
+        [Route("{username}/{password}")]
+        public async Task<ActionResult<IList<Account>>> GetAccount([FromRoute] string username,[FromRoute] string password)
         {
             try
             {
+                Console.Out.WriteLine(password);
                 Account account = await AccountService.RequestAccount(username);
                 IList<Account> accounts = new List<Account>();
                 accounts.Add(account);
