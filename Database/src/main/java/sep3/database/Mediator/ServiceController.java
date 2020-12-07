@@ -2,6 +2,7 @@ package sep3.database.Mediator;
 
 
 import com.google.gson.Gson;
+import sep3.database.Model.Account;
 import sep3.database.Persistance.UserDAO;
 import sep3.database.Persistance.UserDAOImpl;
 
@@ -77,6 +78,10 @@ public class ServiceController implements Runnable
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
                     System.out.println("Done sending user credentials");
 
+                }
+                else if(commandLine.getCommand().equals("UserNew")){
+                    Account account = gson.fromJson(commandLine.getSpecificOrder(),Account.class);
+                    userDAO.addAccount(account);
                 }
 
             }

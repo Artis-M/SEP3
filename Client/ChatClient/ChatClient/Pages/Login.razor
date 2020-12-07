@@ -12,6 +12,7 @@
     <input type="password" @bind="@password"/>
     <button @onclick="@LoginRequest">Login</button>
     <label>@errorMessage</label>
+    <button @onclick="@register">Register</button>
 </NotAuthorized>
 </AuthorizeView>
 
@@ -35,4 +36,10 @@
             errorMessage = e.Message;
         }
     }
+
+    public async Task register()
+    {
+        navigation.NavigateTo("register", true);
+    }
+        
 }

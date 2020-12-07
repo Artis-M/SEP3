@@ -1,0 +1,52 @@
+﻿@page "/Register"
+@using Application.Models
+@using Services
+@inject IAccountService AccountService;
+@inject NavigationManager NavigationManager;
+<h3>Register</h3>
+<div>
+
+    <EditForm Model="@newAccount" OnValidSubmit="@RegisterNewAccount">
+        <div class="form-group">
+            E-mail: <br/>
+            <InputTextArea rows="1" cols="50" @bind-Value="newAccount.email"></InputTextArea>
+        </div>
+        <div class="form-group">
+            Username: <br/>
+            <InputTextArea rows="1" cols="50" @bind-Value="newAccount.Username"></InputTextArea>
+        </div>
+
+        <div>
+            First name:<br/>
+            <InputTextArea rows="1"cols="50" @bind-Value="newAccount.Fname"></InputTextArea>
+        </div>
+        <div>
+            Last name:<br/>
+            <InputTextArea rows="1"cols="50" @bind-Value="newAccount.Lname"></InputTextArea>
+        </div>
+
+        <div>
+            Password:<br/>
+            <InputTextArea rows="1"cols="50" @bind-Value="newAccount.Pass"></InputTextArea>
+        </div>
+
+
+        <p class="actions">
+            <button class="btn btn-outline-success" type="submit">Add</button>
+        </p>
+
+
+    </EditForm>
+</div>
+
+@code {
+    private Account newAccount=new Account();
+
+    private void RegisterNewAccount()
+    {
+        newAccount.role = "User";
+        AccountService.Register(newAccount);
+        NavigationManager.NavigateTo("login", true);
+    }
+
+}

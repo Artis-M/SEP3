@@ -45,9 +45,18 @@ namespace Services
            }
         }
 
-        public Task Register(string username, string password)
+        public async Task Register(Account account)
         {
-            throw new System.NotImplementedException();
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+
+            string serialized = JsonSerializer.Serialize(account);
+            StringContent content = new StringContent(serialized,Encoding.UTF8,"application/json");
+
+            HttpResponseMessage responseMessage = await http.PostAsync(uri, content);
+            Console.WriteLine(responseMessage.ToString());
         }
     }
 }
