@@ -40,9 +40,10 @@ namespace Application.Controllers
         {
             try
             {
-                Console.Out.WriteLine("ROUTE");
                 Account account = await AccountService.RequestAccount(username);
-                return Ok(account);
+                IList<Account> accounts = new List<Account>();
+                accounts.Add(account);
+                return Ok(accounts);
             }
             catch (Exception e)
             {
