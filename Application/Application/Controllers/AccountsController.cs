@@ -100,7 +100,6 @@ namespace Application.Controllers
             {
                 Console.Out.WriteLine(account.email);
                 await AccountService.Register(account);
-
                 return Created($"/{account._id}", account);
             }
             catch (Exception e)

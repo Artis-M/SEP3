@@ -47,14 +47,19 @@ namespace Services
 
         public async Task Register(Account account)
         {
+            
             HttpClient http = new HttpClient
             {
                 BaseAddress = new Uri(uri)
             };
-
+            
+            SHA384CryptoServiceProvider sha = new SHA384CryptoServiceProvider();
+            byte[] passwordBytes = Encoding.ASCII.GetBytes(account.Pass);
+            byte[] hashedBytes = sha.ComputeHash(passwordBytes);
+            account.Pass = Convert.ToBase64String(hashedBytes);
+            
             string serialized = JsonSerializer.Serialize(account);
             StringContent content = new StringContent(serialized,Encoding.UTF8,"application/json");
-
             HttpResponseMessage responseMessage = await http.PostAsync(uri+"register", content);
             Console.WriteLine(responseMessage.ToString());
         }

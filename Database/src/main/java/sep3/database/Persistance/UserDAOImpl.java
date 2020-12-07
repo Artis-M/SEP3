@@ -40,7 +40,7 @@ public class UserDAOImpl implements UserDAO {
     public Account createAccount(Document document) {
         ObjectId _id = new ObjectId(document.get("_id").toString());
         Account account = new Account(
-                document.get("role").toString(), document.get("pass").toString()
+                document.get("role").toString(), document.get("Pass").toString()
                 , _id.toString(), document.get("Username").toString(),
                 document.get("Fname").toString(), document.get("Lname").toString(), document.get("email").toString()
         );
@@ -108,7 +108,14 @@ public class UserDAOImpl implements UserDAO {
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.append("_id", userId);
         FindIterable<Document> findIterable = collection.find(whereQuery).projection(include("friends"));
-        var document = findIterable.cursor().next();
+        Document document;
+        try {
+            document = findIterable.cursor().next();
+        }
+        catch(NoSuchElementException e)
+        {
+            return null;
+        }
         var friends = document.getList("friends", ObjectId.class);
         if (friends != null) {
             for (ObjectId id : friends
@@ -167,7 +174,7 @@ public class UserDAOImpl implements UserDAO {
     Document add = new Document();
     add.append("_id",account.get_id());
     add.append("Username",account.getUsername());
-    add.append("pass",account.getPass());
+    add.append("Pass",account.getPass());
     add.append("Fname",account.getFname());
     add.append("Lname",account.getLname());
     add.append("role",account.getRole());

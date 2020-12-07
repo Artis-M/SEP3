@@ -50,6 +50,7 @@
         newAccount._id = ObjectId.GenerateNewId().ToString();
         newAccount.friends = new List<User>();
         newAccount.topics= new List<Topic>();
+       // Console.Out.WriteLine("Send");
         AccountService.Register(newAccount);
        // NavigationManager.NavigateTo("login", true);
     }

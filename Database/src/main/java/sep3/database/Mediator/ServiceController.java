@@ -80,6 +80,7 @@ public class ServiceController implements Runnable
 
                 }
                 else if(commandLine.getCommand().equals("UserNew")){
+                    System.out.println("Add new User");
                     Account account = gson.fromJson(commandLine.getSpecificOrder(),Account.class);
                     userDAO.addAccount(account);
                 }
