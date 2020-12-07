@@ -7,7 +7,7 @@ namespace Application.Models
 {
     public interface Model
     {
-        public Task RequestChatrooms();
+        public Task<List<Chatroom>> RequestChatrooms();
         public Task RequestUsers();
         public Task RequestTopics();
         public Task SendMessage(Message message, string chatroomId);

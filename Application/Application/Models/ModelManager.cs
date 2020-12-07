@@ -25,9 +25,9 @@ using Application.Services;
 
         }
 
-        public async Task RequestChatrooms()
+        public async Task<List<Chatroom>> RequestChatrooms()
         {
-            await chatServiceImp.requestChatrooms();
+            return await chatServiceImp.requestChatrooms();
         }
 
         public async Task RequestUsers()
@@ -56,7 +56,7 @@ using Application.Services;
 
         public async Task DeleteChatroom(string ChatroomID)
         {
-            //
+            await chatServiceImp.DeleteChatroom(ChatroomID);
         }
 
         public async Task RemoveUser(string userID)

@@ -26,9 +26,8 @@ namespace Application.Controllers
         {
             try
             {
-                //await chatroomService.requestChatrooms();
-                IList<Chatroom> chatrooms = await chatroomService.GetAllChatrooms();
-                return Ok(chatrooms);
+                await chatroomService.requestChatrooms();
+                return Ok(chatroomService.GetAllChatrooms());
             }
             catch (Exception e)
             {
@@ -41,10 +40,17 @@ namespace Application.Controllers
         [Route("{id}")]
         public async Task<ActionResult<Chatroom>> GetChatRoomById([FromRoute] string id)
         {
+            Chatroom chatroom = await chatroomService.GetChatroomByID(id);
             try
             {
-                Chatroom chatroom = await chatroomService.GetChatroomByID(id);
-                return Ok(chatroom);
+                
+                if (chatroom == null)
+                {
+                    return NotFound();
+                }
+
+                return chatroom;
+
             }
             catch (Exception e)
             {
@@ -91,7 +97,7 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
-        [Route("{id}")]
+        [Route("/sendMessage/{id}")]
         public async Task<ActionResult<Message>> SendMessage([FromBody] Message message, [FromRoute] string chatRoomId)
         {
             try
@@ -107,7 +113,7 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
-        [Route("{id}")]
+        [Route("/addUser/{id}")]
         public async Task<ActionResult<Message>> AddUser([FromBody] User user, [FromRoute] string chatRoomId)
         {
             try
@@ -123,7 +129,7 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
-        [Route("{id}")]
+        [Route("/removeUser/{id}")]
         public async Task<ActionResult<Message>> RemoveUser([FromBody] User user, [FromRoute] string chatRoomId)
         {
             try
