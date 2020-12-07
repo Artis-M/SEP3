@@ -65,14 +65,19 @@ namespace Application.Services
 
         public async Task<IList<Account>> GetAllAccounts()
         {
+            Console.WriteLine("Before await RequestAccounts");
             await RequestAccounts();
+            Console.WriteLine("Awaiting Write Line");
             waiter.WaitOne();
+            Console.WriteLine("WERE RETURNING");
             return Accounts;
         }
         public async Task SetListOfAccounts(List<Account> accounts)
         { 
             this.Accounts = accounts;
+            Console.WriteLine("Before waiter reset");
             waiter.Set();
+            Console.WriteLine("After waiter reset");
         }
     }
 }
