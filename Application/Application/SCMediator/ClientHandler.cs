@@ -44,7 +44,7 @@ namespace Application.SCMediator
                 {
                     // model.getChatroom(upsdelivery.JSonThing);
                 }
-                else if (upsdelivery.Command.Equals("ChatroomList"))
+                 if (upsdelivery.Command.Equals("ChatroomList"))
                 {
                     model.ProcessChatrooms(upsdelivery.SpecificOrder);
                 }
