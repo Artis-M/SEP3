@@ -27,15 +27,14 @@ namespace Services
             byte[] passwordBytes = Encoding.ASCII.GetBytes(password);
             byte[] hashedBytes = sha.ComputeHash(passwordBytes);
             string hashedPassword = Convert.ToBase64String(hashedBytes);
-            //Console.WriteLine($"HashedPass:{hashedPassword}");
-
-            string request = $"login/?username={username}&password={hashedPassword}";
-            //Console.WriteLine(uri+request);
+            Console.WriteLine($"HashedPass:{hashedPassword}");
+            string request = $"login/{username}/{hashedPassword}";
+            
                 
             
             
            HttpResponseMessage responseMessage = await http.GetAsync(request);
-           Console.Out.WriteLine(responseMessage.StatusCode);
+           //Console.Out.WriteLine(responseMessage.StatusCode);
            Account account = null;
            if (responseMessage.StatusCode == HttpStatusCode.OK)
            {

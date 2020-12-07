@@ -172,7 +172,8 @@ public class UserDAOImpl implements UserDAO {
 
 
     Document add = new Document();
-    add.append("_id",account.get_id());
+    ObjectId _id = new ObjectId(account.get_id());
+    add.append("_id",_id);
     add.append("Username",account.getUsername());
     add.append("Pass",account.getPass());
     add.append("Fname",account.getFname());
