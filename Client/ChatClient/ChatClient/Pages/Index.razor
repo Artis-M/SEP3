@@ -2,8 +2,10 @@
 @using Services
 @using global::Models
 @using ChatClient.Models
+@using Microsoft.AspNetCore.Authorization
 @using MongoDB.Bson
 @inject ChatService chatService;
+@attribute [Authorize]
 
 <div class="row">
     <div class="col-3">
@@ -57,10 +59,9 @@
     {
         user = new User
         {
-            username = "Test User",
-            userId = ObjectId.GenerateNewId()
+            Username = "Test User",
+            _id = ObjectId.GenerateNewId().ToString()
         };
-        Console.WriteLine(user.userId.ToString());
         chatService.ConnectToServer();
         chatService.newMessage += this.DisplayNewMessage;
         chatService.newMessageFragment += this.DisplayNewMessageFragment;
@@ -81,7 +82,7 @@
         {
             Console.WriteLine("Sending message:" + messageText);
             newMessage.message = messageText;
-            newMessage.authorID = user.userId.ToString();
+            newMessage.authorID = user._id.ToString();
             chatService.SendMessage(newMessage, ChatRoomIdTemp);
             messageText = "";
             newMessage.message = "";
@@ -95,7 +96,7 @@
         if (isConnectedToChatRoom)
         {
             newMessageFragment.message = messageText;
-            newMessageFragment.authorIdString = user.userId.ToString();
+            newMessageFragment.authorIdString = user._id.ToString();
             chatService.SendMessageFragment(newMessageFragment, ChatRoomIdTemp);  
         }
     }

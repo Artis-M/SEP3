@@ -1,12 +1,9 @@
-using System;
-using System.Net.Http;
-using System.Collections.Generic;
+
 using System.Threading.Tasks;
-using System.Text;
+using Application.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Services;
 
 namespace ChatClient
@@ -18,7 +15,9 @@ namespace ChatClient
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
             builder.Services.AddSingleton<ChatService>();
-            builder.Services.AddSingleton<LoginService, LoginServiceImp>();
+            builder.Services.AddSingleton<IAccountService, AccountService>();
+            builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProvider>();
+            builder.Services.AddAuthorizationCore();
             await builder.Build().RunAsync();
         }
     }

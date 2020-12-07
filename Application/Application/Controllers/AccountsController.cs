@@ -35,46 +35,34 @@ namespace Application.Controllers
         }
         
         [HttpGet]
-        [Route("{username}/{password}")]
-        public async Task<ActionResult<IList<Account>>> GetAccount([FromRoute] string username,[FromRoute] string password)
+        [Route("login/")]
+        public async Task<ActionResult<Account>> GetAccount([FromQuery] string username, [FromQuery] string password)
         {
-            try
+            // try
+            // {
+            //     Account account = await AccountService.RequestAccount(username);
+            //     IList<Account> accounts = new List<Account>();
+            //     accounts.Add(account);
+            //     return Ok(accounts);
+            // }
+            // catch (Exception e)
+            // {
+            //     Console.WriteLine(e);
+            //     return StatusCode(500, e.Message);
+            // }
+            Console.WriteLine("Sanity Check");
+            Account account = await AccountService.RequestAccount(username);
+            if (account == null)
             {
-                Console.Out.WriteLine(password);
-                Account account = await AccountService.RequestAccount(username);
-                IList<Account> accounts = new List<Account>();
-                accounts.Add(account);
-                return Ok(accounts);
+                return NotFound();
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return StatusCode(500, e.Message);
+            if (account.Pass != password)
+            {   
+                return NotFound();
             }
+            return Ok(account);
         }
         
-        
-
-        /* Gives an error when launching - Application.Controllers.AccountsController.LogIn (Application)' has more than one parameter that was specified or inferred as bound from request body. Only one param
-         eter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be b
-         ound from body:" */
-       
-        /*[HttpGet]
-        [Route("{username, password}")]
-         public async Task<ActionResult<Account>> LogIn([FromRoute] string username, [FromRoute] string password)
-         {
-             try
-             {
-                 Account account = await AccountService.LogIn(username, password);
-                 return Ok(account);
-             }
-             catch (Exception e)
-             {
-                 Console.WriteLine(e);
-                 return StatusCode(500, e.Message);
-             }
-         }*/
-
         [HttpPost]
         public async Task<ActionResult> Register([FromBody] Account account)
         {
