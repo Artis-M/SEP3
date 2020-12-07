@@ -27,22 +27,27 @@ namespace Services
             byte[] passwordBytes = Encoding.ASCII.GetBytes(password);
             byte[] hashedBytes = sha.ComputeHash(passwordBytes);
             string hashedPassword = Convert.ToBase64String(hashedBytes);
-            Console.WriteLine($"HashedPass:{hashedPassword}");
+            //Console.WriteLine($"HashedPass:{hashedPassword}");
 
             string request = $"login/?username={username}&password={hashedPassword}";
-            Console.WriteLine(uri+request);
+            //Console.WriteLine(uri+request);
                 
+            
+            
            HttpResponseMessage responseMessage = await http.GetAsync(request);
-           Console.WriteLine(await responseMessage.Content.ReadAsStringAsync());
+           Console.Out.WriteLine(responseMessage.StatusCode);
+           Account account = null;
            if (responseMessage.StatusCode == HttpStatusCode.OK)
            {
-               Account account = JsonSerializer.Deserialize<Account>(await responseMessage.Content.ReadAsStringAsync());
-               return account;
+               account = JsonSerializer.Deserialize<Account>(await responseMessage.Content.ReadAsStringAsync());
+               
            }
-           else
+            if (responseMessage.StatusCode == HttpStatusCode.NotFound)
            {
                throw new Exception("Incorrect username or password!");
            }
+            return account;
+            
         }
 
         public async Task Register(Account account)
