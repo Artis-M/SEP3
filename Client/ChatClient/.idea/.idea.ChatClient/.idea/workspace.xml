@@ -23,12 +23,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Application/Application/Controllers/AccountsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Controllers/AccountsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Controllers/ChatroomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Controllers/ChatroomsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Models/Account.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Models/Account.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Models/Model.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Models/Model.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Application/Application/Models/ModelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Models/ModelManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/SCMediator/ChatServiceImp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/SCMediator/ChatServiceImp.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Application/Application/SCMediator/ClientHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/SCMediator/ClientHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Services/AccountsServiceImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Services/AccountsServiceImpl.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Application/Application/Services/ChatroomServiceImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Services/ChatroomServiceImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Services/IAccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Services/IAccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Services/TopicsService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Services/TopicsService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ChatClient/.idea/.idea.ChatClient.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../ChatClient/.idea/.idea.ChatClient.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Database/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/DatabaseApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/DatabaseApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Mediator/ServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Mediator/ServiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Model/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/ChatroomDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/ChatroomDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/ChatroomDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/ChatroomDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/TopicDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/TopicDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/UserDAOImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,9 +54,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/ChatClient/Models/Message.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Models/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Models/User.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Models/Message.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -54,16 +69,17 @@
         <option value="$PROJECT_DIR$/ChatClient/Services/ChatService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/Message.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/LoginServiceImp.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Models/User.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/UserList.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Models/Account.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Services/IAccountService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/Index.razor" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/LoginRedirect.razor" />
         <option value="$PROJECT_DIR$/ChatClient/App.razor" />
+        <option value="$PROJECT_DIR$/ChatClient/Services/IAccountService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Program.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Authentication/AuthenticationProvider.cs" />
+        <option value="$PROJECT_DIR$/ChatClient/Pages/Register.razor" />
+        <option value="$PROJECT_DIR$/ChatClient/Models/User.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/Login.razor" />
+        <option value="$PROJECT_DIR$/ChatClient/Models/Account.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/AccountServiceImp.cs" />
       </list>
     </option>
@@ -77,6 +93,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -135,6 +157,9 @@
       <workItem from="1607082158256" duration="603000" />
       <workItem from="1607329208839" duration="1314000" />
       <workItem from="1607330582593" duration="5225000" />
+      <workItem from="1607336487112" duration="3673000" />
+      <workItem from="1607346702289" duration="3827000" />
+      <workItem from="1607420446489" duration="815000" />
     </task>
     <servers />
   </component>
@@ -167,21 +192,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607018705663" />
-    <state width="1877" height="212" key="GridCell.Tab.0.bottom" timestamp="1607335994816">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1478" height="207" key="GridCell.Tab.0.bottom" timestamp="1607355996979">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1478" height="207" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607355996979" />
     <state width="1877" height="212" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607335994816" />
-    <state width="1877" height="212" key="GridCell.Tab.0.center" timestamp="1607335994815">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1478" height="207" key="GridCell.Tab.0.center" timestamp="1607355996979">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1478" height="207" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1607355996979" />
     <state width="1877" height="212" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607335994815" />
-    <state width="1877" height="212" key="GridCell.Tab.0.left" timestamp="1607335994815">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1478" height="207" key="GridCell.Tab.0.left" timestamp="1607355996979">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1478" height="207" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1607355996979" />
     <state width="1877" height="212" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607335994815" />
-    <state width="1877" height="212" key="GridCell.Tab.0.right" timestamp="1607335994815">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1478" height="207" key="GridCell.Tab.0.right" timestamp="1607355996979">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1478" height="207" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1607355996979" />
     <state width="1877" height="212" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607335994815" />
     <state x="552" y="251" key="Rider.ProjectTemplateDialog.Size" timestamp="1606854494127">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -195,5 +224,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1607012756697" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1607336939164">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1607336939164" />
   </component>
 </project>

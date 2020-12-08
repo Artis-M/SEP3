@@ -10,6 +10,7 @@ import org.bson.types.ObjectId;
 import sep3.database.Model.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static com.mongodb.client.model.Projections.include;
 
@@ -102,6 +103,43 @@ public class ChatroomDAOImpl implements ChatroomDAO{
 
     @Override
     public void AddChatroom(Chatroom chatroom) {
+        Document add = new Document();
+        ObjectId _id = new ObjectId(chatroom.get_id());
+        add.append("_id",_id);
+        add.append("name",chatroom.getName());
+        if(chatroom.getTopics().size()!=0) {
+            Document topics = new Document();
+            for (var topic : chatroom.getTopics()
+            ) {
+                ObjectId topicID = new ObjectId(topic.get_id());
+                topics.append("$set", new BasicDBObject().append("topics", topicID));
+            }
+            add.append("topics", Arrays.asList(topics));
+        }
+        if(chatroom.getParticipants().size()!=0) {
+            Document friends = new Document();
+            for (var friend : chatroom.getParticipants()
+            ) {
+                ObjectId friendId = new ObjectId(friend.get_id());
+                friends.append("$set", new BasicDBObject().append("participants", friendId));
+            }
+            add.append("participants",Arrays.asList(friends));
+        }
+        if(chatroom.getMessages().size()!=0) {
+            Document messages = new Document();
+            for (var message : chatroom.getMessages()
+            ) {
+                BasicDBObject DBmessage = new BasicDBObject();
+                ObjectId authorId = new ObjectId(message.getAuthorID());
+                ObjectId messageId = new ObjectId(message.getMessage());
+                DBmessage.append("AuthorId",authorId);
+                DBmessage.append("messageId",messageId);
+                DBmessage.append("message",message.getMessage());
+                messages.append("$set", new BasicDBObject().append("messages", DBmessage));
+            }
+            add.append("participants",Arrays.asList(messages));
+        }
+        collection.insertOne(add);
 
     }
 
@@ -116,7 +154,37 @@ public class ChatroomDAOImpl implements ChatroomDAO{
     }
 
     @Override
-    public void getChatroom(String name) {
+    public Chatroom getChatroom(String id) {
+        BasicDBObject whereQuery = new BasicDBObject();
+        ObjectId _id = new ObjectId(id);
+        whereQuery.append("_id", _id);
+        Chatroom chat = null;
+        try {
+            Document cursor = collection.find(whereQuery).first();
+            String json = cursor.toJson();
+            chat = gson.fromJson(json, Chatroom.class);
+        }catch (Exception e)
+        {
+            return null;
+        }
 
+        return chat;
+
+    }
+
+    @Override
+    public ArrayList<Chatroom> getChatroomByUserId(String userId) {
+        ArrayList<Chatroom> chatRooms = new ArrayList<>();
+        BasicDBObject whereQuery = new BasicDBObject();
+        ObjectId _id = new ObjectId(userId);
+        whereQuery.append("participants", _id);
+        MongoCursor<Document> documents = collection.find(whereQuery).iterator();
+        while(documents.hasNext())
+        {
+            String json = documents.next().toJson();
+            Chatroom room = gson.fromJson(json,Chatroom.class);
+            chatRooms.add(room);
+        }
+        return chatRooms;
     }
 }

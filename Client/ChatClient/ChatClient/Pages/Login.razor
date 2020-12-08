@@ -12,6 +12,7 @@
     <input type="password" @bind="@password"/>
     <button @onclick="@LoginRequest">Login</button>
     <label>@errorMessage</label>
+    <button @onclick="@register">Register</button>
 </NotAuthorized>
 </AuthorizeView>
 
@@ -27,12 +28,21 @@
         {
             await ((AuthenticationProvider)AuthenticationStateProvider).ValidateLogin(username, password);
             username = "";
-            password = "";
+            
             navigation.NavigateTo("");
         }
         catch (Exception e)
         {
+            //Console.Out.WriteLine("error");
             errorMessage = e.Message;
+            
         }
+        password = "";
     }
+
+    public async Task register()
+    {
+        navigation.NavigateTo("register", true);
+    }
+        
 }

@@ -32,13 +32,13 @@ public class Account extends User{
         this.topics = new ArrayList<>();
         this.email=email;
         this.role=role;
-        this.Pass=Pass;
+        this.Pass =Pass;
     }
 
     public Account(String role,String Pass,String username, String fname, String lname,String email) {
         super(username, fname, lname);
         this.role=role;
-        this.Pass=Pass;
+        this.Pass =Pass;
         this.email=email;
         friends = new ArrayList<>();
         this.topics = new ArrayList<>();
@@ -94,7 +94,7 @@ public class Account extends User{
     }
 
     public void setPass(String pass) {
-        Pass = pass;
+        this.Pass = pass;
     }
 
 }

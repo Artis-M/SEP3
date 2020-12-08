@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.Models;
 using Application.SCMediator;
@@ -14,7 +15,7 @@ namespace Application.Services
         public AccountsServiceImpl(Model modelManager)
         {
             this.model = modelManager;
-            this.Accounts = new List<Account>();
+            
         }
 
         public async Task Register(Account account)
@@ -54,22 +55,20 @@ namespace Application.Services
 
             await model.RemoveUser(accountID);
         }
+        
+        public async Task RequestAccounts()
+        {
+             Accounts = await model.RequestUsers();
+        }
 
         public async Task<IList<Account>> GetAllAccounts()
         {
             await RequestAccounts();
-            Console.Out.WriteLine(Accounts.Count);
             return Accounts;
         }
-        public async Task<List<Account>> RequestAccounts()
-        {
-            return await model.RequestUsers();
-        }
-
         public async Task SetListOfAccounts(List<Account> accounts)
-        {
+        { 
             this.Accounts = accounts;
-
         }
 
         public async Task<Account> RequestAccount(string username)

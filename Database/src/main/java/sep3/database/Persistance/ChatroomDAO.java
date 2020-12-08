@@ -9,5 +9,6 @@ public interface ChatroomDAO {
     void AddChatroom (Chatroom chatroom);
     void deleteChatroom(Chatroom chatroom);
     void updateChatroom(Chatroom chatroom);
-    void getChatroom(String name);
+    Chatroom getChatroom(String id);
+    ArrayList<Chatroom> getChatroomByUserId(String userId);
 }

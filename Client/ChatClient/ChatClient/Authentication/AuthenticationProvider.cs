@@ -62,7 +62,7 @@ using Microsoft.JSInterop;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.InnerException);
+                throw new Exception(e.Message);
             }
 
             NotifyAuthenticationStateChanged(

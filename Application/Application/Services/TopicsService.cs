@@ -23,6 +23,7 @@ namespace Application.Services
         public async Task RemoveTopic(Topic topic)
         {
             Topics.Remove(topic);
+            await Model.DeleteTopic(topic._id);
         }
 
         public async Task<IList<Topic>> GetAllTopics()

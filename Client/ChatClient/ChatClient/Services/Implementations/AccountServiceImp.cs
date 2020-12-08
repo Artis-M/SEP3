@@ -22,32 +22,50 @@ namespace Services
             {
                 BaseAddress = new Uri(uri)
             };
-            
             SHA384CryptoServiceProvider sha = new SHA384CryptoServiceProvider();
             byte[] passwordBytes = Encoding.ASCII.GetBytes(password);
             byte[] hashedBytes = sha.ComputeHash(passwordBytes);
             string hashedPassword = Convert.ToBase64String(hashedBytes);
             Console.WriteLine($"HashedPass:{hashedPassword}");
-
-            string request = $"login/?username={username}&password={hashedPassword}";
-            Console.WriteLine(uri+request);
-                
+            string request = $"login";
+            
+            http.DefaultRequestHeaders.Add("username", username);
+            http.DefaultRequestHeaders.Add("password", hashedPassword);
+            
+            
            HttpResponseMessage responseMessage = await http.GetAsync(request);
-           Console.WriteLine(await responseMessage.Content.ReadAsStringAsync());
+           //Console.Out.WriteLine(responseMessage.StatusCode);
+           Account account = null;
            if (responseMessage.StatusCode == HttpStatusCode.OK)
            {
-               Account account = JsonSerializer.Deserialize<Account>(await responseMessage.Content.ReadAsStringAsync());
-               return account;
+               account = JsonSerializer.Deserialize<Account>(await responseMessage.Content.ReadAsStringAsync());
+               
            }
-           else
+            if (responseMessage.StatusCode == HttpStatusCode.NotFound)
            {
                throw new Exception("Incorrect username or password!");
            }
+            return account;
+            
         }
 
-        public Task Register(string username, string password)
+        public async Task Register(Account account)
         {
-            throw new System.NotImplementedException();
+            
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            
+            SHA384CryptoServiceProvider sha = new SHA384CryptoServiceProvider();
+            byte[] passwordBytes = Encoding.ASCII.GetBytes(account.Pass);
+            byte[] hashedBytes = sha.ComputeHash(passwordBytes);
+            account.Pass = Convert.ToBase64String(hashedBytes);
+            
+            string serialized = JsonSerializer.Serialize(account);
+            StringContent content = new StringContent(serialized,Encoding.UTF8,"application/json");
+            HttpResponseMessage responseMessage = await http.PostAsync(uri+"register", content);
+            Console.WriteLine(responseMessage.ToString());
         }
     }
 }

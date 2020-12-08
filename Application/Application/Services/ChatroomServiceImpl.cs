@@ -30,11 +30,12 @@ namespace Application.Services.Implementations
 
         public async Task requestChatrooms()
         {
-            await model.RequestChatrooms();
+            Chatrooms = await model.RequestChatrooms();
         }
 
         public async Task<IList<Chatroom>> GetAllChatrooms()
         {
+            await requestChatrooms();
             return Chatrooms;
         }
 
@@ -51,10 +52,11 @@ namespace Application.Services.Implementations
                 if (VARIABLE.id.Equals(ChatroomID))
                 {
                     Chatrooms.Remove(VARIABLE);
+                    await model.DeleteChatroom(ChatroomID);
                 }
             }
 
-            await model.DeleteChatroom(ChatroomID);
+           
         }
 
         public async Task SendMessage(string ChatroomID, Message message)
@@ -64,10 +66,11 @@ namespace Application.Services.Implementations
                 if (VARIABLE.id.Equals(ChatroomID))
                 {
                     VARIABLE.addMessage(message);
+                    await model.SendMessage(message, ChatroomID);
                 }
             }
 
-            await model.SendMessage(message, ChatroomID);
+          
         }
 
         public async Task AddUser(string ChatRoomID, User user)
