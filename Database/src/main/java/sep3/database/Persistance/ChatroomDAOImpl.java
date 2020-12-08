@@ -40,6 +40,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         room.set_id(id);
         room.setName(document.get("name").toString());
         List<Document> messages = (List<Document>) document.get("messages");
+
         if(messages.size()!=0) {
             for (var DBmessage : messages
             ) {
@@ -47,16 +48,13 @@ public class ChatroomDAOImpl implements ChatroomDAO {
                         DBmessage.get("message").toString(),
                         DBmessage.get("AuthorId").toString(), DBmessage.get("messageId").toString());
                 room.addMessage(message);
-
             }
         }
 
         ArrayList<User> participants = getChatroomUsers(id);
-        System.out.println(participants);
         room.setParticipants(participants);
         ArrayList<Topic> topics = getChatroomTopic(id);
         room.setTopics(topics);
-
         return room;
     }
 
@@ -198,14 +196,22 @@ public class ChatroomDAOImpl implements ChatroomDAO {
     public ArrayList<Chatroom> getChatroomByUserId(String userId) {
         ArrayList<Chatroom> chatRooms = new ArrayList<>();
         BasicDBObject whereQuery = new BasicDBObject();
+        BasicDBObject participant = new BasicDBObject();
+
         ObjectId _id = new ObjectId(userId);
-        whereQuery.append("participants", _id);
+        participant.append("participantId",_id);
+        whereQuery.append("participants", participant);
         MongoCursor<Document> documents = collection.find(whereQuery).iterator();
+        System.out.println(documents.hasNext());
+
         while (documents.hasNext()) {
-            String json = documents.next().toJson();
-            Chatroom room = gson.fromJson(json, Chatroom.class);
+            Document json = documents.next();
+            System.out.println("Json");
+            System.out.println(json);
+            Chatroom room = createChatroom(json);
             chatRooms.add(room);
         }
+       // System.out.println(chatRooms);
         return chatRooms;
     }
 }
