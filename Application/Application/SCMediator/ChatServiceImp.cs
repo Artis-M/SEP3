@@ -28,7 +28,7 @@ namespace Application.SCMediator
             try
             {
                 Client = new TcpClient(ip, port);
-                clientHandler = new ClientHandler(stream, Client, modelManager);
+                //clientHandler = new ClientHandler(stream, Client, modelManager);
             }
             catch (Exception e)
             {
