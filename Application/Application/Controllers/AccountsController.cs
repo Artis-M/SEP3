@@ -27,8 +27,9 @@ namespace Application.Controllers
         {
             try
             {
-              await AccountService.RequestAccounts();
-                return Ok(AccountService.GetAllAccounts());
+            //  await AccountService.RequestAccounts();
+              IList<Account> accounts = await AccountService.GetAllAccounts();
+                return Ok(accounts);
             }
             catch (Exception e)
             {
@@ -107,6 +108,7 @@ namespace Application.Controllers
         [Route("register")]
         public async Task<ActionResult> Register([FromBody] Account account)
         {
+            
             if (!ModelState.IsValid)
             {
                 Console.WriteLine("Bad Object");

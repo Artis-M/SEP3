@@ -15,7 +15,7 @@ namespace Application.Services
         public AccountsServiceImpl(Model modelManager)
         {
             this.model = modelManager;
-            
+            Accounts = new List<Account>();
         }
 
         public async Task Register(Account account)
