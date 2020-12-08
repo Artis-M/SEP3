@@ -28,7 +28,6 @@
         {
             await ((AuthenticationProvider)AuthenticationStateProvider).ValidateLogin(username, password);
             username = "";
-            
             navigation.NavigateTo("");
         }
         catch (Exception e)

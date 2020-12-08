@@ -109,6 +109,7 @@ namespace Application.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Console.WriteLine("Bad Object");
                 return BadRequest(ModelState);
             }
 
@@ -120,6 +121,7 @@ namespace Application.Controllers
             }
             catch (Exception e)
             {
+                Console.WriteLine("wat");
                 Console.WriteLine(e);
                 return StatusCode(500, e.Message);
             }

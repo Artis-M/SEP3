@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Models;
 
@@ -8,6 +9,7 @@ namespace Application.Services.Implementations
     {
         public List<Chatroom> Chatrooms { get; set; }
         public Application.Models.Model model;
+        private IChatroomService _chatroomServiceImplementation;
 
         public ChatroomServiceImpl(Model modelManager)
         {
@@ -31,6 +33,21 @@ namespace Application.Services.Implementations
         public async Task requestChatrooms()
         {
             Chatrooms = await model.RequestChatrooms();
+        }
+
+        public async Task<List<Chatroom>> GetChatroomByUserID(string id)
+        {
+            List<Chatroom> ChatroomsForUser = await model.RequestChatrooms();
+            List<Chatroom> UsersChatrooms = new List<Chatroom>();
+            foreach (var item in ChatroomsForUser)
+            {
+               User user = item.participants.Users.First(user => user._id.Equals(id));
+               if (user != null)
+               {
+                   UsersChatrooms.Add(item);
+               }
+            }
+            return UsersChatrooms;
         }
 
         public async Task<IList<Chatroom>> GetAllChatrooms()

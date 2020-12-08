@@ -10,7 +10,7 @@ namespace Application.Services
         public Task<Chatroom> GetChatroomByID(string ID);
         public Task requestChatrooms();
 
-
+        public Task<List<Chatroom>> GetChatroomByUserID(string id);
         public Task<IList<Chatroom>> GetAllChatrooms();
 
         public Task AddNewChatroom(Chatroom chatroom);

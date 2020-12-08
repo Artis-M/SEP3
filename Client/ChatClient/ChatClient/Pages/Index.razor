@@ -3,17 +3,29 @@
 @using global::Models
 @using ChatClient.Models
 @using Microsoft.AspNetCore.Authorization
-@using MongoDB.Bson
+@using System.Text.Json
+@using Tier2.Model
+@using System.Runtime.CompilerServices
+@using Microsoft.AspNetCore.Connections
 @inject ChatService chatService;
+@inject IChatroomService chatroomService;
+@inject IJSRuntime JsRuntime;
 @attribute [Authorize]
 
 <div class="row">
     <div class="col-3">
-          <NavLink class="nav-link" href="/login">
-                        <span class="oi oi-home" aria-hidden="true"></span> LoginTest
-                    </NavLink>
-        <input style="width: 50%" type="text" @bind="@ChatRoomIdTemp">
-        <button @onclick="@JoinChatRoom">Join ChatRoom</button>
+          @if (Chatrooms.Any())
+          {
+              @foreach (var item in Chatrooms)
+              {
+                  <div class="row">
+                      <div class="cold-12">
+                          <button type="button" @onclick="() => JoinChatRoom(item.ID)">@item.Name</button>
+                      </div>
+                      </div>
+              }
+          }
+        
     </div>
     <div class="col-6">
         <div style="overflow-y: scroll"> 
@@ -46,8 +58,9 @@
 </div>
 @code
 {
+    private List<Chatroom> Chatrooms = new List<Chatroom>();
+    private Chatroom currentChatroom = null;
     private string messageText;
-    private string ChatRoomIdTemp;
     private bool isConnectedToChatRoom = false;
     private User user;
     private Message newMessage = new Message(null, null, null);
@@ -57,24 +70,28 @@
 
     protected override async Task OnInitializedAsync()
     {
-        user = new User
+        string userAsJson = await JsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
+        if (!string.IsNullOrEmpty(userAsJson))
         {
-            Username = "Test User",
-            _id = ObjectId.GenerateNewId().ToString()
-        };
+            user = JsonSerializer.Deserialize<User>(userAsJson);
+            GetUsersChatRooms();
+        }
         chatService.ConnectToServer();
         chatService.newMessage += this.DisplayNewMessage;
         chatService.newMessageFragment += this.DisplayNewMessageFragment;
     }
 
-    public async Task JoinChatRoom()
+    public async Task GetUsersChatRooms()
     {
-        if (!(ChatRoomIdTemp.Equals("")))
-        {
-            Console.WriteLine("what");
-            await chatService.JoinChatRoom(ChatRoomIdTemp);
+        Chatrooms = await chatroomService.GetUsersChatrooms();
+    }
+    
+    public async Task JoinChatRoom(string ChatroomId)
+    {
+            Console.WriteLine($"Connected to chatroom: {ChatroomId}");
+            currentChatroom = Chatrooms.First(chatroom => chatroom.ID.Equals(ChatroomId));
+            await chatService.JoinChatRoom(ChatroomId);
             isConnectedToChatRoom = true;
-        }
     }
     public void sendMessage()
     {
@@ -83,7 +100,7 @@
             Console.WriteLine("Sending message:" + messageText);
             newMessage.message = messageText;
             newMessage.authorID = user._id.ToString();
-            chatService.SendMessage(newMessage, ChatRoomIdTemp);
+            chatService.SendMessage(newMessage, currentChatroom.ID);
             messageText = "";
             newMessage.message = "";
             newMessageFragment.message = "";
@@ -97,7 +114,7 @@
         {
             newMessageFragment.message = messageText;
             newMessageFragment.authorIdString = user._id.ToString();
-            chatService.SendMessageFragment(newMessageFragment, ChatRoomIdTemp);  
+            chatService.SendMessageFragment(newMessageFragment, currentChatroom.ID);  
         }
     }
 

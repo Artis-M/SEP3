@@ -16,6 +16,7 @@ namespace ChatClient
             builder.RootComponents.Add<App>("app");
             builder.Services.AddSingleton<ChatService>();
             builder.Services.AddSingleton<IAccountService, AccountService>();
+            builder.Services.AddSingleton<IChatroomService, ChatroomServiceImp>();
             builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProvider>();
             builder.Services.AddAuthorizationCore();
             await builder.Build().RunAsync();

@@ -58,7 +58,27 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+        [HttpGet]
+        [Route("user/chatrooms/{id}")]
+        public async Task<ActionResult<Chatroom>> GetChatRoomsByUserId([FromRoute] string id)
+        {
+            List<Chatroom> chatrooms = await chatroomService.GetChatroomByUserID(id);
+            try
+            {
+                
+                if (chatrooms == null)
+                {
+                    return NotFound();
+                }
 
+                return Ok(chatrooms);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
         [HttpPost]
         [Route("Add")]
         public async Task<ActionResult> AddNewChatroom([FromBody] Chatroom chatroom)
