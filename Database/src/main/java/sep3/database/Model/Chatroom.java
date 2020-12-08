@@ -11,6 +11,9 @@ public class Chatroom {
 
 
     public Chatroom() {
+        participants = new ArrayList<>();
+        messages = new ArrayList<>();
+        topics = new ArrayList<>();
     }
 
     public Chatroom(String _id, String name, ArrayList<User> participants, ArrayList<Message> messages, ArrayList<Topic> topics) {
@@ -92,5 +95,16 @@ public class Chatroom {
 
     public void setTopics(ArrayList<Topic> topics) {
         this.topics = topics;
+    }
+
+    @Override
+    public String toString() {
+        return "Chatroom{" +
+                "_id='" + _id + '\'' +
+                ", name='" + name + '\'' +
+                ", participants=" + participants +
+                ", messages=" + messages +
+                ", topics=" + topics +
+                '}';
     }
 }

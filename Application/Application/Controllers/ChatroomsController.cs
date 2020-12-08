@@ -18,6 +18,7 @@ namespace Application.Controllers
 
         public ChatroomsController(IChatroomService chatroomService)
         {
+            
             this.chatroomService = chatroomService;
         }
 
