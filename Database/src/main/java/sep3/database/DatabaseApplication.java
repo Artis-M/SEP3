@@ -7,6 +7,8 @@ import sep3.database.Model.Account;
 import sep3.database.Model.Chatroom;
 import sep3.database.Model.Message;
 import sep3.database.Model.User;
+import sep3.database.Persistance.ChatroomDAO;
+import sep3.database.Persistance.ChatroomDAOImpl;
 import sep3.database.Persistance.UserDAO;
 import sep3.database.Persistance.UserDAOImpl;
 
@@ -18,12 +20,10 @@ public class DatabaseApplication
 
     public static void main(String[] args) throws IOException
     {
-/*        ServiceController controller = new ServiceController();
+     ServiceController controller = new ServiceController();
         Thread t1 = new Thread(controller);
-        t1.start();*/
-        Chatroom chatroom = new Chatroom();
-        Message message = new Message("This is a message",);
-        chatroom.addMessage();
+        t1.start();
+
 
 
     }
