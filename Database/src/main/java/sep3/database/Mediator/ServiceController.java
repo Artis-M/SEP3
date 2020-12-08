@@ -86,7 +86,7 @@ public class ServiceController implements Runnable
                     System.out.println("Add new User");
                     Account account = gson.fromJson(commandLine.getSpecificOrder(), Account.class);
                     userDAO.addAccount(account);
-                } else if (commandLine.getCommand().equals("REQUEST-Chatroom-All"))
+                } else if (commandLine.getCommand().equals("REQUEST-Chatroom-ALL"))
                 {
                     CommandLine commandLine1 = new CommandLine();
                     String response = gson.toJson(chatroomDAO.getAllChatrooms());

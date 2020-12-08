@@ -9,7 +9,7 @@ namespace Application.Models
     {
         public string id { get; set; }
         public string name { get; set; }
-        public TopicList topics { get; set; }
+        public List<Topic> topics { get; set; }
         public List<Message> messages { get; set; }
         public List<User> participants { get; set; }
 
@@ -31,7 +31,7 @@ namespace Application.Models
             this.id = id;
             this.name = name;
             this.participants = participants;
-            this.topics = new TopicList();
+            this.topics = new List<Topic>();
         }
 
         public Chatroom(string id, string name, List<User> participants, List<Message> messages, TopicList topics)
@@ -40,7 +40,7 @@ namespace Application.Models
             this.name = name;
             this.participants = participants;
             this.messages = messages;
-            this.topics = new TopicList();
+            this.topics = new List<Topic>();
         }
 
         public Chatroom(string id, string name, List<User> participants)

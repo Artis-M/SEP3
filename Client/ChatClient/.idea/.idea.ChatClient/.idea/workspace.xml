@@ -22,14 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Controllers/ChatroomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Controllers/ChatroomsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Models/Chatroom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Models/Chatroom.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Models/MessageList.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Models/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Services/ChatroomServiceImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Services/ChatroomServiceImpl.cs" afterDir="false" />
-    </list>
+    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -149,6 +142,7 @@
       <workItem from="1607417974880" duration="2870000" />
       <workItem from="1607421027890" duration="2536000" />
       <workItem from="1607423964449" duration="2631000" />
+      <workItem from="1607427174125" duration="252000" />
     </task>
     <servers />
   </component>
