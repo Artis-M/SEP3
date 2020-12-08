@@ -11,8 +11,6 @@ namespace Application.Services
     {
         public List<Account> Accounts { get; set; }
         public Model model;
-        private bool wait=false;
-        private AutoResetEvent waiter = new AutoResetEvent(false);
 
         public AccountsServiceImpl(Model modelManager)
         {
@@ -60,24 +58,17 @@ namespace Application.Services
         
         public async Task RequestAccounts()
         {
-             await model.RequestUsers();
+             Accounts = await model.RequestUsers();
         }
 
         public async Task<IList<Account>> GetAllAccounts()
         {
-            Console.WriteLine("Before await RequestAccounts");
             await RequestAccounts();
-            Console.WriteLine("Awaiting Write Line");
-            waiter.WaitOne();
-            Console.WriteLine("WERE RETURNING");
             return Accounts;
         }
         public async Task SetListOfAccounts(List<Account> accounts)
         { 
             this.Accounts = accounts;
-            Console.WriteLine("Before waiter reset");
-            waiter.Set();
-            Console.WriteLine("After waiter reset");
         }
 
         public async Task<Account> RequestAccount(string username)
