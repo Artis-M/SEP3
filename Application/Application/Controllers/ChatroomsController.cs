@@ -18,7 +18,6 @@ namespace Application.Controllers
 
         public ChatroomsController(IChatroomService chatroomService)
         {
-            
             this.chatroomService = chatroomService;
         }
 
@@ -27,8 +26,7 @@ namespace Application.Controllers
         {
             try
             {
-                
-               IList<Chatroom> chatrooms = await chatroomService.GetAllChatrooms();
+                IList<Chatroom> chatrooms = await chatroomService.GetAllChatrooms();
                 return Ok(chatrooms);
             }
             catch (Exception e)
@@ -45,14 +43,12 @@ namespace Application.Controllers
             Chatroom chatroom = await chatroomService.GetChatroomByID(id);
             try
             {
-                
                 if (chatroom == null)
                 {
                     return NotFound();
                 }
 
                 return chatroom;
-
             }
             catch (Exception e)
             {
@@ -60,18 +56,22 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
         [HttpGet]
         [Route("user/chatrooms/{id}")]
         public async Task<ActionResult<List<Chatroom>>> GetChatRoomsByUserId([FromRoute] string id)
         {
             Console.WriteLine("Chatrooms requested.");
+          
             List<Chatroom> chatrooms = await chatroomService.GetChatroomByUserID(id);
+
             try
             {
                 if (chatrooms == null)
                 {
                     return NotFound();
                 }
+
                 return Ok(chatrooms);
             }
             catch (Exception e)
@@ -80,6 +80,7 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
         [HttpPost]
         [Route("add")]
         public async Task<ActionResult> AddNewChatroom([FromBody] Chatroom chatroom)
@@ -94,7 +95,7 @@ namespace Application.Controllers
             {
                 Console.WriteLine($"Creating new chatroom {chatroom.name}");
                 await chatroomService.AddNewChatroom(chatroom);
-                return Created($"/{chatroom.id}", chatroom);
+                return Created($"/{chatroom._id}", chatroom);
             }
             catch (Exception e)
             {
@@ -137,12 +138,12 @@ namespace Application.Controllers
 
         [HttpPatch]
         [Route("/addUser/{id}")]
-        public async Task<ActionResult<Message>> AddUser([FromBody] User user, [FromRoute] string chatRoomId)
+        public async Task<ActionResult<Message>> JoinChatroom([FromBody] string userID, [FromRoute] string chatRoomId)
         {
             try
             {
-                await chatroomService.AddUser(chatRoomId, user);
-                return Ok("user added: " + user.Username);
+                await chatroomService.AddUser(chatRoomId, userID);
+                return Ok("user added: " + userID);
             }
             catch (Exception e)
             {
@@ -153,12 +154,12 @@ namespace Application.Controllers
 
         [HttpPatch]
         [Route("/removeUser/{id}")]
-        public async Task<ActionResult<Message>> RemoveUser([FromBody] User user, [FromRoute] string chatRoomId)
+        public async Task<ActionResult<Message>> LeaveChatroom([FromBody] string userID, [FromRoute] string chatRoomId)
         {
             try
             {
-                await chatroomService.RemoveUser(chatRoomId, user);
-                return Ok("user removed: " + user.Username);
+                await chatroomService.RemoveUser(chatRoomId, userID);
+                return Ok("user removed: " + userID);
             }
             catch (Exception e)
             {

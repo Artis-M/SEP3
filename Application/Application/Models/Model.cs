@@ -13,6 +13,8 @@ namespace Application.Models
         public Task SendMessage(Message message, string chatroomId);
         public Task AddNewChatroom(Chatroom chatroom);
         public Task UpdateChatroom(Chatroom chatroom);
+        public Task LeaveChatroom(string userID, string chatroomID);
+        public Task JoinChatroom(string userID, string chatroomID);
         public Task DeleteChatroom(string ChatroomID);
         public Task DeleteTopic(string topicID);
         public Task RemoveUser(string userID);
@@ -21,5 +23,6 @@ namespace Application.Models
         public void ProcessChatrooms(string credentialsJson);
         public void ProcessTopics(string credentialsJson);
         public Task<Account> requestAccount(string username);
+        public Task<List<Chatroom>> requestChatroom(string userID);
     }
 }

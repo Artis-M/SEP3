@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.Models;
@@ -20,7 +21,7 @@ namespace Application.Services.Implementations
         {
             foreach (var VARIABLE in Chatrooms)
             {
-                if (VARIABLE.id.Equals(ID))
+                if (VARIABLE._id.Equals(ID))
                 {
                     return VARIABLE;
                 }
@@ -36,16 +37,8 @@ namespace Application.Services.Implementations
 
         public async Task<List<Chatroom>> GetChatroomByUserID(string id)
         {
-            List<Chatroom> ChatroomsForUser = await model.RequestChatrooms();
-            List<Chatroom> UsersChatrooms = new List<Chatroom>();
-            foreach (var item in ChatroomsForUser)
-            {
-               User user = item.participants.First(user => user._id.Equals(id));
-               if (user != null)
-               {
-                   UsersChatrooms.Add(item);
-               }
-            }
+            
+            List<Chatroom> UsersChatrooms = await model.requestChatroom(id);
             return UsersChatrooms;
         }
 
@@ -65,7 +58,7 @@ namespace Application.Services.Implementations
         {
             foreach (var VARIABLE in Chatrooms)
             {
-                if (VARIABLE.id.Equals(ChatroomID))
+                if (VARIABLE._id.Equals(ChatroomID))
                 {
                     Chatrooms.Remove(VARIABLE);
                     await model.DeleteChatroom(ChatroomID);
@@ -79,7 +72,7 @@ namespace Application.Services.Implementations
         {
             foreach (var VARIABLE in Chatrooms)
             {
-                if (VARIABLE.id.Equals(ChatroomID))
+                if (VARIABLE._id.Equals(ChatroomID))
                 {
                     VARIABLE.addMessage(message);
                     await model.SendMessage(message, ChatroomID);
@@ -89,29 +82,20 @@ namespace Application.Services.Implementations
           
         }
 
-        public async Task AddUser(string ChatRoomID, User user)
+        public async Task AddUser(string ChatRoomID,  string userID)
         {
-            foreach (var VARIABLE in Chatrooms)
-            {
-                if (VARIABLE.id.Equals(ChatRoomID))
-                {
-                    VARIABLE.addUser(user);
-                    await model.UpdateChatroom(VARIABLE);
-                }
-            }
            
-        }
+                    // here the chatroom should update so that the user is inside, the one that is sent to all users somehow
+                    await model.JoinChatroom(userID,ChatRoomID);
+                
 
-        public async Task RemoveUser(string ChatRoomID, User user)
+    }
+
+        public async Task RemoveUser(string ChatRoomID,  string userID)
         {
-            foreach (var VARIABLE in Chatrooms)
-            {
-                if (VARIABLE.id.Equals(ChatRoomID))
-                {
-                    await VARIABLE.removeUser(user);
-                    await model.UpdateChatroom(VARIABLE);
-                }
-            }
+            // the chatroom should update so that the user is not inside it anymore
+                    await model.LeaveChatroom(userID,ChatRoomID);
+                
         }
     }
 }

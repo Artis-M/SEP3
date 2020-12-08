@@ -1,14 +1,14 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
- using Application.Models;
+using Application.Models;
 using Application.SCMediator;
 using Application.Services;
- using Application.Services.Implementations;
- using Microsoft.AspNetCore.Identity;
+using Application.Services.Implementations;
+using Microsoft.AspNetCore.Identity;
 
- namespace Application.Models
+namespace Application.Models
 {
     public class ModelManager : Model
     {
@@ -16,20 +16,22 @@ using Application.Services;
         private IAccountService accountService;
         private IChatroomService chatroomService;
         private ITopicsService topicService;
+
         public ModelManager()
         {
-          this.chatServiceImp= new ChatServiceImp(this);
-          this.accountService=new AccountsServiceImpl(this);
-          this.topicService=new TopicsService(this);
-          this.chatroomService=new ChatroomServiceImpl(this);
-
+            this.chatServiceImp = new ChatServiceImp(this);
+            this.accountService = new AccountsServiceImpl(this);
+            this.topicService = new TopicsService(this);
+            this.chatroomService = new ChatroomServiceImpl(this);
         }
 
-        public async Task<List<Chatroom>> RequestChatrooms() {
+        public async Task<List<Chatroom>> RequestChatrooms()
+        {
             return await chatServiceImp.requestChatrooms();
         }
 
-        public async Task<List<Account>> RequestUsers() { 
+        public async Task<List<Account>> RequestUsers()
+        {
             return await chatServiceImp.requestUsers();
         }
 
@@ -52,34 +54,59 @@ using Application.Services;
             await chatServiceImp.sendChatroomUpdate(chatroom);
         }
 
-        public async Task DeleteChatroom(string ChatroomID) {
+        public async Task LeaveChatroom(string userID, string chatroomID)
+        {
+            await chatServiceImp.LeaveChatroom(chatroomID, userID);
+        }
+
+        public async Task JoinChatroom(string userID, string chatroomID)
+        {
+            await chatServiceImp.JoinChatroom(chatroomID, userID);
+        }
+
+        public async Task DeleteChatroom(string ChatroomID)
+        {
             await chatServiceImp.DeleteChatroom(ChatroomID);
         }
-        public async Task DeleteTopic(string TopicID) {
+
+        public async Task DeleteTopic(string TopicID)
+        {
             await chatServiceImp.DeleteTopic(TopicID);
         }
 
-        public async Task RemoveUser(string userID) {
+        public async Task RemoveUser(string userID)
+        {
             await chatServiceImp.DeleteUser(userID);
         }
 
-        public async Task Register(Account account) {
+        public async Task Register(Account account)
+        {
             await chatServiceImp.sendNewUser(account);
         }
 
-        public void ProcessCredentials(string credentialsJson) {
+        public void ProcessCredentials(string credentialsJson)
+        {
             accountService.SetListOfAccounts(JsonSerializer.Deserialize<List<Account>>(credentialsJson));
         }
-        public void ProcessChatrooms(string credentialsJson) {
+
+        public void ProcessChatrooms(string credentialsJson)
+        {
             //chatroomService.Chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(credentialsJson);
         }
-        public void ProcessTopics(string credentialsJson) {
+
+        public void ProcessTopics(string credentialsJson)
+        {
             //topicService.Topics = JsonSerializer.Deserialize<List<Topic>>(credentialsJson);
         }
 
         public async Task<Account> requestAccount(string username)
         {
             return await chatServiceImp.requestUser(username);
+        }
+
+        public async Task<List<Chatroom>> requestChatroom(string userID)
+        {
+            return await chatServiceImp.requestUsersChatroom(userID);
         }
     }
 }

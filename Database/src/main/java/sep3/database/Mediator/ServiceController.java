@@ -96,18 +96,19 @@ public class ServiceController implements Runnable
                     byte[] responseAsBytes = sendBack.getBytes();
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
                     System.out.println("Done sending chatrooms");
-                } else if (commandLine.getCommand().equals("REQUEST-Chatroom"))
+                } else if (commandLine.getCommand().equals("REQUEST-ChatroomByUser"))
                 {
                     CommandLine commandLine1 = new CommandLine();
-                    String response = gson.toJson(chatroomDAO.getChatroom(commandLine1.getVariableChatroom()));
+                    System.out.println(commandLine1.getVariableUser());
+                    String response = gson.toJson(chatroomDAO.getChatroomByUserId(commandLine.getVariableUser()));
                     commandLine1.setSpecificOrder(response);
-                    commandLine1.setCommand("OneChatroom");
+                    commandLine1.setCommand("ChatroomByUser");
                     String sendBack = gson.toJson(commandLine1);
                     byte[] responseAsBytes = sendBack.getBytes();
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
-                    System.out.println("Done sending chatroom with id:" + commandLine1.getVariableChatroom());
+                    System.out.println("Done sending chatroom for user:" + commandLine1.getVariableUser());
                 }
-                
+
 
             }
         } catch (IOException e)

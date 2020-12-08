@@ -16,7 +16,7 @@ namespace Application.Services
         public Task AddNewChatroom(Chatroom chatroom);
         public Task DeleteChatRoom(string ChatroomID);
         public Task SendMessage(string ChatroomID, Message message);
-        public Task AddUser(string ChatRoomID, User user);
-        public Task RemoveUser(string ChatRoomID, User user);
+        public Task AddUser(string ChatRoomID, string userID);
+        public Task RemoveUser(string ChatRoomID,  string userID);
     }
 }

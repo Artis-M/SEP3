@@ -52,10 +52,11 @@ namespace Application.SCMediator
         // ------------------- //
         public async Task sendMessage(Message message, string chatroomID)
         {
+            string messageSerialized = JsonSerializer.Serialize(message);
             CommandLine command = new CommandLine
             {
-                Command = "Message", variableUser = message.authorID, variableChatroom = chatroomID,
-                SpecificOrder = message.message
+                Command = "NewMessage", variableUser = message.authorID, variableChatroom = chatroomID,
+                SpecificOrder = messageSerialized
             };
             await Send(command);
         }
@@ -101,6 +102,12 @@ namespace Application.SCMediator
             CommandLine command = new CommandLine {Command = "TopicUpdate", SpecificOrder = serialTopic};
             await Send(command);
         }
+        public async Task JoinChatroom(string chatroomID, string userID)
+        {
+            CommandLine command = new CommandLine
+                {Command = "JOIN-Chatroom", variableChatroom = chatroomID, variableUser = userID};
+            await Send(command);
+        }
 
         // ------------------- //
         //      deletes       //
@@ -120,6 +127,13 @@ namespace Application.SCMediator
         public async Task DeleteTopic(string topicID)
         {
             CommandLine command = new CommandLine {Command = "DELETE-Topic", SpecificOrder = topicID};
+            await Send(command);
+        }
+
+        public async Task LeaveChatroom(string chatroomID, string userID)
+        {
+            CommandLine command = new CommandLine
+                {Command = "LEAVE-Chatroom", variableChatroom = chatroomID, variableUser = userID};
             await Send(command);
         }
 
@@ -148,9 +162,10 @@ namespace Application.SCMediator
             }
         }
 
-        public async Task<Chatroom> requestChatroom(string id)
+        public async Task<List<Chatroom>> requestUsersChatroom(string id)
         {
-            CommandLine command = new CommandLine {Command = "REQUEST-Chatroom", variableChatroom = id};
+            CommandLine command = new CommandLine {Command = "REQUEST-ChatroomByUser", variableUser = id};
+
             await Send(command);
             /* move out */
             byte[] dataFromServer = new byte[4048];
@@ -159,10 +174,10 @@ namespace Application.SCMediator
             Console.WriteLine(response);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
             /* to here */
-            if (upsdelivery.Command.Equals("OneChatroom"))
+            if (upsdelivery.Command.Equals("ChatroomByUser"))
             {
-                Chatroom chatroom = JsonSerializer.Deserialize<Chatroom>(upsdelivery.SpecificOrder);
-                return chatroom;
+                List<Chatroom> chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(upsdelivery.SpecificOrder);
+                return chatrooms;
             }
             else
             {
