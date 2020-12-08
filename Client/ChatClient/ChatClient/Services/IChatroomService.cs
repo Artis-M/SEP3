@@ -6,8 +6,10 @@ namespace Services
 {
     public interface IChatroomService
     {
-        public Task<List<Chatroom>> GetUsersChatrooms();
+        public Task<List<Chatroom>> GetUsersChatrooms(string userId);
 
         public Task CreateChatRoom(Chatroom chatroom);
+        
+        public Task LeaveChatRoom(string userID, string chatroomID);
     }
 }

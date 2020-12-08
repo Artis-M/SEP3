@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using ChatClient.Models;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -9,6 +12,7 @@ namespace Services
     public class ChatService
     {
         string url = "https://localhost:5004/chathub";
+        private string uri = "https://localhost:5004/chatrooms/";
         
         HubConnection _hubConnection = null;
         public Action<Message> newMessage;
@@ -25,20 +29,26 @@ namespace Services
             };
             _hubConnection.On<Message>("ReceiveChatRoomMessage", message =>
             {
-                Console.WriteLine("What the fuck");
                 Console.WriteLine($"Received message: {message.message}");
                 newMessage?.Invoke(message);
             });
             _hubConnection.On<MessageFragment>("ReceiveChatRoomMessageFragment", messageFragment =>
             {
-                Console.WriteLine(messageFragment.message);
                 newMessageFragment?.Invoke(messageFragment);
             });
         }
         public async Task SendMessage(Message message, string activeChatRoomId)
         {
-            Console.WriteLine("Sending message:" + message.ToString());
             await _hubConnection.SendAsync("SendMessage", message, activeChatRoomId);
+
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+
+            StringContent content = new StringContent(JsonSerializer.Serialize(message),Encoding.UTF8,"application/json");
+            string request = $"sendMessage/{activeChatRoomId}";
+            http.PatchAsync(request, content);
         }
         public async Task SendMessageFragment(MessageFragment messageFragment, string activeChatRoomId)
         {
