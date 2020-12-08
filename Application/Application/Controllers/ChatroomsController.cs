@@ -26,8 +26,9 @@ namespace Application.Controllers
         {
             try
             {
-                await chatroomService.requestChatrooms();
-                return Ok(chatroomService.GetAllChatrooms());
+                
+               IList<Chatroom> chatrooms = await chatroomService.GetAllChatrooms();
+                return Ok(chatrooms);
             }
             catch (Exception e)
             {

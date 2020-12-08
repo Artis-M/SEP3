@@ -9,7 +9,6 @@ namespace Application.Services.Implementations
     {
         public List<Chatroom> Chatrooms { get; set; }
         public Application.Models.Model model;
-        private IChatroomService _chatroomServiceImplementation;
 
         public ChatroomServiceImpl(Model modelManager)
         {
