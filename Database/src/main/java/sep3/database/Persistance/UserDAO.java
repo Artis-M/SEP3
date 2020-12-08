@@ -10,12 +10,12 @@ import java.util.ArrayList;
 public interface UserDAO {
     Account getAccount(ObjectId userId);
     Account getAccount(String username);
-    User getUser(ObjectId userID);
-    ArrayList<User> getUserFriends(ObjectId userId);
-    void addFriend(User user,ObjectId userId);
-    void removeFriend(User user,ObjectId userId);
-    void addTopicToUser(String Topic,ObjectId userId);
-    void removeUserTopic(String Topic,ObjectId userId);
+    User getUser(String userID);
+    ArrayList<User> getUserFriends(String userId);
+    void addFriend(User user,String userId);
+    void removeFriend(User user,String userId);
+    void addTopicToUser(String Topic,String userId);
+    void removeUserTopic(String Topic,String userId);
     void addAccount(Account account);
     Account getUserByName(String firstName,String LastName);
     ArrayList<Account> getAllAccount();

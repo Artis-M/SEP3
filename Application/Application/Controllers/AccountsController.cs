@@ -27,8 +27,8 @@ namespace Application.Controllers
         {
             try
             {
-            //  await AccountService.RequestAccounts();
-              IList<Account> accounts = await AccountService.GetAllAccounts();
+                
+                IList<Account> accounts = await AccountService.GetAllAccounts();
                 return Ok(accounts);
             }
             catch (Exception e)
