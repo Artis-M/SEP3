@@ -22,7 +22,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="" />
+    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Application/Application/Controllers/ChatroomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Controllers/ChatroomsController.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,10 +59,11 @@
         <option value="$PROJECT_DIR$/ChatClient/Pages/Register.razor" />
         <option value="$PROJECT_DIR$/ChatClient/Authentication/AuthenticationProvider.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/User.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/ChatroomServiceImp.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Services/IChatroomService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" />
+        <option value="$PROJECT_DIR$/ChatClient/Services/IChatroomService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/Index.razor" />
+        <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/ChatService.cs" />
+        <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/ChatroomServiceImp.cs" />
       </list>
     </option>
   </component>
@@ -144,7 +147,9 @@
       <workItem from="1607423964449" duration="2631000" />
       <workItem from="1607427174125" duration="252000" />
       <workItem from="1607427885139" duration="118000" />
-      <workItem from="1607440671801" duration="2470000" />
+      <workItem from="1607440671801" duration="3675000" />
+      <workItem from="1607444646392" duration="28000" />
+      <workItem from="1607444701620" duration="3257000" />
     </task>
     <servers />
   </component>
@@ -177,26 +182,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607018705663" />
-    <state width="1877" height="210" key="GridCell.Tab.0.bottom" timestamp="1607442561930">
+    <state width="1877" height="210" key="GridCell.Tab.0.bottom" timestamp="1607447988553">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1478" height="207" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607422288961" />
-    <state width="1877" height="210" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607442561930" />
-    <state width="1877" height="210" key="GridCell.Tab.0.center" timestamp="1607442561930">
+    <state width="1877" height="210" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607447988553" />
+    <state width="1877" height="210" key="GridCell.Tab.0.center" timestamp="1607447988553">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1478" height="207" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1607422288961" />
-    <state width="1877" height="210" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607442561930" />
-    <state width="1877" height="210" key="GridCell.Tab.0.left" timestamp="1607442561930">
+    <state width="1877" height="210" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607447988553" />
+    <state width="1877" height="210" key="GridCell.Tab.0.left" timestamp="1607447988553">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1478" height="207" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1607422288961" />
-    <state width="1877" height="210" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607442561930" />
-    <state width="1877" height="210" key="GridCell.Tab.0.right" timestamp="1607442561930">
+    <state width="1877" height="210" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607447988553" />
+    <state width="1877" height="210" key="GridCell.Tab.0.right" timestamp="1607447988553">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1478" height="207" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1607422288961" />
-    <state width="1877" height="210" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607442561930" />
+    <state width="1877" height="210" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607447988553" />
     <state x="552" y="251" key="Rider.ProjectTemplateDialog.Size" timestamp="1606854494127">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

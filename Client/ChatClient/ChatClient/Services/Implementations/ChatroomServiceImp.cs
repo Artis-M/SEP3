@@ -55,5 +55,16 @@ namespace Services
             
             http.PostAsync("add", content);
         }
+
+        public async Task LeaveChatRoom(string userID, string chatroomID)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            string request = $"removeUser/{chatroomID}";
+            StringContent content = new StringContent(JsonSerializer.Serialize(userID), Encoding.UTF8,"application/jsontext/plain");
+            http.PatchAsync(request, content);
+        }
     }
 }

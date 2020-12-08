@@ -19,7 +19,7 @@
               {
                   <div class="row">
                       <div class="cold-12">
-                          <button type="button" @onclick="() => JoinChatRoom(item._id)">@item.name</button>
+                          <button type="button" @onclick="() => ConnectToChatRoom(item._id)">@item.name</button>
                       </div>
                       </div>
               }
@@ -40,7 +40,19 @@
             {
                 @foreach (var item in Messages)
                 {
-                    <p>@item.authorID: @item.message</p>
+                    <p>
+                        @if (currentChatroom != null & isConnectedToChatRoom)
+                        {
+                            @try
+                            {
+                                @currentChatroom.participants.Find(user1 => user._id.Equals(@item.authorID)).Username
+                            }
+                            catch(Exception e)
+                            {
+                                @item.authorID
+                            }
+                        }
+                        : @item.message</p>
                 }
             }
         </div>
@@ -50,7 +62,7 @@
                 @foreach (var item in MessageFragments)
                 {
                     <div style="width: 50%;">
-                        <p style="overflow-x: fragments;">User @item.authorIdString.ToString() is typing: @item.message ......</p>
+                        <p style="overflow-x: fragments;">User @if(currentChatroom != null){@currentChatroom.participants.Find(user1 => user._id.Equals(@item.authorIdString)).Username} is typing: @item.message ......</p>
                     </div>
                 }
             }
@@ -60,7 +72,11 @@
         </div>
     </div>
     <div class="col-3">
-        
+        <div class="row">
+            <div class="col-12">
+                <button @onclick="LeaveChatroom">Leave Chatroom</button>
+            </div>
+        </div>
     </div>
 </div>
 @code
@@ -116,13 +132,23 @@
 
         GetUsersChatRooms();
     }
+
+    public async Task LeaveChatroom()
+    {
+        chatroomService.LeaveChatRoom(user._id, currentChatroom._id);
+        currentChatroom = null;
+        isConnectedToChatRoom = false;
+        MessageFragments = new List<MessageFragment>();
+        Messages = new List<Message>();
+    }
     
-    public async Task JoinChatRoom(string ChatroomId)
+    public async Task ConnectToChatRoom(string ChatroomId)
     {
             Console.WriteLine($"Connected to chatroom: {ChatroomId}");
             currentChatroom = Chatrooms.First(chatroom => chatroom._id.Equals(ChatroomId));
             await chatService.JoinChatRoom(ChatroomId);
             isConnectedToChatRoom = true;
+            Messages = currentChatroom.messages;
     }
     public void sendMessage()
     {

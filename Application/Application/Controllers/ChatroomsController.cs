@@ -121,12 +121,13 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
-        [Route("/sendMessage/{id}")]
+        [Route("sendMessage/{chatRoomId}")]
         public async Task<ActionResult<Message>> SendMessage([FromBody] Message message, [FromRoute] string chatRoomId)
         {
             try
             {
                 await chatroomService.SendMessage(chatRoomId, message);
+                Console.WriteLine("got a message from the client");
                 return Ok("message sent: " + message.message);
             }
             catch (Exception e)
@@ -137,7 +138,7 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
-        [Route("/addUser/{id}")]
+        [Route("addUser/{id}")]
         public async Task<ActionResult<Message>> JoinChatroom([FromBody] string userID, [FromRoute] string chatRoomId)
         {
             try
@@ -153,7 +154,7 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
-        [Route("/removeUser/{id}")]
+        [Route("removeUser/{id}")]
         public async Task<ActionResult<Message>> LeaveChatroom([FromBody] string userID, [FromRoute] string chatRoomId)
         {
             try
