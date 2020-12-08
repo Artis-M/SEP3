@@ -9,7 +9,7 @@ namespace Application.Models
     {
         public Task<List<Chatroom>> RequestChatrooms();
         public Task<List<Account>> RequestUsers();
-        public Task<List<Topic>> RequestTopics();
+        //public Task<List<Topic>> RequestTopics();
         public Task SendMessage(Message message, string chatroomId);
         public Task AddNewChatroom(Chatroom chatroom);
         public Task UpdateChatroom(Chatroom chatroom);

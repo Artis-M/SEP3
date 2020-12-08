@@ -33,9 +33,9 @@ using Application.Services;
             return await chatServiceImp.requestUsers();
         }
 
-        public async Task<List<Topic>> RequestTopics() {
+        /*public async Task<List<Topic>> RequestTopics() {
             return await chatServiceImp.requestTopics();
-        }
+        }*/
 
         public async Task SendMessage(Message message, string chatroomId)
         {

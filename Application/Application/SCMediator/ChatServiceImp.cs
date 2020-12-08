@@ -117,8 +117,9 @@ namespace Application.SCMediator
             await Send(command);
         }
 
-        public async Task DeleteTopic(string topicID) {
-            CommandLine command = new CommandLine { Command = "DELETE-Topic", SpecificOrder = topicID };
+        public async Task DeleteTopic(string topicID)
+        {
+            CommandLine command = new CommandLine {Command = "DELETE-Topic", SpecificOrder = topicID};
             await Send(command);
         }
 
@@ -135,11 +136,13 @@ namespace Application.SCMediator
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
             Console.WriteLine(response);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
-            if(upsdelivery.Command == "") {
+            if (upsdelivery.Command == "UserCredentials")
+            {
                 List<Account> accounts = JsonSerializer.Deserialize<List<Account>>(upsdelivery.SpecificOrder);
                 return accounts;
             }
-            else {
+            else
+            {
                 //wait again for data from server, check again
                 return null;
             }
@@ -156,8 +159,15 @@ namespace Application.SCMediator
             Console.WriteLine(response);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
             /* to here */
-            Chatroom chatroom = JsonSerializer.Deserialize<Chatroom>(upsdelivery.SpecificOrder);
-            return chatroom;
+            if (upsdelivery.Command.Equals("OneChatroom"))
+            {
+                Chatroom chatroom = JsonSerializer.Deserialize<Chatroom>(upsdelivery.SpecificOrder);
+                return chatroom;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
@@ -171,9 +181,15 @@ namespace Application.SCMediator
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
             Console.WriteLine(response);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
-
-            Account account = JsonSerializer.Deserialize<Account>(upsdelivery.SpecificOrder);
-            return account;
+            if (upsdelivery.Command.Equals("OneUserCredential"))
+            {
+                Account account = JsonSerializer.Deserialize<Account>(upsdelivery.SpecificOrder);
+                return account;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<List<Chatroom>> requestChatrooms()
@@ -186,12 +202,18 @@ namespace Application.SCMediator
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
             Console.WriteLine(response);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
-
-            List<Chatroom> chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(upsdelivery.SpecificOrder);
-            return chatrooms;
+            if (upsdelivery.Command.Equals("AllChatrooms"))
+            {
+                List<Chatroom> chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(upsdelivery.SpecificOrder);
+                return chatrooms;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public async Task<List<Topic>> requestTopics()
+        /*public async Task<List<Topic>> requestTopics()
         {
             CommandLine command = new CommandLine {Command = "REQUEST-Topic-ALL"};
             await Send(command);
@@ -204,6 +226,6 @@ namespace Application.SCMediator
 
             List<Topic> topics = JsonSerializer.Deserialize<List<Topic>>(response);
             return topics;
-        }
+        }*/
     }
 }

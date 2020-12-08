@@ -3,8 +3,7 @@ package sep3.database.Mediator;
 
 import com.google.gson.Gson;
 import sep3.database.Model.Account;
-import sep3.database.Persistance.UserDAO;
-import sep3.database.Persistance.UserDAOImpl;
+import sep3.database.Persistance.*;
 
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.*;
@@ -17,6 +16,8 @@ public class ServiceController implements Runnable
     private boolean running;
     private ServerSocket welcomeSocket;
     private UserDAO userDAO;
+    private TopicDAO topicDAO;
+    private ChatroomDAO chatroomDAO;
     private BufferedReader in;
     private PrintWriter out;
     private Gson gson;
@@ -25,6 +26,8 @@ public class ServiceController implements Runnable
     {
         gson = new Gson();
         this.userDAO = new UserDAOImpl();
+        this.chatroomDAO = new ChatroomDAOImpl();
+        this.topicDAO = new TopicDAOImpl();
         this.running = true;
         running = true;
         //removed ssl
@@ -66,24 +69,44 @@ public class ServiceController implements Runnable
                     byte[] responseAsBytes = sendBack.getBytes();
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
                     System.out.println("Done sending user credentials");
-                }
-                else if(commandLine.getCommand().equals("REQUEST-User"))
+                } else if (commandLine.getCommand().equals("REQUEST-User"))
                 {
                     CommandLine commandLine1 = new CommandLine();
                     String response = gson.toJson(userDAO.getAccount(commandLine.getVariableUser()));
                     commandLine1.setSpecificOrder(response);
-                   // commandLine1.setCommand("UserCredentials");
+                    commandLine1.setCommand("OneUserCredential");
                     String sendBack = gson.toJson(commandLine1);
                     byte[] responseAsBytes = sendBack.getBytes();
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
                     System.out.println("Done sending user credentials");
 
-                }
-                else if(commandLine.getCommand().equals("UserNew")){
+                } else if (commandLine.getCommand().equals("UserNew"))
+                {
                     System.out.println("Add new User");
-                    Account account = gson.fromJson(commandLine.getSpecificOrder(),Account.class);
+                    Account account = gson.fromJson(commandLine.getSpecificOrder(), Account.class);
                     userDAO.addAccount(account);
+                } else if (commandLine.getCommand().equals("REQUEST-Chatroom-All"))
+                {
+                    CommandLine commandLine1 = new CommandLine();
+                    String response = gson.toJson(chatroomDAO.getAllChatrooms());
+                    commandLine1.setSpecificOrder(response);
+                    commandLine1.setCommand("AllChatrooms");
+                    String sendBack = gson.toJson(commandLine1);
+                    byte[] responseAsBytes = sendBack.getBytes();
+                    outputStream.write(responseAsBytes, 0, responseAsBytes.length);
+                    System.out.println("Done sending chatrooms");
+                } else if (commandLine.getCommand().equals("REQUEST-Chatroom"))
+                {
+                    CommandLine commandLine1 = new CommandLine();
+                    String response = gson.toJson(chatroomDAO.getChatroom(commandLine1.getVariableChatroom()));
+                    commandLine1.setSpecificOrder(response);
+                    commandLine1.setCommand("OneChatroom");
+                    String sendBack = gson.toJson(commandLine1);
+                    byte[] responseAsBytes = sendBack.getBytes();
+                    outputStream.write(responseAsBytes, 0, responseAsBytes.length);
+                    System.out.println("Done sending chatroom with id:" + commandLine1.getVariableChatroom());
                 }
+                
 
             }
         } catch (IOException e)
