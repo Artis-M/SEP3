@@ -72,7 +72,6 @@ public class ServiceController implements Runnable
                     CommandLine commandLine1 = new CommandLine();
                     String response = gson.toJson(userDAO.getAccount(commandLine.getVariableUser()));
                     commandLine1.setSpecificOrder(response);
-                   // commandLine1.setCommand("UserCredentials");
                     String sendBack = gson.toJson(commandLine1);
                     byte[] responseAsBytes = sendBack.getBytes();
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
