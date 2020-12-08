@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Models;
 using Application.SCMediator;
 using Application.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
@@ -36,8 +38,8 @@ namespace Application.Controllers
         }
 
         [HttpGet]
-        [Route("login/{username}/{password}")]
-        public async Task<ActionResult<Account>> GetAccount([FromRoute] string username, [FromRoute] string password)
+        [Route("login")]
+        public async Task<ActionResult<Account>> GetAccount()
         {
             // try
             // {
@@ -50,6 +52,19 @@ namespace Application.Controllers
             // {
             //     Console.WriteLine(e);
             //     return StatusCode(500, e.Message);
+            var re = this.Request;
+            var headers = re.Headers;
+            string username = "";
+            string password = "";
+            try
+            {
+                username = headers.GetCommaSeparatedValues("username").First();
+                password = headers.GetCommaSeparatedValues("password").First();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
             Account account = await AccountService.RequestAccount(username);
             if (account == null)
             {

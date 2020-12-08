@@ -116,7 +116,21 @@ public class ChatroomDAOImpl implements ChatroomDAO{
     }
 
     @Override
-    public void getChatroom(String name) {
+    public Chatroom getChatroom(String id) {
+        BasicDBObject whereQuery = new BasicDBObject();
+        ObjectId _id = new ObjectId(id);
+        whereQuery.append("_id", id);
+        Chatroom chat = null;
+        try {
+            Document cursor = collection.find(whereQuery).first();
+            String json = cursor.toJson();
+            chat = gson.fromJson(json, Chatroom.class);
+        }catch (Exception e)
+        {
+            return null;
+        }
+
+        return chat;
 
     }
 }

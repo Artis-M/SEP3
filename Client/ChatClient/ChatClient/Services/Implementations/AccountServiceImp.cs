@@ -22,15 +22,15 @@ namespace Services
             {
                 BaseAddress = new Uri(uri)
             };
-            
             SHA384CryptoServiceProvider sha = new SHA384CryptoServiceProvider();
             byte[] passwordBytes = Encoding.ASCII.GetBytes(password);
             byte[] hashedBytes = sha.ComputeHash(passwordBytes);
             string hashedPassword = Convert.ToBase64String(hashedBytes);
             Console.WriteLine($"HashedPass:{hashedPassword}");
-            string request = $"login/{username}/{hashedPassword}";
+            string request = $"login";
             
-                
+            http.DefaultRequestHeaders.Add("username", username);
+            http.DefaultRequestHeaders.Add("password", hashedPassword);
             
             
            HttpResponseMessage responseMessage = await http.GetAsync(request);
