@@ -8,9 +8,9 @@
 {
     public class Chatroom
     {
-        public string id { get; set; }
+        public string _id { get; set; }
         public string name { get; set; }
-        public TopicList topics { get; set; }
+        public List<Topic> topics { get; set; }
         public List<Message> messages { get; set; }
         public List<User> participants { get; set; }
 
@@ -21,7 +21,7 @@
 
         public Chatroom(string id, string name, List<User> participants, List<Message> messages)
         {
-            this.id = id;
+            this._id = id;
             this.name = name;
             this.participants = participants;
             this.messages = messages;
@@ -29,24 +29,24 @@
 
         public Chatroom(string id, string name, List<User> participants, TopicList topics)
         {
-            this.id = id;
+            this._id = id;
             this.name = name;
             this.participants = participants;
-            this.topics = new TopicList();
+            this.topics = new List<Topic>();
         }
 
         public Chatroom(string id, string name, List<User> participants, List<Message> messages, TopicList topics)
         {
-            this.id = id;
+            this._id = id;
             this.name = name;
             this.participants = participants;
             this.messages = messages;
-            this.topics = new TopicList();
+            this.topics = new List<Topic>();
         }
 
         public Chatroom(string id, string name, List<User> participants)
         {
-            this.id = id;
+            this._id = id;
             this.name = name;
             this.participants = participants;
         }
