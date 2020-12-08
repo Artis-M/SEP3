@@ -4,9 +4,8 @@
 @using ChatClient.Models
 @using Microsoft.AspNetCore.Authorization
 @using System.Text.Json
+@using MongoDB.Bson
 @using Tier2.Model
-@using System.Runtime.CompilerServices
-@using Microsoft.AspNetCore.Connections
 @inject ChatService chatService;
 @inject IChatroomService chatroomService;
 @inject IJSRuntime JsRuntime;
@@ -20,12 +19,17 @@
               {
                   <div class="row">
                       <div class="cold-12">
-                          <button type="button" @onclick="() => JoinChatRoom(item.ID)">@item.Name</button>
+                          <button type="button" @onclick="() => JoinChatRoom(item.id)">@item.name</button>
                       </div>
                       </div>
               }
           }
-        
+          <div class="row">
+              <div class="col-12">
+                  <input type="text" @bind="NewChatRoomName" placeholder="Enter Chatroom Name"></input>
+                  <button @onclick="CreateChatRoom">Create Chatroom</button>
+              </div>
+          </div>
     </div>
     <div class="col-6">
         <div style="overflow-y: scroll"> 
@@ -58,6 +62,7 @@
 </div>
 @code
 {
+    private string NewChatRoomName;
     private List<Chatroom> Chatrooms = new List<Chatroom>();
     private Chatroom currentChatroom = null;
     private string messageText;
@@ -74,22 +79,44 @@
         if (!string.IsNullOrEmpty(userAsJson))
         {
             user = JsonSerializer.Deserialize<User>(userAsJson);
-            GetUsersChatRooms();
+            chatService.ConnectToServer();
         }
-        chatService.ConnectToServer();
+  
         chatService.newMessage += this.DisplayNewMessage;
         chatService.newMessageFragment += this.DisplayNewMessageFragment;
+        GetUsersChatRooms();
     }
 
     public async Task GetUsersChatRooms()
     {
+        Console.WriteLine("What is going on.....");
         Chatrooms = await chatroomService.GetUsersChatrooms();
+        Console.WriteLine(Chatrooms.ToJson());
+      
+    }
+
+    public async Task CreateChatRoom()
+    {
+        Console.WriteLine(user.ToJson());
+        Console.WriteLine($"New Chatroom {NewChatRoomName} created by {user.Username} at {DateTime.Now.ToUniversalTime()}.");
+        string welcomeMessage = $"New Chatroom {NewChatRoomName} created by {user.Username} at {DateTime.Now.ToUniversalTime()}.";
+        Message message = new Message(welcomeMessage, user._id, ObjectId.GenerateNewId().ToString());
+        List<Message> messages = new List<Message>();
+        List<User> participants = new List<User>();
+        participants.Add(user);
+        messages.Add(message);
+        Chatroom newChatroom = new Chatroom(ObjectId.GenerateNewId().ToString(), NewChatRoomName, participants, messages);
+        chatroomService.CreateChatRoom(newChatroom);
+        
+        NewChatRoomName = "";
+
+        GetUsersChatRooms();
     }
     
     public async Task JoinChatRoom(string ChatroomId)
     {
             Console.WriteLine($"Connected to chatroom: {ChatroomId}");
-            currentChatroom = Chatrooms.First(chatroom => chatroom.ID.Equals(ChatroomId));
+            currentChatroom = Chatrooms.First(chatroom => chatroom.id.Equals(ChatroomId));
             await chatService.JoinChatRoom(ChatroomId);
             isConnectedToChatRoom = true;
     }
@@ -100,7 +127,7 @@
             Console.WriteLine("Sending message:" + messageText);
             newMessage.message = messageText;
             newMessage.authorID = user._id.ToString();
-            chatService.SendMessage(newMessage, currentChatroom.ID);
+            chatService.SendMessage(newMessage, currentChatroom.id);
             messageText = "";
             newMessage.message = "";
             newMessageFragment.message = "";
@@ -113,8 +140,8 @@
         if (isConnectedToChatRoom)
         {
             newMessageFragment.message = messageText;
-            newMessageFragment.authorIdString = user._id.ToString();
-            chatService.SendMessageFragment(newMessageFragment, currentChatroom.ID);  
+            newMessageFragment.authorIdString = user._id;
+            chatService.SendMessageFragment(newMessageFragment, currentChatroom.id);  
         }
     }
 

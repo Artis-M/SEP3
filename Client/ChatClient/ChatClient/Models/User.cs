@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Models
 {
@@ -7,10 +8,13 @@ namespace Models
     {
         public string _id { get; set; }
         [Required,MinLength(8,ErrorMessage = "Please Enter Username with at least 8 characters")]
+        [JsonPropertyName("Username")]
         public string Username { get; set; }
         [Required,MinLength(1,ErrorMessage = "Please Enter First Name")]
+        [JsonPropertyName("Fname")]
         public string Fname { get; set; }
         [Required,MinLength(1,ErrorMessage = "Please Enter Last Name")]
+        [JsonPropertyName("Lname")]
         public string Lname { get; set; }
 
         public User()

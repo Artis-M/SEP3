@@ -10,39 +10,44 @@ namespace Application.Models
         public string id { get; set; }
         public string name { get; set; }
         public TopicList topics { get; set; }
-        public MessageList messages { get; set; }
-        public UserList participants { get; set; }
+        public List<Message> messages { get; set; }
+        public List<User> participants { get; set; }
 
-        public Chatroom(string id, string name, UserList participants, MessageList messages)
+        public Chatroom()
         {
-            this.id = id;
-            this.name = name;
-            this.participants = new UserList();
-            this.messages = new MessageList();
+            
         }
 
-        public Chatroom(string id, string name, UserList participants, TopicList topics)
+        public Chatroom(string id, string name, List<User> participants, List<Message> messages)
         {
             this.id = id;
             this.name = name;
-            this.participants = new UserList();
+            this.participants = participants;
+            this.messages = messages;
+        }
+
+        public Chatroom(string id, string name, List<User> participants, TopicList topics)
+        {
+            this.id = id;
+            this.name = name;
+            this.participants = participants;
             this.topics = new TopicList();
         }
 
-        public Chatroom(string id, string name, UserList participants, MessageList messages, TopicList topics)
+        public Chatroom(string id, string name, List<User> participants, List<Message> messages, TopicList topics)
         {
             this.id = id;
             this.name = name;
-            this.participants = new UserList();
-            this.messages = new MessageList();
+            this.participants = participants;
+            this.messages = messages;
             this.topics = new TopicList();
         }
 
-        public Chatroom(string id, string name, UserList participants)
+        public Chatroom(string id, string name, List<User> participants)
         {
             this.id = id;
             this.name = name;
-            this.participants = new UserList();
+            this.participants = participants;
         }
 
         public async Task removeUser(User user)
@@ -67,7 +72,7 @@ namespace Application.Models
 
         public void addMessage(Message message)
         {
-            messages.addMessage(message);
+            messages.Add(message);
         }
     }
 }

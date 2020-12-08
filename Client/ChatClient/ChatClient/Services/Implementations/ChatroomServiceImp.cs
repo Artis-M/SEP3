@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Application.Models;
@@ -13,7 +14,7 @@ namespace Services
     public class ChatroomServiceImp : IChatroomService
     {
         
-        private string uri = "https://localhost:5004/chatrooms/user/chatrooms";
+        private string uri = "https://localhost:5004/chatrooms/";
         private readonly IJSRuntime jsRuntime;
         
         public async Task<List<Chatroom>> GetUsersChatrooms()
@@ -35,7 +36,7 @@ namespace Services
                 return null;
             }
             
-            HttpResponseMessage responseMessage = await http.GetAsync(useraccount._id);
+            HttpResponseMessage responseMessage = await http.GetAsync($"user/chatrooms/{useraccount._id}");
             //Console.Out.WriteLine(responseMessage.StatusCode);
             List<Chatroom> Chatrooms = new List<Chatroom>();
             if (responseMessage.StatusCode == HttpStatusCode.OK)
@@ -50,6 +51,19 @@ namespace Services
                 
             }
             return Chatrooms;
+        }
+
+        public async Task CreateChatRoom(Chatroom chatroom)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            
+            Console.WriteLine(JsonSerializer.Serialize(chatroom));
+            StringContent content = new StringContent(JsonSerializer.Serialize(chatroom),Encoding.UTF8,"application/json");
+            
+            http.PostAsync("add", content);
         }
     }
 }

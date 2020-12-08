@@ -60,17 +60,16 @@ namespace Application.Controllers
         }
         [HttpGet]
         [Route("user/chatrooms/{id}")]
-        public async Task<ActionResult<Chatroom>> GetChatRoomsByUserId([FromRoute] string id)
+        public async Task<ActionResult<List<Chatroom>>> GetChatRoomsByUserId([FromRoute] string id)
         {
+            Console.WriteLine("Chatrooms requested.");
             List<Chatroom> chatrooms = await chatroomService.GetChatroomByUserID(id);
             try
             {
-                
                 if (chatrooms == null)
                 {
                     return NotFound();
                 }
-
                 return Ok(chatrooms);
             }
             catch (Exception e)
@@ -80,16 +79,18 @@ namespace Application.Controllers
             }
         }
         [HttpPost]
-        [Route("Add")]
+        [Route("add")]
         public async Task<ActionResult> AddNewChatroom([FromBody] Chatroom chatroom)
         {
             if (!ModelState.IsValid)
             {
+                Console.WriteLine(ModelState.ToString());
                 return BadRequest(ModelState);
             }
 
             try
             {
+                Console.WriteLine($"Creating new chatroom {chatroom.name}");
                 await chatroomService.AddNewChatroom(chatroom);
                 return Created($"/{chatroom.id}", chatroom);
             }

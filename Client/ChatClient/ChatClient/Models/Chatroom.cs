@@ -1,4 +1,6 @@
 ﻿﻿﻿using System.Collections.Generic;
+  using System.Threading.Tasks;
+  using Application.Models;
   using Models;
   using MongoDB.Bson;
 
@@ -6,13 +8,72 @@
 {
     public class Chatroom
     {
-        public IList<Message> Messages;
-        public string ID { get; set; }
-        public string Name { get; set; }
+        public string id { get; set; }
+        public string name { get; set; }
+        public TopicList topics { get; set; }
+        public List<Message> messages { get; set; }
+        public List<User> participants { get; set; }
 
         public Chatroom()
         {
-            Messages = new List<Message>();
+            
+        }
+
+        public Chatroom(string id, string name, List<User> participants, List<Message> messages)
+        {
+            this.id = id;
+            this.name = name;
+            this.participants = participants;
+            this.messages = messages;
+        }
+
+        public Chatroom(string id, string name, List<User> participants, TopicList topics)
+        {
+            this.id = id;
+            this.name = name;
+            this.participants = participants;
+            this.topics = new TopicList();
+        }
+
+        public Chatroom(string id, string name, List<User> participants, List<Message> messages, TopicList topics)
+        {
+            this.id = id;
+            this.name = name;
+            this.participants = participants;
+            this.messages = messages;
+            this.topics = new TopicList();
+        }
+
+        public Chatroom(string id, string name, List<User> participants)
+        {
+            this.id = id;
+            this.name = name;
+            this.participants = participants;
+        }
+
+        public async Task removeUser(User user)
+        {
+
+        }
+
+        public void addUser(User user)
+        {
+            
+        }
+
+        public void addTopic(Topic topic)
+        {
+            
+        }
+
+        public void removeTopic(Topic topic)
+        {
+            
+        }
+
+        public void addMessage(Message message)
+        {
+            messages.Add(message);
         }
     }
 }

@@ -7,5 +7,7 @@ namespace Services
     public interface IChatroomService
     {
         public Task<List<Chatroom>> GetUsersChatrooms();
+
+        public Task CreateChatRoom(Chatroom chatroom);
     }
 }

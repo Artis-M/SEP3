@@ -41,7 +41,7 @@ namespace Application.Services.Implementations
             List<Chatroom> UsersChatrooms = new List<Chatroom>();
             foreach (var item in ChatroomsForUser)
             {
-               User user = item.participants.Users.First(user => user._id.Equals(id));
+               User user = item.participants.First(user => user._id.Equals(id));
                if (user != null)
                {
                    UsersChatrooms.Add(item);
