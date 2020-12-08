@@ -3,14 +3,14 @@ package sep3.database.Model;
 import org.bson.types.ObjectId;
 
 public class Message {
-    private String _id;
+    private String messageId;
     private String message;
     private String authorID;
 
     public Message(String message, String authorID,String _id) {
         this.message = message;
         this.authorID = authorID;
-        this._id=_id;
+        this.messageId=_id;
     }
 
     public String getMessage() {
@@ -18,11 +18,11 @@ public class Message {
     }
 
     public String get_id() {
-        return _id;
+        return messageId;
     }
 
     public void set_id(String _id) {
-        this._id = _id;
+        this.messageId = _id;
     }
 
     public void setAuthorID(String authorID) {
@@ -36,8 +36,9 @@ public class Message {
     @Override
     public String toString() {
         return "Message{" +
-                "message='" + message + '\'' +
-                ", AuthorID=" + authorID +
+                "messageId='" + messageId + '\'' +
+                ", message='" + message + '\'' +
+                ", authorID='" + authorID + '\'' +
                 '}';
     }
 

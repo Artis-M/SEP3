@@ -61,6 +61,7 @@ public class ServiceController implements Runnable
                 System.out.println(commandLine.getCommand());
                 if (commandLine.getCommand().equals("REQUEST-UserCredentials"))
                 {
+
                     CommandLine commandLine1 = new CommandLine();
                     String response = gson.toJson(userDAO.getAllAccount());
                     commandLine1.setSpecificOrder(response);
