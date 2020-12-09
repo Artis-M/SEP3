@@ -1,0 +1,36 @@
+﻿.Edit-Flex
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.EditWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("https://images.wallpaperscraft.com/image/plexus_lines_points_120093_1920x1080.jpg");
+}
+
+.EditWrapper form{
+    width: 550px;
+    height: 650px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color:#fff;
+    border-radius: 10px;
+}
+.Edit-Flex div{
+    width: 210px;
+}
+.EditForm h3{
+    text-align: center;
+    margin-top: 15px;
+}
+.EditForm .topicInput
+{
+    margin-bottom: 15px;
+}

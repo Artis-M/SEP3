@@ -104,11 +104,14 @@ public class UserDAOImpl implements UserDAO
     public User getUser(String userID)
     {
         BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.append("_id", userID);
+        ObjectId _id = new ObjectId(userID);
+        whereQuery.append("_id", _id);
         MongoCursor<Document> cursor = collection.find(whereQuery).iterator();
         try
         {
+            
             Document document = cursor.next();
+            System.out.println(document);
             return new User(document.get("_id").toString(), document.get("Username").toString(),
                     document.get("Fname").toString(), document.get("Lname").toString());
         } catch (NoSuchElementException e)

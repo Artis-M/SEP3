@@ -39,11 +39,13 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         room.setName(document.get("name").toString());
         List<Document> messages = (List<Document>) document.get("messages");
         if(messages.size()!=0) {
+
             for (var DBmessage : messages
             ) {
                 Message message = new Message(
                         DBmessage.get("message").toString(),
-                        DBmessage.get("AuthorId").toString(), DBmessage.get("messageId").toString(),DBmessage.get("Username").toString());
+                        DBmessage.get("AuthorId").toString(),
+                        DBmessage.get("messageId").toString(),DBmessage.get("Username").toString());
                 room.addMessage(message);
             }
         }
@@ -93,6 +95,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         ) {
             ObjectId participantId = new ObjectId(DBparticipant.get("participantId").toString());
             User participant = userDAO.getUser(participantId.toString());
+            System.out.println(participant);
             users.add(participant);
 
 

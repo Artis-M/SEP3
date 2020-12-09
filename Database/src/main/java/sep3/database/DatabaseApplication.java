@@ -20,9 +20,15 @@ public class DatabaseApplication
 
     public static void main(String[] args) throws IOException
     {
-        ServiceController controller = new ServiceController();
-        Thread t1 = new Thread(controller);
-        t1.start();
+//        ServiceController controller = new ServiceController();
+//        Thread t1 = new Thread(controller);
+//        t1.start();
+        ChatroomDAO dao = new ChatroomDAOImpl();
+        ArrayList<Chatroom> chatrooms = dao.getAllChatrooms();
+        for (var chatroom: chatrooms
+             ) {
+            System.out.println(chatrooms);
+        }
     }
 
 }
