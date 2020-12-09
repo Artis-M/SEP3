@@ -7,7 +7,7 @@ namespace Models
     public class User
     {
         public string _id { get; set; }
-        [Required,MinLength(8,ErrorMessage = "Please Enter Username with at least 8 characters")]
+        [Required,MinLength(8,ErrorMessage = "Username with at least 8 characters")]
         [JsonPropertyName("Username")]
         public string Username { get; set; }
         [Required,MinLength(1,ErrorMessage = "Please Enter First Name")]

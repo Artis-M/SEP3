@@ -28,6 +28,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
@@ -53,18 +60,19 @@
         <option value="$PROJECT_DIR$/ChatClient/Models/Account.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/AccountServiceImp.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Program.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Pages/Register.razor" />
         <option value="$PROJECT_DIR$/ChatClient/Authentication/AuthenticationProvider.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Models/User.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Services/IChatroomService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/Index.razor" />
         <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/ChatService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/ChatroomServiceImp.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/wwwroot/index.html" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/Login.razor" />
         <option value="$PROJECT_DIR$/ChatClient/wwwroot/css/app.css" />
         <option value="$PROJECT_DIR$/ChatClient/wwwroot/css/login.css" />
+        <option value="$PROJECT_DIR$/ChatClient/wwwroot/index.html" />
+        <option value="$PROJECT_DIR$/ChatClient/Models/User.cs" />
+        <option value="$PROJECT_DIR$/ChatClient/wwwroot/css/SignUp.css" />
+        <option value="$PROJECT_DIR$/ChatClient/Pages/Register.razor" />
       </list>
     </option>
   </component>
@@ -77,6 +85,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -154,6 +163,7 @@
       <workItem from="1607444701620" duration="3257000" />
       <workItem from="1607466525726" duration="3470000" />
       <workItem from="1607501567743" duration="368000" />
+      <workItem from="1607504544416" duration="5332000" />
     </task>
     <servers />
   </component>
@@ -186,25 +196,25 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607018705663" />
-    <state width="1478" height="207" key="GridCell.Tab.0.bottom" timestamp="1607501742170">
+    <state width="1478" height="207" key="GridCell.Tab.0.bottom" timestamp="1607509866805">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1478" height="207" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607501742170" />
+    <state width="1478" height="207" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607509866805" />
     <state width="1877" height="210" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607447988553" />
-    <state width="1478" height="207" key="GridCell.Tab.0.center" timestamp="1607501742170">
+    <state width="1478" height="207" key="GridCell.Tab.0.center" timestamp="1607509866804">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1478" height="207" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1607501742170" />
+    <state width="1478" height="207" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1607509866804" />
     <state width="1877" height="210" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607447988553" />
-    <state width="1478" height="207" key="GridCell.Tab.0.left" timestamp="1607501742170">
+    <state width="1478" height="207" key="GridCell.Tab.0.left" timestamp="1607509866804">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1478" height="207" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1607501742170" />
+    <state width="1478" height="207" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1607509866804" />
     <state width="1877" height="210" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607447988553" />
-    <state width="1478" height="207" key="GridCell.Tab.0.right" timestamp="1607501742170">
+    <state width="1478" height="207" key="GridCell.Tab.0.right" timestamp="1607509866804">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1478" height="207" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1607501742170" />
+    <state width="1478" height="207" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1607509866804" />
     <state width="1877" height="210" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607447988553" />
     <state x="552" y="251" key="Rider.ProjectTemplateDialog.Size" timestamp="1606854494127">
       <screen x="0" y="0" width="1920" height="1040" />
