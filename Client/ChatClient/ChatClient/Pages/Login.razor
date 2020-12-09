@@ -4,22 +4,31 @@
 @using Application.Authentication
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager navigation;
-
+<div class = "loginForm">
 <AuthorizeView>
-<NotAuthorized>
-    <h3>Login</h3>
-    <input type="text" @bind="@username"/>
-    <input type="password" @bind="@password"/>
-    <button @onclick="@LoginRequest">Login</button>
-    <label>@errorMessage</label>
-    <button @onclick="@register">Register</button>
-</NotAuthorized>
+    <NotAuthorized>
+        <div class = "loginWrapper">
+            <h3>Login</h3>
+            <label class="username">Username</label>
+            <input class="InputUsername" type="text" @bind-value="@username"/>
+            <label class="password">Password</label>
+        <input class = "InputPassword" type="password" @bind-value="@password"/>
+            <label class = "errorMessage">@errorMessage</label>
+            <div>
+                <button @onclick="@LoginRequest" class="LoginButton">Login</button>
+            </div>
+            <div>
+                
+               Not registred? <a @onclick="@register" href="#">Sign up now</a>
+            </div>
+        </div>
+    </NotAuthorized>
 </AuthorizeView>
-
+</div>
 @code {
     private string username;
     private string password;
-    private string errorMessage;
+    private string errorMessage = "";
 
     public async Task LoginRequest()
     {
@@ -28,6 +37,7 @@
         {
             await ((AuthenticationProvider)AuthenticationStateProvider).ValidateLogin(username, password);
             username = "";
+            password = "";
             navigation.NavigateTo("");
         }
         catch (Exception e)

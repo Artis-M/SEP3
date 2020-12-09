@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\mundu\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\mundu\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_ChatClient.1949581662.00" t="ExcludeRecursive" />
-    <e p="H:\SEP3 Code\SEP3\Client\ChatClient" t="IncludeFlat">
+    <e p="C:\Users\ioncr\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\ioncr\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_ChatClient.162520100.00" t="ExcludeRecursive" />
+    <e p="F:\SEP3\Client\ChatClient" t="IncludeFlat">
       <e p="ChatClient" t="IncludeRecursive">
         <e p="_Imports.razor" t="Include" />
         <e p="App.razor" t="Include" />
@@ -58,6 +58,8 @@
               <e p="bootstrap.min.css" t="Include" />
               <e p="bootstrap.min.css.map" t="Include" />
             </e>
+            <e p="login.css" t="Include" />
+            <e p="login_background.jpg" t="Include" />
             <e p="open-iconic" t="Include">
               <e p="font" t="Include">
                 <e p="css" t="Include">
@@ -75,6 +77,7 @@
               <e p="ICON-LICENSE" t="Include" />
               <e p="README.md" t="Include" />
             </e>
+            <e p="SignUp.css" t="Include" />
           </e>
           <e p="favicon.ico" t="Include" />
           <e p="index.html" t="Include" />
