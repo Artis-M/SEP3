@@ -43,7 +43,6 @@ namespace Application.Controllers
         {
             try
             {
-                await AccountService.RequestAccounts();
                 Account account = await AccountService.RequestAccountById(userID);
                 return Ok(account);
             }

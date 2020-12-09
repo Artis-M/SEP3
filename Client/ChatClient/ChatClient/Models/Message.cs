@@ -6,19 +6,26 @@ namespace Models
     public class Message
     {
         public string message { get; set; }
-        public string Id { get; set; }
+        public string messageId { get; set; }
         public string authorID { get; set; }
+        public string username { get; set; }
 
-        public Message(string message, string authorId, string id)
+        public Message(string message, string authorId, string messageId, string username)
         {
             this.message = message;
             this.authorID = authorId;
-            this.Id = id;
+            this.messageId = messageId;
+            this.username = username;
+        }
+
+        public Message()
+        {
+            
         }
 
         public string toString()
         {
-            return "Message ID: " + Id + ", Author ID: " + authorID + "Content of message: " + message;
+            return "Message ID: " + messageId + ", Author ID: " + authorID + "Content of message: " + message+"Username: "+username;
         }
     }
 }

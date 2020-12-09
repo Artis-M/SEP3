@@ -23,6 +23,7 @@ namespace Application.Models
         public void ProcessChatrooms(string credentialsJson);
         public void ProcessTopics(string credentialsJson);
         public Task<Account> requestAccount(string username);
+        public Task<Account> requestAccountByID(string userID);
         public Task<List<Chatroom>> requestChatroom(string userID);
     }
 }

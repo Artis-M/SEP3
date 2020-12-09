@@ -120,12 +120,13 @@ namespace Application.Controllers
             }
         }
 
-        [HttpPatch]
+        [HttpPost]
         [Route("sendMessage/{chatRoomId}")]
         public async Task<ActionResult<Message>> SendMessage([FromBody] Message message, [FromRoute] string chatRoomId)
         {
             try
             {
+                Console.Out.WriteLine(message.message);
                 await chatroomService.SendMessage(chatRoomId, message);
                 Console.WriteLine("got a message from the client");
                 return Ok("message sent: " + message.message);

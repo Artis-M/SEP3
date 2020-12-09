@@ -6,11 +6,23 @@ public class Message {
     private String messageId;
     private String message;
     private String authorID;
+    private String username;
 
-    public Message(String message, String authorID,String _id) {
+    public Message(String message, String authorID,String _id,String username) {
         this.message = message;
         this.authorID = authorID;
         this.messageId=_id;
+        this.username = username;
+    }
+
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
     }
 
     public String getMessage() {

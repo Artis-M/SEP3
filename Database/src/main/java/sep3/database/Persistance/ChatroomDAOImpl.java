@@ -43,7 +43,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
             ) {
                 Message message = new Message(
                         DBmessage.get("message").toString(),
-                        DBmessage.get("AuthorId").toString(), DBmessage.get("messageId").toString());
+                        DBmessage.get("AuthorId").toString(), DBmessage.get("messageId").toString(),DBmessage.get("Username").toString());
                 room.addMessage(message);
             }
         }
@@ -174,7 +174,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         BasicDBObject messageObject = new BasicDBObject();
 
         ObjectId authorId = new ObjectId(message.getAuthorID());
-        ObjectId messageId = new ObjectId(message.get_id());
+        ObjectId messageId = new ObjectId();
         messageObject.append("AuthorId", authorId);
         messageObject.append("messageId", messageId);
         messageObject.append("message", message.getMessage());

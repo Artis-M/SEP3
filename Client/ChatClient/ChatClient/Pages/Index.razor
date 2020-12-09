@@ -15,27 +15,36 @@
 
 <div class="row">
     <div class="col-3">
-          @if (Chatrooms.Any())
-          {
-              @foreach (var item in Chatrooms)
-              {
-                  <div class="row">
-                      <div class="cold-12">
-                          <button type="button" @onclick="() => ConnectToChatRoom(item._id)">@item.name</button>
-                      </div>
-                      </div>
-              }
-          }
-          <div class="row">
-              <div class="col-12">
-                  <input type="text" @bind="NewChatRoomName" placeholder="Enter Chatroom Name"></input>
-                  <button @onclick="CreateChatRoom">Create Chatroom</button>
-              </div>
-          </div>
+        @if (Chatrooms.Any())
+        {
+            @foreach (var item in Chatrooms)
+            {
+                <div class="row">
+                    <div class="cold-12">
+                        <button type="button" @onclick="() => ConnectToChatRoom(item._id)">@item.name</button>
+                    </div>
+                </div>
+            }
+        }
+        <div class="row">
+            <div class="col-12">
+                <input type="text" @bind="NewChatRoomName" placeholder="Enter Chatroom Name"></input>
+                <button @onclick="CreateChatRoom">Create Chatroom</button>
+            </div>
+        </div>
     </div>
     <div class="col-6">
         <div class="row">
-            <div class="col-12"><h3>@if(currentChatroom != null){@currentChatroom.name <p>|</p> @currentChatroom._id}</h3></div>
+            <div class="col-12">
+                <h3>
+                    @if (currentChatroom != null)
+                    {
+                        @currentChatroom.name
+                        <p>|</p>
+                        @currentChatroom._id
+                    }
+                </h3>
+            </div>
         </div>
         <div style="overflow-y: scroll">
             @if (Messages.Any())
@@ -57,26 +66,40 @@
                             }
                             : @item.message
                         </p>
-                                                    <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        ...
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item" onclick="(() => @AddFriend(item.authorID)">Add Friend</a>
-                                                    </div>
-                                                    </div>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                ...
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" onclick="(() => @AddFriend(item.authorID)">Add Friend</a>
+                            </div>
+                        </div>
                     </div>
                 }
             }
-                
-                </div>
+
+        </div>
         <div style=" position: fixed; bottom: 40px; width: 100%;">
             @if (MessageFragments.Any())
             {
                 @foreach (var item in MessageFragments)
                 {
                     <div style="width: 50%;">
-                        <p style="overflow-x: fragments;">User @if(currentChatroom != null){@currentChatroom.participants.Find(user1 => user._id.Equals(@item.authorIdString)).Username} is typing: @item.message ......</p>
+                        <p style="overflow-x: fragments;">
+                            User
+                            @if (currentChatroom != null)
+                            {
+                                @try
+                                {
+                                    @currentChatroom.participants.Find(user1 => user._id.Equals(@item.authorIdString)).Username
+                                }
+                                catch
+                                {
+                                    @item.authorID
+                                }
+                            }
+                            is typing: @item.message ......
+                        </p>
                     </div>
                 }
             }
@@ -93,6 +116,7 @@
         </div>
     </div>
 </div>
+
 @code
 {
     private string NewChatRoomName;
@@ -101,7 +125,7 @@
     private string messageText;
     private bool isConnectedToChatRoom = false;
     private User user;
-    private Message newMessage = new Message(null, null, null);
+    private Message newMessage = new Message();
     private MessageFragment newMessageFragment = new MessageFragment();
     private List<MessageFragment> MessageFragments = new List<MessageFragment>();
     private List<Message> Messages = new List<Message>();
@@ -114,7 +138,7 @@
             user = JsonSerializer.Deserialize<User>(userAsJson);
             chatService.ConnectToServer();
         }
-  
+
         chatService.newMessage += this.DisplayNewMessage;
         chatService.newMessageFragment += this.DisplayNewMessageFragment;
         GetUsersChatRooms();
@@ -124,7 +148,7 @@
     {
         AccountService.AddFriend(userID);
     }
-    
+
     public async Task GetUsersChatRooms()
     {
         Console.WriteLine("What is going on.....");
@@ -139,14 +163,14 @@
         Console.WriteLine(user.ToJson());
         Console.WriteLine($"New Chatroom {NewChatRoomName} created by {user.Username} at {DateTime.Now.ToUniversalTime()}.");
         string welcomeMessage = $"New Chatroom {NewChatRoomName} created by {user.Username} at {DateTime.Now.ToUniversalTime()}.";
-        Message message = new Message(welcomeMessage, user._id, ObjectId.GenerateNewId().ToString());
+        Message message = new Message(welcomeMessage, user._id, ObjectId.GenerateNewId().ToString(),user.Username);
         List<Message> messages = new List<Message>();
         List<User> participants = new List<User>();
         participants.Add(user);
         messages.Add(message);
         Chatroom newChatroom = new Chatroom(ObjectId.GenerateNewId().ToString(), NewChatRoomName, participants, messages);
         chatroomService.CreateChatRoom(newChatroom);
-        
+
         NewChatRoomName = "";
 
         GetUsersChatRooms();
@@ -160,23 +184,24 @@
         MessageFragments = new List<MessageFragment>();
         Messages = new List<Message>();
     }
-    
+
     public async Task ConnectToChatRoom(string ChatroomId)
     {
-            Console.WriteLine($"Connected to chatroom: {ChatroomId}");
-            currentChatroom = Chatrooms.First(chatroom => chatroom._id.Equals(ChatroomId));
-            await chatService.JoinChatRoom(ChatroomId);
-            isConnectedToChatRoom = true;
-            Messages = currentChatroom.messages;
+        Console.WriteLine($"Connected to chatroom: {ChatroomId}");
+        currentChatroom = Chatrooms.First(chatroom => chatroom._id.Equals(ChatroomId));
+        await chatService.JoinChatRoom(ChatroomId);
+        isConnectedToChatRoom = true;
+        Messages = currentChatroom.messages;
     }
-    public void sendMessage()
+
+    public async Task sendMessage()
     {
         if (isConnectedToChatRoom)
         {
             Console.WriteLine("Sending message:" + messageText);
             newMessage.message = messageText;
             newMessage.authorID = user._id.ToString();
-            chatService.SendMessage(newMessage, currentChatroom._id);
+            await chatService.SendMessage(newMessage, currentChatroom._id);
             messageText = "";
             newMessage.message = "";
             newMessageFragment.message = "";
@@ -190,7 +215,7 @@
         {
             newMessageFragment.message = messageText;
             newMessageFragment.authorIdString = user._id;
-            chatService.SendMessageFragment(newMessageFragment, currentChatroom._id);  
+            chatService.SendMessageFragment(newMessageFragment, currentChatroom._id);
         }
     }
 
@@ -199,6 +224,7 @@
         Messages.Add(message);
         await InvokeAsync(() => StateHasChanged());
     }
+
     public async void DisplayNewMessageFragment(MessageFragment messageFragment)
     {
         try
@@ -207,7 +233,6 @@
         }
         catch (Exception e)
         {
-
         }
         MessageFragments.Add(messageFragment);
         if (messageFragment.message.Equals(""))
@@ -218,18 +243,18 @@
             }
             catch (Exception e)
             {
-                
             }
         }
         await InvokeAsync(() => StateHasChanged());
     }
+
     protected void KeyDown(KeyboardEventArgs e)
     {
         if (e.Key.Equals("Enter"))
         {
             sendMessage();
         }
-        else if(e.Key.Equals(" ") || e.Key.Equals("Backspace"))
+        else if (e.Key.Equals(" ") || e.Key.Equals("Backspace"))
         {
             sendMessageFragment();
         }

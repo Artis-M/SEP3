@@ -70,16 +70,7 @@ namespace Application.Services.Implementations
 
         public async Task SendMessage(string ChatroomID, Message message)
         {
-            foreach (var VARIABLE in Chatrooms)
-            {
-                if (VARIABLE._id.Equals(ChatroomID))
-                {
-                    VARIABLE.addMessage(message);
-                    await model.SendMessage(message, ChatroomID);
-                }
-            }
-
-          
+            await model.SendMessage(message, ChatroomID);
         }
 
         public async Task AddUser(string ChatRoomID,  string userID)

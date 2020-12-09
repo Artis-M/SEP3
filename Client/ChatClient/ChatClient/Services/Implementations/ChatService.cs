@@ -48,7 +48,8 @@ namespace Services
 
             StringContent content = new StringContent(JsonSerializer.Serialize(message),Encoding.UTF8,"application/json");
             string request = $"sendMessage/{activeChatRoomId}";
-            http.PatchAsync(request, content);
+            Console.Out.WriteLine(content);
+            http.PostAsync(request, content);
         }
         public async Task SendMessageFragment(MessageFragment messageFragment, string activeChatRoomId)
         {

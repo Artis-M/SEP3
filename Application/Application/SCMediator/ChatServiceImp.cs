@@ -57,6 +57,7 @@ namespace Application.SCMediator
             {
                 Command = "NewMessage", variableUser = message.authorID, variableChatroom = chatroomID,
                 SpecificOrder = messageSerialized
+                
             };
             await Send(command);
         }
@@ -102,6 +103,7 @@ namespace Application.SCMediator
             CommandLine command = new CommandLine {Command = "TopicUpdate", SpecificOrder = serialTopic};
             await Send(command);
         }
+
         public async Task JoinChatroom(string chatroomID, string userID)
         {
             CommandLine command = new CommandLine
@@ -148,7 +150,6 @@ namespace Application.SCMediator
             byte[] dataFromServer = new byte[4048];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
-            Console.WriteLine(response);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
             if (upsdelivery.Command == "UserCredentials")
             {
@@ -171,7 +172,6 @@ namespace Application.SCMediator
             byte[] dataFromServer = new byte[4048];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
-            Console.WriteLine(response);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
             /* to here */
             if (upsdelivery.Command.Equals("ChatroomByUser"))
@@ -194,9 +194,28 @@ namespace Application.SCMediator
             byte[] dataFromServer = new byte[4048];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
-            Console.WriteLine(response);
-            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+           CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
             if (upsdelivery.Command.Equals("OneUserCredential"))
+            {
+                Account account = JsonSerializer.Deserialize<Account>(upsdelivery.SpecificOrder);
+                return account;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+        public async Task<Account> requestUserByID(string userID)
+        {
+            CommandLine command = new CommandLine {Command = "REQUEST-UserByID", variableUser = userID};
+            await Send(command);
+
+            byte[] dataFromServer = new byte[4048];
+            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
+            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
+           CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+            if (upsdelivery.Command.Equals("OneUserCredentialByID"))
             {
                 Account account = JsonSerializer.Deserialize<Account>(upsdelivery.SpecificOrder);
                 return account;
@@ -208,39 +227,38 @@ namespace Application.SCMediator
         }
 
         public async Task<List<Chatroom>> requestChatrooms()
-        {
-            CommandLine command = new CommandLine {Command = "REQUEST-Chatroom-ALL"};
-            await Send(command);
+            {
+                CommandLine command = new CommandLine {Command = "REQUEST-Chatroom-ALL"};
+                await Send(command);
 
-            byte[] dataFromServer = new byte[4048];
-            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
-            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
-            Console.WriteLine(response);
-            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
-            if (upsdelivery.Command.Equals("AllChatrooms"))
-            {
-                List<Chatroom> chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(upsdelivery.SpecificOrder);
-                return chatrooms;
+                byte[] dataFromServer = new byte[4048];
+                int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
+                string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
+               CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+                if (upsdelivery.Command.Equals("AllChatrooms"))
+                {
+                    List<Chatroom> chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(upsdelivery.SpecificOrder);
+                    return chatrooms;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+
+            /*public async Task<List<Topic>> requestTopics()
             {
-                return null;
-            }
+                CommandLine command = new CommandLine {Command = "REQUEST-Topic-ALL"};
+                await Send(command);
+    
+                byte[] dataFromServer = new byte[4048];
+                int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
+                string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
+                Console.WriteLine(response);
+                CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+    
+                List<Topic> topics = JsonSerializer.Deserialize<List<Topic>>(response);
+                return topics;
+            }*/
         }
-
-        /*public async Task<List<Topic>> requestTopics()
-        {
-            CommandLine command = new CommandLine {Command = "REQUEST-Topic-ALL"};
-            await Send(command);
-
-            byte[] dataFromServer = new byte[4048];
-            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
-            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
-            Console.WriteLine(response);
-            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
-
-            List<Topic> topics = JsonSerializer.Deserialize<List<Topic>>(response);
-            return topics;
-        }*/
     }
-}
