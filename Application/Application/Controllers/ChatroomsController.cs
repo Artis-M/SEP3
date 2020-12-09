@@ -155,11 +155,12 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
-        [Route("removeUser/{id}")]
+        [Route("removeUser/{chatRoomId}")]
         public async Task<ActionResult<Message>> LeaveChatroom([FromBody] string userID, [FromRoute] string chatRoomId)
         {
             try
             {
+                Console.Out.WriteLine(userID+" SFDGFGFSDDFGDBFCF"+chatRoomId);
                 await chatroomService.RemoveUser(chatRoomId, userID);
                 return Ok("user removed: " + userID);
             }

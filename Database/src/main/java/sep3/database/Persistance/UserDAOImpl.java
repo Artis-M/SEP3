@@ -104,7 +104,8 @@ public class UserDAOImpl implements UserDAO
     public User getUser(String userID)
     {
         BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.append("_id", userID);
+        ObjectId objectId = new ObjectId(userID);
+        whereQuery.append("_id", objectId);
         MongoCursor<Document> cursor = collection.find(whereQuery).iterator();
         try
         {

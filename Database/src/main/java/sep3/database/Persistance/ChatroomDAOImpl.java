@@ -206,7 +206,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
 
     @Override
     public void leaveChatroom(String userId, String chatroomId) {
-
+        System.out.println(chatroomId);
         BasicDBObject chatroomObject = new BasicDBObject();
         BasicDBObject updatePList = new BasicDBObject();
         BasicDBObject participantObject = new BasicDBObject();

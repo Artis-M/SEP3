@@ -163,11 +163,11 @@
         participants.Add(user);
         messages.Add(message);
         Chatroom newChatroom = new Chatroom(ObjectId.GenerateNewId().ToString(), NewChatRoomName, participants, messages);
-        chatroomService.CreateChatRoom(newChatroom);
+        await chatroomService.CreateChatRoom(newChatroom);
 
         NewChatRoomName = "";
 
-        GetUsersChatRooms();
+        await GetUsersChatRooms();
     }
 
     public async Task LeaveChatroom()
