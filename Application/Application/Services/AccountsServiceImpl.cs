@@ -77,7 +77,7 @@ namespace Application.Services
         }
         public async Task<Account> RequestAccountById(string userID)
         {
-            return Accounts.First(acc => acc._id.Equals(userID));
+            return await model.requestAccountByID(userID);
         }
     }
 }

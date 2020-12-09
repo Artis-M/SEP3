@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,8 +41,9 @@ namespace Application.Models
         }*/
 
         public async Task SendMessage(Message message, string chatroomId)
-        {
+        { 
             await chatServiceImp.sendMessage(message, chatroomId);
+           
         }
 
         public async Task AddNewChatroom(Chatroom chatroom)
@@ -102,6 +104,11 @@ namespace Application.Models
         public async Task<Account> requestAccount(string username)
         {
             return await chatServiceImp.requestUser(username);
+        }
+
+        public async Task<Account> requestAccountByID(string userID)
+        {
+            return await chatServiceImp.requestUserByID(userID);
         }
 
         public async Task<List<Chatroom>> requestChatroom(string userID)
