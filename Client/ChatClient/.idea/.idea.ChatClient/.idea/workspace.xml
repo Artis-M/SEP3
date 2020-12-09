@@ -22,7 +22,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="" />
+    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/.idea/.idea.Application/.idea/contentModel.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,9 +41,19 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/ChatClient/Pages/Index.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/obj/Debug/netstandard2.1/Razor/Pages/Index.razor.g.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Pages/Login.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Pages/Register.razor" root0="SKIP_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Services/Implementations/AccountServiceImp.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Services/IAccountService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Models/User.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Services/Implementations/ChatroomServiceImp.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Services/IChatroomService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Models/Message.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Authentication/AuthenticationProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Models/User.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -63,7 +75,6 @@
         <option value="$PROJECT_DIR$/ChatClient/Authentication/AuthenticationProvider.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Services/IChatroomService.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Pages/Index.razor" />
         <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/ChatService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/ChatroomServiceImp.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/Login.razor" />
@@ -73,6 +84,7 @@
         <option value="$PROJECT_DIR$/ChatClient/Models/User.cs" />
         <option value="$PROJECT_DIR$/ChatClient/wwwroot/css/SignUp.css" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/Register.razor" />
+        <option value="$PROJECT_DIR$/ChatClient/Pages/Index.razor" />
       </list>
     </option>
   </component>

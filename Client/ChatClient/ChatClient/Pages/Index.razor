@@ -66,14 +66,6 @@
                             }
                             : @item.message
                         </p>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                ...
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" onclick="(() => @AddFriend(item.authorID)">Add Friend</a>
-                            </div>
-                        </div>
                     </div>
                 }
             }
@@ -111,6 +103,13 @@
     <div class="col-3">
         <div class="row">
             <div class="col-12">
+                   @if (currentChatroom != null)
+                                {
+                                    @foreach (var item in currentChatroom.participants)
+                                    {
+                                        <div class="row"><div class="d-inline"><h2>@item.Username</h2><a class="dropdown-item" onclick="(() => @AddFriend(item._id)">Add Friend</a></div></div>
+                                    } 
+                                }
                 <button @onclick="LeaveChatroom">Leave Chatroom</button>
             </div>
         </div>
