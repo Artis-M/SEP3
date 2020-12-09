@@ -33,14 +33,11 @@ public class ChatroomDAOImpl implements ChatroomDAO {
     }
 
     private Chatroom createChatroom(Document document) {
-        System.out.println(document);
-
         Chatroom room = new Chatroom();
         String id = document.get("_id").toString();
         room.set_id(id);
         room.setName(document.get("name").toString());
         List<Document> messages = (List<Document>) document.get("messages");
-
         if(messages.size()!=0) {
             for (var DBmessage : messages
             ) {
@@ -95,7 +92,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         for (var DBparticipant : participants
         ) {
             ObjectId participantId = new ObjectId(DBparticipant.get("participantId").toString());
-            User participant = userDAO.getUser(participantId);
+            User participant = userDAO.getUser(participantId.toString());
             users.add(participant);
 
 
@@ -169,8 +166,57 @@ public class ChatroomDAOImpl implements ChatroomDAO {
 
     }
 
+
     @Override
-    public void updateChatroom(Chatroom chatroom) {
+    public void addMessageToChatroom(String chatroomId, Message message) {
+        BasicDBObject chatroomObject = new BasicDBObject();
+        BasicDBObject updateMessage = new BasicDBObject();
+        BasicDBObject messageObject = new BasicDBObject();
+
+        ObjectId authorId = new ObjectId(message.getAuthorID());
+        ObjectId messageId = new ObjectId(message.get_id());
+        messageObject.append("AuthorId", authorId);
+        messageObject.append("messageId", messageId);
+        messageObject.append("message", message.getMessage());
+
+        updateMessage.append("$push", new BasicDBObject().append("messages",messageObject));
+        ObjectId chatroom_id = new ObjectId(chatroomId);
+        chatroomObject.append("_id", chatroom_id);
+        collection.updateOne(chatroomObject,updateMessage);
+    }
+
+    @Override
+    public void joinChatroom(String userId, String chatroomId) {
+        BasicDBObject chatroomObject = new BasicDBObject();
+        BasicDBObject updatePList = new BasicDBObject();
+        BasicDBObject participantObject = new BasicDBObject();
+
+        ObjectId participantId = new ObjectId(userId);
+        participantObject.append("participantId", participantId);
+
+
+        updatePList.append("$push", new BasicDBObject().append("participants",participantObject));
+        ObjectId chatroom_id = new ObjectId(chatroomId);
+        chatroomObject.append("_id", chatroom_id);
+        collection.updateOne(chatroomObject,updatePList);
+
+    }
+
+    @Override
+    public void leaveChatroom(String userId, String chatroomId) {
+
+        BasicDBObject chatroomObject = new BasicDBObject();
+        BasicDBObject updatePList = new BasicDBObject();
+        BasicDBObject participantObject = new BasicDBObject();
+
+        ObjectId participantId = new ObjectId(userId);
+        participantObject.append("participantId", participantId);
+
+
+        updatePList.append("$pull", new BasicDBObject().append("participants",participantObject));
+        ObjectId chatroom_id = new ObjectId(chatroomId);
+        chatroomObject.append("_id", chatroom_id);
+        collection.updateOne(chatroomObject,updatePList);
 
     }
 
@@ -211,7 +257,6 @@ public class ChatroomDAOImpl implements ChatroomDAO {
             Chatroom room = createChatroom(json);
             chatRooms.add(room);
         }
-       // System.out.println(chatRooms);
         return chatRooms;
     }
 }
