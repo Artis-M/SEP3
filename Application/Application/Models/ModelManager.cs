@@ -86,6 +86,11 @@ namespace Application.Models
             await chatServiceImp.sendNewUser(account);
         }
 
+        public async Task AddFriend(List<User> users)
+        {
+            await chatServiceImp.AddFriend(users);
+        }
+
         public void ProcessCredentials(string credentialsJson)
         {
             accountService.SetListOfAccounts(JsonSerializer.Deserialize<List<Account>>(credentialsJson));

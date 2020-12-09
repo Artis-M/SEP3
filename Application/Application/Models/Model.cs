@@ -19,6 +19,7 @@ namespace Application.Models
         public Task DeleteTopic(string topicID);
         public Task RemoveUser(string userID);
         public Task Register(Account account);
+        public Task AddFriend(List<User> users);
         public void ProcessCredentials(string credentialsJson);
         public void ProcessChatrooms(string credentialsJson);
         public void ProcessTopics(string credentialsJson);

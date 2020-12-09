@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Application.Models;
 using Application.SCMediator;
@@ -151,6 +152,28 @@ namespace Application.Controllers
             try
             {
                 await AccountService.RemoveAccount(accountID);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPatch]
+        [Route("addFriend")]
+        public async Task<ActionResult> AddFriend([FromBody] List<User> users)
+        {
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine("Bad Object");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await AccountService.AddFriend(users);
                 return Ok();
             }
             catch (Exception e)

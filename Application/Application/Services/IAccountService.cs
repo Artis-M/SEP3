@@ -16,5 +16,6 @@ namespace Application.Services
         public Task<Account> RequestAccount(string username);
 
         public Task<Account> RequestAccountById(string userID);
+        public Task AddFriend(List<User> users);
     }
 }

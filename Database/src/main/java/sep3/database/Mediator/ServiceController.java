@@ -4,12 +4,14 @@ package sep3.database.Mediator;
 import com.google.gson.Gson;
 import sep3.database.Model.Account;
 import sep3.database.Model.Message;
+import sep3.database.Model.User;
 import sep3.database.Persistance.*;
 
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ServiceController implements Runnable
 {
@@ -135,6 +137,13 @@ public class ServiceController implements Runnable
                     String chatroomID = requestCommand.getVariableChatroom();
                     Message message = gson.fromJson(requestCommand.getSpecificOrder(), Message.class);
                     chatroomDAO.addMessageToChatroom(chatroomID, message);
+                }
+                else if(requestCommand.getCommand().equals("AddFriends")){
+                    ArrayList<User> specificOrder = gson.fromJson(requestCommand.getSpecificOrder(),ArrayList.class);
+                    User user1 = specificOrder.get(0);
+                    User user2 = specificOrder.get(1);
+                    userDAO.addFriend(user1, user2.get_id());
+                    userDAO.addFriend(user2,user1.get_id());
                 }
             }
         } catch (IOException e)
