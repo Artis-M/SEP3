@@ -55,5 +55,11 @@
     height: 25px;
     color:red;
 }
+.LoginButton:hover{
+    border-color:#0B9EF0;
+    color:#0B9EF0;
+    border-style: solid;
+    background-color: #b0d8ee;
+}
 
 
