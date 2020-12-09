@@ -1,9 +1,10 @@
 # 3 Tier Arhitecture Chat System using Blazor
 
-- Tier 1 - Blazor WASM.
-- Tier 2 - Application Layer in C#.
-- Tier 3 - Database(MongoDB) in Java.
+**Table of Contents**
 
+[TOCM]
+
+[TOC]
 
 ### Tier 1 - Blazor Client
 
