@@ -124,7 +124,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         add.append("_id", _id);
         add.append("name", chatroom.getName());
 
-        if (chatroom.getTopics().size() != 0) {
+        if (chatroom.getTopics()!=null) {
             Document topics = new Document();
             for (var topic : chatroom.getTopics()
             ) {
@@ -152,6 +152,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
                 ObjectId messageId = new ObjectId(message.get_id());
                 DBmessage.append("AuthorId", authorId);
                 DBmessage.append("messageId", messageId);
+                DBmessage.append("Username", message.getUsername());
                 DBmessage.append("message", message.getMessage());
                 messages.add(DBmessage);
             }

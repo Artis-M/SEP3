@@ -3,6 +3,7 @@ package sep3.database.Mediator;
 
 import com.google.gson.Gson;
 import sep3.database.Model.Account;
+import sep3.database.Model.Chatroom;
 import sep3.database.Model.Message;
 import sep3.database.Model.User;
 import sep3.database.Persistance.*;
@@ -144,6 +145,12 @@ public class ServiceController implements Runnable
                     User user2 = specificOrder.get(1);
                     userDAO.addFriend(user1, user2.get_id());
                     userDAO.addFriend(user2,user1.get_id());
+                }
+                else if(requestCommand.getCommand().equals("ChatroomNew")){
+
+                    Chatroom chatroom = gson.fromJson(requestCommand.getSpecificOrder(),Chatroom.class);
+                    System.out.println();
+                    chatroomDAO.AddChatroom(chatroom);
                 }
             }
         } catch (IOException e)
