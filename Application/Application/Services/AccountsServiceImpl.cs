@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Models;
@@ -70,10 +71,13 @@ namespace Application.Services
         { 
             this.Accounts = accounts;
         }
-
         public async Task<Account> RequestAccount(string username)
         {
             return await model.requestAccount(username);
+        }
+        public async Task<Account> RequestAccountById(string userID)
+        {
+            return Accounts.First(acc => acc._id.Equals(userID));
         }
     }
 }

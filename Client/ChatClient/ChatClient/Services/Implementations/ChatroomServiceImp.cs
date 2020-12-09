@@ -63,7 +63,7 @@ namespace Services
                 BaseAddress = new Uri(uri)
             };
             string request = $"removeUser/{chatroomID}";
-            StringContent content = new StringContent(JsonSerializer.Serialize(userID), Encoding.UTF8,"application/jsontext/plain");
+            StringContent content = new StringContent(JsonSerializer.Serialize(userID), Encoding.UTF8,"application/json");
             http.PatchAsync(request, content);
         }
     }

@@ -8,5 +8,7 @@ namespace Services
     {
         Task<Account> Login(string username, string password);
         Task Register(Account account);
+
+        Task AddFriend(string UserID);
     }
 }

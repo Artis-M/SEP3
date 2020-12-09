@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.JSInterop;
 using Application.Models;
 using Models;
 
@@ -16,6 +17,7 @@ namespace Services
     public class AccountService : IAccountService
     {
         private string uri = "https://localhost:5004/accounts/";
+        private readonly IJSRuntime jsRuntime;
         public async Task<Account> Login(string username, string password)
         {
             HttpClient http = new HttpClient
@@ -66,6 +68,31 @@ namespace Services
             StringContent content = new StringContent(serialized,Encoding.UTF8,"application/json");
             HttpResponseMessage responseMessage = await http.PostAsync(uri+"register", content);
             Console.WriteLine(responseMessage.ToString());
+        }
+
+        public async Task AddFriend(string UserID)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            string request = $"user/{UserID}";
+            
+            string userJson = await http.GetStringAsync(request);
+            User targetUser = JsonSerializer.Deserialize<User>(userJson);
+            
+            Account userAccount = JsonSerializer.Deserialize<Account>(await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser"));
+
+            userAccount.friends.Add(targetUser);
+            
+            await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", JsonSerializer.Serialize(userAccount));
+            
+            request = "user/friend";
+            
+            StringContent content = new StringContent(JsonSerializer.Serialize(userAccount), Encoding.UTF8,"application/json");
+            
+            //needs to be implemented on the Application layer. smh..
+            // http.PatchAsync(request, content);
         }
     }
 }

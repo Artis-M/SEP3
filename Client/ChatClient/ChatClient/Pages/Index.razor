@@ -6,9 +6,11 @@
 @using System.Text.Json
 @using MongoDB.Bson
 @using Tier2.Model
+@using System.Runtime.CompilerServices
 @inject ChatService chatService;
 @inject IChatroomService chatroomService;
 @inject IJSRuntime JsRuntime;
+@inject IAccountService AccountService;
 @attribute [Authorize]
 
 <div class="row">
@@ -40,22 +42,34 @@
             {
                 @foreach (var item in Messages)
                 {
-                    <p>
-                        @if (currentChatroom != null & isConnectedToChatRoom)
-                        {
-                            @try
+                    <div>
+                        <p>
+                            @if (currentChatroom != null & isConnectedToChatRoom)
                             {
-                                @currentChatroom.participants.Find(user1 => user._id.Equals(@item.authorID)).Username
+                                @try
+                                {
+                                    @currentChatroom.participants.Find(user1 => user._id.Equals(@item.authorID)).Username
+                                }
+                                catch (Exception e)
+                                {
+                                    @item.authorID
+                                }
                             }
-                            catch(Exception e)
-                            {
-                                @item.authorID
-                            }
-                        }
-                        : @item.message</p>
+                            : @item.message
+                        </p>
+                                                    <div class="dropdown">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        ...
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" onclick="(() => @AddFriend(item.authorID)">Add Friend</a>
+                                                    </div>
+                                                    </div>
+                    </div>
                 }
             }
-        </div>
+                
+                </div>
         <div style=" position: fixed; bottom: 40px; width: 100%;">
             @if (MessageFragments.Any())
             {
@@ -106,6 +120,11 @@
         GetUsersChatRooms();
     }
 
+    public async Task AddFriend(string userID)
+    {
+        AccountService.AddFriend(userID);
+    }
+    
     public async Task GetUsersChatRooms()
     {
         Console.WriteLine("What is going on.....");

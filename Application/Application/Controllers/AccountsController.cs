@@ -37,6 +37,22 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+        [HttpGet]
+        [Route("user/{id}")]
+        public async Task<ActionResult<Account>> GetUserById([FromRoute] string userID)
+        {
+            try
+            {
+                await AccountService.RequestAccounts();
+                Account account = await AccountService.RequestAccountById(userID);
+                return Ok(account);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
 
         [HttpGet]
         [Route("login")]
