@@ -2,9 +2,11 @@
 
 **Table of Contents**
 
-[TOCM]
-
-[TOC]
+- [3 Tier Arhitecture Chat System using Blazor](#3-tier-arhitecture-chat-system-using-blazor)
+    + [Tier 1 - Blazor Client](#tier-1---blazor-client)
+    + [Tier 2 - Application (Server)](#tier-2---application--server-)
+    + [Tier 3 - Database](#tier-3---database)
+    + [Security Concerns](#security-concerns)
 
 ### Tier 1 - Blazor Client
 
