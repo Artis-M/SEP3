@@ -22,17 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Controllers/AccountsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Controllers/AccountsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Controllers/ChatroomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Controllers/ChatroomsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Models/Message.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Models/Message.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Models/Model.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Models/Model.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Models/ModelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Models/ModelManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/SCMediator/ChatServiceImp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/SCMediator/ChatServiceImp.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Services/AccountsServiceImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Services/AccountsServiceImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Services/ChatroomServiceImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Services/ChatroomServiceImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Mediator/ServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Mediator/ServiceController.java" afterDir="false" />
-    </list>
+    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,18 +32,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/ChatClient/Services/Implementations/AccountServiceImp.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Services/IAccountService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Pages/Login.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Authentication/AuthenticationProvider.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Services/IChatroomService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Pages/Index.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Services/Implementations/ChatroomServiceImp.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Pages/Register.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Services/Implementations/AccountServiceImp.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Models/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Models/Message.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Models/User.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Authentication/AuthenticationProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Pages/Register.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Services/IChatroomService.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">

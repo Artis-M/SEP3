@@ -123,7 +123,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         ObjectId _id = new ObjectId(chatroom.get_id());
         add.append("_id", _id);
         add.append("name", chatroom.getName());
-
+      //  add.append("creator",);
         if (chatroom.getTopics().size() != 0) {
             Document topics = new Document();
             for (var topic : chatroom.getTopics()
@@ -153,6 +153,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
                 DBmessage.append("AuthorId", authorId);
                 DBmessage.append("messageId", messageId);
                 DBmessage.append("message", message.getMessage());
+                DBmessage.append("Username",message.getUsername());
                 messages.add(DBmessage);
             }
             add.append("messages", messages);
@@ -178,6 +179,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         messageObject.append("AuthorId", authorId);
         messageObject.append("messageId", messageId);
         messageObject.append("message", message.getMessage());
+        messageObject.append("Username",message.getUsername());
 
         updateMessage.append("$push", new BasicDBObject().append("messages",messageObject));
         ObjectId chatroom_id = new ObjectId(chatroomId);
