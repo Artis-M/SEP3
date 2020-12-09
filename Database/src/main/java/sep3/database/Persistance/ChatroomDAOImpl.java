@@ -178,6 +178,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         messageObject.append("AuthorId", authorId);
         messageObject.append("messageId", messageId);
         messageObject.append("message", message.getMessage());
+        messageObject.append("Username", message.getUsername());
 
         updateMessage.append("$push", new BasicDBObject().append("messages",messageObject));
         ObjectId chatroom_id = new ObjectId(chatroomId);

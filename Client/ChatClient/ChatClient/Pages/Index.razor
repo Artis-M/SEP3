@@ -55,14 +55,7 @@
                         <p>
                             @if (currentChatroom != null & isConnectedToChatRoom)
                             {
-                                @try
-                                {
-                                    @currentChatroom.participants.Find(user1 => user._id.Equals(@item.authorID)).Username
-                                }
-                                catch (Exception e)
-                                {
-                                    @item.authorID
-                                }
+                               @item.username
                             }
                             : @item.message
                         </p>
@@ -81,14 +74,7 @@
                             User
                             @if (currentChatroom != null)
                             {
-                                @try
-                                {
-                                    @currentChatroom.participants.Find(user1 => user._id.Equals(@item.authorIdString)).Username
-                                }
-                                catch
-                                {
-                                    @item.authorID
-                                }
+                                @item.username
                             }
                             is typing: @item.message ......
                         </p>
@@ -103,13 +89,22 @@
     <div class="col-3">
         <div class="row">
             <div class="col-12">
-                   @if (currentChatroom != null)
-                                {
-                                    @foreach (var item in currentChatroom.participants)
-                                    {
-                                        <div class="row"><div class="d-inline"><h2>@item.Username</h2><a class="dropdown-item" onclick="(() => @AddFriend(item._id)">Add Friend</a></div></div>
-                                    } 
-                                }
+                @if (currentChatroom != null)
+                {
+                  //  @currentChatroom.participants.First().Username;
+                    @foreach (var item in currentChatroom.participants)
+                    {
+                        @try
+                        {
+                            <button type="button" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
+                        }
+                        catch (Exception e)
+                        {
+                            <p> oh god oh no </p>
+                        }
+
+                    }
+                }
                 <button @onclick="LeaveChatroom">Leave Chatroom</button>
             </div>
         </div>
@@ -200,6 +195,7 @@
             Console.WriteLine("Sending message:" + messageText);
             newMessage.message = messageText;
             newMessage.authorID = user._id.ToString();
+            newMessage.username = user.Username;
             await chatService.SendMessage(newMessage, currentChatroom._id);
             messageText = "";
             newMessage.message = "";
@@ -214,6 +210,7 @@
         {
             newMessageFragment.message = messageText;
             newMessageFragment.authorIdString = user._id;
+            newMessageFragment.username = user.Username;
             chatService.SendMessageFragment(newMessageFragment, currentChatroom._id);
         }
     }
