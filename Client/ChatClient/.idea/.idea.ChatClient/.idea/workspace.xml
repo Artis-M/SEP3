@@ -22,23 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Controllers/AccountsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Controllers/AccountsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Controllers/ChatroomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Controllers/ChatroomsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Models/Model.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Models/Model.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Models/ModelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Models/ModelManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/SCMediator/ChatServiceImp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/SCMediator/ChatServiceImp.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Services/AccountsServiceImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Services/AccountsServiceImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Services/ChatroomServiceImpl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Services/ChatroomServiceImpl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/Services/IAccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/Services/IAccountService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Application/Application/SignalR/ChatHub.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Application/Application/SignalR/ChatHub.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/DatabaseApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/DatabaseApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Mediator/ServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Mediator/ServiceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/ChatroomDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/ChatroomDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/TopicDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/TopicDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Database/src/main/java/sep3/database/Persistance/UserDAOImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="5a19b099-23ba-4b7f-a817-1483f81f2b18" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -198,6 +182,7 @@
       <workItem from="1607545751256" duration="2501000" />
       <workItem from="1607592580104" duration="3790000" />
       <workItem from="1607614674578" duration="1616000" />
+      <workItem from="1607631889975" duration="292000" />
     </task>
     <servers />
   </component>

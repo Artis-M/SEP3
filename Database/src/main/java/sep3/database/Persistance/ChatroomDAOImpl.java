@@ -127,7 +127,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         ObjectId _id = new ObjectId(chatroom.get_id());
         add.append("_id", _id);
         add.append("name", chatroom.getName());
-        add.append("owner",chatroom.getOwner());
+        add.append("owner",new ObjectId(chatroom.getOwner()));
         add.append("type",chatroom.getType());
 
         if (chatroom.getTopics()!=null) {
