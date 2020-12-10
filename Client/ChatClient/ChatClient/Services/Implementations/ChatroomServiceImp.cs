@@ -19,6 +19,7 @@ namespace Services
         private readonly IJSRuntime jsRuntime;
         public Chatroom currentlySelectedChatroom;
         
+        
         public async Task<List<Chatroom>> GetUsersChatrooms(string userId)
         {
             

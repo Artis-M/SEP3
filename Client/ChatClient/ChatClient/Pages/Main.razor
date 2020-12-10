@@ -12,47 +12,50 @@
 @inject ChatService ChatService;
 @inject IJSRuntime JsRuntime;
 @inject AuthenticationStateProvider AuthenticationStateProvider;
-<link href="C:\Users\jambo\Desktop\School\Semester 3\SEP3\SEP3\Client\ChatClient\ChatClient\wwwroot\css\mainpage.css" rel="stylesheet"/>
+
 <div>
 
-    <div class="userProfile">
-        <div>
-            <button @onclick="@((() => EditProfile()))">
+    <div class="loginForm">
+        <div class="userProfile">
+
+            <button class="editProfile" @onclick="@((() => EditProfile()))">
                 Edit profile
             </button>
-        </div>
-        <h1>Profile</h1>
-        <div>
-            <h3>@storedUser.Username</h3>
-        </div>
-        <div>
-            <h3>@storedUser._id</h3>
-        </div>
-        <div>
-            <h3>@storedUser.Fname</h3>
-        </div>
-        <div>
-            <h3>@storedUser.Lname</h3>
-        </div>
-        <div>
-            <h3>@storedUser.friends</h3>
-        </div>
-        <div>
+
+            <h1>Profile</h1>
             <div>
-                <h4>Joined chatrooms</h4>
-                <p>@chatroomCount</p>
+                <h3>@storedUser.Username</h3>
+            </div>
+
+            <div>
+                <h3>@storedUser.Fname</h3>
             </div>
             <div>
-                <h4>Friends</h4>
-                <p>@friendCount</p>
+                <h3>@storedUser.Lname</h3>
             </div>
-        </div>
-        <div>
-            <button @onclick="@((() => DeleteProfile()))">
+            <div>
+                <h3>@storedUser.friends</h3>
+            </div>
+            <div>
+                <h6>@storedUser._id</h6>
+            </div>
+            <div>
+                <div>
+                    <h4>Joined chatrooms</h4>
+                    <p>@chatroomCount</p>
+                </div>
+                <div>
+                    <h4>Friends</h4>
+                    <p>@friendCount</p>
+                </div>
+            </div>
+
+            <button class="deleteProfile" @onclick="@((() => DeleteProfile()))">
                 Delete profile
             </button>
-        </div>
 
+
+        </div>
     </div>
     <div>
         <div>
@@ -120,14 +123,12 @@
                 @foreach (var item in Chatrooms)
                 {
                     <tr>
-                        <td>@item.name</td>
-
-
                         <td>
                             <button @onclick="@((() => EnterChatroom(@item._id)))">
-                                <i class="oi oi-trash" style="color: black"/>
+                                @item.name
                             </button>
                         </td>
+
 
                     </tr>
                 }
@@ -225,7 +226,7 @@
 
     public async Task EditProfile()
     {
-        //redirect to edit profile page
+    //redirect to edit profile page
     }
 
     public async Task DeleteProfile()
@@ -233,12 +234,12 @@
         try
         {
             await AccountService.DeleteProfile(storedUser._id);
-            ((AuthenticationProvider)AuthenticationStateProvider).Logout();
+            ((AuthenticationProvider) AuthenticationStateProvider).Logout();
             NavigationManager.NavigateTo("login");
         }
-        catch (Exception e) { }
-       
-        
+        catch (Exception e)
+        {
+        }
     }
 
 }
