@@ -1,19 +1,33 @@
-﻿
-.userProfile {
-    background-color: rgb(255, 255, 255);
-    height: 55%;
-    width: 25%;
+﻿.wholePage {
+
     display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("https://images.wallpaperscraft.com/image/plexus_lines_points_120093_1920x1080.jpg");
+}
+
+.userProfile {
+    display: flex;
+    align-content: center;
+    background-color: rgb(255, 255, 255);
+    height: 60%;
+    width: 25%;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: left;
+    justify-content: center;
     border-radius: 10px;
+    margin: 50px;
+    font-size: 1rem;
 }
 
-.userProfile h1, h3,h6 {
-    padding-left: 30px;
+.userProfile h1, h3, h6 {
+    padding-right: 30px;
 }
-
 
 
 .editProfile {
@@ -45,10 +59,4 @@
     cursor: pointer;
 
     border-radius: 25px;
-}
-
-html {
-    font-family: Times New Roman;
-    font-size: 1rem;
-    background-color: lightgray;
 }
