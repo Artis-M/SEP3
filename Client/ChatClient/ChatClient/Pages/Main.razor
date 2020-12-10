@@ -207,7 +207,8 @@
 
     private async Task EnterChatroom(string id)
     {
-    //opens chatroom and lets the user chat
+        await ChatroomService.SetCurrentChatroom(id);
+        NavigationManager.NavigateTo("");
     }
 
     public async Task AddChatroom()

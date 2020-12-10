@@ -19,6 +19,7 @@ namespace Application.Services.Implementations
 
         public async Task<Chatroom> GetChatroomByID(string ID)
         {
+            await requestChatrooms();
             foreach (var VARIABLE in Chatrooms)
             {
                 if (VARIABLE._id.Equals(ID))

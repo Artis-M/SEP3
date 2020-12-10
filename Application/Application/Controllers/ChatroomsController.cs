@@ -37,10 +37,11 @@ namespace Application.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public async Task<ActionResult<Chatroom>> GetChatRoomById([FromRoute] string id)
+        [Route("{chatRoomId}")]
+        public async Task<ActionResult<Chatroom>> GetChatRoomById([FromRoute] string chatRoomId)
         {
-            Chatroom chatroom = await chatroomService.GetChatroomByID(id);
+            Console.WriteLine("Getting chat room:" + chatRoomId);
+            Chatroom chatroom = await chatroomService.GetChatroomByID(chatRoomId);
             try
             {
                 if (chatroom == null)

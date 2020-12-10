@@ -83,6 +83,12 @@
           </e>
           <e p="favicon.ico" t="Include" />
           <e p="index.html" t="Include" />
+          <e p="js" t="Include">
+            <e p="bootstrap" t="Include">
+              <e p="bootstrap.min.js" t="Include" />
+              <e p="bootstrap.min.js.map" t="Include" />
+            </e>
+          </e>
           <e p="sample-data" t="Include">
             <e p="weather.json" t="Include" />
           </e>

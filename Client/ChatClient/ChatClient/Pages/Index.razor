@@ -25,6 +25,7 @@
                         {
                             <div class="row">
                                 <div class="col-12">
+                                    @item.Username
                                     <div class="btn-group dropright">
                                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             ...
@@ -118,7 +119,8 @@
         if (!string.IsNullOrEmpty(userAsJson))
         {
             user = JsonSerializer.Deserialize<User>(userAsJson);
-            chatService.ConnectToServer();
+            await chatService.ConnectToServer();
+            Console.WriteLine("Connected to server");
         }
         currentChatroom = chatroomService.GetCurrentChatroom();
         chatService.newMessage += this.DisplayNewMessage;
