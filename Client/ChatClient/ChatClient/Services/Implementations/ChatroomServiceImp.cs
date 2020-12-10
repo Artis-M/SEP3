@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -16,6 +17,7 @@ namespace Services
         
         private string uri = "https://localhost:5004/chatrooms/";
         private readonly IJSRuntime jsRuntime;
+        public Chatroom currentlySelectedChatroom;
         
         public async Task<List<Chatroom>> GetUsersChatrooms(string userId)
         {
@@ -56,6 +58,34 @@ namespace Services
             http.PostAsync("add", content);
         }
 
+        public Task JoinChatRoom(string chatroomId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task SetCurrentChatroom(string chatroomId)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            HttpResponseMessage responseMessage = await http.GetAsync($"{chatroomId}");
+            if (responseMessage.StatusCode == HttpStatusCode.OK)
+            {
+                Chatroom chatroom = JsonSerializer.Deserialize<Chatroom>(await responseMessage.Content.ReadAsStringAsync());
+                currentlySelectedChatroom = chatroom;
+            }
+        }
+
+        public Chatroom GetCurrentChatroom()
+        {
+            return currentlySelectedChatroom;
+        }
+
+        public async Task RemoveCurrentChatroom()
+        { 
+            currentlySelectedChatroom = null;
+        }
         public async Task LeaveChatRoom(string userID, string chatroomID)
         {
             HttpClient http = new HttpClient

@@ -14,26 +14,38 @@
 @attribute [Authorize]
 
 <div class="row">
-    <div class="col-3">
-        @if (Chatrooms.Any())
-        {
-            @foreach (var item in Chatrooms)
-            {
-                <div class="row">
-                    <div class="cold-12">
-                        <button type="button" @onclick="() => ConnectToChatRoom(item._id)">@item.name</button>
-                    </div>
-                </div>
-            }
-        }
+    <div class="col-4">
         <div class="row">
             <div class="col-12">
-                <input type="text" @bind="NewChatRoomName" placeholder="Enter Chatroom Name"></input>
-                <button @onclick="CreateChatRoom">Create Chatroom</button>
+                @if (currentChatroom != null)
+                {
+                    @foreach (var item in currentChatroom.participants)
+                    {
+                        @try
+                        {
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="btn-group dropright">
+                                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            ...
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <button type="button" class="btn-sm" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        catch (Exception e)
+                        {
+                        }
+                    }
+                }
+                <button @onclick="LeaveChatroom">Leave Chatroom</button>
             </div>
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-8">
         <div class="row">
             <div class="col-12">
                 <h3>
@@ -46,7 +58,7 @@
                 </h3>
             </div>
         </div>
-        <div style="overflow-y: scroll">
+        <div class="messageBox" style="overflow-y: scroll">
             @if (Messages.Any())
             {
                 @foreach (var item in Messages)
@@ -55,7 +67,7 @@
                         <p>
                             @if (currentChatroom != null & isConnectedToChatRoom)
                             {
-                               @item.username
+                                @item.username
                             }
                             : @item.message
                         </p>
@@ -64,7 +76,7 @@
             }
 
         </div>
-        <div style=" position: fixed; bottom: 40px; width: 100%;">
+        <div class="messageFragmentBox" style="position: fixed; bottom: 40px; width: 100%;">
             @if (MessageFragments.Any())
             {
                 @foreach (var item in MessageFragments)
@@ -82,38 +94,14 @@
                 }
             }
         </div>
-        <div style=" position: fixed; bottom: 0; width: 100%;">
+        <div class="chatBox" style=" position: fixed; bottom: 0; width: 100%;">
             <input type="text" style="height: 40px; width: 50%;" @onkeyup="@KeyDown" @bind:event="oninput" @bind="@messageText"/>
-        </div>
-    </div>
-    <div class="col-3">
-        <div class="row">
-            <div class="col-12">
-                @if (currentChatroom != null)
-                {
-                  //  @currentChatroom.participants.First().Username;
-                    @foreach (var item in currentChatroom.participants)
-                    {
-                        @try
-                        {
-                            <button type="button" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
-                        }
-                        catch (Exception e)
-                        {
-                            <p> oh god oh no </p>
-                        }
-
-                    }
-                }
-                <button @onclick="LeaveChatroom">Leave Chatroom</button>
-            </div>
         </div>
     </div>
 </div>
 
 @code
 {
-    private string NewChatRoomName;
     private List<Chatroom> Chatrooms = new List<Chatroom>();
     private Chatroom currentChatroom = null;
     private string messageText;
@@ -132,9 +120,10 @@
             user = JsonSerializer.Deserialize<User>(userAsJson);
             chatService.ConnectToServer();
         }
-
+        currentChatroom = chatroomService.GetCurrentChatroom();
         chatService.newMessage += this.DisplayNewMessage;
         chatService.newMessageFragment += this.DisplayNewMessageFragment;
+        ConnectToChatRoom();
         GetUsersChatRooms();
     }
 
@@ -152,24 +141,6 @@
         await InvokeAsync(() => StateHasChanged());
     }
 
-    public async Task CreateChatRoom()
-    {
-        Console.WriteLine(user.ToJson());
-        Console.WriteLine($"New Chatroom {NewChatRoomName} created by {user.Username} at {DateTime.Now.ToUniversalTime()}.");
-        string welcomeMessage = $"New Chatroom {NewChatRoomName} created by {user.Username} at {DateTime.Now.ToUniversalTime()}.";
-        Message message = new Message(welcomeMessage, user._id, ObjectId.GenerateNewId().ToString(),user.Username);
-        List<Message> messages = new List<Message>();
-        List<User> participants = new List<User>();
-        participants.Add(user);
-        messages.Add(message);
-        Chatroom newChatroom = new Chatroom(ObjectId.GenerateNewId().ToString(), NewChatRoomName, participants, messages);
-        await chatroomService.CreateChatRoom(newChatroom);
-
-        NewChatRoomName = "";
-
-        await GetUsersChatRooms();
-    }
-
     public async Task LeaveChatroom()
     {
         chatroomService.LeaveChatRoom(user._id, currentChatroom._id);
@@ -179,11 +150,9 @@
         Messages = new List<Message>();
     }
 
-    public async Task ConnectToChatRoom(string ChatroomId)
+    public async Task ConnectToChatRoom()
     {
-        Console.WriteLine($"Connected to chatroom: {ChatroomId}");
-        currentChatroom = Chatrooms.First(chatroom => chatroom._id.Equals(ChatroomId));
-        await chatService.JoinChatRoom(ChatroomId);
+        await chatService.JoinChatRoom(chatroomService.GetCurrentChatroom()._id);
         isConnectedToChatRoom = true;
         Messages = currentChatroom.messages;
     }
