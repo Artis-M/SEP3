@@ -24,7 +24,7 @@ public class UserDAOImpl implements UserDAO
     private DBConnection connection;
     private Gson gson;
     private TopicDAO topicDAO;
-    private ChatroomDAO chatroomDAO;
+
 
     public UserDAOImpl()
     {
@@ -32,7 +32,7 @@ public class UserDAOImpl implements UserDAO
         collection = connection.getDatabase().getCollection("Users");
         gson = new Gson();
         topicDAO = new TopicDAOImpl();
-        chatroomDAO = new ChatroomDAOImpl();
+
     }
 
     private MongoCursor<Document> cursor(String key, Object obj)
