@@ -13,10 +13,8 @@
 @inject IJSRuntime JsRuntime;
 @inject AuthenticationStateProvider AuthenticationStateProvider;
 
-<div>
-
-    <div class="loginForm">
-        <div class="userProfile">
+<div class="wholePage">
+    <div class="userProfile">
 
             <button class="editProfile" @onclick="@((() => EditProfile()))">
                 Edit profile
@@ -56,8 +54,7 @@
 
 
         </div>
-    </div>
-    <div>
+    <div class="userProfile">
         <div>
             <h1>Your topics</h1>
             <button @onclick="@((() => AddTopic()))">
@@ -97,7 +94,7 @@
             }
         </div>
     </div>
-    <div>
+    <div class="userProfile">
         <div>
             <h1>Your chatrooms</h1>
             <button @onclick="@((() => AddChatroom()))">
@@ -136,7 +133,7 @@
             </table>
         }
     </div>
-    <div>
+    <div class="userProfile">
         <div>
             <h1>Friends</h1>
         </div>
