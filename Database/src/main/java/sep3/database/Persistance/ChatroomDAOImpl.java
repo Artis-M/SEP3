@@ -243,6 +243,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
 
     }
 
+
     @Override
     public ArrayList<Chatroom> getChatroomByUserId(String userId) {
         ArrayList<Chatroom> chatRooms = new ArrayList<>();
@@ -263,5 +264,17 @@ public class ChatroomDAOImpl implements ChatroomDAO {
             chatRooms.add(room);
         }
         return chatRooms;
+    }
+
+    @Override
+    public void deleteUserFromChatrooms(String userId) {
+        BasicDBObject whereQuery = new BasicDBObject();
+        BasicDBObject participant = new BasicDBObject();
+
+        ObjectId _id = new ObjectId(userId);
+        participant.append("participantId",_id);
+        whereQuery.append("$pull", new BasicDBObject().append("participants",participant));
+
+        collection.updateMany(new BasicDBObject(),whereQuery);
     }
 }

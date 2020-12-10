@@ -101,6 +101,17 @@ public class UserDAOImpl implements UserDAO
     }
 
     @Override
+    public void deleteFriendFromUsers(String friend) {
+        BasicDBObject friendQuery = new BasicDBObject();
+
+        ObjectId _id = new ObjectId(friend);
+        friendQuery.append("$pull", new BasicDBObject().append("friends",_id));
+
+
+        collection.updateMany(new BasicDBObject(),friendQuery);
+    }
+
+    @Override
     public User getUser(String userID)
     {
         BasicDBObject whereQuery = new BasicDBObject();
@@ -150,12 +161,14 @@ public class UserDAOImpl implements UserDAO
     }
 
     @Override
-    public void addFriend(User friend, String userId)
+    public void addFriend(String friend,String userId)
     {
         BasicDBObject newDocument = new BasicDBObject();
-        newDocument.append("$push", new BasicDBObject().append("friends", friend.get_id()));
+        ObjectId friendId = new ObjectId(friend);
+        ObjectId currentUser = new ObjectId(userId);
+        newDocument.append("$push", new BasicDBObject().append("friends", friendId));
         BasicDBObject searchQuery = new BasicDBObject();
-        searchQuery.append("_id", userId);
+        searchQuery.append("_id", currentUser);
         collection.updateOne(searchQuery, newDocument);
 
 

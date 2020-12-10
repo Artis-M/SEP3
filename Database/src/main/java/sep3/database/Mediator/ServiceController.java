@@ -143,8 +143,8 @@ public class ServiceController implements Runnable
                     ArrayList<User> specificOrder = gson.fromJson(requestCommand.getSpecificOrder(),ArrayList.class);
                     User user1 = specificOrder.get(0);
                     User user2 = specificOrder.get(1);
-                    userDAO.addFriend(user1, user2.get_id());
-                    userDAO.addFriend(user2,user1.get_id());
+                    userDAO.addFriend(user1.get_id(), user2.get_id());
+                    userDAO.addFriend(user2.get_id(),user1.get_id());
                 }
                 else if(requestCommand.getCommand().equals("ChatroomNew")){
 
