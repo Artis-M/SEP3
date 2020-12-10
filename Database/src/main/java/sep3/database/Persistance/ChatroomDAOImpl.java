@@ -37,6 +37,8 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         String id = document.get("_id").toString();
         room.set_id(id);
         room.setName(document.get("name").toString());
+        room.setOwner(document.get("owner").toString());
+        room.setType(document.get("type").toString());
         List<Document> messages = (List<Document>) document.get("messages");
         if(messages.size()!=0) {
 
@@ -76,7 +78,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
             }
         }catch (NullPointerException e)
         {
-            System.out.println(e.getMessage());
+
         }
         return topicList;
     }
@@ -95,7 +97,6 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         ) {
             ObjectId participantId = new ObjectId(DBparticipant.get("participantId").toString());
             User participant = userDAO.getUser(participantId.toString());
-            System.out.println(participant);
             users.add(participant);
 
 
@@ -126,6 +127,8 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         ObjectId _id = new ObjectId(chatroom.get_id());
         add.append("_id", _id);
         add.append("name", chatroom.getName());
+        add.append("owner",chatroom.getOwner());
+        add.append("type",chatroom.getType());
 
         if (chatroom.getTopics()!=null) {
             Document topics = new Document();
@@ -238,7 +241,6 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         } catch (Exception e) {
             return null;
         }
-
         return chat;
 
     }
@@ -254,12 +256,9 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         participant.append("participantId",_id);
         whereQuery.append("participants", participant);
         MongoCursor<Document> documents = collection.find(whereQuery).iterator();
-        System.out.println(documents.hasNext());
 
         while (documents.hasNext()) {
             Document json = documents.next();
-            System.out.println("Json");
-            System.out.println(json);
             Chatroom room = createChatroom(json);
             chatRooms.add(room);
         }
@@ -270,11 +269,9 @@ public class ChatroomDAOImpl implements ChatroomDAO {
     public void deleteUserFromChatrooms(String userId) {
         BasicDBObject whereQuery = new BasicDBObject();
         BasicDBObject participant = new BasicDBObject();
-
         ObjectId _id = new ObjectId(userId);
         participant.append("participantId",_id);
         whereQuery.append("$pull", new BasicDBObject().append("participants",participant));
-
         collection.updateMany(new BasicDBObject(),whereQuery);
     }
 }

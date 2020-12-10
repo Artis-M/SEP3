@@ -10,5 +10,6 @@ namespace Services
         Task Register(Account account);
 
         Task AddFriend(string UserID);
+        public Task DeleteProfile(string userID);
     }
 }

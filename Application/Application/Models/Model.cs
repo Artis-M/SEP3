@@ -1,6 +1,7 @@
 ﻿﻿using System.Collections.Generic;
 using System.Threading.Tasks;
  using Application.Models;
+ using Application.Services;
  using MongoDB.Bson;
 
 namespace Application.Models
@@ -26,5 +27,6 @@ namespace Application.Models
         public Task<Account> requestAccount(string username);
         public Task<Account> requestAccountByID(string userID);
         public Task<List<Chatroom>> requestChatroom(string userID);
+        public Task EditAccount(Account account);
     }
 }

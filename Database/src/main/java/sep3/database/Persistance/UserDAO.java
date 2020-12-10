@@ -20,5 +20,7 @@ public interface UserDAO {
     Account getUserByName(String firstName,String LastName);
     ArrayList<Account> getAllAccount();
     void deleteFriendFromUsers(String friend);
+    void deleteAccount(String userID);
+    void EditAccount(Account account);
 
 }

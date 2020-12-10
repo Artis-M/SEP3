@@ -1,0 +1,234 @@
+﻿@page "/Main"
+@using Services
+@using Application.Models
+@using global::Models
+@using System.Text.Json
+@using Application.Authentication
+@using Microsoft.AspNetCore.Components.Authorization
+@using Tier2.Model
+@inject NavigationManager NavigationManager;
+@inject IAccountService AccountService;
+@inject IChatroomService ChatroomService;
+@inject ChatService ChatService;
+@inject IJSRuntime JsRuntime;
+@inject AuthenticationStateProvider AuthenticationStateProvider;
+
+<div class="wholePage">
+    <div class="arrange">
+        <div class="userProfile">
+            <div style="width:300px;margin-bottom: 10px;">
+                <h3 class="ProfileText">Profile</h3>
+                <div>
+                    <h5>Username: @storedUser.Username</h5>
+                </div>
+
+                <div>
+                    <h5>First Name: @storedUser.Fname</h5>
+                </div>
+                <div>
+                    <h5>Last Name: @storedUser.Lname</h5>
+                </div>
+                <div>
+                    <h5>Email: @storedUser.email</h5>
+                </div>
+            </div>
+
+
+            <div class="buttons">
+                <button class="editButton"@onclick="@((() => EditProfile()))">
+                    Edit profile
+                </button>
+                <button class="deleteButton" @onclick="@((() => DeleteProfile()))">
+                    Delete profile
+                </button>
+            </div>
+
+
+        </div>
+        <div class="topicsCard">
+            <div>
+                <h1>Filter by topic</h1>
+            </div>
+            <div>
+                @if (storedUser.topics == null)
+                {
+                    <p>You don't have any topics</p>
+                }
+                else
+                {
+                    <select class="form-control selectpicker" @onchange="@((arg => FilterChats(arg)))" style="width: 100px">
+                        @foreach (var item in storedUser.topics)
+                        {
+                            <option>@item.name</option>
+                        }
+                    </select>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="chatrooms">
+
+        <h1>Your chatrooms</h1>
+        <div class="buttons"><button class="editButton" @onclick="@((() => AddChatroom()))">
+                         Add chatroom
+                     </button></div>
+
+        <div class="chatroomTable">
+            @if (Chatrooms == null)
+            {
+                <p>
+                    <em>Loading...</em>
+                </p>
+            }
+            else if (!Chatrooms.Any())
+            {
+                <p>
+                    <em>No chatrooms are in the system.</em>
+                </p>
+            }
+            else
+            {
+                <table class="table">
+                    <tbody>
+                    @foreach (var item in Chatrooms)
+                    {
+                        <tr>
+                            <td>
+                                <button class="chatroomButton" @onclick="@((() => EnterChatroom(@item._id)))">
+                                    @item.name
+                                </button>
+                            </td>
+
+
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+    <div class="friends">
+        <div>
+            <h1>Friends</h1>
+        </div>
+        <div>
+
+            @if (storedUser.friends == null)
+            {
+                <p>
+                    <em>Loading...</em>
+                </p>
+            }
+            else if (!storedUser.friends.Any())
+            {
+                <p>
+                    <em>No friends, chat and make some!</em>
+                </p>
+            }
+            else
+            {
+                <table class="table">
+                    <tbody>
+                    @foreach (var item in storedUser.friends)
+                    {
+                        <tr>
+                            <td>@item.Username</td>
+                            <td>
+                                <button @onclick="@((() => RemoveFriend(item._id)))">
+                                    <i class="oi oi-minus" style="color: black"/>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private Account storedUser = new Account();
+    private int chatroomCount = 0;
+    private int friendCount = 0;
+    private List<Chatroom> Chatrooms = new List<Chatroom>();
+    private List<Chatroom> filtered = new List<Chatroom>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        string userAsJson = await JsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
+        if (!string.IsNullOrEmpty(userAsJson))
+        {
+            storedUser = JsonSerializer.Deserialize<Account>(userAsJson);
+        }
+        Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
+
+    //chatroomCount = Chatrooms.Count;
+    //friendCount = storedUser.friends.Count;
+    }
+
+    private void FilterChats(ChangeEventArgs args)
+    {
+        string filterby = null;
+        try
+        {
+            filterby = args.Value.ToString();
+        }
+        catch (Exception e)
+        {
+        }
+        if (filterby != null)
+        {
+        }
+    }
+
+    private async Task RemoveTopic(string id)
+    {
+    //call method to remove topic
+    }
+
+    private async Task AddTopic()
+    {
+    //new page to add a topic?
+        NavigationManager.NavigateTo("");
+    }
+
+    private async Task EnterChatroom(string id)
+    {
+        await ChatroomService.SetCurrentChatroom(id);
+        NavigationManager.NavigateTo("");
+    }
+
+    public async Task AddChatroom()
+    {
+    //add new chatroom  
+    }
+
+    public async Task LeaveRoom(string id)
+    {
+    //leave chatroom
+    }
+
+    public async Task RemoveFriend(string id)
+    {
+    }
+
+    public async Task EditProfile()
+    {
+    //redirect to edit profile page
+    }
+
+    public async Task DeleteProfile()
+    {
+        try
+        {
+            await AccountService.DeleteProfile(storedUser._id);
+            ((AuthenticationProvider) AuthenticationStateProvider).Logout();
+            NavigationManager.NavigateTo("login");
+        }
+        catch (Exception e)
+        {
+        }
+    }
+
+}

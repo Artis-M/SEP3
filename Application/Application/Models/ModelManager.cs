@@ -120,5 +120,10 @@ namespace Application.Models
         {
             return await chatServiceImp.requestUsersChatroom(userID);
         }
+
+        public async Task EditAccount(Account account)
+        {
+            await chatServiceImp.sendUserUpdate(account);
+        }
     }
 }

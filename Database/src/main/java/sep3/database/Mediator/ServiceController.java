@@ -66,9 +66,11 @@ public class ServiceController implements Runnable
                 if (requestCommand.getCommand().equals("REQUEST-UserCredentials"))
                 {
 
+
                     CommandLine commandLine1 = new CommandLine();
                     String response = gson.toJson(userDAO.getAllAccount());
                     commandLine1.setSpecificOrder(response);
+                    System.out.println(response);
                     commandLine1.setCommand("UserCredentials");
                     String sendBack = gson.toJson(commandLine1);
                     byte[] responseAsBytes = sendBack.getBytes();
@@ -151,6 +153,14 @@ public class ServiceController implements Runnable
                     Chatroom chatroom = gson.fromJson(requestCommand.getSpecificOrder(),Chatroom.class);
                     System.out.println();
                     chatroomDAO.AddChatroom(chatroom);
+                }
+                else if(requestCommand.getCommand().equals("DELETE-User")){
+                    userDAO.deleteAccount(requestCommand.getVariableUser());
+
+                }
+                else if(requestCommand.getCommand().equals("UserUpdate")){
+                    Account account = gson.fromJson(requestCommand.getSpecificOrder(),Account.class);
+                    userDAO.EditAccount(account);
                 }
             }
         } catch (IOException e)
