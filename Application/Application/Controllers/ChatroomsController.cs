@@ -6,7 +6,9 @@ using Application.Models;
 using Application.SCMediator;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using MongoDB.Bson;
+using WebApplication.SignalR;
 
 namespace Application.Controllers
 {
@@ -15,10 +17,12 @@ namespace Application.Controllers
     public class ChatroomsController : ControllerBase
     {
         private IChatroomService chatroomService;
+        private readonly IHubContext<ChatHub> _hubContext;
 
-        public ChatroomsController(IChatroomService chatroomService)
+        public ChatroomsController(IHubContext<ChatHub> hubContext, IChatroomService chatroomService)
         {
             this.chatroomService = chatroomService;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -112,6 +116,7 @@ namespace Application.Controllers
             try
             {
                 await chatroomService.DeleteChatRoom(id);
+                await _hubContext.Clients.Group(id).SendAsync("ReceiveChatroomUpdate", null);
                 return Ok();
             }
             catch (Exception e)
@@ -146,6 +151,8 @@ namespace Application.Controllers
             try
             {
                 await chatroomService.AddUser(chatRoomId, userID);
+                Chatroom chatroom = await chatroomService.GetChatroomByID(chatRoomId);
+                await _hubContext.Clients.Group(chatRoomId).SendAsync("ReceiveChatroomUpdate", chatroom);
                 return Ok("user added: " + userID);
             }
             catch (Exception e)
@@ -163,6 +170,8 @@ namespace Application.Controllers
             {
                 Console.Out.WriteLine(userID+" SFDGFGFSDDFGDBFCF"+chatRoomId);
                 await chatroomService.RemoveUser(chatRoomId, userID);
+                Chatroom chatroom = await chatroomService.GetChatroomByID(chatRoomId);
+                await _hubContext.Clients.Group(chatRoomId).SendAsync("ReceiveChatroomUpdate", chatroom);
                 return Ok("user removed: " + userID);
             }
             catch (Exception e)

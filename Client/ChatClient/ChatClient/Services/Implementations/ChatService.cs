@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ChatClient.Models;
 using Microsoft.AspNetCore.SignalR.Client;
 using Models;
+using Tier2.Model;
 
 namespace Services
 {
@@ -17,6 +18,7 @@ namespace Services
         HubConnection _hubConnection = null;
         public Action<Message> newMessage;
         public Action<MessageFragment> newMessageFragment;
+        public Action<Chatroom> chatroomUpdate;
         public async Task ConnectToServer()
         {
             _hubConnection = new HubConnectionBuilder().WithUrl(url).Build();
@@ -35,6 +37,10 @@ namespace Services
             _hubConnection.On<MessageFragment>("ReceiveChatRoomMessageFragment", messageFragment =>
             {
                 newMessageFragment?.Invoke(messageFragment);
+            });
+            _hubConnection.On<Chatroom>("ReceiveChatroomUpdate", chatroom =>
+            {   
+                chatroomUpdate.Invoke(chatroom);
             });
         }
         public async Task SendMessage(Message message, string activeChatRoomId)

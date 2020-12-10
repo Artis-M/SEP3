@@ -97,5 +97,18 @@ namespace Services
             StringContent content = new StringContent(JsonSerializer.Serialize(userID), Encoding.UTF8,"application/json");
             http.PatchAsync(request, content);
         }
+
+        public async Task KickFromChatroom(string targetUserID, string chatroomID)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            string request = $"removeUser/{chatroomID}";
+            
+            StringContent content = new StringContent(JsonSerializer.Serialize(targetUserID), Encoding.UTF8,"application/json");
+            
+            http.PatchAsync(request, content);
+        }
     }
 }
