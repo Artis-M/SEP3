@@ -94,7 +94,7 @@ namespace Services
 
             await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser",
                 JsonSerializer.Serialize(userAccount));
-            
+
             List<User> twoFriends = new List<User>();
             twoFriends.Add(targetUser);
             twoFriends.Add(theOneThatsAdding);
@@ -104,6 +104,16 @@ namespace Services
 
 
             http.PatchAsync(request, content);
+        }
+
+        public async Task DeleteProfile(string userID)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            string request = $"{userID}";
+            await http.DeleteAsync(request);
         }
     }
 }

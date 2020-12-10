@@ -152,6 +152,14 @@ public class ServiceController implements Runnable
                     System.out.println();
                     chatroomDAO.AddChatroom(chatroom);
                 }
+                else if(requestCommand.getCommand().equals("DELETE-User")){
+                    userDAO.deleteAccount(requestCommand.getVariableUser());
+                    System.out.println("DELETE ACCOUNT");
+                }
+                else if(requestCommand.getCommand().equals("UserUpdate")){
+                    Account account = gson.fromJson(requestCommand.getSpecificOrder(),Account.class);
+                    userDAO.EditAccount(account);
+                }
             }
         } catch (IOException e)
         {

@@ -34,6 +34,7 @@
           <e p="Index.razor" t="Include" />
           <e p="Login.razor" t="Include" />
           <e p="LoginRedirect.razor" t="Include" />
+          <e p="Main.razor" t="Include" />
           <e p="Register.razor" t="Include" />
         </e>
         <e p="Program.cs" t="Include" />
@@ -62,6 +63,7 @@
             </e>
             <e p="login.css" t="Include" />
             <e p="login_background.jpg" t="Include" />
+            <e p="mainpage.css" t="Include" />
             <e p="open-iconic" t="Include">
               <e p="font" t="Include">
                 <e p="css" t="Include">

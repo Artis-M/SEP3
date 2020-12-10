@@ -38,7 +38,7 @@
             await ((AuthenticationProvider)AuthenticationStateProvider).ValidateLogin(username, password);
             username = "";
             password = "";
-            navigation.NavigateTo("");
+            navigation.NavigateTo("Main");
         }
         catch (Exception e)
         {
@@ -51,7 +51,7 @@
 
     public async Task register()
     {
-        navigation.NavigateTo("register", true);
+        navigation.NavigateTo("Register", true);
     }
         
 }

@@ -19,5 +19,7 @@ public interface UserDAO {
     void addAccount(Account account);
     Account getUserByName(String firstName,String LastName);
     ArrayList<Account> getAllAccount();
+    void deleteAccount(String userID);
+    void EditAccount(Account account);
 
 }

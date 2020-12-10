@@ -72,7 +72,7 @@ using Microsoft.JSInterop;
         {
             cachedUser = null;
             var user = new ClaimsPrincipal(new ClaimsIdentity());
-            jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", null);
+             jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", null);
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
         

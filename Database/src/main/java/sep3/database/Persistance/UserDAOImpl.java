@@ -24,6 +24,7 @@ public class UserDAOImpl implements UserDAO
     private DBConnection connection;
     private Gson gson;
     private TopicDAO topicDAO;
+    private ChatroomDAO chatroomDAO;
 
     public UserDAOImpl()
     {
@@ -31,6 +32,7 @@ public class UserDAOImpl implements UserDAO
         collection = connection.getDatabase().getCollection("Users");
         gson = new Gson();
         topicDAO = new TopicDAOImpl();
+        chatroomDAO = new ChatroomDAOImpl();
     }
 
     private MongoCursor<Document> cursor(String key, Object obj)
@@ -97,6 +99,49 @@ public class UserDAOImpl implements UserDAO
             cursor.close();
         }
         return accounts;
+
+    }
+
+    @Override
+    public void deleteAccount(String userID)
+    {
+        ObjectId user_id = new ObjectId(userID);
+        collection.deleteOne(new Document("_id", user_id));
+        ArrayList<Account> accounts = getAllAccount();
+        User user = null;
+        /*for (int i = 0; i < accounts.size(); i++)
+        {
+            if (accounts.get(i).get_id().equals(user_id))
+            {
+                user = accounts.get(i);
+            }
+        }
+        for (int i = 0; i < accounts.size(); i++)
+        {
+            for (int j = 0; j < accounts.get(i).getFriends().size(); j++)
+            {
+                if (accounts.get(i).getFriends().get(j).get_id().equals(user_id))
+                {
+                    removeFriend(user, accounts.get(i).getFriends().get(j).get_id());
+                }
+            }
+        }*/
+        //delete from friends and chatrooms
+    }
+
+    @Override
+    public void EditAccount(Account account)
+    {
+        BasicDBObject basicDBObject = new BasicDBObject();
+        BasicDBObject basicDBObject1 = new BasicDBObject();
+        basicDBObject.append("Username", account.getUsername());
+        basicDBObject.append("Fname", account.getFname());
+        basicDBObject.append("Lname", account.getLname());
+        basicDBObject.append("Pass", account.getPass());
+        basicDBObject.append("role", account.getRole());
+        basicDBObject.append("email", account.getEmail());
+        basicDBObject1.append("_id", new ObjectId(account.get_id()));
+        collection.updateOne(basicDBObject, basicDBObject1);
 
     }
 

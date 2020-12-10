@@ -1,0 +1,20 @@
+﻿
+
+.userProfile {
+    background-color: rgb(82, 143, 188, 0.8);
+    height: 90%;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgb(125, 177, 216);
+    left: 33%;
+    position: relative;
+}
+
+html {
+    font-family: Times New Roman;
+    font-size: 1rem;
+    background-color: lightgray;
+}
