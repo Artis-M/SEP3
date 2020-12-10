@@ -69,9 +69,11 @@
     <div class="chatrooms">
 
         <h1>Your chatrooms</h1>
-        <div class="buttons"><button class="editButton" @onclick="@((() => AddChatroom()))">
-                         Add chatroom
-                     </button></div>
+        <div class="buttons">
+            <button class="editButton" @onclick="@((() => AddChatroom()))">
+                Add chatroom
+            </button>
+        </div>
 
         <div class="chatroomTable">
             @if (Chatrooms == null)
@@ -107,42 +109,50 @@
             }
         </div>
     </div>
-    <div class="friends">
-        <div>
-            <h1>Friends</h1>
+    <div class="arrange">
+
+        <div class="friends">
+            <div>
+                <h1>Friends</h1>
+            </div>
+            <div>
+
+                @if (storedUser.friends == null)
+                {
+                    <p>
+                        <em>Loading...</em>
+                    </p>
+                }
+                else if (!storedUser.friends.Any())
+                {
+                    <p>
+                        <em>No friends, chat and make some!</em>
+                    </p>
+                }
+                else
+                {
+                    <table class="table">
+                        <tbody>
+                        @foreach (var item in storedUser.friends)
+                        {
+                            <tr>
+                                <td>@item.Username</td>
+                                <td>
+                                    <button @onclick="@((() => RemoveFriend(item._id)))">
+                                        <i class="oi oi-minus" style="color: black"/>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+            </div>
         </div>
         <div>
-
-            @if (storedUser.friends == null)
-            {
-                <p>
-                    <em>Loading...</em>
-                </p>
-            }
-            else if (!storedUser.friends.Any())
-            {
-                <p>
-                    <em>No friends, chat and make some!</em>
-                </p>
-            }
-            else
-            {
-                <table class="table">
-                    <tbody>
-                    @foreach (var item in storedUser.friends)
-                    {
-                        <tr>
-                            <td>@item.Username</td>
-                            <td>
-                                <button @onclick="@((() => RemoveFriend(item._id)))">
-                                    <i class="oi oi-minus" style="color: black"/>
-                                </button>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            }
+            <button class="chatroomButton" @onclick="@((() => Logout()))">
+                Log out
+            </button>
         </div>
     </div>
 </div>
@@ -229,6 +239,11 @@
         catch (Exception e)
         {
         }
+    }
+
+    private async Task Logout()
+    {
+        
     }
 
 }
