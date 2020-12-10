@@ -2,7 +2,7 @@
 {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 .EditWrapper {
     display: flex;
@@ -25,6 +25,7 @@
 }
 .Edit-Flex div{
     width: 210px;
+    margin-bottom: 10px;
 }
 .EditForm h3{
     text-align: center;
@@ -33,4 +34,72 @@
 .EditForm .topicInput
 {
     margin-bottom: 15px;
+}
+.EditForm .validate_div
+{
+    height: 18px;
+    font-size: 12px;
+    font-style: italic;
+}
+.EditForm input {
+    border-radius: 5px;
+    outline: none;
+    border-style: solid;
+    border-width: 1px;
+    height: 40px;
+}
+.EditForm .UpdateButtonDiv
+{
+    text-align: center;
+}
+.UpdateButtonDiv button
+{
+    border-radius: 10px;
+    outline: none;
+    margin:5px 0 15px 0;
+    width: 150px;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #0B9EF0;
+    color: #fff;
+    height: 33px;
+}
+
+.UpdateButtonDiv button:hover{
+    border-color:#0B9EF0;
+    color:#0B9EF0;
+    border-style: solid;
+    background-color: #b0d8ee;
+}
+.topicButtons {
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.topicButtons button
+{
+    border-radius: 10px;
+    outline: none;
+    margin:5px 0 15px 0;
+    width: 90px;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    color: #fff;
+    height: 33px;
+}
+.addTopic
+{
+    background-color: #51CD5D;
+}
+.removeTopic
+{
+    
+    background-color: #D32240;
+}
+.Edit_Left div {
+    margin-bottom: 0;
+}
+.divToMain{
+    margin:15px 0 0 18px;
 }

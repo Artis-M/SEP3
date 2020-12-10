@@ -127,7 +127,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         add.append("_id", _id);
         add.append("name", chatroom.getName());
 
-        if (chatroom.getTopics().size() != 0) {
+        if (chatroom.getTopics()!=null) {
             Document topics = new Document();
             for (var topic : chatroom.getTopics()
             ) {
@@ -155,6 +155,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
                 ObjectId messageId = new ObjectId(message.get_id());
                 DBmessage.append("AuthorId", authorId);
                 DBmessage.append("messageId", messageId);
+                DBmessage.append("Username", message.getUsername());
                 DBmessage.append("message", message.getMessage());
                 messages.add(DBmessage);
             }
@@ -181,6 +182,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         messageObject.append("AuthorId", authorId);
         messageObject.append("messageId", messageId);
         messageObject.append("message", message.getMessage());
+        messageObject.append("Username", message.getUsername());
 
         updateMessage.append("$push", new BasicDBObject().append("messages",messageObject));
         ObjectId chatroom_id = new ObjectId(chatroomId);
@@ -207,7 +209,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
 
     @Override
     public void leaveChatroom(String userId, String chatroomId) {
-
+        System.out.println(chatroomId);
         BasicDBObject chatroomObject = new BasicDBObject();
         BasicDBObject updatePList = new BasicDBObject();
         BasicDBObject participantObject = new BasicDBObject();

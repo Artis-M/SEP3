@@ -4,64 +4,69 @@
 <div class="EditWrapper">
     <EditForm Model="@updatedAccount" OnValidSubmit="@UpdateAccount">
         <DataAnnotationsValidator/>
-            <div class = "EditForm">
-                <h3>Edit Profile</h3>
-                <div class="Edit-Flex">
+        
+        <div class="EditForm">
+            <div class="divToMain">
+                <a @onclick="@backToMenu" href="#">Return to main page</a>
+                </div>
+            <h3>Edit Profile</h3>
+            <div class="Edit-Flex">
                 <div class="Edit_right">
                     <div class="form-group">
                         E-mail: <br/>
-                        <InputText  @bind-Value="updatedAccount.email"/>
+                        <InputText @bind-Value="updatedAccount.email"/>
                         <div class="validate_div">
                             <ValidationMessage For="@(() => updatedAccount.email)"/>
                         </div>
                     </div>
                     <div class="form-group">
                         Username: <br/>
-                        <InputText  @bind-Value="updatedAccount.Username"/>
+                        <InputText @bind-Value="updatedAccount.Username"/>
                         <div class="validate_div validate_div_username">
                             <ValidationMessage For="@(() => error)"/>
                             <ValidationMessage For="@(() => updatedAccount.Username)"/>
                         </div>
                     </div>
-    
+
                     <div class="form-group">
                         First name:<br/>
-                        <InputText  @bind-Value="updatedAccount.Fname"/>
+                        <InputText @bind-Value="updatedAccount.Fname"/>
                         <div class="validate_div">
                             <ValidationMessage For="@(() => updatedAccount.Fname)"/>
                         </div>
                     </div>
                     <div class="form-group">
                         Last name:<br/>
-                        <InputText  rows="1"cols="50" @bind-Value="updatedAccount.Lname"/>
+                        <InputText rows="1"cols="50" @bind-Value="updatedAccount.Lname"/>
                         <div class="validate_div">
                             <ValidationMessage For="@(() => updatedAccount.Lname)"/>
                         </div>
                     </div>
-    
+
                     <div class="form-group">
                         Password:<br/>
-                        <InputText type="password"  rows="1"cols="50" @bind-Value="updatedAccount.Pass"/>
+                        <InputText type="password" rows="1"cols="50" @bind-Value="updatedAccount.Pass"/>
                         <div class="validate_div">
                             <ValidationMessage For="@(() => updatedAccount.Pass)"/>
                         </div>
                     </div>
                 </div>
-                    <div class="Edit_Left">
-                        <div class="form-group">
-                            Topics:<br/>
-                            @for (int i = 0; i < counterTopic; i++)
-                            {
-                                <InputText type="text" class="topicInput" rows="1"cols="50" @bind-Value="updatedAccount.Pass"/>
-                            }
-                        </div>
-                        <button @onclick="@incrementCounter">add Topic</button>
+                <div class="Edit_Left">
+                    <div class="form-group">
+                        Topics:<br/>
+
+                        <InputText type="text" class="topicInput" rows="1"cols="50" @bind-Value="@topic"/>
                     </div>
+                    <div class="topicButtons">
+                        <button @onclick="@addTopic" class="addTopic">Add</button>
+                        <button @onclick="@removeTopic" class="removeTopic">Remove</button>
                     </div>
-                <div class="SignUpButton">
-                    <button  type="submit">Update</button>
                 </div>
             </div>
+            <div class="UpdateButtonDiv">
+                <button type="submit">Update</button>
+            </div>
+        </div>
             
         </EditForm>
     
@@ -69,7 +74,6 @@
 
 
 @code {
-    private int counterTopic = 0;
     private List<Topic> topics =new List<Topic>();
     private Account updatedAccount = new Account();
     private string error = "";
@@ -80,8 +84,18 @@
         
     }
 
-    private void incrementCounter()
+    private void addTopic()
     {
-        counterTopic++;
+        
+    }
+
+    private void removeTopic()
+    {
+        
+    }
+
+    private void backToMenu()
+    {
+        
     }
 }

@@ -79,5 +79,10 @@ namespace Application.Services
         {
             return await model.requestAccountByID(userID);
         }
+
+        public async Task AddFriend(List<User> users)
+        {
+            await model.AddFriend(users);
+        }
     }
 }
