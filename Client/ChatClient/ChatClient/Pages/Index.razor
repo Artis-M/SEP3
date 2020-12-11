@@ -6,102 +6,113 @@
 @using System.Text.Json
 @using MongoDB.Bson
 @using Tier2.Model
-@using System.Runtime.CompilerServices
+@using Application.Models
 @inject ChatService chatService;
 @inject IChatroomService chatroomService;
 @inject IJSRuntime JsRuntime;
 @inject IAccountService AccountService;
 @inject NavigationManager Nav;
 @attribute [Authorize]
-
-<div class="row">
-    <div class="col-4">
-        <div class="row">
-            <div class="col-12">
-                @if (currentChatroom != null)
-                {
-                    @foreach (var item in currentChatroom.participants)
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-2">
+            <div class="row h-100 d-flex align-items-end usersidebar">
+                <div class="col-12">
+                    @if (currentChatroom != null)
                     {
-                        @try
+                        @foreach (var item in currentChatroom.participants)
                         {
-                            <div class="row">
-                                <div class="col-12">
-                                    @item.Username
-                                    <div class="btn-group dropright">
-                                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            ...
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <button type="button" class="btn-sm" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
-                                            @if (currentChatroom.ownerID.Equals(user._id) || user.isAdmin)
-                                            {
-                                                <button type="button" class="btn-sm" @onclick="(() => RemoveFromChatroom(item._id))">kick User</button>
-                                            }
+                            @try
+                            {
+                                <div class="row user">
+                                    <div class="col-12">
+                                        <div class="username">
+                                            <img class="img-fluid chatProfileImage" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg"/>
+                                            @item.Username
+                                            <div style="float: right;" class="btn-group dropright justify-content-end">
+                                                <button type="button" class="optionsButton dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    ...
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <button type="button" class="btn-sm" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
+                                                    @if (currentChatroom.owner.Equals(user._id) || user.role.Equals("admin"))
+                                                    {
+                                                        <button type="button" class="menuButton" @onclick="(() => RemoveFromChatroom(item._id))">kick User</button>
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
+                            catch (Exception e)
+                            {
+                            }
                         }
-                        catch (Exception e)
+                    }
+                    <button class="leaveButton" @onclick="LeaveChatroom">Leave Chatroom</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-10 w-100">
+            <div class="row align-self-start titlebar w-100">
+                <div class="col-12">
+                    <div class="chatroomTitle">
+                        @if (currentChatroom != null)
                         {
+                            @currentChatroom.name
                         }
-                    }
-                }
-                <button @onclick="LeaveChatroom">Leave Chatroom</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-8">
-        <div class="row">
-            <div class="col-12">
-                <h3>
-                    @if (currentChatroom != null)
-                    {
-                        @currentChatroom.name
-                        <p>|</p>
-                        @currentChatroom._id
-                    }
-                </h3>
-            </div>
-        </div>
-        <div class="messageBox" style="overflow-y: scroll">
-            @if (Messages.Any())
-            {
-                @foreach (var item in Messages)
-                {
-                    <div>
-                        <p>
-                            @if (currentChatroom != null & isConnectedToChatRoom)
-                            {
-                                @item.username
-                            }
-                            : @item.message
-                        </p>
                     </div>
-                }
-            }
-
-        </div>
-        <div class="messageFragmentBox" style="position: fixed; bottom: 40px; width: 100%;">
-            @if (MessageFragments.Any())
-            {
-                @foreach (var item in MessageFragments)
-                {
-                    <div style="width: 50%;">
-                        <p style="overflow-x: fragments;">
-                            User
-                            @if (currentChatroom != null)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="row h-50 w-100">
+                        <div class="messageBox w-100">
+                            @if (Messages.Any())
                             {
-                                @item.username
+                                @foreach (var item in Messages)
+                                {
+                                    <div>
+                                        <p>
+                                            @if (currentChatroom != null & isConnectedToChatRoom)
+                                            {
+                                                @item.username
+                                            }
+                                            : @item.message
+                                        </p>
+                                    </div>
+                                }
                             }
-                            is typing: @item.message ......
-                        </p>
+                        </div>
                     </div>
-                }
-            }
-        </div>
-        <div class="chatBox" style=" position: fixed; bottom: 0; width: 100%;">
-            <input type="text" style="height: 40px; width: 50%;" @onkeyup="@KeyDown" @bind:event="oninput" @bind="@messageText"/>
+                    <div class="row w-100">
+                        <div class="col-12 d-flex align-items-end">
+                            <div class="messageFragmentBox">
+                                @if (MessageFragments.Any())
+                                {
+                                    @foreach (var item in MessageFragments)
+                                    {
+                                        <div style="width: 50%;">
+                                            <p style="overflow-x: fragments;">
+                                                User
+                                                @if (currentChatroom != null)
+                                                {
+                                                    @item.username
+                                                }
+                                                is typing: @item.message ......
+                                            </p>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="chatBox">
+                                <input type="text" @bind="@messageText"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -112,7 +123,7 @@
     private Chatroom currentChatroom = null;
     private string messageText;
     private bool isConnectedToChatRoom = false;
-    private User user;
+    private Account user;
     private Message newMessage = new Message();
     private MessageFragment newMessageFragment = new MessageFragment();
     private List<MessageFragment> MessageFragments = new List<MessageFragment>();
@@ -123,7 +134,7 @@
         string userAsJson = await JsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
         if (!string.IsNullOrEmpty(userAsJson))
         {
-            user = JsonSerializer.Deserialize<User>(userAsJson);
+            user = JsonSerializer.Deserialize<Account>(userAsJson);
             await chatService.ConnectToServer();
             Console.WriteLine("Connected to server");
         }
@@ -137,9 +148,9 @@
 
     public async Task AddFriend(string userID)
     {
-       await AccountService.AddFriend(userID);
+        await AccountService.AddFriend(userID);
     }
-    
+
     public async void ChatroomUpdate(Chatroom chatroom)
     {
         currentChatroom = chatroom;
@@ -157,7 +168,7 @@
     {
         await chatroomService.KickFromChatroom(UserId, currentChatroom._id);
     }
-    
+
     public async Task GetUsersChatRooms()
     {
         Console.WriteLine("What is going on.....");

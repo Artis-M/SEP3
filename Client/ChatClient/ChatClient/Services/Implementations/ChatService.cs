@@ -70,5 +70,10 @@ namespace Services
         {
             await _hubConnection.SendAsync("LeaveChatRoom", ChatRoomId);
         }
+
+        public async Task DisconnectFromHub()
+        {
+            await _hubConnection.StopAsync();
+        }
     }
 }

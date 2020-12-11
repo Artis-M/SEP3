@@ -13,7 +13,8 @@
         public List<Topic> topics { get; set; }
         public List<Message> messages { get; set; }
         public List<User> participants { get; set; }
-        public string ownerID { get; set; }
+        public string owner { get; set; }
+        public string type { get; set; } = "public";
         public Chatroom()
         {
             participants = new List<User>();
@@ -29,7 +30,7 @@
             this.messages = messages;
         }
 
-        public Chatroom(string id, string name, List<User> participants, TopicList topics)
+        public Chatroom(string id, string name, List<User> participants, List<Topic> topics)
         {
             this._id = id;
             this.name = name;
@@ -37,7 +38,7 @@
             this.topics = new List<Topic>();
         }
 
-        public Chatroom(string id, string name, List<User> participants, List<Message> messages, TopicList topics)
+        public Chatroom(string id, string name, List<User> participants, List<Message> messages, List<Topic> topics)
         {
             this._id = id;
             this.name = name;

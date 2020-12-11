@@ -6,7 +6,6 @@ namespace Models
 {
     public class User
     {
-        public bool isAdmin { get; set; }
         public string _id { get; set; }
         [Required,MinLength(3,ErrorMessage = "Please Enter Username with at least 3 characters")]
         [JsonPropertyName("Username")]

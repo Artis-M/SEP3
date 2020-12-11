@@ -171,8 +171,7 @@
         {
             storedUser = JsonSerializer.Deserialize<Account>(userAsJson);
         }
-        Console.Out.WriteLine(storedUser._id);
-        Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
+        //Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
 
     //chatroomCount = Chatrooms.Count;
     //friendCount = storedUser.friends.Count;
@@ -212,7 +211,7 @@
 
     public async Task AddChatroom()
     {
-        NavigationManager.NavigateTo("add chatroom");
+        NavigationManager.NavigateTo("AddChatroom");
     }
 
     public async Task LeaveRoom(string id)
@@ -225,7 +224,7 @@
 
     public async Task EditProfile()
     {
-        NavigationManager.NavigateTo("editprofile");
+        NavigationManager.NavigateTo("EditProfile");
     }
 
     public async Task DeleteProfile()

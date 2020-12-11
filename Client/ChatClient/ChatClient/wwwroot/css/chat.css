@@ -1,0 +1,75 @@
+
+.chatProfileImage{
+    object-fit: cover;
+    height: auto;
+    width: 50px;
+    height: 50px;
+}
+.username{
+    display: inline;
+    font-weight: bold;
+}
+
+.user{
+        padding: auto;
+        height: 90vh;
+}
+.usersidebar{
+    background-color: #919191;
+}
+.user:nth-of-type(even){
+    background-color: #919191;
+}
+.user:nth-of-type(odd){
+    background-color: #525252;
+}
+
+.user{
+    height: auto;
+}
+.optionsButton{
+    margin: auto;
+    width: 50px;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #0B9EF0;
+    color: #fff;
+    height: 50px;
+}
+.menuButton{
+    margin: auto;
+    height: 50px;
+    width: auto;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #0B9EF0;
+    color: #fff;
+}
+.leaveButton{
+    margin: auto;
+    height: 50px;
+    width: 105%;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #c03333;
+    color: #fff;
+}
+.btn-group{
+    padding: auto;
+    margin-right: -5%;
+}
+.chatroomTitle{
+    font-size: 25pt;
+    font-weight: bold;
+}
+.titlebar{
+    background-color: #808080;
+}
+.messageBox{
+    overflow-y: scroll;
+
+}
+.messageFragmentBox{
+    height: max-content;
+    overflow-y: scroll;
+}
