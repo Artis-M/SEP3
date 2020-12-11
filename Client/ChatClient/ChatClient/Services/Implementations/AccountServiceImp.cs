@@ -113,6 +113,7 @@ namespace Services
                 BaseAddress = new Uri(uri)
             };
             string request = $"{userID}";
+            Console.Out.WriteLine(request + "USER TO BE DELETED");
             await http.DeleteAsync(request);
         }
     }
