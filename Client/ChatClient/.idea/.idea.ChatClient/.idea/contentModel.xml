@@ -47,7 +47,9 @@
             <e p="AccountServiceImp.cs" t="Include" />
             <e p="ChatroomServiceImp.cs" t="Include" />
             <e p="ChatService.cs" t="Include" />
+            <e p="TopicServiceImpl.cs" t="Include" />
           </e>
+          <e p="ITopicService.cs" t="Include" />
         </e>
         <e p="Shared" t="Include">
           <e p="MainLayout.razor" t="Include" />
