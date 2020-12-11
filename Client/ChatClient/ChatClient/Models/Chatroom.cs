@@ -13,7 +13,7 @@
         public List<Topic> topics { get; set; }
         public List<Message> messages { get; set; }
         public List<User> participants { get; set; }
-
+        public string ownerID { get; set; }
         public Chatroom()
         {
             participants = new List<User>();

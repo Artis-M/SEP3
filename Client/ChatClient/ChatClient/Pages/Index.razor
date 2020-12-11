@@ -33,10 +33,10 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             <button type="button" class="btn-sm" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
-                                            @*@if (currentChatroom.ownerID.equals(user._id) || user.isAdmin)
+                                            @if (currentChatroom.ownerID.Equals(user._id) || user.isAdmin)
                                             {
                                                 <button type="button" class="btn-sm" @onclick="(() => RemoveFromChatroom(item._id))">kick User</button>
-                                            }*@
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +137,7 @@
 
     public async Task AddFriend(string userID)
     {
-        AccountService.AddFriend(userID);
+       await AccountService.AddFriend(userID);
     }
     
     public async void ChatroomUpdate(Chatroom chatroom)

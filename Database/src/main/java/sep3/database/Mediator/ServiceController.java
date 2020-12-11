@@ -62,6 +62,7 @@ public class ServiceController implements Runnable
 
 
                 CommandLine requestCommand = gson.fromJson(request, CommandLine.class);
+                System.out.println(requestCommand.getSpecificOrder());
                 CommandLine responseCommand = new CommandLine();
                 if (requestCommand.getCommand().equals("REQUEST-UserCredentials"))
                 {
@@ -155,7 +156,10 @@ public class ServiceController implements Runnable
                     chatroomDAO.AddChatroom(chatroom);
                 }
                 else if(requestCommand.getCommand().equals("DELETE-User")){
-                    userDAO.deleteAccount(requestCommand.getVariableUser());
+                    System.out.println(requestCommand.getSpecificOrder());
+                    userDAO.deleteAccount(requestCommand.getSpecificOrder());
+                    userDAO.deleteFriendFromUsers(requestCommand.getSpecificOrder());
+                    chatroomDAO.deleteUserFromChatrooms(requestCommand.getSpecificOrder());
 
                 }
                 else if(requestCommand.getCommand().equals("UserUpdate")){
