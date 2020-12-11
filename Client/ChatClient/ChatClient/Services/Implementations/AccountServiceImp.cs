@@ -18,6 +18,11 @@ namespace Services
         private string uri = "https://localhost:5004/accounts/";
         private readonly IJSRuntime jsRuntime;
 
+        public AccountService(IJSRuntime jsRuntime)
+        {
+            this.jsRuntime = jsRuntime;
+        }
+
         public async Task<Account> Login(string username, string password)
         {
             HttpClient http = new HttpClient
@@ -69,28 +74,26 @@ namespace Services
             Console.WriteLine(responseMessage.ToString());
         }
 
-        public async Task AddFriend(string UserID)
+        public async Task AddFriend(string UserID, Account userAccount)
         {
             HttpClient http = new HttpClient
             {
                 BaseAddress = new Uri(uri)
             };
-            string request = $"addFriend";
+            string request = $"user/{UserID}";
 
             string userJson = await http.GetStringAsync(request);
             User targetUser = JsonSerializer.Deserialize<User>(userJson);
-
-            Account userAccount =
-                JsonSerializer.Deserialize<Account>(
-                    await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser"));
+            
             userAccount.friends.Add(targetUser);
-            User theOneThatsAdding = new User
-            {
-                _id = userAccount._id,
-                Fname = userAccount.Fname,
-                Lname = userAccount.Lname,
-                Username = userAccount.Username
-            };
+            // User theOneThatsAdding = new User
+            // {
+            //     _id = userAccount._id,
+            //     Fname = userAccount.Fname,
+            //     Lname = userAccount.Lname,
+            //     Username = userAccount.Username
+            // };
+            User theOneThatsAdding = userAccount;
 
             await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser",
                 JsonSerializer.Serialize(userAccount));
@@ -98,12 +101,11 @@ namespace Services
             List<User> twoFriends = new List<User>();
             twoFriends.Add(targetUser);
             twoFriends.Add(theOneThatsAdding);
-
+            Console.WriteLine(JsonSerializer.Serialize(twoFriends));
             StringContent content =
                 new StringContent(JsonSerializer.Serialize(twoFriends), Encoding.UTF8, "application/json");
-
-
-            http.PatchAsync(request, content);
+            request = $"addFriend";
+            await http.PatchAsync(request, content);
         }
 
         public async Task DeleteProfile(string userID)

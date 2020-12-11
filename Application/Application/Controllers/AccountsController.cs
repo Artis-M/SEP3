@@ -39,7 +39,7 @@ namespace Application.Controllers
             }
         }
         [HttpGet]
-        [Route("user/{id}")]
+        [Route("user/{userID}")]
         public async Task<ActionResult<Account>> GetUserById([FromRoute] string userID)
         {
             try
@@ -134,6 +134,7 @@ namespace Application.Controllers
         [Route("addFriend")]
         public async Task<ActionResult> AddFriend([FromBody] List<User> users)
         {
+            Console.WriteLine($"{users[0]}, {users[1]}");
             if (!ModelState.IsValid)
             {
                 Console.WriteLine("Bad Object");

@@ -2,6 +2,7 @@ package sep3.database.Mediator;
 
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import sep3.database.Model.Account;
 import sep3.database.Model.Chatroom;
 import sep3.database.Model.Message;
@@ -10,6 +11,7 @@ import sep3.database.Persistance.*;
 
 import javax.net.ssl.SSLServerSocketFactory;
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -144,7 +146,11 @@ public class ServiceController implements Runnable
                     chatroomDAO.addMessageToChatroom(chatroomID, message);
                 }
                 else if(requestCommand.getCommand().equals("AddFriends")){
-                    ArrayList<User> specificOrder = gson.fromJson(requestCommand.getSpecificOrder(),ArrayList.class);
+                    Type type = new TypeToken<ArrayList<User>>() {}.getType();
+                    ArrayList<User> specificOrder = gson.fromJson(requestCommand.getSpecificOrder(), type);
+                    System.out.println( specificOrder.toString());
+                    System.out.println( specificOrder.get(0).toString());
+                    System.out.println( specificOrder.get(1).toString());
                     User user1 = specificOrder.get(0);
                     User user2 = specificOrder.get(1);
                     userDAO.addFriend(user1.get_id(), user2.get_id());

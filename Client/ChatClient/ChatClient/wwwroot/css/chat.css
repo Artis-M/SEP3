@@ -54,6 +54,15 @@
     background-color: #c03333;
     color: #fff;
 }
+.backButton{
+    margin: auto;
+    height: 50px;
+    width: 105%;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #70cf7e;
+    color: #fff;
+}
 .btn-group{
     padding: auto;
     margin-right: -5%;
