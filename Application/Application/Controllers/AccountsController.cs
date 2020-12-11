@@ -114,7 +114,7 @@ namespace Application.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{accountID}")]
         public async Task<ActionResult> DeleteAccount([FromRoute] string accountID)
         {
             try

@@ -16,7 +16,9 @@
         public string ownerID { get; set; }
         public Chatroom()
         {
-            
+            participants = new List<User>();
+            messages = new List<Message>();
+            topics = new List<Topic>();
         }
 
         public Chatroom(string id, string name, List<User> participants, List<Message> messages)

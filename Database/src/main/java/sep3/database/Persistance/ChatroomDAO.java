@@ -14,4 +14,5 @@ public interface ChatroomDAO {
     void leaveChatroom(String userId,String chatroomId);
     Chatroom getChatroom(String id);
     ArrayList<Chatroom> getChatroomByUserId(String userId);
+    void deleteUserFromChatrooms(String userId);
 }

@@ -121,7 +121,7 @@ namespace Application.SCMediator
 
         public async Task DeleteUser(string userID)
         {
-            CommandLine command = new CommandLine {Command = "DELETE-User", SpecificOrder = userID};
+            CommandLine command = new CommandLine {Command = "DELETE-User", variableUser = userID};
             Console.Out.WriteLine("DELETE USER "+userID);
             await Send(command);
         }
