@@ -4,9 +4,9 @@
 @using ChatClient.Models
 @using Microsoft.AspNetCore.Authorization
 @using System.Text.Json
+@using Application.Models
 @using MongoDB.Bson
 @using Tier2.Model
-@using System.Runtime.CompilerServices
 @inject ChatService chatService;
 @inject IChatroomService chatroomService;
 @inject IJSRuntime JsRuntime;
@@ -33,7 +33,7 @@
                                         </button>
                                         <div class="dropdown-menu">
                                             <button type="button" class="btn-sm" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
-                                            @if (currentChatroom.ownerID.equals(user._id) || user.isAdmin)
+                                            @if (currentChatroom.ownerID.equals(user._id) || user.role.Equals("admin"))
                                             {
                                                 <button type="button" class="btn-sm" @onclick="(() => RemoveFromChatroom(item._id))">kick User</button>
                                             }
@@ -47,7 +47,9 @@
                         }
                     }
                 }
+                <button @onclick="LeaveBackToMain">Back to Main</button>
                 <button @onclick="LeaveChatroom">Leave Chatroom</button>
+                
             </div>
         </div>
     </div>
@@ -112,7 +114,7 @@
     private Chatroom currentChatroom = null;
     private string messageText;
     private bool isConnectedToChatRoom = false;
-    private User user;
+    private Account user;
     private Message newMessage = new Message();
     private MessageFragment newMessageFragment = new MessageFragment();
     private List<MessageFragment> MessageFragments = new List<MessageFragment>();
@@ -123,7 +125,7 @@
         string userAsJson = await JsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
         if (!string.IsNullOrEmpty(userAsJson))
         {
-            user = JsonSerializer.Deserialize<User>(userAsJson);
+            user = JsonSerializer.Deserialize<Account>(userAsJson);
             await chatService.ConnectToServer();
             Console.WriteLine("Connected to server");
         }
@@ -156,6 +158,15 @@
     public async Task RemoveFromChatroom(string UserId)
     {
         await chatroomService.KickFromChatroom(UserId, currentChatroom._id);
+    }
+
+    public async Task LeaveBackToMain()
+    {
+        await chatService.LeaveChatRoom(currentChatroom._id);
+        await chatService.DisconnectFromHub();
+        await chatroomService.RemoveCurrentChatroom();
+        currentChatroom = null;
+        Nav.NavigateTo("main");
     }
     
     public async Task GetUsersChatRooms()
