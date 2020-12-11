@@ -192,7 +192,7 @@
         }
     }
 
-    private async Task RemoveTopic(string id)
+    /*private async Task RemoveTopic(string id)
     {
     //call method to remove topic
     }
@@ -201,7 +201,7 @@
     {
     //new page to add a topic?
         NavigationManager.NavigateTo("");
-    }
+    }*/
 
     private async Task EnterChatroom(string id)
     {
@@ -211,12 +211,11 @@
 
     public async Task AddChatroom()
     {
-    //add new chatroom  
+        NavigationManager.NavigateTo("add chatroom");
     }
 
     public async Task LeaveRoom(string id)
     {
-    //leave chatroom
     }
 
     public async Task RemoveFriend(string id)
@@ -225,7 +224,7 @@
 
     public async Task EditProfile()
     {
-    //redirect to edit profile page
+        NavigationManager.NavigateTo("editprofile");
     }
 
     public async Task DeleteProfile()
@@ -238,12 +237,21 @@
         }
         catch (Exception e)
         {
+            Console.Out.WriteLine(e);
         }
     }
 
     private async Task Logout()
     {
-        
+        try
+        {
+            ((AuthenticationProvider) AuthenticationStateProvider).Logout();
+            NavigationManager.NavigateTo("login");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
 }
