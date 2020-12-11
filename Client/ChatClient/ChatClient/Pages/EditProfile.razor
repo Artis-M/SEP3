@@ -1,15 +1,18 @@
 ﻿@page "/EditProfile"
 @using Application.Models
-@inject NavigationManager NavigationManager;
+@using System.Text.Json
+@using Services
+@inject IJSRuntime JsRuntime;
+@inject IAccountService AccountService;
 
 <div class="EditWrapper">
     <EditForm Model="@updatedAccount" OnValidSubmit="@UpdateAccount">
         <DataAnnotationsValidator/>
-
+        
         <div class="EditForm">
             <div class="divToMain">
                 <a @onclick="@backToMenu" href="#">Return to main page</a>
-            </div>
+                </div>
             <h3>Edit Profile</h3>
             <div class="Edit-Flex">
                 <div class="Edit_right">
@@ -62,41 +65,77 @@
                         <button @onclick="@addTopic" class="addTopic">Add</button>
                         <button @onclick="@removeTopic" class="removeTopic">Remove</button>
                     </div>
+                    <ul>
+                        @foreach(Topic topic in topics)
+    {
+        <li>@topic.name</li>
+    }
+                    </ul>
                 </div>
             </div>
             <div class="UpdateButtonDiv">
                 <button type="submit">Update</button>
             </div>
         </div>
-
-    </EditForm>
-
+            
+        </EditForm>
+    
 </div>
 
 
 @code {
-    private List<Topic> topics = new List<Topic>();
+    private List<Topic> topics =new List<Topic>();
     private Account updatedAccount = new Account();
     private string error = "";
     private string topic = "";
+    protected override async Task OnInitializedAsync()
+    {
+        string userAsJson = await JsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
+        if (!string.IsNullOrEmpty(userAsJson))
+        {
+            updatedAccount = JsonSerializer.Deserialize<Account>(userAsJson);
+            
+        }
+        updatedAccount.Pass = "";
+        topics = updatedAccount.topics;
+        Console.Out.WriteLine(updatedAccount._id);
+    }
 
     public void UpdateAccount()
     {
+        AccountService.editProfile(updatedAccount);
     }
 
     private void addTopic()
     {
         
+        AccountService.addTopicToProfile(topic,updatedAccount._id);
+       topics.Add(new Topic(topic));
+        topic = "";
     }
 
     private void removeTopic()
     {
-        
+        try
+        {
+            foreach (var topic1 in topics)
+            {
+                if (topic1.name.Equals(topic))
+                {
+                    topics.Remove(topic1);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        AccountService.removeTopicFromProfile(topic,updatedAccount._id);
+        topic = "";
     }
 
     private void backToMenu()
     {
-        NavigationManager.NavigateTo("Main",true);
+        
     }
-
 }

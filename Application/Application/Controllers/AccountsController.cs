@@ -17,7 +17,7 @@ namespace Application.Controllers
     public class AccountsController : ControllerBase
     {
         private IAccountService AccountService;
-
+        
         public AccountsController(IAccountService accountService)
         {
             this.AccountService = accountService;
@@ -77,9 +77,9 @@ namespace Application.Controllers
                 return NotFound();
             }
 
-            Console.Out.WriteLine(account.Pass);
-            Console.Out.WriteLine(password);
-            Console.Out.WriteLine(account.Pass == password);
+           // Console.Out.WriteLine(account.Pass);
+           // Console.Out.WriteLine(password);
+           // Console.Out.WriteLine(account.Pass == password);
             if (account.Pass != password)
             {
                 return NotFound();
@@ -170,6 +170,37 @@ namespace Application.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+        [HttpPost]
+        [Route("topic/add/{userId}")]
+        public async Task<ActionResult> addTopicToUser([FromBody] string topic, [FromRoute] string userId)
+        {
+            Console.Out.WriteLine();
+            try
+            {
+                Console.Out.WriteLine("topic:" + topic + " UserId" + "  " + userId);
+                await AccountService.addTopicToUser(userId, topic);
+                Console.Out.WriteLine("Topic added");
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+        [HttpDelete]
+        [Route("topic/remove/{userId}/{topic}")]
+        public async Task<ActionResult> removeTopicFromUser([FromRoute] string topic, [FromRoute] string userId)
+        {
+            try
+            {
+                await AccountService.removeTopicFromUser(userId, topic);
+                return Ok();
+            }
+            catch (Exception e)
+            {
                 return StatusCode(500, e.Message);
             }
         }

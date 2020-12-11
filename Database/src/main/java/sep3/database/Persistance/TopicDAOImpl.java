@@ -10,6 +10,7 @@ import sep3.database.Model.Topic;
 import sep3.database.Model.TopicList;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -57,17 +58,21 @@ public class TopicDAOImpl implements TopicDAO {
         TopicList topicList = new TopicList();
         MongoCursor<Document> cursor = cursor("_id",userId);
         Document document;
+        List<ObjectId> topics = null;
         try {
             document = cursor.next();
+            topics = document.getList("topics", ObjectId.class);
         }
-        catch(NoSuchElementException e)
+        catch(Exception e)
         {
             return null;
         }
-        var topics = document.getList("topics", ObjectId.class);
+
+
         if(topics!=null) {
-            for (ObjectId id : topics
+            for (var id : topics
             ) {
+
                 Topic topic = getTopic(id);
                 topicList.addTopic(topic);
             }

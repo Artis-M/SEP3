@@ -11,5 +11,8 @@ namespace Services
 
         Task AddFriend(string UserID);
         public Task DeleteProfile(string userID);
+        public Task addTopicToProfile(string topic, string userId);
+        public Task removeTopicFromProfile(string topic, string userId);
+        public Task editProfile(Account account);
     }
 }

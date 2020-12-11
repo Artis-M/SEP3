@@ -28,5 +28,7 @@ namespace Application.Models
         public Task<Account> requestAccountByID(string userID);
         public Task<List<Chatroom>> requestChatroom(string userID);
         public Task EditAccount(Account account);
+        public void removeTopicFromUser(string userId, string topic);
+        public void addTopicToUser(string userId, string topic);
     }
 }

@@ -132,18 +132,9 @@ public class UserDAOImpl implements UserDAO
         edit.append("Lname", account.getLname());
         edit.append("role", account.getRole());
         edit.append("email", account.getEmail());
-        if (account.getTopics()!= null)
-        {
-            Document topics = new Document();
-            for (var topic : account.getTopics()
-            )
-            {
-                Topic addTopic = topicDAO.getTopic(topic.getName());
-                topics.append("$set", new BasicDBObject().append("topics", addTopic.get_id()));
-            }
-            edit.append("topics", Arrays.asList(topics));
-        }
-        collection.updateOne(toEdit,edit);
+        BasicDBObject update = new BasicDBObject();
+        update.put("$set",edit);
+        collection.updateOne(toEdit,update);
     }
 
     @Override

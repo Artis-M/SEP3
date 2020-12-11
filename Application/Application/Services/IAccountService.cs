@@ -19,5 +19,7 @@ namespace Application.Services
         public Task<Account> RequestAccountById(string userID);
         public Task AddFriend(List<User> users);
         public Task EditAccount(Account account);
+        public Task removeTopicFromUser(string userId, string topic);
+        public Task addTopicToUser(string userId, string topic);
     }
 }
