@@ -8,7 +8,7 @@ namespace Services
     {
         public Task<List<Chatroom>> GetUsersChatrooms(string userId);
         public Task CreateChatRoom(Chatroom chatroom);
-        public Task JoinChatRoom(string chatroomId);
+        public Task JoinChatRoom(string chatroomId,string userID);
         public Task SetCurrentChatroom(string chatroomId);
 
         public Chatroom GetCurrentChatroom();
