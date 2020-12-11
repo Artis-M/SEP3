@@ -69,9 +69,11 @@
     <div class="chatrooms">
 
         <h1>Your chatrooms</h1>
-        <div class="buttons"><button class="editButton" @onclick="@((() => AddChatroom()))">
-                         Add chatroom
-                     </button></div>
+        <div class="buttons">
+            <button class="editButton" @onclick="@((() => AddChatroom()))">
+                Add chatroom
+            </button>
+        </div>
 
         <div class="chatroomTable">
             @if (Chatrooms == null)
@@ -107,42 +109,50 @@
             }
         </div>
     </div>
-    <div class="friends">
-        <div>
-            <h1>Friends</h1>
+    <div class="arrange">
+
+        <div class="friends">
+            <div>
+                <h1>Friends</h1>
+            </div>
+            <div>
+
+                @if (storedUser.friends == null)
+                {
+                    <p>
+                        <em>Loading...</em>
+                    </p>
+                }
+                else if (!storedUser.friends.Any())
+                {
+                    <p>
+                        <em>No friends, chat and make some!</em>
+                    </p>
+                }
+                else
+                {
+                    <table class="table">
+                        <tbody>
+                        @foreach (var item in storedUser.friends)
+                        {
+                            <tr>
+                                <td>@item.Username</td>
+                                <td>
+                                    <button @onclick="@((() => RemoveFriend(item._id)))">
+                                        <i class="oi oi-minus" style="color: black"/>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+            </div>
         </div>
         <div>
-
-            @if (storedUser.friends == null)
-            {
-                <p>
-                    <em>Loading...</em>
-                </p>
-            }
-            else if (!storedUser.friends.Any())
-            {
-                <p>
-                    <em>No friends, chat and make some!</em>
-                </p>
-            }
-            else
-            {
-                <table class="table">
-                    <tbody>
-                    @foreach (var item in storedUser.friends)
-                    {
-                        <tr>
-                            <td>@item.Username</td>
-                            <td>
-                                <button @onclick="@((() => RemoveFriend(item._id)))">
-                                    <i class="oi oi-minus" style="color: black"/>
-                                </button>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            }
+            <button class="chatroomButton" @onclick="@((() => Logout()))">
+                Log out
+            </button>
         </div>
     </div>
 </div>
@@ -182,7 +192,7 @@
         }
     }
 
-    private async Task RemoveTopic(string id)
+    /*private async Task RemoveTopic(string id)
     {
     //call method to remove topic
     }
@@ -191,7 +201,7 @@
     {
     //new page to add a topic?
         NavigationManager.NavigateTo("");
-    }
+    }*/
 
     private async Task EnterChatroom(string id)
     {
@@ -201,12 +211,11 @@
 
     public async Task AddChatroom()
     {
-    //add new chatroom  
+        NavigationManager.NavigateTo("add chatroom");
     }
 
     public async Task LeaveRoom(string id)
     {
-    //leave chatroom
     }
 
     public async Task RemoveFriend(string id)
@@ -215,7 +224,7 @@
 
     public async Task EditProfile()
     {
-    //redirect to edit profile page
+        NavigationManager.NavigateTo("editprofile");
     }
 
     public async Task DeleteProfile()
@@ -228,6 +237,20 @@
         }
         catch (Exception e)
         {
+            Console.Out.WriteLine(e);
+        }
+    }
+
+    private async Task Logout()
+    {
+        try
+        {
+            ((AuthenticationProvider) AuthenticationStateProvider).Logout();
+            NavigationManager.NavigateTo("login");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
         }
     }
 
