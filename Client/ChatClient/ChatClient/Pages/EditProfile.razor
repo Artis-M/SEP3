@@ -4,6 +4,7 @@
 @using Services
 @inject IJSRuntime JsRuntime;
 @inject IAccountService AccountService;
+@inject NavigationManager NavigationManager;
 
 <div class="EditWrapper">
     <EditForm Model="@updatedAccount" OnValidSubmit="@UpdateAccount">
@@ -66,10 +67,13 @@
                         <button @onclick="@removeTopic" class="removeTopic">Remove</button>
                     </div>
                     <ul>
-                        @foreach(Topic topic in topics)
-    {
-        <li>@topic.name</li>
-    }
+                        @if (topics!=null)
+                        {
+                            @foreach (Topic topic in topics)
+                            {
+                                <li>@topic.name</li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>
@@ -84,31 +88,55 @@
 
 
 @code {
-    private List<Topic> topics =new List<Topic>();
+    private List<Topic> topics=new List<Topic>();
     private Account updatedAccount = new Account();
     private string error = "";
     private string topic = "";
+    private string defaultUsername = "";
     protected override async Task OnInitializedAsync()
     {
         string userAsJson = await JsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
         if (!string.IsNullOrEmpty(userAsJson))
         {
             updatedAccount = JsonSerializer.Deserialize<Account>(userAsJson);
-            
         }
+        defaultUsername = updatedAccount.Username;
         updatedAccount.Pass = "";
-        topics = updatedAccount.topics;
+       // topics = updatedAccount.topics;
         Console.Out.WriteLine(updatedAccount._id);
     }
 
-    public void UpdateAccount()
+    public async void UpdateAccount()
     {
-        AccountService.editProfile(updatedAccount);
+        error = "Username already in use";
+        try
+        {
+            Account check =  await AccountService.getUser(updatedAccount.Username);
+            if (updatedAccount.Username == defaultUsername)
+            {
+                error = "";
+                await AccountService.editProfile(updatedAccount);
+                NavigationManager.NavigateTo("Main");
+            }
+            else
+            {
+                error = "Username already in use";
+            }
+        }
+        catch (Exception e)
+        {
+            error = "";
+            await AccountService.editProfile(updatedAccount);
+        }
+        
+        
+        
+        
     }
 
     private void addTopic()
     {
-        
+        Console.Out.WriteLine(topics==null);
         AccountService.addTopicToProfile(topic,updatedAccount._id);
        topics.Add(new Topic(topic));
         topic = "";
@@ -136,6 +164,6 @@
 
     private void backToMenu()
     {
-        
+        NavigationManager.NavigateTo("Main",true);
     }
 }

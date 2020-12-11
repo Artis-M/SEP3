@@ -3,6 +3,7 @@
 @using global::Models
 @using MongoDB.Bson
 @using Services
+@using System.Threading
 @inject IAccountService AccountService;
 @inject NavigationManager NavigationManager;
 
@@ -46,10 +47,11 @@
             <div class="form-group">
                 Password:<br/>
                 <InputText type="password"  rows="1"cols="50" @bind-Value="newAccount.Pass"/>
-                 <div class="validate_div">
-                                <ValidationMessage For="@(() => newAccount.Pass)"/>
-                                </div>
+                <div class="validate_div">
+                    <ValidationMessage For="@(() => newAccount.Pass)"/>
+                </div>
             </div>
+            <p style="margin: 0;font-size: 14px;color: red;height: 16px;">@error</p>
             <div class="SignUpButton">
                 <button  type="submit">Sign Up</button>
             </div>
@@ -66,22 +68,36 @@
     private string error = "";
     private Account newAccount=new Account();
 
-    private void RegisterNewAccount()
+    private async  void RegisterNewAccount()
     {
         try
         {
+            
             newAccount.role = "User";
             newAccount._id = ObjectId.GenerateNewId().ToString();
             newAccount.friends = new List<User>();
             newAccount.topics= new List<Topic>();
-            AccountService.Register(newAccount);
+            error = "Username already in use";
+            Account check =  await AccountService.getUser(newAccount.Username);
+            
+            if (check==null)
+            {
+                error = "";
+                AccountService.Register(newAccount);
+                NavigationManager.NavigateTo("login");
+            }
+            else
+            {
+                error = "Username already in use";
+            }
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            error = e.Message;
+            error = "";
+            AccountService.Register(newAccount);
+            NavigationManager.NavigateTo("login");
         }
-        
+        Console.Out.WriteLine(error);
       // NavigationManager.NavigateTo("login", true);
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Application.Models;
 using Models;
 
@@ -14,5 +15,6 @@ namespace Services
         public Task addTopicToProfile(string topic, string userId);
         public Task removeTopicFromProfile(string topic, string userId);
         public Task editProfile(Account account);
+        Task<Account> getUser(string username);
     }
 }

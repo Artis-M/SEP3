@@ -53,6 +53,23 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+        [HttpGet]
+        [Route("user/username/{username}")]
+        public async Task<ActionResult<Account>> GetUserByUsername([FromRoute] string username)
+        {
+            try
+            {
+                Console.Out.WriteLine(username);
+                Account account = await AccountService.RequestAccount(username);
+                Console.Out.WriteLine("username");
+                return Ok(account);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
 
         [HttpGet]
         [Route("login")]

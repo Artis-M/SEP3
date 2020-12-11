@@ -51,6 +51,29 @@ namespace Services
             return account;
         }
 
+        public async Task<Account> getUser(string username)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            Account account = null;
+            try
+            {
+                string json = await http.GetStringAsync(uri + $"user/username/{username}");
+                account = JsonSerializer.Deserialize<Account>(json);
+            }
+            catch(Exception e)
+
+            {
+                throw new Exception("Username Already in Use");
+            }
+
+        return account;
+
+
+        }
+
         public async Task Register(Account account)
         {
             HttpClient http = new HttpClient
@@ -62,7 +85,7 @@ namespace Services
             byte[] passwordBytes = Encoding.ASCII.GetBytes(account.Pass);
             byte[] hashedBytes = sha.ComputeHash(passwordBytes);
             account.Pass = Convert.ToBase64String(hashedBytes);
-
+            
             string serialized = JsonSerializer.Serialize(account);
             StringContent content = new StringContent(serialized, Encoding.UTF8, "application/json");
             HttpResponseMessage responseMessage = await http.PostAsync(uri + "register", content);
