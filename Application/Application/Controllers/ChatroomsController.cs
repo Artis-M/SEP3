@@ -44,7 +44,7 @@ namespace Application.Controllers
         [Route("{chatRoomId}")]
         public async Task<ActionResult<Chatroom>> GetChatRoomById([FromRoute] string chatRoomId)
         {
-            Console.WriteLine("Getting chat room:" + chatRoomId);
+           // Console.WriteLine("Getting chat room:" + chatRoomId);
             Chatroom chatroom = await chatroomService.GetChatroomByID(chatRoomId);
             try
             {
@@ -66,7 +66,7 @@ namespace Application.Controllers
         [Route("user/chatrooms/{id}")]
         public async Task<ActionResult<List<Chatroom>>> GetChatRoomsByUserId([FromRoute] string id)
         {
-            Console.WriteLine("Chatrooms requested.");
+            //Console.WriteLine("Chatrooms requested.");
           
             List<Chatroom> chatrooms = await chatroomService.GetChatroomByUserID(id);
 
@@ -98,7 +98,7 @@ namespace Application.Controllers
 
             try
             {
-                Console.WriteLine($"Creating new chatroom {chatroom.name}");
+               // Console.WriteLine($"Creating new chatroom {chatroom.name}");
                 await chatroomService.AddNewChatroom(chatroom);
                 return Created($"/{chatroom._id}", chatroom);
             }
@@ -132,9 +132,9 @@ namespace Application.Controllers
         {
             try
             {
-                Console.Out.WriteLine(message.message);
+               // Console.Out.WriteLine(message.message);
                 await chatroomService.SendMessage(chatRoomId, message);
-                Console.WriteLine("got a message from the client");
+                //Console.WriteLine("got a message from the client");
                 return Ok("message sent: " + message.message);
             }
             catch (Exception e)
@@ -168,7 +168,7 @@ namespace Application.Controllers
         {
             try
             {
-                Console.Out.WriteLine(userID+" SFDGFGFSDDFGDBFCF"+chatRoomId);
+               // Console.Out.WriteLine(userID+" SFDGFGFSDDFGDBFCF"+chatRoomId);
                 await chatroomService.RemoveUser(chatRoomId, userID);
                 Chatroom chatroom = await chatroomService.GetChatroomByID(chatRoomId);
                 await _hubContext.Clients.Group(chatRoomId).SendAsync("ReceiveChatroomUpdate", chatroom);

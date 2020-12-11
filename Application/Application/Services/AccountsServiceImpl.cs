@@ -84,5 +84,16 @@ namespace Application.Services
         {
             await model.EditAccount(account);
         }
+        public async Task removeTopicFromUser(string userId, string topic)
+        {
+            Console.Out.WriteLine(userId);
+            Console.Out.WriteLine(topic);
+            model.removeTopicFromUser(userId,topic);
+        }
+
+        public async Task addTopicToUser(string userId, string topic)
+        {
+            model.addTopicToUser(userId,topic);
+        }
     }
 }

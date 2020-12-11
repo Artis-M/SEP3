@@ -64,6 +64,7 @@ public class ServiceController implements Runnable
                 CommandLine requestCommand = gson.fromJson(request, CommandLine.class);
                 System.out.println(requestCommand.getSpecificOrder());
                 CommandLine responseCommand = new CommandLine();
+                System.out.println(requestCommand.getCommand());
                 if (requestCommand.getCommand().equals("REQUEST-UserCredentials"))
                 {
 
@@ -162,9 +163,25 @@ public class ServiceController implements Runnable
                     chatroomDAO.deleteUserFromChatrooms(requestCommand.getSpecificOrder());
 
                 }
-                else if(requestCommand.getCommand().equals("UserUpdate")){
+                else if(requestCommand.getCommand().equals("UserUpdate"))
+                {
                     Account account = gson.fromJson(requestCommand.getSpecificOrder(),Account.class);
+                    System.out.println(account);
                     userDAO.EditAccount(account);
+                }
+                else if(requestCommand.getCommand().equals("AddTopicToUser"))
+                {
+                    System.out.println("Topic added " + requestCommand.getSpecificOrder());
+                    System.out.println("User "  + requestCommand.getVariableUser());
+                    userDAO.addTopicToUser(requestCommand.getSpecificOrder(),requestCommand.getVariableUser());
+
+                }
+                else if(requestCommand.getCommand().equals("removeTopicFromUser"))
+                {
+                    System.out.println("Topic removed " + requestCommand.getSpecificOrder());
+                    System.out.println("User "  + requestCommand.getVariableUser());
+                    userDAO.removeUserTopic(requestCommand.getSpecificOrder(),requestCommand.getVariableUser());
+
                 }
             }
         } catch (IOException e)

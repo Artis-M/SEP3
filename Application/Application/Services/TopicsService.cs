@@ -7,7 +7,7 @@ namespace Application.Services
     public class TopicsService : ITopicsService
     {
         public List<Topic> Topics { get; set; }
-        public Application.Models.Model Model;
+        public Model Model;
 
         public TopicsService(Model modelManager)
         {
@@ -42,6 +42,16 @@ namespace Application.Services
             }
 
             return null;
+        }
+
+        public Task removeTopicFromUser(string userId, string topic)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task addTopicToUser(string userId, string topic)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

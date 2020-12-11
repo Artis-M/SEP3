@@ -171,6 +171,7 @@
         {
             storedUser = JsonSerializer.Deserialize<Account>(userAsJson);
         }
+        Console.Out.WriteLine(storedUser._id);
         Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
 
     //chatroomCount = Chatrooms.Count;

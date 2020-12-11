@@ -113,7 +113,68 @@ namespace Services
                 BaseAddress = new Uri(uri)
             };
             string request = $"{userID}";
+            Console.Out.WriteLine(request + "USER TO BE DELETED");
             await http.DeleteAsync(request);
+        }
+        public async Task addTopicToProfile(string topic, string userId)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            string response = uri +  $"topic/add/{userId}";
+            Console.Out.WriteLine($"Topic {topic} UserId {userId}");
+            Console.Out.WriteLine(response);
+            try
+            {
+                string serialized = JsonSerializer.Serialize(topic);
+                StringContent content = new StringContent(serialized, Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await http.PostAsync(response, content);
+                Console.Out.WriteLine(responseMessage);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+        }
+
+        public async Task removeTopicFromProfile(string topic, string userId)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            string response = uri+ $"topic/remove/{userId}/{topic}";
+            try
+            {
+                
+                Console.Out.WriteLine($"Topic {topic} UserId {userId}");
+                HttpResponseMessage responseMessage = await http.DeleteAsync(response);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task editProfile(Account account)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            string response = uri +  $"editAccount";
+            SHA384CryptoServiceProvider sha = new SHA384CryptoServiceProvider();
+            byte[] passwordBytes = Encoding.ASCII.GetBytes(account.Pass);
+            byte[] hashedBytes = sha.ComputeHash(passwordBytes);
+            account.Pass = Convert.ToBase64String(hashedBytes);
+            string serialized = JsonSerializer.Serialize(account);
+            StringContent content = new StringContent(serialized, Encoding.UTF8, "application/json");
+            HttpResponseMessage responseMessage = await http.PatchAsync(response, content);
+            Console.Out.WriteLine(responseMessage);
         }
     }
 }

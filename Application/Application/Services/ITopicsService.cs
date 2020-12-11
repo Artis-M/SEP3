@@ -11,5 +11,7 @@ namespace Application.Services
         public Task RemoveTopic(Topic topic);
         public Task<IList<Topic>> GetAllTopics();
         public Task<Topic> GetTopicById(string id);
+        public Task removeTopicFromUser(string userId, string topic);
+        public Task addTopicToUser(string userId, string topic);
     }
 }

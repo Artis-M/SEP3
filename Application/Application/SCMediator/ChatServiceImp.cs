@@ -89,6 +89,23 @@ namespace Application.SCMediator
             await Send(command);
         }
 
+        public async Task addTopicToUser(string userId, string topic)
+        {
+            CommandLine sendCommand = new CommandLine();
+            sendCommand.Command = "AddTopicToUser";
+            sendCommand.variableUser = userId;
+            sendCommand.SpecificOrder = topic;
+            Console.Out.WriteLine("AddTopuc");
+            await Send(sendCommand);
+        }
+        public async Task removeTopicfromUser(string userId, string topic)
+        {
+            CommandLine sendCommand = new CommandLine();
+            sendCommand.Command = "removeTopicFromUser";
+            sendCommand.variableUser = userId;
+            sendCommand.SpecificOrder = topic;
+            await Send(sendCommand);
+        }
         public async Task sendNewTopic(Topic topic)
         {
             string serialTopic = JsonSerializer.Serialize(topic);
@@ -121,7 +138,7 @@ namespace Application.SCMediator
 
         public async Task DeleteUser(string userID)
         {
-            CommandLine command = new CommandLine {Command = "DELETE-User", SpecificOrder = userID};
+            CommandLine command = new CommandLine {Command = "DELETE-User", variableUser = userID};
             Console.Out.WriteLine("DELETE USER "+userID);
             await Send(command);
         }

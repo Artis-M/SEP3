@@ -125,5 +125,15 @@ namespace Application.Models
         {
             await chatServiceImp.sendUserUpdate(account);
         }
+
+        public void removeTopicFromUser(string userId, string topic)
+        {
+            chatServiceImp.removeTopicfromUser(userId, topic);
+        }
+
+        public void addTopicToUser(string userId, string topic)
+        {
+            chatServiceImp.addTopicToUser(userId, topic);
+        }
     }
 }
