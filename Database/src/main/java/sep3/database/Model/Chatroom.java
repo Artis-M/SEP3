@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Chatroom {
     private String _id;
     private String name;
+    private String type;
+    private String owner;
     private ArrayList<User> participants;
     private ArrayList<Message> messages;
     private ArrayList<Topic> topics;
@@ -95,6 +97,22 @@ public class Chatroom {
 
     public void setTopics(ArrayList<Topic> topics) {
         this.topics = topics;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     @Override

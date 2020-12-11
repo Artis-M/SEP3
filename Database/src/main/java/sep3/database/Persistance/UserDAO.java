@@ -12,13 +12,14 @@ public interface UserDAO {
     Account getAccount(String username);
     User getUser(String userID);
     ArrayList<User> getUserFriends(String userId);
-    void addFriend(User user,String userId);
+    void addFriend(String friend,String userId);
     void removeFriend(User user,String userId);
     void addTopicToUser(String Topic,String userId);
     void removeUserTopic(String Topic,String userId);
     void addAccount(Account account);
     Account getUserByName(String firstName,String LastName);
     ArrayList<Account> getAllAccount();
+    void deleteFriendFromUsers(String friend);
     void deleteAccount(String userID);
     void EditAccount(Account account);
 

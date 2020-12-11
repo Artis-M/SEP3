@@ -54,6 +54,8 @@
 .loginWrapper .errorMessage {
     height: 25px;
     color:red;
+    font-size: 14px;
+    width: 235px;
 }
 .LoginButton:hover{
     border-color:#0B9EF0;

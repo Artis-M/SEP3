@@ -68,9 +68,7 @@ public class TopicDAOImpl implements TopicDAO {
         if(topics!=null) {
             for (ObjectId id : topics
             ) {
-                System.out.println("Here");
                 Topic topic = getTopic(id);
-                System.out.println(topic);
                 topicList.addTopic(topic);
             }
         }
@@ -84,17 +82,14 @@ public class TopicDAOImpl implements TopicDAO {
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.append("name",topic);
         var document = collection.find(whereQuery).first();
-        System.out.println(document);
         if(document==null)
         {
             ObjectId id = new ObjectId();
-
             addTopic(new Topic(id.toString(),topic));
             document = collection.find(whereQuery).first();
         }
         ObjectId id = new ObjectId(document.get("_id").toString());
         Topic topic1 = new Topic(id.toString(),document.get("name").toString());
-        System.out.println(topic1);
         return topic1;
     }
 }
