@@ -8,6 +8,8 @@ namespace Application.Models
     public class Chatroom
     {
         public string _id { get; set; }
+        public string type { get; set; }
+        public string owner { get; set; }
         public string name { get; set; }
         public List<Topic> topics { get; set; }
         public List<Message> messages { get; set; }

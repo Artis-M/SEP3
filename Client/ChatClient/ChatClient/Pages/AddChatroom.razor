@@ -1,0 +1,68 @@
+﻿@page "/AddChatroom"
+@using Services
+@using Tier2.Model
+@using Application.Models
+@using System.Text.Json
+@using MongoDB.Bson
+@inject IAccountService AccountService;
+@inject IChatroomService ChatroomService;
+@inject NavigationManager NavigationManager;
+@inject IJSRuntime JsRuntime;
+<div class="SignUpWrapper">
+
+    <div class="chatroomForm">
+        <EditForm Model="@newChatroom" OnValidSubmit="@AddNewChatRoom">
+
+
+            <h3>New chatroom</h3>
+            <div class="AddchatroomField">
+                Name: <br/>
+                <InputText @bind-Value="newChatroom.name"/>
+            </div>
+            <div>
+                <div class="AddchatroomField">
+                    Topic name: <br/>
+                    <InputText @bind-Value="_topic.name"/>
+                </div>
+
+                <button class="ChatroomAdding" type="submit" onclick="@AddTopic()">Add topic</button>
+
+            </div>
+
+            <button class="ChatroomAdding" type="submit">Add chatroom</button>
+
+
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private Chatroom newChatroom = new Chatroom();
+    private Account storedUser = new Account();
+    private List<Topic> Topics = new List<Topic>();
+    private Topic _topic = new Topic();
+
+    protected override async Task OnInitializedAsync()
+    {
+        string userAsJson = await JsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
+        if (!string.IsNullOrEmpty(userAsJson))
+        {
+            storedUser = JsonSerializer.Deserialize<Account>(userAsJson);
+        }
+    }
+
+    private async Task AddNewChatRoom()
+    {
+        newChatroom.ownerID = storedUser._id;
+        newChatroom._id = new ObjectId().ToString();
+        newChatroom.topics = Topics;
+        await ChatroomService.CreateChatRoom(newChatroom);
+    }
+
+    private async Task AddTopic()
+    {
+        _topic._id = new ObjectId().ToString();
+        Topics.Add(_topic);
+    }
+
+}

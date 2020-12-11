@@ -1,14 +1,15 @@
 ﻿@page "/EditProfile"
 @using Application.Models
+@inject NavigationManager NavigationManager;
 
 <div class="EditWrapper">
     <EditForm Model="@updatedAccount" OnValidSubmit="@UpdateAccount">
         <DataAnnotationsValidator/>
-        
+
         <div class="EditForm">
             <div class="divToMain">
                 <a @onclick="@backToMenu" href="#">Return to main page</a>
-                </div>
+            </div>
             <h3>Edit Profile</h3>
             <div class="Edit-Flex">
                 <div class="Edit_right">
@@ -67,21 +68,20 @@
                 <button type="submit">Update</button>
             </div>
         </div>
-            
-        </EditForm>
-    
+
+    </EditForm>
+
 </div>
 
 
 @code {
-    private List<Topic> topics =new List<Topic>();
+    private List<Topic> topics = new List<Topic>();
     private Account updatedAccount = new Account();
     private string error = "";
     private string topic = "";
 
     public void UpdateAccount()
     {
-        
     }
 
     private void addTopic()
@@ -96,6 +96,7 @@
 
     private void backToMenu()
     {
-        
+        NavigationManager.NavigateTo("Main",true);
     }
+
 }
