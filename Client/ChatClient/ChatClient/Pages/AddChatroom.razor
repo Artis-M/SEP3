@@ -53,9 +53,10 @@
 
     private async Task AddNewChatRoom()
     {
-        newChatroom.ownerID = storedUser._id;
+        newChatroom.owner = storedUser._id;
         newChatroom._id = new ObjectId().ToString();
         newChatroom.topics = Topics;
+        newChatroom.participants.Add(storedUser);
         await ChatroomService.CreateChatRoom(newChatroom);
     }
 
