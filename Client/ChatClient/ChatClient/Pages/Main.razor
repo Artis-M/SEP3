@@ -14,114 +14,151 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider;
 
 <div class="wholePage">
-    <div class="arrange">
-        <div class="userProfile">
-            <div style="width:300px;margin-bottom: 10px;">
-                <h3 class="ProfileText">Profile</h3>
-                <div>
-                    <h5>Username: @storedUser.Username</h5>
-                </div>
-
-                <div>
-                    <h5>First Name: @storedUser.Fname</h5>
-                </div>
-                <div>
-                    <h5>Last Name: @storedUser.Lname</h5>
-                </div>
-                <div>
-                    <h5>Email: @storedUser.email</h5>
-                </div>
-            </div>
-
-
-            <div class="buttons">
-                <button class="editButton"@onclick="@((() => EditProfile()))">
-                    Edit profile
-                </button>
-                <button class="deleteButton" @onclick="@((() => DeleteProfile()))">
-                    Delete profile
-                </button>
-            </div>
-
-
-        </div>
-        <div class="topicsCard">
+<div class="arrange">
+    <div class="userProfile">
+        <div style="width:300px;margin-bottom: 10px;">
+            <h3 class="ProfileText">Profile</h3>
             <div>
-                <h3>Chatrooms by topic</h3>
+                <h5>Username: @storedUser.Username</h5>
             </div>
-            <div class="flex-row d-flex">
-                @if (topics == null|| topics.Count==0)
-                {
-                    <p>You don't have any topics</p>
-                    <p>Topics can be added in edit page</p>
-                }
-                else
-                {
-                    <select class="form-control selectpicker" @bind="@filterOption" style="width: 200px;margin-right: 20px">
-                        @foreach (var item in topics)
-                        {
-                            <option>@item.name</option>
-                        }
-                    </select>
-                    <button @onclick="@FilterChats" class="chatroomSearch">Search</button>
-                }
-                
+
+            <div>
+                <h5>First Name: @storedUser.Fname</h5>
             </div>
-            <div class="filteredChatrooms">
-                @if (filtered.Count > 0)
-                {
-                    @foreach (var chatroom in filtered)
-                    {
-                        if (verifyIfUserParticipant(chatroom))
-                        {
-                            <div class="filteredRoom">
-                                <p class="align-self-center">
-                                    @chatroom.name
-                                </p>
-                                <button @onclick="@JoinChatroom"> Join</button>
-                            </div>
-                        }
-                    }
-                }
+            <div>
+                <h5>Last Name: @storedUser.Lname</h5>
+            </div>
+            <div>
+                <h5>Email: @storedUser.email</h5>
             </div>
         </div>
-    </div>
-    <div class="chatrooms">
 
-        <h3>Chatrooms</h3>
+
         <div class="buttons">
-            <button class="editButton" @onclick="@((() => AddChatroom()))">
-                Add chatroom
+            <button class="editButton"@onclick="@((() => EditProfile()))">
+                Edit profile
+            </button>
+            <button class="deleteButton" @onclick="@((() => DeleteProfile()))">
+                Delete profile
             </button>
         </div>
 
-        <div class="chatroomTable">
-            @if (Chatrooms == null)
+
+    </div>
+    <div class="topicsCard">
+        <div>
+            <h3>Chatrooms by topic</h3>
+        </div>
+        <div class="flex-row d-flex">
+            @if (topics == null || topics.Count == 0)
+            {
+                <p>You don't have any topics</p>
+                <p>Topics can be added in edit page</p>
+            }
+            else
+            {
+                <select class="form-control selectpicker" @bind="@filterOption" style="width: 200px;margin-right: 20px">
+                    @foreach (var item in topics)
+                    {
+                        <option>@item.name</option>
+                    }
+                </select>
+                <button @onclick="@FilterChats" class="chatroomSearch">Search</button>
+            }
+
+        </div>
+        <div class="filteredChatrooms">
+            @if (filterCount>0)
+            {
+                @foreach (var chatroom in filtered)
+                {
+                    if (verifyIfUserParticipant(chatroom))
+                    {
+                        <div class="filteredRoom">
+                            <p class="align-self-center">
+                                @chatroom.name
+                            </p>
+                            <button @onclick="@JoinChatroom"> Join</button>
+                        </div>
+                    }
+                }
+            }
+            else
+            {
+                <p>@filterError</p>
+            }
+            
+        </div>
+    </div>
+</div>
+<div class="chatrooms">
+
+    <h3>Chatrooms</h3>
+    <div class="buttons">
+        <button class="editButton" @onclick="@((() => AddChatroom()))">
+            Add chatroom
+        </button>
+    </div>
+
+    <div class="chatroomTable">
+        @if (Chatrooms == null)
+        {
+            <p>
+                <em>Loading...</em>
+            </p>
+        }
+        else if (!Chatrooms.Any())
+        {
+            <p>
+                <em>No chatrooms are in the system.</em>
+            </p>
+        }
+        else
+        {
+            @foreach (var item in Chatrooms)
+            {
+                <div >
+                    <button class="chatroomButton" @onclick="@((() => EnterChatroom(@item._id)))">
+                        @item.name
+                    </button>
+                </div>
+            }
+        }
+    </div>
+</div>
+<div class="arrange">
+
+    <div class="friends">
+        <div>
+            <h3>Friends</h3>
+        </div>
+        <div>
+
+            @if (storedUser.friends == null)
             {
                 <p>
                     <em>Loading...</em>
                 </p>
             }
-            else if (!Chatrooms.Any())
+            else if (!storedUser.friends.Any())
             {
                 <p>
-                    <em>No chatrooms are in the system.</em>
+                    <em>No friends, chat and make some!</em>
                 </p>
             }
             else
             {
                 <table class="table">
                     <tbody>
-                    @foreach (var item in Chatrooms)
+                    @foreach (var item in storedUser.friends)
                     {
                         <tr>
+                            <td>@item.Username</td>
                             <td>
-                                <button class="chatroomButton" @onclick="@((() => EnterChatroom(@item._id)))">
-                                    @item.name
+                                <button @onclick="@((() => RemoveFriend(item._id)))">
+                                    <i class="oi oi-minus" style="color: black"/>
                                 </button>
                             </td>
-
-
                         </tr>
                     }
                     </tbody>
@@ -129,52 +166,12 @@
             }
         </div>
     </div>
-    <div class="arrange">
-
-        <div class="friends">
-            <div>
-                <h3>Friends</h3>
-            </div>
-            <div>
-
-                @if (storedUser.friends == null)
-                {
-                    <p>
-                        <em>Loading...</em>
-                    </p>
-                }
-                else if (!storedUser.friends.Any())
-                {
-                    <p>
-                        <em>No friends, chat and make some!</em>
-                    </p>
-                }
-                else
-                {
-                    <table class="table">
-                        <tbody>
-                        @foreach (var item in storedUser.friends)
-                        {
-                            <tr>
-                                <td>@item.Username</td>
-                                <td>
-                                    <button @onclick="@((() => RemoveFriend(item._id)))">
-                                        <i class="oi oi-minus" style="color: black"/>
-                                    </button>
-                                </td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-                }
-            </div>
-        </div>
-        <div>
-            <button class="logoutButton" @onclick="@((() => Logout()))">
-                Log out
-            </button>
-        </div>
+    <div>
+        <button class="logoutButton" @onclick="@((() => Logout()))">
+            Log out
+        </button>
     </div>
+</div>
 </div>
 
 @code {
@@ -186,6 +183,8 @@
     private List<Chatroom> filtered = new List<Chatroom>();
     private string chatRoomID;
     private List<Topic> topics = new List<Topic>();
+    private string filterError="";
+    private int filterCount = 0;
 
 
     protected override async Task OnInitializedAsync()
@@ -198,8 +197,6 @@
         Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
         Account user = await AccountService.getUser(storedUser.Username);
         topics = user.topics;
-        Console.Out.WriteLine(topics.Count);
-        Console.Out.WriteLine(storedUser._id);
 
     }
 
@@ -212,7 +209,13 @@
             if (participant._id.Equals(storedUser._id))
             {
                 check = false;
+                filterCount--;
             }
+        }
+        if (filterCount!= 0)
+        {
+            filterError = "There is no such chatroom with this topic";
+            Console.Out.WriteLine("Error");
         }
         return check;
     }
@@ -221,11 +224,14 @@
     {
         try
         {
-            
             filtered = await ChatroomService.getChatroomByTopic(filterOption);
-            StateHasChanged();
             
-
+            filterCount = filtered.Count;
+            if (filterCount == 0)
+            {
+                filterError = "There are no such chatrooms with this topic";
+            }
+            StateHasChanged();
         }
         catch (Exception e)
         {
@@ -251,7 +257,7 @@
 
     private async Task JoinChatroom()
     {
-        await ChatroomService.JoinChatRoom(chatRoomID,storedUser._id);
+        await ChatroomService.JoinChatRoom(chatRoomID, storedUser._id);
     }
 
     public async Task AddChatroom()

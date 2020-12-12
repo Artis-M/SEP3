@@ -146,7 +146,8 @@
     private  void addTopic()
     {
         AccountService.addTopicToProfile(topic,updatedAccount._id);
-        if (topic != null || topic.Length>0)
+        Console.Out.WriteLine("Topic length: " + topic.Length);
+        if (topic.Length!=0)
         {
             topicError = "";
             topics.Add(new Topic(topic));

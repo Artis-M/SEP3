@@ -102,10 +102,34 @@
 {
     background-color: #51CD5D;
 }
+.addTopic:hover
+{
+    background-color: #c6f2d3;
+    color:#51CD5D;
+}
+.addTopic:active{
+    border:1px solid #51CD5D;
+    background-color: #c6f2d3;
+    color:#51CD5D;
+}
 .removeTopic
 {
-    
     background-color: #D32240;
+}
+.removeTopic:hover, .logoutButton:hover
+{
+    background-color: #fab9be;
+    color:#D32240;
+}
+.removeTopic:active,.logoutButton:active
+{
+    outline:none;
+    border:1px solid #D32240;
+    background-color: #fab9be;
+    color:#D32240;
+}
+.logoutButton:focus{
+    outline:none;
 }
 .Edit_Left div {
     margin-bottom: 0;
