@@ -212,10 +212,15 @@
                 filterCount--;
             }
         }
-        if (filterCount!= 0)
+        if (filterCount== 0)
         {
-            filterError = "There is no such chatroom with this topic";
-            Console.Out.WriteLine("Error");
+            InvokeAsync(() =>
+            {
+                filterError = "There is no such chatroom with this topic";
+                StateHasChanged();
+            });
+
+
         }
         return check;
     }
@@ -229,9 +234,13 @@
             filterCount = filtered.Count;
             if (filterCount == 0)
             {
-                filterError = "There are no such chatrooms with this topic";
+                
+                    filterError = "There is no such chatroom with this topic";
+                    
+               
             }
             StateHasChanged();
+            
         }
         catch (Exception e)
         {
