@@ -189,6 +189,19 @@ public class ServiceController implements Runnable
                     userDAO.removeUserTopic(requestCommand.getSpecificOrder(),requestCommand.getVariableUser());
 
                 }
+                else if (requestCommand.getCommand().equals("ChatroomsByTopic"))
+                {
+
+
+                    String response = gson.toJson(chatroomDAO.getChatroomsByTopic(requestCommand.getSpecificOrder()));
+                    responseCommand.setSpecificOrder(response);
+                    System.out.println(response);
+                    responseCommand.setCommand("ChatroomsByTopic");
+                    String sendBack = gson.toJson(responseCommand);
+                    byte[] responseAsBytes = sendBack.getBytes();
+                    outputStream.write(responseAsBytes, 0, responseAsBytes.length);
+
+                }
             }
         } catch (IOException e)
         {

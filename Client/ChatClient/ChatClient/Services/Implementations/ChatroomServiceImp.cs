@@ -34,7 +34,10 @@ namespace Services
             List<Chatroom> Chatrooms = new List<Chatroom>();
             if (responseMessage.StatusCode == HttpStatusCode.OK)
             {
+                
                 Chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(await responseMessage.Content.ReadAsStringAsync());
+                //Console.Out.WriteLine("Chatrooms");
+                //Console.Out.WriteLine(Chatrooms.Count);
                
             }
             if (responseMessage.StatusCode == HttpStatusCode.NotFound)
@@ -62,7 +65,7 @@ namespace Services
                 BaseAddress = new Uri(uri)
             };
             
-            Console.WriteLine(JsonSerializer.Serialize(chatroom));
+           // Console.WriteLine(JsonSerializer.Serialize(chatroom));
             StringContent content = new StringContent(JsonSerializer.Serialize(chatroom),Encoding.UTF8,"application/json");
             
             http.PostAsync("add", content);
@@ -125,6 +128,20 @@ namespace Services
             StringContent content = new StringContent(JsonSerializer.Serialize(targetUserID), Encoding.UTF8,"application/json");
             
             http.PatchAsync(request, content);
+        }
+
+        public async Task<List<Chatroom>> getChatroomByTopic(string topic)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            String responseMessage = await http.GetStringAsync($"chatrooms/topic/{topic}");
+            //Console.Out.WriteLine(responseMessage.StatusCode);
+            List<Chatroom> Chatrooms = new List<Chatroom>();
+            Chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(responseMessage);
+                Console.Out.WriteLine(Chatrooms.Count);
+                return Chatrooms;
         }
     }
 }

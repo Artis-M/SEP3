@@ -17,5 +17,7 @@ namespace Services
         public Task LeaveChatRoom(string userID, string chatroomID);
 
         public Task KickFromChatroom(string userID, string chatroomID);
+
+        public Task<List<Chatroom>> getChatroomByTopic(string topic);
     }
 }

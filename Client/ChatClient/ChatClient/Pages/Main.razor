@@ -50,24 +50,32 @@
                 <h3>Chatrooms by topic</h3>
             </div>
             <div>
-                @if (storedUser.topics == null)
+                @if (topics == null|| topics.Count==0)
                 {
                     <p>You don't have any topics</p>
+                    <p>Topics can be added in edit page</p>
                 }
                 else
                 {
-                    <select class="form-control selectpicker" @onchange="@((arg => FilterChats(arg)))" style="width: 100px">
+                    <select class="form-control selectpicker" @bind="@filterOption" style="width: 100px">
                         @foreach (var item in storedUser.topics)
                         {
                             <option>@item.name</option>
                         }
                     </select>
+                    <button @onclick="@FilterChats">Search</button>
                 }
                 
             </div>
             <div>
-                <input type="text" @bind="@chatRoomID"/>
-                <button @onclick="@JoinChatroom">Join</button>
+                @if (filtered.Count > 0)
+                {
+                    @foreach (var chatroom in filtered)
+                    {
+                        @chatroom.name
+                        <button @onclick="@JoinChatroom"> Join</button>
+                    }
+                }
             </div>
         </div>
     </div>
@@ -163,12 +171,14 @@
 </div>
 
 @code {
+    private string filterOption = "";
     private Account storedUser = new Account();
     private int chatroomCount = 0;
     private int friendCount = 0;
     private List<Chatroom> Chatrooms = new List<Chatroom>();
     private List<Chatroom> filtered = new List<Chatroom>();
     private string chatRoomID;
+    private List<Topic> topics = new List<Topic>();
 
 
     protected override async Task OnInitializedAsync()
@@ -179,21 +189,20 @@
             storedUser = JsonSerializer.Deserialize<Account>(userAsJson);
         }
         Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
-
+        Account user = await AccountService.getUser(storedUser.Username);
+        topics = user.topics;
 
     }
 
-    private void FilterChats(ChangeEventArgs args)
+    private async void FilterChats()
     {
-        string filterby = null;
         try
         {
-            filterby = args.Value.ToString();
+            
+            filtered =  await ChatroomService.getChatroomByTopic(filterOption);
+
         }
         catch (Exception e)
-        {
-        }
-        if (filterby != null)
         {
         }
     }

@@ -41,6 +41,32 @@ namespace Application.Controllers
         }
 
         [HttpGet]
+        [Route("chatrooms/topic/{topic}")]
+        public async Task<ActionResult<List<Chatroom>>> GetChatroomsByTopic([FromRoute] string topic)
+        {
+            List<Chatroom> chatrooms = await chatroomService.getChatroomsByTopic(topic);
+            Console.Out.WriteLine("COntroller");
+            foreach (var VARIABLE in chatrooms)
+            {
+                Console.Out.WriteLine(VARIABLE.name);
+            }
+            try
+            {
+                if (chatrooms == null)
+                {
+                    return NotFound();
+                }
+
+                return chatrooms;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("{chatRoomId}")]
         public async Task<ActionResult<Chatroom>> GetChatRoomById([FromRoute] string chatRoomId)
         {

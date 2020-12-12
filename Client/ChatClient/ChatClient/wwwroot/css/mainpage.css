@@ -13,7 +13,7 @@
 .ProfileText{
     text-align: center;
     margin-top: 25px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 .userProfile {
     display: flex;
@@ -128,9 +128,6 @@
     flex-direction: column;
 }
 
-.userProfile h1, h3, h6 {
-    padding-right: 30px;
-}
 
 .buttons {
     display: flex;

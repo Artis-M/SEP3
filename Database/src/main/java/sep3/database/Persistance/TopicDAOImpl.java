@@ -35,7 +35,7 @@ public class TopicDAOImpl implements TopicDAO {
         Document document = new Document();
         ObjectId _id = new ObjectId(topic.get_id());
         document.append("_id",_id);
-        document.append("name",topic.getName());
+        document.append("name",topic.getName().toLowerCase());
         collection.insertOne(document);
 
 
@@ -85,7 +85,7 @@ public class TopicDAOImpl implements TopicDAO {
     public Topic getTopic(String topic) {
         collection = connection.getDatabase().getCollection("Topics");
         BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.append("name",topic);
+        whereQuery.append("name",topic.toLowerCase());
         var document = collection.find(whereQuery).first();
         if(document==null)
         {

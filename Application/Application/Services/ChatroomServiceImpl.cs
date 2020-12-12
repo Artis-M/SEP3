@@ -89,5 +89,10 @@ namespace Application.Services.Implementations
                     await model.LeaveChatroom(userID,ChatRoomID);
                 
         }
+
+        public async Task<List<Chatroom>> getChatroomsByTopic(string topic)
+        {
+            return await model.getChatroomsByTopic(topic);
+        }
     }
 }

@@ -30,5 +30,7 @@ namespace Application.Models
         public Task EditAccount(Account account);
         public void removeTopicFromUser(string userId, string topic);
         public void addTopicToUser(string userId, string topic);
+
+        public Task<List<Chatroom>> getChatroomsByTopic(string topic);
     }
 }

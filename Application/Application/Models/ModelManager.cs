@@ -135,5 +135,10 @@ namespace Application.Models
         {
             chatServiceImp.addTopicToUser(userId, topic);
         }
+
+        public async Task<List<Chatroom>> getChatroomsByTopic(string topic)
+        {
+           return await chatServiceImp.requestChatroomsByTopic(topic);
+        }
     }
 }

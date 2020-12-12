@@ -257,10 +257,7 @@ namespace Application.SCMediator
                 List<Chatroom> chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(upsdelivery.SpecificOrder);
                 return chatrooms;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public async Task AddFriend(List<User> users)
@@ -274,6 +271,28 @@ namespace Application.SCMediator
             await Send(commandLine);
         }
 
+
+        public async Task<List<Chatroom>> requestChatroomsByTopic(string topic)
+        {
+            CommandLine commandLine = new CommandLine
+            {
+                Command = "ChatroomsByTopic",
+                SpecificOrder = topic
+            };
+            await Send(commandLine);
+            byte[] dataFromServer = new byte[4048];
+            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
+            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
+            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+            if (upsdelivery.Command.Equals("ChatroomsByTopic"))
+            {
+                Console.Out.WriteLine(upsdelivery.SpecificOrder);
+                List<Chatroom> chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(upsdelivery.SpecificOrder);
+                return chatrooms;
+            }
+
+            return null;
+        }
         /*public async Task<List<Topic>> requestTopics()
         {
             CommandLine command = new CommandLine {Command = "REQUEST-Topic-ALL"};
