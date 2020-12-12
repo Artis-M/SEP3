@@ -284,13 +284,10 @@ public class ChatroomDAOImpl implements ChatroomDAO {
        Topic topicObject = topicDAO.getTopic(topic);
         participant.append("topics",new ObjectId(topicObject.get_id()));
         whereQuery.append("topics", participant);
-        System.out.println(topicObject.toString());
         MongoCursor<Document> documents = collection.find(whereQuery).iterator();
-        System.out.println("DOCUMENT " + documents.hasNext());
         while (documents.hasNext()) {
             Document json = documents.next();
             Chatroom room = createChatroom(json);
-            System.out.println("CHATROOM \n" + room);
             chatRooms.add(room);
         }
         System.out.println(chatRooms.size());

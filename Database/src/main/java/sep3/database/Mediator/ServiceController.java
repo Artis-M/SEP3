@@ -64,9 +64,9 @@ public class ServiceController implements Runnable
 
 
                 CommandLine requestCommand = gson.fromJson(request, CommandLine.class);
-                System.out.println(requestCommand.getSpecificOrder());
+               // System.out.println(requestCommand.getSpecificOrder());
                 CommandLine responseCommand = new CommandLine();
-                System.out.println(requestCommand.getCommand());
+               // System.out.println(requestCommand.getCommand());
                 if (requestCommand.getCommand().equals("REQUEST-UserCredentials"))
                 {
 
@@ -74,7 +74,7 @@ public class ServiceController implements Runnable
                     CommandLine commandLine1 = new CommandLine();
                     String response = gson.toJson(userDAO.getAllAccount());
                     commandLine1.setSpecificOrder(response);
-                    System.out.println(response);
+                   // System.out.println(response);
                     commandLine1.setCommand("UserCredentials");
                     String sendBack = gson.toJson(commandLine1);
                     byte[] responseAsBytes = sendBack.getBytes();
@@ -84,6 +84,7 @@ public class ServiceController implements Runnable
                 {
 
                     String response = gson.toJson(userDAO.getAccount(requestCommand.getVariableUser()));
+                    System.out.println(response);
                     responseCommand.setSpecificOrder(response);
                     responseCommand.setCommand("OneUserCredential");
                     String sendBack = gson.toJson(responseCommand);
@@ -148,9 +149,9 @@ public class ServiceController implements Runnable
                 else if(requestCommand.getCommand().equals("AddFriends")){
                     Type type = new TypeToken<ArrayList<User>>() {}.getType();
                     ArrayList<User> specificOrder = gson.fromJson(requestCommand.getSpecificOrder(), type);
-                    System.out.println(specificOrder);
-                    System.out.println( specificOrder.get(0));
-                    System.out.println( specificOrder.get(1));
+                   // System.out.println(specificOrder);
+                   // System.out.println( specificOrder.get(0));
+                   // System.out.println( specificOrder.get(1));
                     User user1 = specificOrder.get(0);
                     User user2 = specificOrder.get(1);
                     userDAO.addFriend(user1.get_id(), user2.get_id());
@@ -159,11 +160,11 @@ public class ServiceController implements Runnable
                 else if(requestCommand.getCommand().equals("ChatroomNew")){
 
                     Chatroom chatroom = gson.fromJson(requestCommand.getSpecificOrder(),Chatroom.class);
-                    System.out.println();
+                   // System.out.println();
                     chatroomDAO.AddChatroom(chatroom);
                 }
                 else if(requestCommand.getCommand().equals("DELETE-User")){
-                    System.out.println(requestCommand.getSpecificOrder());
+                   // System.out.println(requestCommand.getSpecificOrder());
                     userDAO.deleteAccount(requestCommand.getSpecificOrder());
                     userDAO.deleteFriendFromUsers(requestCommand.getSpecificOrder());
                     chatroomDAO.deleteUserFromChatrooms(requestCommand.getSpecificOrder());
@@ -172,20 +173,20 @@ public class ServiceController implements Runnable
                 else if(requestCommand.getCommand().equals("UserUpdate"))
                 {
                     Account account = gson.fromJson(requestCommand.getSpecificOrder(),Account.class);
-                    System.out.println(account);
+                    //System.out.println(account);
                     userDAO.EditAccount(account);
                 }
                 else if(requestCommand.getCommand().equals("AddTopicToUser"))
                 {
-                    System.out.println("Topic added " + requestCommand.getSpecificOrder());
-                    System.out.println("User "  + requestCommand.getVariableUser());
+                   // System.out.println("Topic added " + requestCommand.getSpecificOrder());
+                   // System.out.println("User "  + requestCommand.getVariableUser());
                     userDAO.addTopicToUser(requestCommand.getSpecificOrder(),requestCommand.getVariableUser());
 
                 }
                 else if(requestCommand.getCommand().equals("removeTopicFromUser"))
                 {
-                    System.out.println("Topic removed " + requestCommand.getSpecificOrder());
-                    System.out.println("User "  + requestCommand.getVariableUser());
+                    //System.out.println("Topic removed " + requestCommand.getSpecificOrder());
+                   // System.out.println("User "  + requestCommand.getVariableUser());
                     userDAO.removeUserTopic(requestCommand.getSpecificOrder(),requestCommand.getVariableUser());
 
                 }
@@ -195,7 +196,7 @@ public class ServiceController implements Runnable
 
                     String response = gson.toJson(chatroomDAO.getChatroomsByTopic(requestCommand.getSpecificOrder()));
                     responseCommand.setSpecificOrder(response);
-                    System.out.println(response);
+                   // System.out.println(response);
                     responseCommand.setCommand("ChatroomsByTopic");
                     String sendBack = gson.toJson(responseCommand);
                     byte[] responseAsBytes = sendBack.getBytes();

@@ -103,9 +103,10 @@
             updatedAccount = JsonSerializer.Deserialize<Account>(userAsJson);
         }
         defaultUsername = updatedAccount.Username;
+        Console.Out.WriteLine(updatedAccount.Username);
         Account check =  await AccountService.getUser(updatedAccount.Username);
         updatedAccount.Pass = "";
-        Console.Out.WriteLine(check.topics.Count);
+        StateHasChanged();
         if (check.topics != null)
         {
             topics = check.topics;
@@ -119,7 +120,7 @@
         error = "Username already in use";
         try
         {
-            Account check =  await AccountService.getUser(updatedAccount.Username);
+             await AccountService.getUser(updatedAccount.Username);
             if (updatedAccount.Username == defaultUsername)
             {
                 error = "";
@@ -144,7 +145,7 @@
 
     private  void addTopic()
     {
-          AccountService.addTopicToProfile(topic,updatedAccount._id);
+        AccountService.addTopicToProfile(topic,updatedAccount._id);
         if (topic != null || topic.Length>0)
         {
             topicError = "";
@@ -155,6 +156,7 @@
             topicError = "Topic field is empty";
         }
         topic = "";
+        StateHasChanged();
     }
 
     private void removeTopic()
@@ -184,6 +186,7 @@
         topics = removed;
         AccountService.removeTopicFromProfile(topic,updatedAccount._id);
         topic = "";
+        StateHasChanged();
     }
 
     private void backToMenu()

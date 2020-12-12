@@ -49,7 +49,7 @@
             <div>
                 <h3>Chatrooms by topic</h3>
             </div>
-            <div>
+            <div class="flex-row d-flex">
                 @if (topics == null|| topics.Count==0)
                 {
                     <p>You don't have any topics</p>
@@ -57,23 +57,30 @@
                 }
                 else
                 {
-                    <select class="form-control selectpicker" @bind="@filterOption" style="width: 100px">
-                        @foreach (var item in storedUser.topics)
+                    <select class="form-control selectpicker" @bind="@filterOption" style="width: 200px;margin-right: 20px">
+                        @foreach (var item in topics)
                         {
                             <option>@item.name</option>
                         }
                     </select>
-                    <button @onclick="@FilterChats">Search</button>
+                    <button @onclick="@FilterChats" class="chatroomSearch">Search</button>
                 }
                 
             </div>
-            <div>
+            <div class="filteredChatrooms">
                 @if (filtered.Count > 0)
                 {
                     @foreach (var chatroom in filtered)
                     {
-                        @chatroom.name
-                        <button @onclick="@JoinChatroom"> Join</button>
+                        if (verifyIfUserParticipant(chatroom))
+                        {
+                            <div class="filteredRoom">
+                                <p class="align-self-center">
+                                    @chatroom.name
+                                </p>
+                                <button @onclick="@JoinChatroom"> Join</button>
+                            </div>
+                        }
                     }
                 }
             </div>
@@ -191,7 +198,23 @@
         Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
         Account user = await AccountService.getUser(storedUser.Username);
         topics = user.topics;
+        Console.Out.WriteLine(topics.Count);
+        Console.Out.WriteLine(storedUser._id);
 
+    }
+
+    private bool verifyIfUserParticipant(Chatroom chatroom)
+    {
+        bool check = true;
+        
+        foreach (var participant in chatroom.participants)
+        {
+            if (participant._id.Equals(storedUser._id))
+            {
+                check = false;
+            }
+        }
+        return check;
     }
 
     private async void FilterChats()
@@ -199,7 +222,9 @@
         try
         {
             
-            filtered =  await ChatroomService.getChatroomByTopic(filterOption);
+            filtered = await ChatroomService.getChatroomByTopic(filterOption);
+            StateHasChanged();
+            
 
         }
         catch (Exception e)

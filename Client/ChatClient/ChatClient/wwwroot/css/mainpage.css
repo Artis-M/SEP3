@@ -15,6 +15,79 @@
     margin-top: 25px;
     margin-bottom: 25px;
 }
+.chatroomSearch {
+    border-radius: 10px;
+    outline: none;
+    width: 70px;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #0B9EF0;
+    color: #fff;
+    height: 33px;
+
+}
+
+.chatroomSearch:hover{
+
+    color:#0B9EF0;
+    border-style: solid;
+    background-color: #b0d8ee;
+}
+.chatroomSearch:active{
+    outline: none;
+    border:1px solid #0B9EF0;
+    color:#0B9EF0;
+    background-color: #b0d8ee;
+}
+.filteredChatrooms {
+    margin-top: 15px;
+    height: 230px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+.filteredRoom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+
+}
+.filteredRoom button
+{
+    margin-right: 15px;
+    border-radius: 10px;
+    outline: none;
+    width: 70px;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #fff;
+    height: 33px;
+    background-color: #51CD5D;
+}
+.filteredRoom button:hover{
+
+    color:#51CD5D;
+    border-style: solid;
+    background-color: #baf2bb;
+}
+.filteredRoom button:active{
+    border:1px solid #51CD5D;
+    color:#51CD5D;
+    background-color: #baf2bb;
+}
+.filteredRoom p{
+    margin: 0 20px 0 0;
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.chatroomSearch:focus
+{
+    outline:none;
+}
 .userProfile {
     display: flex;
     align-content: center;
