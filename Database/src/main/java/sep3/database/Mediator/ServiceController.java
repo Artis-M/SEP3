@@ -145,6 +145,7 @@ public class ServiceController implements Runnable
                 }
                 else if(requestCommand.getCommand().equals("AddFriends")){
                     ArrayList<User> specificOrder = gson.fromJson(requestCommand.getSpecificOrder(),ArrayList.class);
+                    System.out.println(specificOrder);
                     User user1 = specificOrder.get(0);
                     User user2 = specificOrder.get(1);
                     userDAO.addFriend(user1.get_id(), user2.get_id());

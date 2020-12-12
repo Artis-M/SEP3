@@ -107,7 +107,7 @@
                                 }
                             </div>
                             <div class="chatBox">
-                                <input type="text" @bind="@messageText"/>
+                                <input type="text" @onkeyup="@KeyDown" @bind:event="oninput" @bind="@messageText"/>
                             </div>
                         </div>
                     </div>
