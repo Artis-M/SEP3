@@ -28,7 +28,6 @@
                         Username: <br/>
                         <InputText @bind-Value="updatedAccount.Username"/>
                         <div class="validate_div validate_div_username">
-                            <ValidationMessage For="@(() => error)"/>
                             <ValidationMessage For="@(() => updatedAccount.Username)"/>
                         </div>
                     </div>
@@ -62,6 +61,7 @@
 
                         <InputText type="text" class="topicInput" rows="1"cols="50" @bind-Value="@topic"/>
                     </div>
+                    <p class="topicError">@topicError</p>
                     <div class="topicButtons">
                         <button @onclick="@addTopic" class="addTopic">Add</button>
                         <button @onclick="@removeTopic" class="removeTopic">Remove</button>
@@ -77,6 +77,7 @@
                     </ul>
                 </div>
             </div>
+            <p class="editError">@error</p>
             <div class="UpdateButtonDiv">
                 <button type="submit">Update</button>
             </div>
@@ -93,6 +94,7 @@
     private string error = "";
     private string topic = "";
     private string defaultUsername = "";
+    private string topicError = "";
     protected override async Task OnInitializedAsync()
     {
         string userAsJson = await JsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
@@ -101,8 +103,14 @@
             updatedAccount = JsonSerializer.Deserialize<Account>(userAsJson);
         }
         defaultUsername = updatedAccount.Username;
+        Account check =  await AccountService.getUser(updatedAccount.Username);
         updatedAccount.Pass = "";
-       // topics = updatedAccount.topics;
+        Console.Out.WriteLine(check.topics.Count);
+        if (check.topics != null)
+        {
+            topics = check.topics;
+        }
+
         Console.Out.WriteLine(updatedAccount._id);
     }
 
@@ -134,30 +142,46 @@
         
     }
 
-    private void addTopic()
+    private  void addTopic()
     {
-        Console.Out.WriteLine(topics==null);
-        AccountService.addTopicToProfile(topic,updatedAccount._id);
-       topics.Add(new Topic(topic));
+          AccountService.addTopicToProfile(topic,updatedAccount._id);
+        if (topic != null || topic.Length>0)
+        {
+            topicError = "";
+            topics.Add(new Topic(topic));
+        }
+        else
+        {
+            topicError = "Topic field is empty";
+        }
         topic = "";
     }
 
     private void removeTopic()
     {
+        topicError = "";
+        List<Topic> removed = topics;
+        int countRemoved = 0;
         try
         {
-            foreach (var topic1 in topics)
+            foreach (var topic1 in removed)
             {
-                if (topic1.name.Equals(topic))
+                if (topic1.name.ToLower().Equals(topic.ToLower()))
                 {
-                    topics.Remove(topic1);
+                    removed.Remove(topic1);
+                    countRemoved++;
                 }
+            }
+            if (countRemoved == 0)
+            {
+                topicError = "Topic is not in the list";
             }
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
         }
+        topics = removed;
         AccountService.removeTopicFromProfile(topic,updatedAccount._id);
         topic = "";
     }

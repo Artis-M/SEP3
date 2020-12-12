@@ -46,12 +46,13 @@
 }
 .SignUpForm h3 {
     margin-top: 15px;
+    padding: 0px;
 }
 
 .SignUpForm .validate_div
 {
     height: 18px;
-    margin-bottom: 7px;
+    margin-bottom: 5px;
 }
 .SignUpForm input{
     border-radius: 5px;

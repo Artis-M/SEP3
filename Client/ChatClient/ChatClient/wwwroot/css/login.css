@@ -34,9 +34,11 @@
 .loginWrapper h3{
     text-align: center;
     margin-top: 50px;
+    padding:0;
 }
 .loginWrapper label {
     width: 202px;
+    font-weight: 300;
     margin:10px 0 0 0;
 }
 .loginWrapper button
@@ -56,11 +58,17 @@
     color:red;
     font-size: 14px;
     width: 235px;
+    text-align: center;
 }
 .LoginButton:hover{
-    border-color:#0B9EF0;
+
     color:#0B9EF0;
     border-style: solid;
+    background-color: #b0d8ee;
+}
+.LoginButton:active{
+    border:1px solid #0B9EF0;
+    color:#0B9EF0;
     background-color: #b0d8ee;
 }
 

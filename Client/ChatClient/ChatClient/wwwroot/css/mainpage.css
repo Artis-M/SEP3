@@ -13,7 +13,7 @@
 .ProfileText{
     text-align: center;
     margin-top: 25px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .userProfile {
     display: flex;
@@ -42,7 +42,7 @@
     border-radius: 10px;
     outline: none;
     margin: 5px 0px 15px 10px;
-    width: 400px;
+    width: 350px;
     border-width: 0px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     color: #fff;
@@ -93,8 +93,8 @@
     padding: 20px;
 }
 .chatrooms{
-    width: 550px;
-    height: 720px;
+    width: 350px;
+    height: 670px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -110,8 +110,8 @@
     margin-top:20px;
 }
 .friends{
-    width: 400px;
-    height: 620px;
+    width: 350px;
+    height: 584px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
