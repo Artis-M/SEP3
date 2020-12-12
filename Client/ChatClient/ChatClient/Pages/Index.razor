@@ -29,18 +29,21 @@
                                         <div class="username">
                                             <img class="img-fluid chatProfileImage" src="https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg"/>
                                             @item.Username
-                                            <div style="float: right;" class="btn-group dropright justify-content-end">
-                                                <button type="button" class="optionsButton dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    ...
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <button type="button" class="btn-sm" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
-                                                    @if (currentChatroom.owner.Equals(user._id) || user.role.Equals("admin"))
-                                                    {
-                                                        <button type="button" class="menuButton" @onclick="(() => RemoveFromChatroom(item._id))">kick User</button>
-                                                    }
-                                                </div>
-                                            </div>
+                                            @if (!(item._id.Equals(user._id)))
+                                            {
+                                                <div style="float: right;" class="btn-group dropright justify-content-end">
+                                                    <button type="button" class="optionsButton dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        ...
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <button type="button" class="btn-sm" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
+                                                        @if (currentChatroom.owner.Equals(user._id) || user.role.Equals("admin"))
+                                                        {
+                                                            <button type="button" class="menuButton" @onclick="(() => RemoveFromChatroom(item._id))">kick User</button>
+                                                        }
+                                                    </div>
+                                                </div>  
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -50,6 +53,7 @@
                             }
                         }
                     }
+                    <button class="backButton" @onclick="BackToHub">Back to Hub</button>
                     <button class="leaveButton" @onclick="LeaveChatroom">Leave Chatroom</button>
                 </div>
             </div>
@@ -148,7 +152,18 @@
 
     public async Task AddFriend(string userID)
     {
-        await AccountService.AddFriend(userID);
+        await AccountService.AddFriend(userID, user);
+    }
+
+    public async Task BackToHub()
+    {
+        currentChatroom = null;
+        isConnectedToChatRoom = false;
+        await chatroomService.RemoveCurrentChatroom();
+        await chatService.DisconnectFromHub();
+        MessageFragments = new List<MessageFragment>();
+        Messages = new List<Message>();
+        Nav.NavigateTo("main");
     }
 
     public async void ChatroomUpdate(Chatroom chatroom)
@@ -156,11 +171,19 @@
         currentChatroom = chatroom;
         if (chatroom == null)
         {
-            Nav.NavigateTo("Main");
+            await BackToHub();
         }
         else
         {
-            await InvokeAsync(() => StateHasChanged());
+            foreach (var item in chatroom.participants)
+            {
+                if (item._id.Equals(user._id))
+                {
+                    await InvokeAsync(() => StateHasChanged());
+                    return;
+                }
+            }
+            await BackToHub();
         }
     }
 

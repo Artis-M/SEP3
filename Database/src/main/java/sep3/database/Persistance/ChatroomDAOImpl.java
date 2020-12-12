@@ -40,7 +40,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         room.setOwner(document.get("owner").toString());
         room.setType(document.get("type").toString());
         List<Document> messages = (List<Document>) document.get("messages");
-        if(messages.size()!=0) {
+        if(messages!=null) {
 
             for (var DBmessage : messages
             ) {

@@ -22,10 +22,10 @@
             <div>
                 <div class="AddchatroomField">
                     Topic name: <br/>
-                    <InputText @bind-Value="_topic.name"/>
+                    <InputText @bind-Value="@topicName"/>
                 </div>
 
-                <button class="ChatroomAdding" type="submit" onclick="@AddTopic()">Add topic</button>
+                <button class="ChatroomAdding" onclick="@AddTopic()">Add topic</button>
 
             </div>
 
@@ -40,7 +40,8 @@
     private Chatroom newChatroom = new Chatroom();
     private Account storedUser = new Account();
     private List<Topic> Topics = new List<Topic>();
-    private Topic _topic = new Topic();
+
+    private string topicName = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -54,16 +55,24 @@
     private async Task AddNewChatRoom()
     {
         newChatroom.owner = storedUser._id;
-        newChatroom._id = new ObjectId().ToString();
+        ObjectId objectId = ObjectId.GenerateNewId();
+        newChatroom._id = objectId.ToString();
+        Console.Out.WriteLine(newChatroom._id);
         newChatroom.topics = Topics;
         newChatroom.participants.Add(storedUser);
         await ChatroomService.CreateChatRoom(newChatroom);
+        NavigationManager.NavigateTo("Main", true);
     }
 
     private async Task AddTopic()
     {
-        _topic._id = new ObjectId().ToString();
+        Topic _topic = new Topic
+        {
+            _id = ObjectId.GenerateNewId().ToString(),
+            name = topicName
+        };
         Topics.Add(_topic);
+        topicName = "";
     }
 
 }

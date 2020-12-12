@@ -38,6 +38,17 @@
     height: 66px;
     background-color: #0B9EF0;
 }
+.logoutButton{
+    border-radius: 10px;
+    outline: none;
+    margin: 5px 0px 15px 10px;
+    width: 400px;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #fff;
+    height: 66px;
+    background-color: #c12727;
+}
 
 
 .buttons button {
@@ -100,7 +111,7 @@
 }
 .friends{
     width: 400px;
-    height: 720px;
+    height: 620px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

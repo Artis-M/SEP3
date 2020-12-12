@@ -195,7 +195,7 @@ public class UserDAOImpl implements UserDAO
         ObjectId currentUser = new ObjectId(userId);
         newDocument.append("$push", new BasicDBObject().append("friends", friendId));
         BasicDBObject searchQuery = new BasicDBObject();
-        searchQuery.append("_id", userId);
+        searchQuery.append("_id", currentUser);
         collection.updateOne(searchQuery, newDocument);
 
 

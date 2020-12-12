@@ -63,6 +63,11 @@
                         }
                     </select>
                 }
+                
+            </div>
+            <div>
+                <input type="text" @bind="@chatRoomID"/>
+                <button @onclick="@JoinChatroom">Join</button>
             </div>
         </div>
     </div>
@@ -150,7 +155,7 @@
             </div>
         </div>
         <div>
-            <button class="chatroomButton" @onclick="@((() => Logout()))">
+            <button class="logoutButton" @onclick="@((() => Logout()))">
                 Log out
             </button>
         </div>
@@ -163,6 +168,8 @@
     private int friendCount = 0;
     private List<Chatroom> Chatrooms = new List<Chatroom>();
     private List<Chatroom> filtered = new List<Chatroom>();
+    private string chatRoomID;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -171,10 +178,9 @@
         {
             storedUser = JsonSerializer.Deserialize<Account>(userAsJson);
         }
-        //Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
+        Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
 
-    //chatroomCount = Chatrooms.Count;
-    //friendCount = storedUser.friends.Count;
+
     }
 
     private void FilterChats(ChangeEventArgs args)
@@ -207,6 +213,11 @@
     {
         await ChatroomService.SetCurrentChatroom(id);
         NavigationManager.NavigateTo("");
+    }
+
+    private async Task JoinChatroom()
+    {
+        await ChatroomService.JoinChatRoom(chatRoomID,storedUser._id);
     }
 
     public async Task AddChatroom()

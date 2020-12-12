@@ -46,6 +46,15 @@ namespace Services
             return Chatrooms;
         }
 
+        /*public async Task<List<Chatroom>> GetAllChatrooms()
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+        }*/
+
+
         public async Task CreateChatRoom(Chatroom chatroom)
         {
             HttpClient http = new HttpClient
@@ -59,9 +68,16 @@ namespace Services
             http.PostAsync("add", content);
         }
 
-        public Task JoinChatRoom(string chatroomId)
+        public async Task JoinChatRoom(string chatroomId,string userID)
         {
-            throw new NotImplementedException();
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            string request = $"addUser/{chatroomId}";
+            
+            StringContent content = new StringContent(JsonSerializer.Serialize(userID), Encoding.UTF8,"application/json");
+            http.PatchAsync(request, content);
         }
 
         public async Task SetCurrentChatroom(string chatroomId)

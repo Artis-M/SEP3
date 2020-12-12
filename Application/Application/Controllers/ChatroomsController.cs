@@ -145,11 +145,12 @@ namespace Application.Controllers
         }
 
         [HttpPatch]
-        [Route("addUser/{id}")]
+        [Route("addUser/{chatRoomId}")]
         public async Task<ActionResult<Message>> JoinChatroom([FromBody] string userID, [FromRoute] string chatRoomId)
         {
             try
             {
+                Console.WriteLine($"{userID}, {chatRoomId}");
                 await chatroomService.AddUser(chatRoomId, userID);
                 Chatroom chatroom = await chatroomService.GetChatroomByID(chatRoomId);
                 await _hubContext.Clients.Group(chatRoomId).SendAsync("ReceiveChatroomUpdate", chatroom);
