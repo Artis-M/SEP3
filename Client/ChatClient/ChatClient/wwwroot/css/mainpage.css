@@ -236,10 +236,21 @@
     padding: 10px;
     margin: 10px;
 }
-
+.friend{
+    width: 300px;
+    margin-bottom: 15px;
+}
+.FriendsList
+{
+    height: 515px;
+    overflow: auto;
+}
 .friendName {
-    width: 190px;
+    width: 180px;
     margin: 0 10px 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .friendChatroom
 {
@@ -249,7 +260,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     color: #fff;
     height: 33px;
-    margin-left: 20px;
+    margin-left: 30px;
     background-color:#6a6dd4;
     width: 60px;
 }
@@ -286,7 +297,7 @@
 }
 .friendRemove:focus
 {
-    outline:none;
+    outline:none!important;
 }
 .arrange {
     display: flex;
