@@ -12,12 +12,22 @@
 .user{
     max-height: 50px;
     color:rgb(212, 212, 212);
+    height: auto;
 }
+.userScroll{
+    height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+.userScroll::-webkit-scrollbar {
+    display: none;
+}
+
 .usersidebar{
     background-color: #404040;
 }
 .user:nth-of-type(even){
-    background-color: #919191;
+    background-color: #555555;
 }
 .user:nth-of-type(odd){
     background-color: #333333;
@@ -27,10 +37,6 @@
     padding-left: 15px;
     overflow-x: hidden;
     background-color: rgb(85, 85, 85);
-}
-
-.user{
-    height: auto;
 }
 .optionsButton{
     margin: auto;
@@ -76,10 +82,6 @@
 }
 .messageBox::-webkit-scrollbar {
     display: none;
-}
-.example {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
 }
 .messageBox p{
     margin-left: 10pt;
@@ -127,7 +129,7 @@
 .backButton{
     margin: auto;
     height: 50px;
-    width: 105%;
+    width: 100%;
     border-width: 0px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     background-color: #70cf7e;

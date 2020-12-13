@@ -17,7 +17,7 @@
     <div class="row h-100">
         <div class="col-2">
             <div class="row h-100 d-flex align-items-end usersidebar no-gutters">
-                <div class="col-12">
+                <div class="col-12 userScroll">
                     @if (currentChatroom != null)
                     {
                         @foreach (var item in currentChatroom.participants)
@@ -33,7 +33,7 @@
                                             {
                                                 <div style="float: right;" class="btn-group dropright justify-content-end">
                                                     <button type="button" class="optionsButton dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        ...
+                                                        
                                                     </button>
                                                     <div class="dropdown-menu">
                                                         <button type="button" class="menuButton" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
