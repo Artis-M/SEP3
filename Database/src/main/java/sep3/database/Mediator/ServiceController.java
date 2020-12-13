@@ -58,7 +58,7 @@ public class ServiceController implements Runnable
             System.out.println("Client Connected");
             while (running)
             {
-                byte[] lenbytes = new byte[1024];
+                byte[] lenbytes = new byte[4048];
                 int read = inputStream.read(lenbytes, 0, lenbytes.length);
                 String request = new String(lenbytes, 0, read);
 

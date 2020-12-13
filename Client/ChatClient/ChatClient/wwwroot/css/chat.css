@@ -1,4 +1,3 @@
-
 .chatProfileImage{
     object-fit: cover;
     height: auto;
@@ -11,17 +10,23 @@
 }
 
 .user{
-        padding: auto;
-        height: 90vh;
+    max-height: 50px;
+    color:rgb(212, 212, 212);
 }
 .usersidebar{
-    background-color: #919191;
+    background-color: #404040;
 }
 .user:nth-of-type(even){
     background-color: #919191;
 }
 .user:nth-of-type(odd){
-    background-color: #525252;
+    background-color: #333333;
+}
+.container-fluid.h-100 {
+    padding-right: 15px;
+    padding-left: 15px;
+    overflow-x: hidden;
+    background-color: rgb(85, 85, 85);
 }
 
 .user{
@@ -48,11 +53,76 @@
 .leaveButton{
     margin: auto;
     height: 50px;
-    width: 105%;
+    width: 100%;
     border-width: 0px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     background-color: #c03333;
     color: #fff;
+}
+.chatroomTitle{
+    font-size: 25pt;
+    font-weight: bold;
+}
+.titlebar{
+    background-color: #7a7a7a;
+    height: 10%;
+}
+.messageBox{
+    overflow-y: auto;
+    height: 100%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+}
+.messageBox::-webkit-scrollbar {
+    display: none;
+}
+.example {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.messageBox p{
+    margin-left: 10pt;
+    margin-right: 10pt;
+    padding-right: 5pt;
+    padding-left: 10pt;
+    border-radius: 10px;
+    color: rgb(212, 212, 212);
+    background-color: rgb(39, 39, 39);
+
+}
+.messageFragmentBox::-webkit-scrollbar {
+    display: none;
+}
+.messageFragmentBox{
+    overflow-y: auto;
+    height: 100%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.messageFragmentBox p{
+    margin-left: 10pt;
+    margin-right: 10pt;
+    padding-right: 5pt;
+    padding-left: 10pt;
+    border-radius: 10px;
+    color: rgb(212, 212, 212);
+    background-color: rgb(77, 136, 101);
+}
+.chatBox{
+    display: flex;
+    justify-content: center;
+    margin-left: 10pt;
+    margin-right: 10pt;
+}
+.chatInput{
+    border-radius: 10px;
+    height: auto;
+    height: 60px;
+    width: 85%;
+    background-color: rgb(114, 114, 114);
+    color:rgb(212, 212, 212);
 }
 .backButton{
     margin: auto;
@@ -63,22 +133,13 @@
     background-color: #70cf7e;
     color: #fff;
 }
-.btn-group{
-    padding: auto;
-    margin-right: -5%;
-}
-.chatroomTitle{
-    font-size: 25pt;
-    font-weight: bold;
-}
-.titlebar{
-    background-color: #808080;
-}
-.messageBox{
-    overflow-y: scroll;
-
-}
-.messageFragmentBox{
-    height: max-content;
-    overflow-y: scroll;
+.sendButton{
+    margin: auto;
+    height: 50px;
+    width: 10%;
+    border-width: 0px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color:rgb(77, 136, 101);
+    color: #fff;
 }
