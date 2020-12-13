@@ -128,7 +128,7 @@
 </div>
 <div class="arrange">
 
-    <div class="friends">
+    <div class="friendsWrapper">
         <div>
             <h3>Friends</h3>
         </div>
@@ -148,21 +148,22 @@
             }
             else
             {
-                <table class="table">
-                    <tbody>
+                
+                <div class="FriendsList">
                     @foreach (var item in storedUser.friends)
                     {
-                        <tr>
-                            <td>@item.Username</td>
-                            <td>
-                                <button @onclick="@((() => RemoveFriend(item._id)))">
-                                    <i class="oi oi-minus" style="color: black"/>
-                                </button>
-                            </td>
-                        </tr>
+                        
+                        <div class="friend d-flex flex-row" >
+                            <h5 class="align-self-center friendName">@item.Fname @item.Lname</h5>
+                            <button class="friendRemove" @onclick="@((() => RemoveFriend(item._id)))">
+                                <i class="oi oi-minus" />
+                            </button>
+                            <button class="friendChatroom" >
+                                                    chat
+                                                </button>
+                        </div>
                     }
-                    </tbody>
-                </table>
+                    </div>
             }
         </div>
     </div>

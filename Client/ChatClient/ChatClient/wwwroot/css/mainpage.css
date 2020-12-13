@@ -225,7 +225,7 @@
 {
     margin-bottom: 15px;
 }
-.friends{
+.friendsWrapper{
     width: 350px;
     height: 584px;
     display: flex;
@@ -237,7 +237,57 @@
     margin: 10px;
 }
 
+.friendName {
+    width: 190px;
+    margin: 0 10px 0 0;
+}
+.friendChatroom
+{
+    border-radius: 10px;
+    outline: none;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #fff;
+    height: 33px;
+    margin-left: 20px;
+    background-color:#6a6dd4;
+    width: 60px;
+}
+.friendChatroom:hover {
+    color:#6a6dd4;
+    border-style: solid;
+    background-color: #d4d3fc;
+}
+.friendChatroom:active {
+    outline: none;
+    border:1px solid #6a6dd4;
+    color:#6a6dd4;
+    background-color: #d4d3fc;
+}
+.friendRemove {
+    border-radius: 20px;
+    background-color: #D32240;
+    border: none;
+    width: 33px;
+    height: 33px;
+    color:#fff;
+    
+}
 
+.friendRemove:hover
+{
+    background-color: #fab9be;
+    color:#D32240;
+}
+.friendRemove:active{
+    border:1px solid #D32240;
+    background-color: #fab9be;
+    color:#D32240;
+}
+.friendRemove:focus
+{
+    outline:none;
+}
 .arrange {
     display: flex;
     align-content: center;
@@ -251,11 +301,3 @@
     flex-direction: row;
 }
 
-.editProfile {
-
-}
-
-.deleteProfile {
-
-
-}
