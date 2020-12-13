@@ -134,13 +134,13 @@
         </div>
         <div>
 
-            @if (storedUser.friends == null)
+            @if (friends == null)
             {
                 <p>
                     <em>Loading...</em>
                 </p>
             }
-            else if (!storedUser.friends.Any())
+            else if (!friends.Any())
             {
                 <p>
                     <em>No friends, chat and make some!</em>
@@ -150,9 +150,8 @@
             {
                 
                 <div class="FriendsList">
-                    @foreach (var item in storedUser.friends)
+                    @foreach (var item in friends)
                     {
-                        
                         <div class="friend d-flex flex-row" >
                             <h5 class="align-self-center friendName">@item.Fname @item.Lname</h5>
                             <button class="friendRemove" @onclick="@((() => RemoveFriend(item._id)))">
@@ -187,6 +186,7 @@
     private List<Topic> topics = new List<Topic>();
     private string filterError="";
     private int filterCount = 0;
+    private List<User> friends = new List<User>();
 
 
     protected override async Task OnInitializedAsync()
@@ -199,6 +199,7 @@
         Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
         Account user = await AccountService.getUser(storedUser.Username);
         topics = user.topics;
+        friends = user.friends;
 
     }
 
@@ -282,6 +283,15 @@
 
     public async Task RemoveFriend(string id)
     {
+        foreach (var friend in friends.ToArray())
+        {
+            if (friend._id.Equals(id))
+            {
+                friends.Remove(friend);
+            }
+        }
+        await AccountService.removeFriend(storedUser._id, id);
+       // StateHasChanged();
     }
 
     public async Task EditProfile()

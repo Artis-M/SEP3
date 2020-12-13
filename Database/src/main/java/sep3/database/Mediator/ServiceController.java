@@ -149,13 +149,16 @@ public class ServiceController implements Runnable
                 else if(requestCommand.getCommand().equals("AddFriends")){
                     Type type = new TypeToken<ArrayList<User>>() {}.getType();
                     ArrayList<User> specificOrder = gson.fromJson(requestCommand.getSpecificOrder(), type);
-                   // System.out.println(specificOrder);
-                   // System.out.println( specificOrder.get(0));
-                   // System.out.println( specificOrder.get(1));
+
                     User user1 = specificOrder.get(0);
                     User user2 = specificOrder.get(1);
                     userDAO.addFriend(user1.get_id(), user2.get_id());
                     userDAO.addFriend(user2.get_id(),user1.get_id());
+                }
+                else if(requestCommand.getCommand().equals("removeFriend"))
+                {
+                    userDAO.removeFriend(requestCommand.getVariableUser(),requestCommand.getSpecificOrder());
+
                 }
                 else if(requestCommand.getCommand().equals("ChatroomNew")){
 

@@ -13,7 +13,7 @@ public interface UserDAO {
     User getUser(String userID);
     ArrayList<User> getUserFriends(String userId);
     void addFriend(String friend,String userId);
-    void removeFriend(User user,String userId);
+    void removeFriend(String user,String friendId);
     void addTopicToUser(String Topic,String userId);
     void removeUserTopic(String Topic,String userId);
     void addAccount(Account account);

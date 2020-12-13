@@ -189,6 +189,9 @@ namespace Application.Controllers
             }
         }
 
+       
+        
+        
         [HttpPatch]
         [Route("removeUser/{chatRoomId}")]
         public async Task<ActionResult<Message>> LeaveChatroom([FromBody] string userID, [FromRoute] string chatRoomId)

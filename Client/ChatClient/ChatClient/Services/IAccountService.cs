@@ -16,5 +16,6 @@ namespace Services
         public Task removeTopicFromProfile(string topic, string userId);
         public Task editProfile(Account account);
         Task<Account> getUser(string username);
+        public Task removeFriend(string userId, string friendId);
     }
 }

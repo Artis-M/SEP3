@@ -21,5 +21,6 @@ namespace Application.Services
         public Task EditAccount(Account account);
         public Task removeTopicFromUser(string userId, string topic);
         public Task addTopicToUser(string userId, string topic);
+        public Task removeFriend(string userId, string friendId);
     }
 }

@@ -32,5 +32,6 @@ namespace Application.Models
         public void addTopicToUser(string userId, string topic);
 
         public Task<List<Chatroom>> getChatroomsByTopic(string topic);
+        public Task removeFriend(string userId, string friendId);
     }
 }

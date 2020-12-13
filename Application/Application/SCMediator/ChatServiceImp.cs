@@ -135,7 +135,7 @@ namespace Application.SCMediator
             CommandLine command = new CommandLine {Command = "DELETE-Chatroom", SpecificOrder = chatroomID};
             await Send(command);
         }
-
+        
         public async Task DeleteUser(string userID)
         {
             CommandLine command = new CommandLine {Command = "DELETE-User", variableUser = userID};
@@ -270,6 +270,20 @@ namespace Application.SCMediator
             };
             await Send(commandLine);
         }
+        
+        public async Task removeFriend(string userId,string friendId)
+        {
+            
+            CommandLine commandLine = new CommandLine
+            {
+                Command = "removeFriend",
+                variableUser = userId,
+                SpecificOrder = friendId
+            };
+            Console.Out.WriteLine($"remove {friendId} from {userId}");
+            await Send(commandLine);
+        }
+        
 
 
         public async Task<List<Chatroom>> requestChatroomsByTopic(string topic)

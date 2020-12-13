@@ -169,6 +169,21 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+        [HttpPatch]
+        [Route("user/removeFriend/{userId}")]
+        public async Task<ActionResult> removeFriend([FromRoute] string userId, [FromBody] string friendId)
+        {
+            try
+            {
+                await AccountService.removeFriend(userId, friendId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
 
         [HttpPatch]
         [Route("editAccount")]

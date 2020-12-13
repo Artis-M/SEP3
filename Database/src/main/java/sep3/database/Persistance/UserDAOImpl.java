@@ -202,12 +202,14 @@ public class UserDAOImpl implements UserDAO
     }
 
     @Override
-    public void removeFriend(User user, String userId)
+    public void removeFriend(String user, String friendId)
     {
-        ObjectId user_id = new ObjectId(user.get_id());
-        BasicDBObject update = new BasicDBObject("friends", user_id);
+        ObjectId friend_id = new ObjectId(friendId);
+        BasicDBObject update = new BasicDBObject("friends", friend_id);
         BasicDBObject searchQuery = new BasicDBObject();
+        ObjectId userId = new ObjectId(user);
         searchQuery.append("_id", userId);
+        System.out.println("REmove " + friendId + " FROM " + user);
         collection.updateOne(searchQuery, new BasicDBObject("$pull", update));
     }
 

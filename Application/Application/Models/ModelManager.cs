@@ -140,5 +140,10 @@ namespace Application.Models
         {
            return await chatServiceImp.requestChatroomsByTopic(topic);
         }
+
+        public async Task removeFriend(string userId, string friendId)
+        {
+            await chatServiceImp.removeFriend(userId, friendId);
+        }
     }
 }

@@ -95,5 +95,10 @@ namespace Application.Services
         {
             model.addTopicToUser(userId,topic);
         }
+
+        public async Task removeFriend(string userId, string friendId)
+        {
+            await model.removeFriend(userId, friendId);
+        }
     }
 }

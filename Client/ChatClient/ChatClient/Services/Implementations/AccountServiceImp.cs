@@ -97,6 +97,18 @@ namespace Services
             Console.WriteLine(responseMessage.ToString());
         }
 
+        public async Task removeFriend(string userId, string friendId)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            string request = $"user/removeFriend/{userId}";
+            StringContent content =
+                new StringContent(JsonSerializer.Serialize(friendId), Encoding.UTF8, "application/json");
+            await http.PatchAsync(request, content);
+        }
+        
         public async Task AddFriend(string UserID, Account userAccount)
         {
             HttpClient http = new HttpClient
@@ -124,7 +136,6 @@ namespace Services
             List<User> twoFriends = new List<User>();
             twoFriends.Add(targetUser);
             twoFriends.Add(theOneThatsAdding);
-            Console.WriteLine(JsonSerializer.Serialize(twoFriends));
             StringContent content =
                 new StringContent(JsonSerializer.Serialize(twoFriends), Encoding.UTF8, "application/json");
             request = $"addFriend";
