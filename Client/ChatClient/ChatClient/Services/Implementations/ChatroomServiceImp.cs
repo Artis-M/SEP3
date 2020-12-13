@@ -78,9 +78,9 @@ namespace Services
                 BaseAddress = new Uri(uri)
             };
             string request = $"addUser/{chatroomId}";
-            
+            Console.Out.WriteLine($"{chatroomId},{userID}");
             StringContent content = new StringContent(JsonSerializer.Serialize(userID), Encoding.UTF8,"application/json");
-            http.PatchAsync(request, content);
+            await http.PatchAsync(request, content);
         }
 
         public async Task SetCurrentChatroom(string chatroomId)

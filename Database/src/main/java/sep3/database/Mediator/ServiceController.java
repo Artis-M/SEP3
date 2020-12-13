@@ -129,7 +129,7 @@ public class ServiceController implements Runnable
 
                 } else if (requestCommand.getCommand().equals("JOIN-Chatroom"))
                 {
-
+                    System.out.println("JOIN CHATROOM");
                     String userId = requestCommand.getVariableUser();
                     String chatroomId = requestCommand.getVariableChatroom();
                     chatroomDAO.joinChatroom(userId, chatroomId);

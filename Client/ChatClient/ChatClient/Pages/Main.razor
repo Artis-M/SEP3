@@ -78,7 +78,7 @@
                             <p class="align-self-center">
                                 @chatroom.name
                             </p>
-                            <button @onclick="@JoinChatroom"> Join</button>
+                            <button @onclick="@(() => { JoinChatroom(chatroom._id);})"> Join</button>
                         </div>
                     }
                 }
@@ -267,9 +267,11 @@
         NavigationManager.NavigateTo("");
     }
 
-    private async Task JoinChatroom()
+    private async Task JoinChatroom(string id)
     {
-        await ChatroomService.JoinChatRoom(chatRoomID, storedUser._id);
+        await ChatroomService.JoinChatRoom(id, storedUser._id);
+        Console.Out.WriteLine($"CHATROOOOM : : : {id}");
+        await EnterChatroom(id);
     }
 
     public async Task AddChatroom()

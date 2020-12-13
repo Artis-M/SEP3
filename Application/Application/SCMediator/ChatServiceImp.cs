@@ -122,6 +122,7 @@ namespace Application.SCMediator
 
         public async Task JoinChatroom(string chatroomID, string userID)
         {
+            Console.Out.WriteLine("JOIn CHAT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             CommandLine command = new CommandLine
                 {Command = "JOIN-Chatroom", variableChatroom = chatroomID, variableUser = userID};
             await Send(command);
@@ -139,7 +140,7 @@ namespace Application.SCMediator
         public async Task DeleteUser(string userID)
         {
             CommandLine command = new CommandLine {Command = "DELETE-User", variableUser = userID};
-            Console.Out.WriteLine("DELETE USER "+userID);
+            //Console.Out.WriteLine("DELETE USER "+userID);
             await Send(command);
         }
 

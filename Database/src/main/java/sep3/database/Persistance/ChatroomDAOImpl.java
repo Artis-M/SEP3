@@ -201,7 +201,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
 
         ObjectId participantId = new ObjectId(userId);
         participantObject.append("participantId", participantId);
-
+        System.out.println("JOINNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
 
         updatePList.append("$push", new BasicDBObject().append("participants",participantObject));
         ObjectId chatroom_id = new ObjectId(chatroomId);

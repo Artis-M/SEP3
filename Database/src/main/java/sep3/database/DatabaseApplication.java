@@ -23,6 +23,7 @@ public class DatabaseApplication
         ServiceController controller = new ServiceController();
         Thread t1 = new Thread(controller);
         t1.start();
+
     }
 
 }
