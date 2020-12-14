@@ -161,6 +161,7 @@ namespace Application.Controllers
         [Route("{id}")]
         public async Task<ActionResult> DeleteChatroom([FromRoute] string id)
         {
+            Console.WriteLine($"Deleting room: {id}");
             try
             {
                 await chatroomService.DeleteChatRoom(id);

@@ -49,13 +49,16 @@
                         }
                     }
                     <button class="backButton" @onclick="BackToHub">Back to Hub</button>
-                    @if (currentChatroom != null && !(currentChatroom.type.Equals("private")) && !(currentChatroom.owner.Equals(user._id)))
+                    @if (currentChatroom != null)
                     {
-                        <button class="leaveButton" @onclick="LeaveChatroom">Leave Chatroom</button>
-                    }
-                    @if (currentChatroom != null && currentChatroom.owner.Equals(user._id) || user.role.Equals("admin"))
-                    {
-                        <button class="leaveButton" @onclick="DeleteChatroom">Delete Chatroom</button>
+                        @if (currentChatroom.type.Equals("private") && !(currentChatroom.owner.Equals(user._id)))
+                        {
+                            <button class="leaveButton" @onclick="LeaveChatroom">Leave Chatroom</button>
+                        }
+                        @if (currentChatroom.owner.Equals(user._id) || user.role.Equals("admin"))
+                        {
+                            <button class="leaveButton" @onclick="DeleteChatroom">Delete Chatroom</button>
+                        }
                     }
                 </div>
             </div>
@@ -132,6 +135,7 @@
 {
     private List<Chatroom> Chatrooms = new List<Chatroom>();
     private Chatroom currentChatroom = null;
+    private string chatRoomIDBuffer = "";
     private string messageText = "";
     private bool isConnectedToChatRoom = false;
     private Account user;
@@ -145,6 +149,7 @@
     {
         string userAsJson = await JsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
         currentChatroom = chatroomService.GetCurrentChatroom();
+        chatRoomIDBuffer = currentChatroom._id;
         if (currentChatroom == null)
         {
             Nav.NavigateTo("main", true);
@@ -171,13 +176,14 @@
 
     public async Task BackToHub()
     {
-        await chatService.LeaveChatRoom(currentChatroom._id);
+        await chatService.LeaveChatRoom(chatRoomIDBuffer);
         currentChatroom = null;
         isConnectedToChatRoom = false;
         await chatroomService.RemoveCurrentChatroom();
         await chatService.DisconnectFromHub();
         MessageFragments = new List<MessageFragment>();
         Messages = new List<Message>();
+        chatRoomIDBuffer = "";
         Nav.NavigateTo("main");
     }
 
@@ -251,8 +257,7 @@
 
     public async Task DeleteChatroom()
     {
-        chatroomService.DeleteChatRoom(currentChatroom._id);
-        BackToHub();
+        await chatroomService.DeleteChatRoom(currentChatroom._id);
     }
 
     public void sendMessageFragment()
