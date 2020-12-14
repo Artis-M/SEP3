@@ -1,5 +1,10 @@
 
 .chatProfileImage{
+    margin: 2pt;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 2pt;
+    border-color: #0B9EF0;
     object-fit: cover;
     width: 50px;
     height: 50px;
@@ -22,7 +27,7 @@
 }
 
 .user{
-    max-height: 50px;
+    max-height: 55px;
     color:rgb(212, 212, 212);
     height: auto;
 }
@@ -37,7 +42,7 @@
 .messageFragmentMessage{
     height: 60px;
     max-height: 36px;
-    width: 80vw;
+    width: 75vw;
     overflow: auto;
     white-space: nowrap;
     scrollbar-width: none;

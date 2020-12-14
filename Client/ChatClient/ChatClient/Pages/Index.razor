@@ -87,9 +87,17 @@
                                             <p>
                                                 @if (currentChatroom != null & isConnectedToChatRoom)
                                                 {
-                                                    @if (currentChatroom != null)
-                                                    {
-                                                        <img class="img-fluid chatProfileImageMessage" src="@currentChatroom.participants.First((user => user._id.Equals(item.authorID))).PictureURL"/><b>@item.username</b>
+                                                     @if (currentChatroom != null)
+                                                     {
+                                                       @if(currentChatroom.participants.Exists((user => user._id.Equals(item.authorID)))){
+                                                           
+                                                            <img class="img-fluid chatProfileImageMessage" src="@currentChatroom.participants.First((user => user._id.Equals(item.authorID))).PictureURL"/><b>@item.username</b>
+                                                        }
+                                                        else
+                                                        {
+                                                            <img class="img-fluid chatProfileImageMessage" src="https://mineblocks.com/1/wiki/images/c/cc/Barrier.png"/><b>@item.username</b>
+                                                        }
+                                                        
                                                     }
                                                 }
                                                 : @item.message
@@ -200,6 +208,13 @@
         }
         else
         {
+            foreach (var item in MessageFragments.ToList())
+            {
+                if (!(chatroom.participants.Exists(user1 => user1._id.Equals(item.authorIdString))))
+                {
+                    MessageFragments.Remove(item);
+                }
+            }
             foreach (var item in chatroom.participants)
             {
                 if (item._id.Equals(user._id))
