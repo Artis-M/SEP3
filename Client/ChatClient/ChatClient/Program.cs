@@ -22,7 +22,7 @@ namespace Models
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
-            builder.Services.AddSingleton<ChatService>();
+            builder.Services.AddSingleton<IChatService, ChatService>();
             builder.Services.AddSingleton<IAccountService, AccountService>();
             builder.Services.AddScoped<ITopicService, TopicServiceImpl>();
             builder.Services.AddSingleton<IChatroomService, ChatroomServiceImp>();
