@@ -270,6 +270,27 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         collection.deleteOne(remove);
     }
 
+    @Override
+    public void deletePrivateChatroom(String userId1, String userId2) {
+        BasicDBObject object = new BasicDBObject();
+        ObjectId user1 = new ObjectId(userId1);
+        object.append("participantId",user1);
+        BasicDBObject query = new BasicDBObject();
+        BasicDBObject object1 = new BasicDBObject();
+        //  BasicDBObject query1 = new BasicDBObject();
+        ObjectId user2 = new ObjectId(userId2);
+        object1.append("participantId",user2);
+        List<BasicDBObject> participants = new ArrayList<>();
+
+        participants.add(object);
+                participants.add(object1);
+
+
+        query.append("participants",participants);
+        query.append("type","private");
+        collection.deleteOne(query);
+    }
+
 
     @Override
     public ArrayList<Chatroom> getChatroomByUserId(String userId) {
