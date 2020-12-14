@@ -264,10 +264,13 @@
     {
         if (isConnectedToChatRoom)
         {
-            newMessageFragment.message = messageText;
-            newMessageFragment.authorIdString = user._id;
-            newMessageFragment.username = user.Username;
-            chatService.SendMessageFragment(newMessageFragment, currentChatroom._id);
+            if (messageText.Length < 1000)
+            {
+                newMessageFragment.message = messageText;
+                newMessageFragment.authorIdString = user._id;
+                newMessageFragment.username = user.Username;
+                chatService.SendMessageFragment(newMessageFragment, currentChatroom._id);  
+            }
         }
     }
 
