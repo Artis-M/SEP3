@@ -1,8 +1,8 @@
 ﻿@page "/AddChatroom"
 @using Services
-@using Tier2.Model
-@using Application.Models
+@using Models
 @using System.Text.Json
+@using global::Models
 @using MongoDB.Bson
 @inject IAccountService AccountService;
 @inject IChatroomService ChatroomService;
@@ -12,35 +12,28 @@
 
     <div class="chatroomForm">
         <EditForm Model="@newChatroom" OnValidSubmit="@AddNewChatRoom">
-
-
             <h3>New chatroom</h3>
             <div class="AddchatroomField">
                 Name: <br/>
                 <InputText @bind-Value="newChatroom.name"/>
             </div>
             <div>
-                <div class="AddchatroomField">
-                    Topic name: <br/>
-                    <InputText @bind-Value="@topicName"/>
-                </div>
-
-                <button class="ChatroomAdding" onclick="@AddTopic()">Add topic</button>
-
             </div>
-
             <button class="ChatroomAdding" type="submit">Add chatroom</button>
-
-
         </EditForm>
+        <div class="AddchatroomField">
+            Topic name: <br/>
+            <input type="text" @bind:event="oninput" @bind="@topicName"></input>
+        </div>
+        <button class="ChatroomAdding" @onclick="@AddTopic">Add topic</button>
     </div>
 </div>
 
 @code {
+    
     private Chatroom newChatroom = new Chatroom();
-    private Account storedUser = new Account();
+    private User storedUser = new Account();
     private List<Topic> Topics = new List<Topic>();
-
     private string topicName = "";
 
     protected override async Task OnInitializedAsync()
@@ -49,6 +42,11 @@
         if (!string.IsNullOrEmpty(userAsJson))
         {
             storedUser = JsonSerializer.Deserialize<Account>(userAsJson);
+            Console.WriteLine(storedUser._id);
+        }
+        else
+        {
+            Console.WriteLine("what");
         }
     }
 
@@ -60,8 +58,10 @@
         Console.Out.WriteLine(newChatroom._id);
         newChatroom.topics = Topics;
         newChatroom.participants.Add(storedUser);
+        newChatroom.owner = storedUser._id;
+        newChatroom.type = "public";
         await ChatroomService.CreateChatRoom(newChatroom);
-        NavigationManager.NavigateTo("Main", true);
+        NavigationManager.NavigateTo("Main");
     }
 
     private async Task AddTopic()

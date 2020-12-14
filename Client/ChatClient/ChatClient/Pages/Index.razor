@@ -1,12 +1,8 @@
 ﻿@page "/"
 @using Services
-@using global::Models
-@using ChatClient.Models
 @using Microsoft.AspNetCore.Authorization
 @using System.Text.Json
 @using MongoDB.Bson
-@using Tier2.Model
-@using Application.Models
 @inject ChatService chatService;
 @inject IChatroomService chatroomService;
 @inject IJSRuntime JsRuntime;
@@ -16,8 +12,8 @@
 <div class="container-fluid h-100">
     <div class="row h-100">
         <div class="col-2">
-            <div class="row h-100 d-flex align-items-end usersidebar no-gutters">
-                <div class="col-12 userScroll">
+            <div class="row no-gutters h-100 d-flex align-items-end usersidebar">
+                <div id="userList" class="col-12 userScroll">
                     @if (currentChatroom != null)
                     {
                         @foreach (var item in currentChatroom.participants)
@@ -33,7 +29,6 @@
                                             {
                                                 <div style="float: right;" class="btn-group dropright justify-content-end">
                                                     <button type="button" class="optionsButton dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        
                                                     </button>
                                                     <div class="dropdown-menu">
                                                         <button type="button" class="menuButton" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
@@ -54,7 +49,10 @@
                         }
                     }
                     <button class="backButton" @onclick="BackToHub">Back to Hub</button>
-                    <button class="leaveButton" @onclick="LeaveChatroom">Leave Chatroom</button>
+                    @if (currentChatroom != null && !(currentChatroom.type.Equals("private")))
+                    {
+                        <button class="leaveButton" @onclick="LeaveChatroom">Leave Chatroom</button>
+                    }
                 </div>
             </div>
         </div>
@@ -97,7 +95,7 @@
                                 {
                                     @foreach (var item in MessageFragments)
                                     {
-                                        <p style="overflow-x: fragments;">
+                                        <p>
                                             User
                                             @if (currentChatroom != null)
                                             {
@@ -110,7 +108,7 @@
                             </div>
                         </div>
                         <div style="height: 10%;" class="row d-flex align-items-end">
-                            <div class="chatBox">
+                            <div class="chatBox w-100">
                                 @if (messageText.Length > charLimit)
                                 {
                                     <label>Message too long, max 1000 characters.</label>  
@@ -145,7 +143,7 @@
         currentChatroom = chatroomService.GetCurrentChatroom();
         if (currentChatroom == null)
         {
-            Nav.NavigateTo("main");
+            Nav.NavigateTo("main", true);
         }
         if (!string.IsNullOrEmpty(userAsJson))
         {
@@ -156,8 +154,10 @@
         chatService.newMessage += this.DisplayNewMessage;
         chatService.newMessageFragment += this.DisplayNewMessageFragment;
         chatService.chatroomUpdate += this.ChatroomUpdate;
-        ConnectToChatRoom();
-        GetUsersChatRooms();
+        await ConnectToChatRoom();
+        await GetUsersChatRooms();
+        await JsRuntime.InvokeAsync<object>("scroll", "userList");
+        await JsRuntime.InvokeAsync<object>("scroll", "messages");
     }
 
     public async Task AddFriend(string userID)
@@ -235,7 +235,6 @@
             {
                 return;
             }
-            Console.WriteLine("Sending message:" + messageText);
             newMessage.message = messageText;
             newMessage.authorID = user._id.ToString();
             newMessage.username = user.Username;
@@ -262,7 +261,7 @@
     {
         Messages.Add(message);
         await InvokeAsync(() => StateHasChanged());
-        JsRuntime.InvokeVoidAsync("scroll", "messages");
+        await JsRuntime.InvokeAsync<object>("scroll", "messages");
     }
 
     public async void DisplayNewMessageFragment(MessageFragment messageFragment)
@@ -286,7 +285,7 @@
             }
         }
         await InvokeAsync(() => StateHasChanged());
-        JsRuntime.InvokeVoidAsync("scroll", "messageFragments");
+        await JsRuntime.InvokeAsync<object>("scroll", "messageFragments");
     }
 
     protected void KeyDown(KeyboardEventArgs e)

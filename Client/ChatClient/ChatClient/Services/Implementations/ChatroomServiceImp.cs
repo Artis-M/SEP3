@@ -6,9 +6,8 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Application.Models;
+using Models;
 using Microsoft.JSInterop;
-using Tier2.Model;
 
 namespace Services
 {
@@ -65,7 +64,7 @@ namespace Services
                 BaseAddress = new Uri(uri)
             };
             
-           // Console.WriteLine(JsonSerializer.Serialize(chatroom));
+            Console.WriteLine(JsonSerializer.Serialize(chatroom));
             StringContent content = new StringContent(JsonSerializer.Serialize(chatroom),Encoding.UTF8,"application/json");
             
             http.PostAsync("add", content);

@@ -3,7 +3,7 @@
  using System.Text.Json.Serialization;
  using Models;
 
- namespace Application.Models
+ namespace Models
 {
     public class Account : User
     {

@@ -8,7 +8,9 @@ namespace Application.Models
     public class Chatroom
     {
         public string _id { get; set; }
+        
         public string type { get; set; }
+        
         public string owner { get; set; }
         public string name { get; set; }
         public List<Topic> topics { get; set; }
@@ -17,7 +19,9 @@ namespace Application.Models
 
         public Chatroom()
         {
-            
+            topics = new List<Topic>();
+            messages = new List<Message>();
+            participants = new List<User>();
         }
 
         public Chatroom(string id, string name, List<User> participants, List<Message> messages)
@@ -28,7 +32,7 @@ namespace Application.Models
             this.messages = messages;
         }
 
-        public Chatroom(string id, string name, List<User> participants, TopicList topics)
+        public Chatroom(string id, string name, List<User> participants, List<Topic> topics)
         {
             this._id = id;
             this.name = name;
@@ -36,7 +40,7 @@ namespace Application.Models
             this.topics = new List<Topic>();
         }
 
-        public Chatroom(string id, string name, List<User> participants, List<Message> messages, TopicList topics)
+        public Chatroom(string id, string name, List<User> participants, List<Message> messages, List<Topic> topics)
         {
             this._id = id;
             this.name = name;

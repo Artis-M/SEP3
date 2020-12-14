@@ -3,10 +3,8 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ChatClient.Models;
 using Microsoft.AspNetCore.SignalR.Client;
 using Models;
-using Tier2.Model;
 
 namespace Services
 {
