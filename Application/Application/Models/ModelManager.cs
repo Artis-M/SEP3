@@ -71,6 +71,11 @@ namespace Application.Models
             await chatServiceImp.DeleteChatroom(ChatroomID);
         }
 
+        public async Task DeletePrivateChatroom(string userID, string friendID)
+        {
+            await chatServiceImp.DeletePrivateChatroom(userID, friendID);
+        }
+
         public async Task DeleteTopic(string TopicID)
         {
             await chatServiceImp.DeleteTopic(TopicID);

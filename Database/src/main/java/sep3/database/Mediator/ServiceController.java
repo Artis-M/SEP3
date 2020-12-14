@@ -268,8 +268,6 @@ public class ServiceController implements Runnable
                 }
                 else if (requestCommand.getCommand().equals("ChatroomsByTopic"))
                 {
-
-
                     String response = gson.toJson(chatroomDAO.getChatroomsByTopic(requestCommand.getSpecificOrder()));
                     responseCommand.setSpecificOrder(response);
                    // System.out.println(response);
@@ -285,7 +283,9 @@ public class ServiceController implements Runnable
                     byte[] responseAsBytes = sendBack.getBytes();
                     outputStream.write(toSendLenBytes);
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
-
+                }
+                else if(requestCommand.getCommand().equals("DELETE-PrivateChatroom")){
+                    chatroomDAO.deletePrivateChatroom(requestCommand.getSpecificOrder(),requestCommand.getVariableUser());
                 }
             }
         } catch (IOException e)

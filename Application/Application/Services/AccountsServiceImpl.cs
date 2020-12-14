@@ -99,6 +99,7 @@ namespace Application.Services
         public async Task removeFriend(string userId, string friendId)
         {
             await model.removeFriend(userId, friendId);
+            await model.DeletePrivateChatroom(userId, friendId);
         }
     }
 }

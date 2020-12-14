@@ -6,7 +6,9 @@ import com.mongodb.DBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.springframework.util.RouteMatcher;
 import sep3.database.Model.*;
@@ -229,21 +231,20 @@ public class ChatroomDAOImpl implements ChatroomDAO {
     public Chatroom getPrivateChatroom(String userId1,String userId2)
     {
         BasicDBObject object = new BasicDBObject();
-        ObjectId user1 = new ObjectId(userId1);
+      ObjectId user1 = new ObjectId(userId1);
         object.append("participantId",user1);
-        BasicDBObject query = new BasicDBObject();
         BasicDBObject object1 = new BasicDBObject();
-      //  BasicDBObject query1 = new BasicDBObject();
         ObjectId user2 = new ObjectId(userId2);
-        object1.append("participantId",user2);
-        List<BasicDBObject> participants = new ArrayList<>();
-        participants.add(object1);
-        participants.add(object);
-        query.append("participants",participants);
-        query.append("type","private");
-        Document document = collection.find(query).first();
-        System.out.println(query);
+       object1.append("participantId",user2);
+        Bson users = Filters.and(Filters.eq("participants",object),
+                Filters.eq("participants",object1),
+                Filters.eq("type","private")
+                );
+        Document document = collection.find(users).first();
+
+        assert document != null;
         return createChatroom(document);
+
     }
 
     @Override
@@ -275,20 +276,14 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         BasicDBObject object = new BasicDBObject();
         ObjectId user1 = new ObjectId(userId1);
         object.append("participantId",user1);
-        BasicDBObject query = new BasicDBObject();
         BasicDBObject object1 = new BasicDBObject();
-        //  BasicDBObject query1 = new BasicDBObject();
         ObjectId user2 = new ObjectId(userId2);
         object1.append("participantId",user2);
-        List<BasicDBObject> participants = new ArrayList<>();
-
-        participants.add(object);
-                participants.add(object1);
-
-
-        query.append("participants",participants);
-        query.append("type","private");
-        collection.deleteOne(query);
+        Bson users = Filters.and(Filters.eq("participants",object),
+                Filters.eq("participants",object1),
+                Filters.eq("type","private")
+        );
+        collection.deleteOne(users);
     }
 
 
