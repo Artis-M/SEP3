@@ -157,5 +157,14 @@ namespace Services
                 currentlySelectedChatroom = chatroom;
             }
         }
+
+        public async Task DeleteChatRoom(string ChatroomID)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            http.DeleteAsync($"{ChatroomID}");
+        }
     }
 }

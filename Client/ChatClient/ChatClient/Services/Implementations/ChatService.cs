@@ -8,15 +8,15 @@ using Models;
 
 namespace Services
 {
-    public class ChatService
+    public class ChatService : IChatService
     {
         string url = "https://localhost:5004/chathub";
         private string uri = "https://localhost:5004/chatrooms/";
         
         HubConnection _hubConnection = null;
-        public Action<Message> newMessage;
-        public Action<MessageFragment> newMessageFragment;
-        public Action<Chatroom> chatroomUpdate;
+        public Action<Message> newMessage { get; set; }
+        public Action<MessageFragment> newMessageFragment { get; set; }
+        public Action<Chatroom> chatroomUpdate { get; set; }
         public async Task ConnectToServer()
         {
             _hubConnection = new HubConnectionBuilder().WithUrl(url).Build();
