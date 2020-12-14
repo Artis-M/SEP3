@@ -142,5 +142,20 @@ namespace Services
                 Console.Out.WriteLine(Chatrooms.Count);
                 return Chatrooms;
         }
+
+        public async Task EnterPrivateChatroom(string user, string user1)
+        {
+            HttpClient http = new HttpClient
+            {
+                BaseAddress = new Uri(uri)
+            };
+            HttpResponseMessage responseMessage = await http.GetAsync($"private/{user}/{user1}");
+            if (responseMessage.StatusCode == HttpStatusCode.OK)
+            {
+                Chatroom chatroom =
+                    JsonSerializer.Deserialize<Chatroom>(await responseMessage.Content.ReadAsStringAsync());
+                currentlySelectedChatroom = chatroom;
+            }
+        }
     }
 }
