@@ -76,6 +76,7 @@
             newAccount._id = ObjectId.GenerateNewId().ToString();
             newAccount.friends = new List<User>();
             newAccount.topics= new List<Topic>();
+            newAccount.PictureURL = "https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg";
             error = "Username already in use";
             Account check =  await AccountService.getUser(newAccount.Username);
             
