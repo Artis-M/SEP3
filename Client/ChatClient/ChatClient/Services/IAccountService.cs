@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Application.Models;
+﻿using System;
+using System.Threading.Tasks;
 using Models;
 
 namespace Services
@@ -9,6 +9,12 @@ namespace Services
         Task<Account> Login(string username, string password);
         Task Register(Account account);
 
-        Task AddFriend(string UserID);
+        Task AddFriend(string UserID, Account account);
+        public Task DeleteProfile(string userID);
+        public Task addTopicToProfile(string topic, string userId);
+        public Task removeTopicFromProfile(string topic, string userId);
+        public Task editProfile(Account account);
+        Task<Account> getUser(string username);
+        public Task removeFriend(string userId, string friendId);
     }
 }

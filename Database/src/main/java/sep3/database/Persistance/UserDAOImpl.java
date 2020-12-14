@@ -25,12 +25,14 @@ public class UserDAOImpl implements UserDAO
     private Gson gson;
     private TopicDAO topicDAO;
 
+
     public UserDAOImpl()
     {
         connection = DBConnection.setConnection();
         collection = connection.getDatabase().getCollection("Users");
         gson = new Gson();
         topicDAO = new TopicDAOImpl();
+
     }
 
     private MongoCursor<Document> cursor(String key, Object obj)
@@ -46,9 +48,10 @@ public class UserDAOImpl implements UserDAO
         Account account = new Account(
                 document.get("role").toString(), document.get("Pass").toString()
                 , _id.toString(), document.get("Username").toString(),
-                document.get("Fname").toString(), document.get("Lname").toString(), document.get("email").toString()
+                document.get("Fname").toString(), document.get("Lname").toString(), document.get("email").toString(),document.get("PictureURL").toString()
         );
         account.setTopics(topicDAO.getUserTopics(_id));
+        System.out.println(account.getTopics());
         account.setFriends(getUserFriends(_id.toString()));
         return account;
 
@@ -101,16 +104,53 @@ public class UserDAOImpl implements UserDAO
     }
 
     @Override
+    public void deleteFriendFromUsers(String friend) {
+        BasicDBObject friendQuery = new BasicDBObject();
+
+        ObjectId _id = new ObjectId(friend);
+        friendQuery.append("$pull", new BasicDBObject().append("friends",_id));
+
+
+        collection.updateMany(new BasicDBObject(),friendQuery);
+    }
+
+    @Override
+    public void deleteAccount(String userID) {
+        ObjectId _id = new ObjectId(userID);
+        BasicDBObject delete = new BasicDBObject();
+        delete.append("_id",_id);
+        collection.deleteOne(delete);
+    }
+
+    @Override
+    public void EditAccount(Account account) {
+        BasicDBObject edit = new BasicDBObject();
+        BasicDBObject toEdit = new BasicDBObject();
+        toEdit.append("_id",new ObjectId(account.get_id()));
+        edit.append("Username", account.getUsername());
+        edit.append("Pass", account.getPass());
+        edit.append("Fname", account.getFname());
+        edit.append("Lname", account.getLname());
+        edit.append("role", account.getRole());
+        edit.append("email", account.getEmail());
+        BasicDBObject update = new BasicDBObject();
+        edit.append("PictureURL",account.getPictureURL());
+        update.put("$set",edit);
+        collection.updateOne(toEdit,update);
+    }
+
+    @Override
     public User getUser(String userID)
     {
         BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.append("_id", userID);
+        ObjectId objectId = new ObjectId(userID);
+        whereQuery.append("_id", objectId);
         MongoCursor<Document> cursor = collection.find(whereQuery).iterator();
         try
         {
             Document document = cursor.next();
             return new User(document.get("_id").toString(), document.get("Username").toString(),
-                    document.get("Fname").toString(), document.get("Lname").toString());
+                    document.get("Fname").toString(), document.get("Lname").toString(), document.get("PictureURL").toString());
         } catch (NoSuchElementException e)
         {
 
@@ -122,10 +162,10 @@ public class UserDAOImpl implements UserDAO
     @Override
     public ArrayList<User> getUserFriends(String userId)
     {
-        //ChangeTo arrayList and remove UserList class
-        UserList list = new UserList();
+        ArrayList<User>  list = new ArrayList<>();
         BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.append("_id", userId);
+
+        whereQuery.append("_id", new ObjectId(userId));
         FindIterable<Document> findIterable = collection.find(whereQuery).projection(include("friends"));
         Document document;
         try
@@ -142,31 +182,35 @@ public class UserDAOImpl implements UserDAO
             )
             {
                 User friend = getUser(id.toString());
-                list.addUser(friend);
+                list.add(friend);
             }
         }
-        return list.getUsers();
+        return list;
     }
 
     @Override
-    public void addFriend(User friend, String userId)
+    public void addFriend(String friend,String userId)
     {
         BasicDBObject newDocument = new BasicDBObject();
-        newDocument.append("$push", new BasicDBObject().append("friends", friend.get_id()));
+        ObjectId friendId = new ObjectId(friend);
+        ObjectId currentUser = new ObjectId(userId);
+        newDocument.append("$push", new BasicDBObject().append("friends", friendId));
         BasicDBObject searchQuery = new BasicDBObject();
-        searchQuery.append("_id", userId);
+        searchQuery.append("_id", currentUser);
         collection.updateOne(searchQuery, newDocument);
 
 
     }
 
     @Override
-    public void removeFriend(User user, String userId)
+    public void removeFriend(String user, String friendId)
     {
-        ObjectId user_id = new ObjectId(user.get_id());
-        BasicDBObject update = new BasicDBObject("friends", user_id);
+        ObjectId friend_id = new ObjectId(friendId);
+        BasicDBObject update = new BasicDBObject("friends", friend_id);
         BasicDBObject searchQuery = new BasicDBObject();
+        ObjectId userId = new ObjectId(user);
         searchQuery.append("_id", userId);
+        System.out.println("REmove " + friendId + " FROM " + user);
         collection.updateOne(searchQuery, new BasicDBObject("$pull", update));
     }
 
@@ -175,8 +219,7 @@ public class UserDAOImpl implements UserDAO
     {
         BasicDBObject newDocument = new BasicDBObject();
         ObjectId topicID = new ObjectId(topicDAO.getTopic(Topic).get_id());
-        System.out.println(topicID.toString());
-        newDocument.append("$push", new BasicDBObject().append("topics", topicID));
+        newDocument.append("$push", new BasicDBObject().append("topics",topicID));
         BasicDBObject searchQuery = new BasicDBObject();
         ObjectId user_id = new ObjectId(userId);
         searchQuery.append("_id", user_id);
@@ -189,7 +232,6 @@ public class UserDAOImpl implements UserDAO
     {
         BasicDBObject newDocument = new BasicDBObject();
         ObjectId topicID = new ObjectId(topicDAO.getTopic(Topic).get_id());
-        System.out.println(topicID.toString());
         newDocument.append("$pull", new BasicDBObject().append("topics", topicID));
         BasicDBObject searchQuery = new BasicDBObject();
         ObjectId user_id = new ObjectId(userId);
@@ -211,28 +253,8 @@ public class UserDAOImpl implements UserDAO
         add.append("Lname", account.getLname());
         add.append("role", account.getRole());
         add.append("email", account.getEmail());
-        if (account.getTopics().size() != 0)
-        {
-            Document topics = new Document();
-            for (var topic : account.getTopics()
-            )
-            {
-                ObjectId topicID = new ObjectId(topic.get_id());
-                topics.append("$set", new BasicDBObject().append("topics", topicID));
-            }
-            add.append("topics", Arrays.asList(topics));
-        }
-        if (account.getFriends().size() != 0)
-        {
-            Document friends = new Document();
-            for (var friend : account.getFriends()
-            )
-            {
-                ObjectId friendId = new ObjectId(friend.get_id());
-                friends.append("$set", new BasicDBObject().append("topics", friendId));
-            }
-            add.append("friends", Arrays.asList(friends));
-        }
+        add.append("PictureURL",account.getPictureURL());
+
         collection.insertOne(add);
     }
 

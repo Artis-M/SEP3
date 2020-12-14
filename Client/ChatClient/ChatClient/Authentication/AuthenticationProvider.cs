@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Application.Models;
  using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
  using Models;
  using Services;
 
- namespace Application.Authentication
+ namespace Models.Authentication
 {
     public class AuthenticationProvider : AuthenticationStateProvider
     {
@@ -72,7 +71,7 @@ using Microsoft.JSInterop;
         {
             cachedUser = null;
             var user = new ClaimsPrincipal(new ClaimsIdentity());
-            jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", null);
+             jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", null);
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
         

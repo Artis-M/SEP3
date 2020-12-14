@@ -26,8 +26,8 @@ public class Account extends User{
                 '}';
     }
 
-    public Account(String role, String Pass, String _id, String username, String fname, String lname, String email) {
-        super(_id, username, fname, lname);
+    public Account(String role, String Pass, String _id, String username, String fname, String lname, String email,String PictureURL) {
+        super(_id, username, fname, lname,PictureURL);
         friends = new ArrayList<>();
         this.topics = new ArrayList<>();
         this.email=email;

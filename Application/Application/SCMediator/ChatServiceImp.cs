@@ -43,8 +43,14 @@ namespace Application.SCMediator
         {
             string upsdelivery = JsonSerializer.Serialize(command);
             stream = Client.GetStream();
-            byte[] dataToServer = Encoding.ASCII.GetBytes(upsdelivery);
-            stream.Write(dataToServer, 0, dataToServer.Length);
+           // byte[] dataToServer = Encoding.ASCII.GetBytes(upsdelivery);
+           //stream.Write(dataToServer, 0, dataToServer.Length);
+           int toSendLen = System.Text.Encoding.ASCII.GetByteCount(upsdelivery);
+           byte[] toSendBytes = System.Text.Encoding.ASCII.GetBytes(upsdelivery);
+           byte[] toSendLenBytes = System.BitConverter.GetBytes(toSendLen);
+           stream.Write(toSendLenBytes);
+           stream.Write(toSendBytes,0,toSendLen);
+
         }
 
         // ------------------- //
@@ -57,7 +63,6 @@ namespace Application.SCMediator
             {
                 Command = "NewMessage", variableUser = message.authorID, variableChatroom = chatroomID,
                 SpecificOrder = messageSerialized
-                
             };
             await Send(command);
         }
@@ -90,6 +95,23 @@ namespace Application.SCMediator
             await Send(command);
         }
 
+        public async Task addTopicToUser(string userId, string topic)
+        {
+            CommandLine sendCommand = new CommandLine();
+            sendCommand.Command = "AddTopicToUser";
+            sendCommand.variableUser = userId;
+            sendCommand.SpecificOrder = topic;
+            Console.Out.WriteLine("AddTopuc");
+            await Send(sendCommand);
+        }
+        public async Task removeTopicfromUser(string userId, string topic)
+        {
+            CommandLine sendCommand = new CommandLine();
+            sendCommand.Command = "removeTopicFromUser";
+            sendCommand.variableUser = userId;
+            sendCommand.SpecificOrder = topic;
+            await Send(sendCommand);
+        }
         public async Task sendNewTopic(Topic topic)
         {
             string serialTopic = JsonSerializer.Serialize(topic);
@@ -106,6 +128,7 @@ namespace Application.SCMediator
 
         public async Task JoinChatroom(string chatroomID, string userID)
         {
+            Console.Out.WriteLine("JOIn CHAT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             CommandLine command = new CommandLine
                 {Command = "JOIN-Chatroom", variableChatroom = chatroomID, variableUser = userID};
             await Send(command);
@@ -120,9 +143,16 @@ namespace Application.SCMediator
             await Send(command);
         }
 
+        public async Task DeletePrivateChatroom(string userID, string friendID)
+        {
+            CommandLine command = new CommandLine{Command = "DELETE-PrivateChatroom",SpecificOrder = userID,variableUser = friendID};
+            await Send(command);
+        }
+        
         public async Task DeleteUser(string userID)
         {
-            CommandLine command = new CommandLine {Command = "DELETE-User", SpecificOrder = userID};
+            CommandLine command = new CommandLine {Command = "DELETE-User", variableUser = userID};
+            Console.Out.WriteLine("DELETE USER "+userID);
             await Send(command);
         }
 
@@ -146,8 +176,12 @@ namespace Application.SCMediator
         {
             CommandLine command = new CommandLine {Command = "REQUEST-UserCredentials"};
             await Send(command);
-
-            byte[] dataFromServer = new byte[4048];
+            
+            
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
@@ -169,7 +203,10 @@ namespace Application.SCMediator
 
             await Send(command);
             /* move out */
-            byte[] dataFromServer = new byte[4048];
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
@@ -191,10 +228,13 @@ namespace Application.SCMediator
             CommandLine command = new CommandLine {Command = "REQUEST-User", variableUser = username};
             await Send(command);
 
-            byte[] dataFromServer = new byte[4048];
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
-           CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
             if (upsdelivery.Command.Equals("OneUserCredential"))
             {
                 Account account = JsonSerializer.Deserialize<Account>(upsdelivery.SpecificOrder);
@@ -204,17 +244,40 @@ namespace Application.SCMediator
             {
                 return null;
             }
+        }
 
+        public async Task<Chatroom> getPrivateChatroom(string user, string user1)
+        {
+            CommandLine command = new CommandLine {Command = "REQUEST-PrivateCHatroom", variableUser = user,SpecificOrder = user1};
+            await Send(command);
+            Chatroom room = new Chatroom();
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
+            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
+            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
+            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+            if (upsdelivery.Command.Equals("REQUEST-PrivateCHatroom"))
+            {
+                room = JsonSerializer.Deserialize<Chatroom>(upsdelivery.SpecificOrder);
+                return room;
+            }
+
+            return null;
         }
         public async Task<Account> requestUserByID(string userID)
         {
             CommandLine command = new CommandLine {Command = "REQUEST-UserByID", variableUser = userID};
             await Send(command);
 
-            byte[] dataFromServer = new byte[4048];
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
-           CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
             if (upsdelivery.Command.Equals("OneUserCredentialByID"))
             {
                 Account account = JsonSerializer.Deserialize<Account>(upsdelivery.SpecificOrder);
@@ -227,38 +290,88 @@ namespace Application.SCMediator
         }
 
         public async Task<List<Chatroom>> requestChatrooms()
-            {
-                CommandLine command = new CommandLine {Command = "REQUEST-Chatroom-ALL"};
-                await Send(command);
+        {
+            CommandLine command = new CommandLine {Command = "REQUEST-Chatroom-ALL"};
+            await Send(command);
 
-                byte[] dataFromServer = new byte[4048];
-                int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
-                string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
-               CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
-                if (upsdelivery.Command.Equals("AllChatrooms"))
-                {
-                    List<Chatroom> chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(upsdelivery.SpecificOrder);
-                    return chatrooms;
-                }
-                else
-                {
-                    return null;
-                }
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
+            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
+            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
+            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+            if (upsdelivery.Command.Equals("AllChatrooms"))
+            {
+                List<Chatroom> chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(upsdelivery.SpecificOrder);
+                return chatrooms;
+            }
+            return null;
+        }
+
+        public async Task AddFriend(List<User> users)
+        {
+            string serialized = JsonSerializer.Serialize(users);
+            CommandLine commandLine = new CommandLine
+            {
+                Command = "AddFriends",
+                SpecificOrder = serialized
+            };
+            await Send(commandLine);
+        }
+        
+        public async Task removeFriend(string userId,string friendId)
+        {
+            
+            CommandLine commandLine = new CommandLine
+            {
+                Command = "removeFriend",
+                variableUser = userId,
+                SpecificOrder = friendId
+            };
+            Console.Out.WriteLine($"remove {friendId} from {userId}");
+            await Send(commandLine);
+        }
+        
+
+
+        public async Task<List<Chatroom>> requestChatroomsByTopic(string topic)
+        {
+            CommandLine commandLine = new CommandLine
+            {
+                Command = "ChatroomsByTopic",
+                SpecificOrder = topic
+            };
+            await Send(commandLine);
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
+            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
+            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
+            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+            if (upsdelivery.Command.Equals("ChatroomsByTopic"))
+            {
+                Console.Out.WriteLine(upsdelivery.SpecificOrder);
+                List<Chatroom> chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(upsdelivery.SpecificOrder);
+                return chatrooms;
             }
 
-            /*public async Task<List<Topic>> requestTopics()
-            {
-                CommandLine command = new CommandLine {Command = "REQUEST-Topic-ALL"};
-                await Send(command);
-    
-                byte[] dataFromServer = new byte[4048];
-                int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
-                string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
-                Console.WriteLine(response);
-                CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
-    
-                List<Topic> topics = JsonSerializer.Deserialize<List<Topic>>(response);
-                return topics;
-            }*/
+            return null;
         }
+        /*public async Task<List<Topic>> requestTopics()
+        {
+            CommandLine command = new CommandLine {Command = "REQUEST-Topic-ALL"};
+            await Send(command);
+
+            byte[] dataFromServer = new byte[4048];
+            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
+            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
+            Console.WriteLine(response);
+            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+
+            List<Topic> topics = JsonSerializer.Deserialize<List<Topic>>(response);
+            return topics;
+        }*/
     }
+}

@@ -18,17 +18,19 @@ namespace Application.Models
         [Required,MinLength(1,ErrorMessage = "Please Enter Last Name")]
         [JsonPropertyName("Lname")]
         public string Lname { get; set; }
+        public string PictureURL { get; set; }
 
         public User()
         {
             
         }
-        public User(string _id, string username, string fname, string lname)
+        public User(string _id, string username, string fname, string lname, string pictureUrl)
         {
             this._id = _id;
             this.Username = username;
             this.Fname = fname;
             this.Lname = lname;
+            this.PictureURL = pictureUrl;
         }
         public User( string username, string fname, string lname)
         {

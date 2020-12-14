@@ -1,0 +1,139 @@
+﻿.Edit-Flex
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.EditWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("https://images.wallpaperscraft.com/image/plexus_lines_points_120093_1920x1080.jpg");
+}
+
+.EditWrapper form{
+    width: 550px;
+    height: 650px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color:#fff;
+    border-radius: 10px;
+}
+.Edit-Flex div{
+    width: 210px;
+    margin-bottom: 10px;
+}
+.EditForm h3{
+    text-align: center;
+    margin-top: 15px;
+    
+}
+.EditForm .editError,.EditForm .topicError
+{
+    text-align: center;
+    font-weight: 300;
+    height: 16px;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color:red;
+}
+.EditForm .topicInput
+{
+    margin-bottom: 15px;
+}
+.EditForm .validate_div
+{
+    height: 18px;
+    font-size: 12px;
+    font-style: italic;
+}
+.EditForm input {
+    border-radius: 5px;
+    outline: none;
+    border-style: solid;
+    border-width: 1px;
+    height: 40px;
+}
+.EditForm .UpdateButtonDiv
+{
+    text-align: center;
+}
+.UpdateButtonDiv button
+{
+    border-radius: 10px;
+    outline: none;
+    margin:5px 0 15px 0;
+    width: 150px;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #0B9EF0;
+    color: #fff;
+    height: 33px;
+}
+
+.UpdateButtonDiv button:hover{
+    border-color:#0B9EF0;
+    color:#0B9EF0;
+    border-style: solid;
+    background-color: #b0d8ee;
+}
+.topicButtons {
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.topicButtons button
+{
+    border-radius: 10px;
+    outline: none;
+    margin:5px 0 15px 0;
+    width: 90px;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    color: #fff;
+    height: 33px;
+}
+.addTopic
+{
+    background-color: #51CD5D;
+}
+.addTopic:hover
+{
+    background-color: #c6f2d3;
+    color:#51CD5D;
+}
+.addTopic:active{
+    border:1px solid #51CD5D;
+    background-color: #c6f2d3;
+    color:#51CD5D;
+}
+.removeTopic
+{
+    background-color: #D32240;
+}
+.removeTopic:hover, .logoutButton:hover
+{
+    background-color: #fab9be;
+    color:#D32240;
+}
+.removeTopic:active,.logoutButton:active
+{
+    outline:none;
+    border:1px solid #D32240;
+    background-color: #fab9be;
+    color:#D32240;
+}
+.logoutButton:focus{
+    outline:none;
+}
+.Edit_Left div {
+    margin-bottom: 0;
+}
+.divToMain{
+    margin:15px 0 0 18px;
+}

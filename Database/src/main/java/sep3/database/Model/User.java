@@ -7,13 +7,15 @@ public class User {
     private String Username;
     private String Fname;
     private String Lname;
+    private String PictureURL;
 
 
-    public User(String _id, String username, String fname, String lname) {
+    public User(String _id, String username, String fname, String lname, String PictureURL) {
         this._id = _id;
         Username = username;
         Fname = fname;
         Lname = lname;
+        this.PictureURL = PictureURL;
     }
 
     public User(String username, String fname, String lname) {
@@ -62,5 +64,15 @@ public class User {
                 ", Fname='" + Fname + '\'' +
                 ", Lname='" + Lname + '\'' +
                 '}';
+    }
+
+    public String getPictureURL()
+    {
+        return PictureURL;
+    }
+
+    public void setPictureURL(String pictureURL)
+    {
+        PictureURL = pictureURL;
     }
 }

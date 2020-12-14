@@ -19,6 +19,7 @@ namespace Application.Services.Implementations
 
         public async Task<Chatroom> GetChatroomByID(string ID)
         {
+            await requestChatrooms();
             foreach (var VARIABLE in Chatrooms)
             {
                 if (VARIABLE._id.Equals(ID))
@@ -87,6 +88,16 @@ namespace Application.Services.Implementations
             // the chatroom should update so that the user is not inside it anymore
                     await model.LeaveChatroom(userID,ChatRoomID);
                 
+        }
+
+        public async Task<List<Chatroom>> getChatroomsByTopic(string topic)
+        {
+            return await model.getChatroomsByTopic(topic);
+        }
+
+        public async Task<Chatroom> getPrivateChatroom(string user1, string user2)
+        {
+            return await model.getPrivateChatroom(user1, user2);
         }
     }
 }

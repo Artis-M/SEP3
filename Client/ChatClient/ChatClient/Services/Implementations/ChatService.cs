@@ -3,20 +3,20 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ChatClient.Models;
 using Microsoft.AspNetCore.SignalR.Client;
 using Models;
 
 namespace Services
 {
-    public class ChatService
+    public class ChatService : IChatService
     {
         string url = "https://localhost:5004/chathub";
         private string uri = "https://localhost:5004/chatrooms/";
         
         HubConnection _hubConnection = null;
-        public Action<Message> newMessage;
-        public Action<MessageFragment> newMessageFragment;
+        public Action<Message> newMessage { get; set; }
+        public Action<MessageFragment> newMessageFragment { get; set; }
+        public Action<Chatroom> chatroomUpdate { get; set; }
         public async Task ConnectToServer()
         {
             _hubConnection = new HubConnectionBuilder().WithUrl(url).Build();
@@ -35,6 +35,10 @@ namespace Services
             _hubConnection.On<MessageFragment>("ReceiveChatRoomMessageFragment", messageFragment =>
             {
                 newMessageFragment?.Invoke(messageFragment);
+            });
+            _hubConnection.On<Chatroom>("ReceiveChatroomUpdate", chatroom =>
+            {   
+                chatroomUpdate.Invoke(chatroom);
             });
         }
         public async Task SendMessage(Message message, string activeChatRoomId)
@@ -63,6 +67,11 @@ namespace Services
         public async Task LeaveChatRoom(string ChatRoomId)
         {
             await _hubConnection.SendAsync("LeaveChatRoom", ChatRoomId);
+        }
+
+        public async Task DisconnectFromHub()
+        {
+            await _hubConnection.StopAsync();
         }
     }
 }

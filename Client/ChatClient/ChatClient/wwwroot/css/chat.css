@@ -1,0 +1,148 @@
+
+.chatProfileImage{
+    object-fit: cover;
+    height: auto;
+    width: 50px;
+    height: 50px;
+}
+.username{
+    display: inline;
+    font-weight: bold;
+}
+
+.user{
+    max-height: 50px;
+    color:rgb(212, 212, 212);
+    height: auto;
+}
+.userScroll{
+    height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+.userScroll::-webkit-scrollbar {
+    display: none;
+}
+
+.usersidebar{
+    background-color: #404040;
+}
+.user:nth-of-type(even){
+    background-color: #555555;
+}
+.user:nth-of-type(odd){
+    background-color: #333333;
+}
+.container-fluid.h-100 {
+    padding-right: 15px;
+    padding-left: 15px;
+    overflow-x: hidden;
+    background-color: rgb(85, 85, 85);
+}
+.optionsButton{
+    margin: auto;
+    width: 50px;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #0B9EF0;
+    color: #fff;
+    height: 50px;
+}
+.menuButton{
+    margin: auto;
+    height: 50px;
+    width: auto;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #0B9EF0;
+    color: #fff;
+}
+.leaveButton{
+    margin: auto;
+    height: 50px;
+    width: 100%;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #c03333;
+    color: #fff;
+}
+.chatroomTitle{
+    font-size: 25pt;
+    font-weight: bold;
+}
+.titlebar{
+    background-color: #7a7a7a;
+    height: 10%;
+}
+.messageBox{
+    overflow-y: auto;
+    height: 100%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+}
+.messageBox::-webkit-scrollbar {
+    display: none;
+}
+.messageBox p{
+    margin-left: 10pt;
+    margin-right: 10pt;
+    padding-right: 5pt;
+    padding-left: 10pt;
+    border-radius: 10px;
+    color: rgb(212, 212, 212);
+    background-color: rgb(39, 39, 39);
+
+}
+.messageFragmentBox::-webkit-scrollbar {
+    display: none;
+}
+.messageFragmentBox{
+    overflow-y: auto;
+    height: 100%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.messageFragmentBox p{
+    margin-left: 10pt;
+    margin-right: 10pt;
+    padding-right: 5pt;
+    padding-left: 10pt;
+    border-radius: 10px;
+    color: rgb(212, 212, 212);
+    background-color: rgb(77, 136, 101);
+}
+.chatBox{
+    display: flex;
+    justify-content: center;
+    margin-left: 10pt;
+    margin-right: 10pt;
+}
+.chatInput{
+    border-radius: 10px;
+    height: auto;
+    height: 60px;
+    width: 85%;
+    background-color: rgb(114, 114, 114);
+    color:rgb(212, 212, 212);
+}
+.backButton{
+    margin: auto;
+    height: 50px;
+    width: 100%;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: #70cf7e;
+    color: #fff;
+}
+.sendButton{
+    margin: auto;
+    height: 50px;
+    width: 10%;
+    border-width: 0px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color:rgb(77, 136, 101);
+    color: #fff;
+}

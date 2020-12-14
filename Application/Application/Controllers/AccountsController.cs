@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Application.Models;
 using Application.SCMediator;
@@ -16,7 +17,7 @@ namespace Application.Controllers
     public class AccountsController : ControllerBase
     {
         private IAccountService AccountService;
-
+        
         public AccountsController(IAccountService accountService)
         {
             this.AccountService = accountService;
@@ -38,7 +39,7 @@ namespace Application.Controllers
             }
         }
         [HttpGet]
-        [Route("user/{id}")]
+        [Route("user/{userID}")]
         public async Task<ActionResult<Account>> GetUserById([FromRoute] string userID)
         {
             try
@@ -52,22 +53,28 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+        [HttpGet]
+        [Route("user/username/{username}")]
+        public async Task<ActionResult<Account>> GetUserByUsername([FromRoute] string username)
+        {
+            try
+            {
+                Console.Out.WriteLine(username);
+                Account account = await AccountService.RequestAccount(username);
+                Console.Out.WriteLine("username");
+                return Ok(account);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
 
         [HttpGet]
         [Route("login")]
         public async Task<ActionResult<Account>> GetAccount()
         {
-            // try
-            // {
-            //     Account account = await AccountService.RequestAccount(username);
-            //     IList<Account> accounts = new List<Account>();
-            //     accounts.Add(account);
-            //     return Ok(accounts);
-            // }
-            // catch (Exception e)
-            // {
-            //     Console.WriteLine(e);
-            //     return StatusCode(500, e.Message);
             var re = this.Request;
             var headers = re.Headers;
             string username = "";
@@ -87,9 +94,9 @@ namespace Application.Controllers
                 return NotFound();
             }
 
-            Console.Out.WriteLine(account.Pass);
-            Console.Out.WriteLine(password);
-            Console.Out.WriteLine(account.Pass == password);
+           // Console.Out.WriteLine(account.Pass);
+           // Console.Out.WriteLine(password);
+           // Console.Out.WriteLine(account.Pass == password);
             if (account.Pass != password)
             {
                 return NotFound();
@@ -97,27 +104,6 @@ namespace Application.Controllers
 
             return Ok(account);
         }
-
-
-        /* Gives an error when launching - Application.Controllers.AccountsController.LogIn (Application)' has more than one parameter that was specified or inferred as bound from request body. Only one param
-         eter per action may be bound from body. Inspect the following parameters, and use 'FromQueryAttribute' to specify bound from query, 'FromRouteAttribute' to specify bound from route, and 'FromBodyAttribute' for parameters to be b
-         ound from body:" */
-
-        /*[HttpGet]
-        [Route("{username, password}")]
-         public async Task<ActionResult<Account>> LogIn([FromRoute] string username, [FromRoute] string password)
-         {
-             try
-             {
-                 Account account = await AccountService.LogIn(username, password);
-                 return Ok(account);
-             }
-             catch (Exception e)
-             {
-                 Console.WriteLine(e);
-                 return StatusCode(500, e.Message);
-             }
-         }*/
 
         [HttpPost]
         [Route("register")]
@@ -145,17 +131,110 @@ namespace Application.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{accountID}")]
         public async Task<ActionResult> DeleteAccount([FromRoute] string accountID)
         {
             try
             {
                 await AccountService.RemoveAccount(accountID);
+                Console.Out.WriteLine(accountID+"DELETE ME");
                 return Ok();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPatch]
+        [Route("addFriend")]
+        public async Task<ActionResult> AddFriend([FromBody] List<User> users)
+        {
+            Console.WriteLine($"{users[0]}, {users[1]}");
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine("Bad Object");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await AccountService.AddFriend(users);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+        [HttpPatch]
+        [Route("user/removeFriend/{userId}")]
+        public async Task<ActionResult> removeFriend([FromRoute] string userId, [FromBody] string friendId)
+        {
+            try
+            {
+                await AccountService.removeFriend(userId, friendId);
+                
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPatch]
+        [Route("editAccount")]
+        public async Task<ActionResult> EditAccount([FromBody] Account account)
+        {
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine("Bad Object");
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                await AccountService.EditAccount(account);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
+        [HttpPost]
+        [Route("topic/add/{userId}")]
+        public async Task<ActionResult> addTopicToUser([FromBody] string topic, [FromRoute] string userId)
+        {
+            Console.Out.WriteLine();
+            try
+            {
+                Console.Out.WriteLine("topic:" + topic + " UserId" + "  " + userId);
+                await AccountService.addTopicToUser(userId, topic);
+                Console.Out.WriteLine("Topic added");
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+        [HttpDelete]
+        [Route("topic/remove/{userId}/{topic}")]
+        public async Task<ActionResult> removeTopicFromUser([FromRoute] string topic, [FromRoute] string userId)
+        {
+            try
+            {
+                await AccountService.removeTopicFromUser(userId, topic);
+                return Ok();
+            }
+            catch (Exception e)
+            {
                 return StatusCode(500, e.Message);
             }
         }

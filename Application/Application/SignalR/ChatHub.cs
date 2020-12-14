@@ -9,6 +9,7 @@ namespace WebApplication.SignalR
 {
     public class ChatHub : Hub
     {
+        
         public Task JoinChatRoom(string ChatRoomId)
         {
             Console.WriteLine($"User:{Context.ConnectionId} joined the chatroom:{ChatRoomId}");
@@ -27,6 +28,11 @@ namespace WebApplication.SignalR
         {
             Console.WriteLine("messageFragment sent?");
             return Clients.Group(activeChatRoomId).SendAsync("ReceiveChatRoomMessageFragment", messageFragment);
+        }
+        public Task UpdateChatroom(Chatroom chatroom)
+        {
+            Console.WriteLine("Chatroom update.");
+            return Clients.Group(chatroom._id).SendAsync("ReceiveChatroomUpdate", chatroom);
         }
     }
 }

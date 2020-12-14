@@ -10,6 +10,7 @@ import sep3.database.Model.Topic;
 import sep3.database.Model.TopicList;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ public class TopicDAOImpl implements TopicDAO {
         Document document = new Document();
         ObjectId _id = new ObjectId(topic.get_id());
         document.append("_id",_id);
-        document.append("name",topic.getName());
+        document.append("name",topic.getName().toLowerCase());
         collection.insertOne(document);
 
 
@@ -54,47 +55,52 @@ public class TopicDAOImpl implements TopicDAO {
 
 
         collection = connection.getDatabase().getCollection("Users");
-        TopicList topicList = new TopicList();
+        ArrayList<Topic> topicList = new ArrayList();
         MongoCursor<Document> cursor = cursor("_id",userId);
         Document document;
+        List<ObjectId> topics = null;
         try {
+
             document = cursor.next();
+            System.out.println(document);
+            topics = document.getList("topics", ObjectId.class);
+            System.out.println(topics);
         }
-        catch(NoSuchElementException e)
+        catch(Exception e)
         {
-            return null;
-        }
-        var topics = document.getList("topics", ObjectId.class);
-        if(topics!=null) {
-            for (ObjectId id : topics
-            ) {
-                System.out.println("Here");
-                Topic topic = getTopic(id);
-                System.out.println(topic);
-                topicList.addTopic(topic);
-            }
+            System.out.println("Exception");
+
         }
 
-        return topicList.getTopics();
+
+        if(topics!=null) {
+            System.out.println("Not null");
+            for (var id : topics
+            ) {
+
+                Topic topic = getTopic(id);
+                topicList.add(topic);
+            }
+
+        }
+
+        return topicList;
     }
 
     @Override
     public Topic getTopic(String topic) {
         collection = connection.getDatabase().getCollection("Topics");
         BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.append("name",topic);
+        whereQuery.append("name",topic.toLowerCase());
         var document = collection.find(whereQuery).first();
-        System.out.println(document);
         if(document==null)
         {
             ObjectId id = new ObjectId();
-
             addTopic(new Topic(id.toString(),topic));
             document = collection.find(whereQuery).first();
         }
         ObjectId id = new ObjectId(document.get("_id").toString());
         Topic topic1 = new Topic(id.toString(),document.get("name").toString());
-        System.out.println(topic1);
         return topic1;
     }
 }

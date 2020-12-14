@@ -71,6 +71,11 @@ namespace Application.Models
             await chatServiceImp.DeleteChatroom(ChatroomID);
         }
 
+        public async Task DeletePrivateChatroom(string userID, string friendID)
+        {
+            await chatServiceImp.DeletePrivateChatroom(userID, friendID);
+        }
+
         public async Task DeleteTopic(string TopicID)
         {
             await chatServiceImp.DeleteTopic(TopicID);
@@ -84,6 +89,11 @@ namespace Application.Models
         public async Task Register(Account account)
         {
             await chatServiceImp.sendNewUser(account);
+        }
+
+        public async Task AddFriend(List<User> users)
+        {
+            await chatServiceImp.AddFriend(users);
         }
 
         public void ProcessCredentials(string credentialsJson)
@@ -114,6 +124,36 @@ namespace Application.Models
         public async Task<List<Chatroom>> requestChatroom(string userID)
         {
             return await chatServiceImp.requestUsersChatroom(userID);
+        }
+
+        public async Task EditAccount(Account account)
+        {
+            await chatServiceImp.sendUserUpdate(account);
+        }
+
+        public void removeTopicFromUser(string userId, string topic)
+        {
+            chatServiceImp.removeTopicfromUser(userId, topic);
+        }
+
+        public void addTopicToUser(string userId, string topic)
+        {
+            chatServiceImp.addTopicToUser(userId, topic);
+        }
+
+        public async Task<List<Chatroom>> getChatroomsByTopic(string topic)
+        {
+           return await chatServiceImp.requestChatroomsByTopic(topic);
+        }
+
+        public async Task removeFriend(string userId, string friendId)
+        {
+            await chatServiceImp.removeFriend(userId, friendId);
+        }
+
+        public async Task<Chatroom> getPrivateChatroom(string user, string user1)
+        {
+           return await chatServiceImp.getPrivateChatroom(user, user1);
         }
     }
 }

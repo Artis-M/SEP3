@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Services
 {
@@ -16,5 +17,10 @@ namespace Application.Services
         public Task<Account> RequestAccount(string username);
 
         public Task<Account> RequestAccountById(string userID);
+        public Task AddFriend(List<User> users);
+        public Task EditAccount(Account account);
+        public Task removeTopicFromUser(string userId, string topic);
+        public Task addTopicToUser(string userId, string topic);
+        public Task removeFriend(string userId, string friendId);
     }
 }
