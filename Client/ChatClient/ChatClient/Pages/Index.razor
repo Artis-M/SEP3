@@ -51,7 +51,7 @@
                     <button class="backButton" @onclick="BackToHub">Back to Hub</button>
                     @if (currentChatroom != null)
                     {
-                        @if (currentChatroom.type.Equals("private") && !(currentChatroom.owner.Equals(user._id)))
+                        @if (currentChatroom.type.Equals("private") || !(currentChatroom.owner.Equals(user._id)))
                         {
                             <button class="leaveButton" @onclick="LeaveChatroom">Leave Chatroom</button>
                         }
@@ -311,7 +311,7 @@
         {
             sendMessage();
         }
-        else if (e.Key.Equals(" ") || e.Key.Equals("Backspace"))
+        else
         {
             sendMessageFragment();
         }
