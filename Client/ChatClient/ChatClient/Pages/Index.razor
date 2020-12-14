@@ -51,11 +51,11 @@
                     <button class="backButton" @onclick="BackToHub">Back to Hub</button>
                     @if (currentChatroom != null)
                     {
-                        @if (currentChatroom.type.Equals("private") || !(currentChatroom.owner.Equals(user._id)))
+                        @if ((currentChatroom.type.Equals("private") || !(currentChatroom.owner.Equals(user._id))) && !(currentChatroom.type.Equals("private")))
                         {
                             <button class="leaveButton" @onclick="LeaveChatroom">Leave Chatroom</button>
                         }
-                        @if (currentChatroom.owner.Equals(user._id) || user.role.Equals("admin"))
+                        @if ((currentChatroom.owner.Equals(user._id) || user.role.Equals("admin")) && !(currentChatroom.type.Equals("private")))
                         {
                             <button class="leaveButton" @onclick="DeleteChatroom">Delete Chatroom</button>
                         }
@@ -165,8 +165,8 @@
         chatService.chatroomUpdate += this.ChatroomUpdate;
         await ConnectToChatRoom();
         await GetUsersChatRooms();
-        await JsRuntime.InvokeAsync<object>("scroll", "userList");
-        await JsRuntime.InvokeAsync<object>("scroll", "messages");
+        await JsRuntime.InvokeVoidAsync("scroll", "userList");
+        await JsRuntime.InvokeVoidAsync("scroll", "messages");
     }
 
     public async Task AddFriend(string userID)
@@ -278,7 +278,7 @@
     {
         Messages.Add(message);
         await InvokeAsync(() => StateHasChanged());
-        await JsRuntime.InvokeAsync<object>("scroll", "messages");
+        await JsRuntime.InvokeVoidAsync("scroll", "messages");
     }
 
     public async void DisplayNewMessageFragment(MessageFragment messageFragment)
@@ -302,7 +302,7 @@
             }
         }
         await InvokeAsync(() => StateHasChanged());
-        await JsRuntime.InvokeAsync<object>("scroll", "messageFragments");
+        await JsRuntime.InvokeVoidAsync("scroll", "messageFragments");
     }
 
     protected void KeyDown(KeyboardEventArgs e)
