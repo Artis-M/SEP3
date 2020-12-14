@@ -1,13 +1,12 @@
 ﻿@page "/Main"
 @using Services
-@using global::Models
 @using System.Text.Json
 @using global::Models.Authentication
 @using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager NavigationManager;
 @inject IAccountService AccountService;
 @inject IChatroomService ChatroomService;
-@inject ChatService ChatService;
+@inject IChatService ChatService;
 @inject IJSRuntime JsRuntime;
 @inject AuthenticationStateProvider AuthenticationStateProvider;
 

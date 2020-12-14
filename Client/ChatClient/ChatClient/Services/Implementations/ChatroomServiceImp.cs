@@ -164,7 +164,7 @@ namespace Services
             {
                 BaseAddress = new Uri(uri)
             };
-            http.DeleteAsync($"{ChatroomID}");
+            await http.DeleteAsync($"{ChatroomID}");
         }
     }
 }
