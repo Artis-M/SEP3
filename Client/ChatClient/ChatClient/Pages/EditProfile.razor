@@ -56,6 +56,11 @@
                     </div>
                 </div>
                 <div class="Edit_Left">
+                     <div class="form-group">
+                                            Profile Picture:<br/>
+                    
+                                            <InputText type="text" class="topicInput" rows="1"cols="50" @bind-Value="updatedAccount.PictureURL"/>
+                                        </div>
                     <div class="form-group">
                         Topics:<br/>
 
@@ -67,7 +72,7 @@
                         <button @onclick="@removeTopic" class="removeTopic">Remove</button>
                     </div>
                     <ul>
-                        @if (topics!=null)
+                        @if (topics != null)
                         {
                             @foreach (Topic topic in topics)
                             {
@@ -145,12 +150,11 @@
 
     private  void addTopic()
     {
-        AccountService.addTopicToProfile(topic,updatedAccount._id);
-        Console.Out.WriteLine("Topic length: " + topic.Length);
         if (topic.Length!=0)
         {
             topicError = "";
             topics.Add(new Topic(topic));
+            AccountService.addTopicToProfile(topic,updatedAccount._id);
         }
         else
         {
@@ -172,6 +176,7 @@
                 if (topic1.name.ToLower().Equals(topic.ToLower()))
                 {
                     removed.Remove(topic1);
+                    AccountService.removeTopicFromProfile(topic,updatedAccount._id);
                     countRemoved++;
                 }
             }
@@ -185,7 +190,6 @@
             Console.WriteLine(e);
         }
         topics = removed;
-        AccountService.removeTopicFromProfile(topic,updatedAccount._id);
         topic = "";
         StateHasChanged();
     }

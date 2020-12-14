@@ -52,6 +52,7 @@ namespace Application.Services
         public async Task RequestAccounts()
         {
             Accounts = await model.RequestUsers();
+
         }
 
         public async Task<IList<Account>> GetAllAccounts()

@@ -16,6 +16,7 @@ namespace Models
         [Required,MinLength(1,ErrorMessage = "Please Enter Last Name")]
         [JsonPropertyName("Lname")]
         public string Lname { get; set; }
+        [JsonPropertyName("pictureURL")]
         public string PictureURL{get;set;}
 
         public User()

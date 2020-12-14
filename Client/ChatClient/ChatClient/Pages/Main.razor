@@ -46,7 +46,7 @@
         <div>
             <h3>Chatrooms by topic</h3>
         </div>
-        <div class="flex-row d-flex">
+        
             @if (topics == null || topics.Count == 0)
             {
                 <p>You don't have any topics</p>
@@ -54,16 +54,18 @@
             }
             else
             {
+                <div class="flex-row d-flex">
                 <select class="form-control selectpicker" @bind="@filterOption" style="width: 200px;margin-right: 20px">
                     @foreach (var item in topics)
                     {
                         <option>@item.name</option>
                     }
                 </select>
-                <button @onclick="@FilterChats" class="chatroomSearch">Search</button>
+                    <button @onclick="@FilterChats" class="chatroomSearch">Search</button>
+                    </div>
             }
 
-        </div>
+        
         <div class="filteredChatrooms">
             @if (filterCount>0)
             {
@@ -195,7 +197,12 @@
         }
         Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
         Account user = await AccountService.getUser(storedUser.Username);
+        Console.Out.WriteLine(user.Username);
         topics = user.topics;
+        foreach (var VARIABLE in topics)
+        {
+            Console.Out.WriteLine(VARIABLE.name);
+        }
         friends = user.friends;
 
     }

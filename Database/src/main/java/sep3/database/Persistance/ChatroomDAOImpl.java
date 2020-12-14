@@ -326,7 +326,7 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         BasicDBObject whereQuery = new BasicDBObject();
         BasicDBObject participant = new BasicDBObject();
 
-       Topic topicObject = topicDAO.getTopic(topic);
+       Topic topicObject = topicDAO.getTopic(topic.toLowerCase());
         participant.append("topics",new ObjectId(topicObject.get_id()));
         whereQuery.append("topics", participant);
         MongoCursor<Document> documents = collection.find(whereQuery).iterator();

@@ -55,30 +55,36 @@ public class TopicDAOImpl implements TopicDAO {
 
 
         collection = connection.getDatabase().getCollection("Users");
-        TopicList topicList = new TopicList();
+        ArrayList<Topic> topicList = new ArrayList();
         MongoCursor<Document> cursor = cursor("_id",userId);
         Document document;
         List<ObjectId> topics = null;
         try {
+
             document = cursor.next();
+            System.out.println(document);
             topics = document.getList("topics", ObjectId.class);
+            System.out.println(topics);
         }
         catch(Exception e)
         {
-            return null;
+            System.out.println("Exception");
+
         }
 
 
         if(topics!=null) {
+            System.out.println("Not null");
             for (var id : topics
             ) {
 
                 Topic topic = getTopic(id);
-                topicList.addTopic(topic);
+                topicList.add(topic);
             }
+
         }
 
-        return topicList.getTopics();
+        return topicList;
     }
 
     @Override
