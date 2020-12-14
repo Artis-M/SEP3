@@ -133,6 +133,7 @@ public class UserDAOImpl implements UserDAO
         edit.append("role", account.getRole());
         edit.append("email", account.getEmail());
         BasicDBObject update = new BasicDBObject();
+        edit.append("PictureURL",account.getPictureURL());
         update.put("$set",edit);
         collection.updateOne(toEdit,update);
     }
@@ -251,6 +252,7 @@ public class UserDAOImpl implements UserDAO
         add.append("Lname", account.getLname());
         add.append("role", account.getRole());
         add.append("email", account.getEmail());
+        add.append("PictureURL",account.getPictureURL());
         if (account.getTopics()!= null)
         {
             Document topics = new Document();
