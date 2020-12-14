@@ -43,6 +43,7 @@
         <e p="Services" t="Include">
           <e p="IAccountService.cs" t="Include" />
           <e p="IChatroomService.cs" t="Include" />
+          <e p="IChatService.cs" t="Include" />
           <e p="Implementations" t="Include">
             <e p="AccountServiceImp.cs" t="Include" />
             <e p="ChatroomServiceImp.cs" t="Include" />

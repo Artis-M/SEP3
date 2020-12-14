@@ -51,6 +51,7 @@ public class UserDAOImpl implements UserDAO
                 document.get("Fname").toString(), document.get("Lname").toString(), document.get("email").toString(),document.get("PictureURL").toString()
         );
         account.setTopics(topicDAO.getUserTopics(_id));
+        System.out.println(account.getTopics());
         account.setFriends(getUserFriends(_id.toString()));
         return account;
 
@@ -218,7 +219,7 @@ public class UserDAOImpl implements UserDAO
     {
         BasicDBObject newDocument = new BasicDBObject();
         ObjectId topicID = new ObjectId(topicDAO.getTopic(Topic).get_id());
-        newDocument.append("$push", new BasicDBObject().append("topics", topicID));
+        newDocument.append("$push", new BasicDBObject().append("topics",topicID));
         BasicDBObject searchQuery = new BasicDBObject();
         ObjectId user_id = new ObjectId(userId);
         searchQuery.append("_id", user_id);
