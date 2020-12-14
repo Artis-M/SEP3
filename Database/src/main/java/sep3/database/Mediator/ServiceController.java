@@ -287,6 +287,9 @@ public class ServiceController implements Runnable
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
 
                 }
+                else if(requestCommand.getCommand().equals("DELETE-PrivateChatroom")){
+                    chatroomDAO.removeChatroom(requestCommand.getSpecificOrder(),requestCommand.getVariableUser());
+                }
             }
         } catch (IOException e)
         {

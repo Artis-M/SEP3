@@ -17,6 +17,7 @@ namespace Application.Models
         public Task LeaveChatroom(string userID, string chatroomID);
         public Task JoinChatroom(string userID, string chatroomID);
         public Task DeleteChatroom(string ChatroomID);
+        public Task DeletePrivateChatroom(string userID, string friendID);
         public Task DeleteTopic(string topicID);
         public Task RemoveUser(string userID);
         public Task Register(Account account);

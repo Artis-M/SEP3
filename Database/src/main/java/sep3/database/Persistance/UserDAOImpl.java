@@ -48,7 +48,7 @@ public class UserDAOImpl implements UserDAO
         Account account = new Account(
                 document.get("role").toString(), document.get("Pass").toString()
                 , _id.toString(), document.get("Username").toString(),
-                document.get("Fname").toString(), document.get("Lname").toString(), document.get("email").toString()
+                document.get("Fname").toString(), document.get("Lname").toString(), document.get("email").toString(),document.get("PictureURL").toString()
         );
         account.setTopics(topicDAO.getUserTopics(_id));
         account.setFriends(getUserFriends(_id.toString()));
@@ -148,7 +148,7 @@ public class UserDAOImpl implements UserDAO
         {
             Document document = cursor.next();
             return new User(document.get("_id").toString(), document.get("Username").toString(),
-                    document.get("Fname").toString(), document.get("Lname").toString());
+                    document.get("Fname").toString(), document.get("Lname").toString(), document.get("PictureURL").toString());
         } catch (NoSuchElementException e)
         {
 

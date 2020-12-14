@@ -20,8 +20,8 @@
         {
         }
 
-        public Account(string role, string pass, string email, string id, string username, string fname, string lname) :
-            base(id, username, fname, lname)
+        public Account(string role, string pass, string email, string id, string username, string fname, string lname, string PictureURL) :
+            base(id, username, fname, lname,PictureURL)
         {
             this.email = email;
             this.Pass = pass;

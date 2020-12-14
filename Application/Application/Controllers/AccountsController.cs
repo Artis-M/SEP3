@@ -176,6 +176,7 @@ namespace Application.Controllers
             try
             {
                 await AccountService.removeFriend(userId, friendId);
+                
                 return Ok();
             }
             catch (Exception e)

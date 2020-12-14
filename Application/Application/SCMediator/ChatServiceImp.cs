@@ -142,6 +142,12 @@ namespace Application.SCMediator
             CommandLine command = new CommandLine {Command = "DELETE-Chatroom", SpecificOrder = chatroomID};
             await Send(command);
         }
+
+        public async Task DeletePrivateChatroom(string userID, string friendID)
+        {
+            CommandLine command = new CommandLine{Command = "DELETE-PrivateChatroom",SpecificOrder = userID,variableUser = friendID};
+            await Send(command);
+        }
         
         public async Task DeleteUser(string userID)
         {
