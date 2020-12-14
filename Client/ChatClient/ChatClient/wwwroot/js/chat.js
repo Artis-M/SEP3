@@ -1,4 +1,9 @@
 ﻿function scroll(elementID) {
-    var elem = document.getElementById('elementID');
-    elem.scrollTop = elem.scrollHeight;
+    let elem = document.getElementById(elementID);
+    // elem.scrollTop = elem.scrollHeight;
+    elem.scrollBy({
+        top: elem.scrollHeight,
+        left: 0,
+        behavior: "smooth"
+    });
 }
