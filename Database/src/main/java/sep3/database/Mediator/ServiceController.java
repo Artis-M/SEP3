@@ -241,9 +241,9 @@ public class ServiceController implements Runnable
                 }
                 else if(requestCommand.getCommand().equals("DELETE-User")){
                    // System.out.println(requestCommand.getSpecificOrder());
-                    userDAO.deleteAccount(requestCommand.getSpecificOrder());
-                    userDAO.deleteFriendFromUsers(requestCommand.getSpecificOrder());
-                    chatroomDAO.deleteUserFromChatrooms(requestCommand.getSpecificOrder());
+                    userDAO.deleteAccount(requestCommand.getVariableUser());
+                    userDAO.deleteFriendFromUsers(requestCommand.getVariableUser());
+                    chatroomDAO.deleteUserFromChatrooms(requestCommand.getVariableUser());
 
                 }
                 else if(requestCommand.getCommand().equals("UserUpdate"))
