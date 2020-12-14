@@ -19,5 +19,6 @@ namespace Application.Services
         public Task AddUser(string ChatRoomID, string userID);
         public Task RemoveUser(string ChatRoomID,  string userID);
         public Task<List<Chatroom>> getChatroomsByTopic(string topic);
+        public Task<Chatroom> getPrivateChatroom(string user1, string user2);
     }
 }

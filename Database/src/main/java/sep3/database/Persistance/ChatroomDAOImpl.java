@@ -216,16 +216,34 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         BasicDBObject chatroomObject = new BasicDBObject();
         BasicDBObject updatePList = new BasicDBObject();
         BasicDBObject participantObject = new BasicDBObject();
-
         ObjectId participantId = new ObjectId(userId);
         participantObject.append("participantId", participantId);
-
-
         updatePList.append("$pull", new BasicDBObject().append("participants",participantObject));
         ObjectId chatroom_id = new ObjectId(chatroomId);
         chatroomObject.append("_id", chatroom_id);
         collection.updateOne(chatroomObject,updatePList);
 
+
+    }
+
+    public Chatroom getPrivateChatroom(String userId1,String userId2)
+    {
+        BasicDBObject object = new BasicDBObject();
+        ObjectId user1 = new ObjectId(userId1);
+        object.append("participantId",user1);
+        BasicDBObject query = new BasicDBObject();
+        BasicDBObject object1 = new BasicDBObject();
+      //  BasicDBObject query1 = new BasicDBObject();
+        ObjectId user2 = new ObjectId(userId2);
+        object1.append("participantId",user2);
+        List<BasicDBObject> participants = new ArrayList<>();
+        participants.add(object1);
+        participants.add(object);
+        query.append("participants",participants);
+        query.append("type","private");
+        Document document = collection.find(query).first();
+        System.out.println(query);
+        return createChatroom(document);
     }
 
     @Override
@@ -245,6 +263,13 @@ public class ChatroomDAOImpl implements ChatroomDAO {
 
     }
 
+    @Override
+    public void removeChatroom(String id) {
+        ObjectId _id = new ObjectId(id);
+        BasicDBObject remove = new BasicDBObject("_id",_id);
+        collection.deleteOne(remove);
+    }
+
 
     @Override
     public ArrayList<Chatroom> getChatroomByUserId(String userId) {
@@ -255,7 +280,9 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         ObjectId _id = new ObjectId(userId);
         participant.append("participantId",_id);
         whereQuery.append("participants", participant);
+        whereQuery.append("type","public");
         MongoCursor<Document> documents = collection.find(whereQuery).iterator();
+
 
         while (documents.hasNext()) {
             Document json = documents.next();

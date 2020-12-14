@@ -3,6 +3,7 @@ package sep3.database.Mediator;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.bson.types.ObjectId;
 import sep3.database.Model.Account;
 import sep3.database.Model.Chatroom;
 import sep3.database.Model.Message;
@@ -175,6 +176,7 @@ public class ServiceController implements Runnable
                     String chatroomId = requestCommand.getVariableChatroom();
                     chatroomDAO.joinChatroom(userId, chatroomId);
                 } else if (requestCommand.getCommand().equals("LEAVE-Chatroom"))
+
                 {
 
                     String userId = requestCommand.getVariableUser();
@@ -190,11 +192,19 @@ public class ServiceController implements Runnable
                 else if(requestCommand.getCommand().equals("AddFriends")){
                     Type type = new TypeToken<ArrayList<User>>() {}.getType();
                     ArrayList<User> specificOrder = gson.fromJson(requestCommand.getSpecificOrder(), type);
-
                     User user1 = specificOrder.get(0);
                     User user2 = specificOrder.get(1);
                     userDAO.addFriend(user1.get_id(), user2.get_id());
                     userDAO.addFriend(user2.get_id(),user1.get_id());
+                    Chatroom privateChat = new Chatroom();
+                    ObjectId _id = new ObjectId();
+                    privateChat.set_id(_id.toString());
+                    privateChat.setType("private");
+                    privateChat.addUser(user1);
+                    privateChat.addUser(user2);
+                    privateChat.setName(user1.getUsername() + " " + user2.getUsername());
+                    privateChat.setOwner(user1.get_id());
+                    chatroomDAO.AddChatroom(privateChat);
                 }
                 else if(requestCommand.getCommand().equals("removeFriend"))
                 {
@@ -206,6 +216,28 @@ public class ServiceController implements Runnable
                     Chatroom chatroom = gson.fromJson(requestCommand.getSpecificOrder(),Chatroom.class);
                    // System.out.println();
                     chatroomDAO.AddChatroom(chatroom);
+                }
+                else if(requestCommand.getCommand().equals("REQUEST-PrivateCHatroom"))
+                {
+                    System.out.println(requestCommand);
+                    Chatroom chatroom = new Chatroom();
+                    chatroom = chatroomDAO.getPrivateChatroom(
+                            requestCommand.getVariableUser(),requestCommand.getSpecificOrder());
+                            String responseBack = gson.toJson(chatroom);
+                    responseCommand.setSpecificOrder(responseBack);
+
+                    responseCommand.setCommand("REQUEST-PrivateCHatroom");
+                    String sendBack = gson.toJson(responseCommand);
+                    byte[] toSendBytes = sendBack.getBytes();
+                    int toSendLen = toSendBytes.length;
+                    byte[] toSendLenBytes = new byte[4];
+                    toSendLenBytes[0] = (byte)(toSendLen & 0xff);
+                    toSendLenBytes[1] = (byte)((toSendLen >> 8) & 0xff);
+                    toSendLenBytes[2] = (byte)((toSendLen >> 16) & 0xff);
+                    toSendLenBytes[3] = (byte)((toSendLen >> 24) & 0xff);
+                    byte[] responseAsBytes = sendBack.getBytes();
+                    outputStream.write(toSendLenBytes);
+                    outputStream.write(responseAsBytes, 0, responseAsBytes.length);
                 }
                 else if(requestCommand.getCommand().equals("DELETE-User")){
                    // System.out.println(requestCommand.getSpecificOrder());

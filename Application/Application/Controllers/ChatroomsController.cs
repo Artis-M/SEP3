@@ -87,6 +87,28 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+        
+        [HttpGet]
+        [Route("private/{userId}/{userId1}")]
+        public async Task<ActionResult<Chatroom>> getPrivateCHatroom([FromRoute] string userId,[FromRoute] string userId1)
+        {
+            // Console.WriteLine("Getting chat room:" + chatRoomId);
+            Chatroom chatroom = await chatroomService.getPrivateChatroom(userId,userId1);
+            try
+            {
+                if (chatroom == null)
+                {
+                    return NotFound();
+                }
+
+                return chatroom;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500, e.Message);
+            }
+        }
 
         [HttpGet]
         [Route("user/chatrooms/{id}")]

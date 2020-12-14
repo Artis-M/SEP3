@@ -38,4 +38,14 @@ public class CommandLine
     public void setSpecificOrder(String specificOrder) {
         SpecificOrder = specificOrder;
     }
+
+    @Override
+    public String toString() {
+        return "CommandLine{" +
+                "Command='" + Command + '\'' +
+                ", variableUser='" + variableUser + '\'' +
+                ", variableChatroom='" + variableChatroom + '\'' +
+                ", SpecificOrder='" + SpecificOrder + '\'' +
+                '}';
+    }
 }

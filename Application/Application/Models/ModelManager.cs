@@ -145,5 +145,10 @@ namespace Application.Models
         {
             await chatServiceImp.removeFriend(userId, friendId);
         }
+
+        public async Task<Chatroom> getPrivateChatroom(string user, string user1)
+        {
+           return await chatServiceImp.getPrivateChatroom(user, user1);
+        }
     }
 }
