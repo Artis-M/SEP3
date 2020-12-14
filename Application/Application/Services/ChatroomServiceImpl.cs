@@ -94,5 +94,10 @@ namespace Application.Services.Implementations
         {
             return await model.getChatroomsByTopic(topic);
         }
+
+        public async Task<Chatroom> getPrivateChatroom(string user1, string user2)
+        {
+            return await model.getPrivateChatroom(user1, user2);
+        }
     }
 }

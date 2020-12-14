@@ -240,6 +240,26 @@ namespace Application.SCMediator
             }
         }
 
+        public async Task<Chatroom> getPrivateChatroom(string user, string user1)
+        {
+            CommandLine command = new CommandLine {Command = "REQUEST-PrivateCHatroom", variableUser = user,SpecificOrder = user1};
+            await Send(command);
+            Chatroom room = new Chatroom();
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
+            int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
+            string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
+            CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
+            if (upsdelivery.Command.Equals("REQUEST-PrivateCHatroom"))
+            {
+                room = JsonSerializer.Deserialize<Chatroom>(upsdelivery.SpecificOrder);
+                return room;
+            }
+
+            return null;
+        }
         public async Task<Account> requestUserByID(string userID)
         {
             CommandLine command = new CommandLine {Command = "REQUEST-UserByID", variableUser = userID};

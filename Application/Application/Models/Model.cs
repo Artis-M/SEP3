@@ -33,5 +33,7 @@ namespace Application.Models
 
         public Task<List<Chatroom>> getChatroomsByTopic(string topic);
         public Task removeFriend(string userId, string friendId);
+        public Task<Chatroom> getPrivateChatroom(string user, string user1);
+        
     }
 }

@@ -157,7 +157,7 @@
                             <button class="friendRemove" @onclick="@((() => RemoveFriend(item._id)))">
                                 <i class="oi oi-minus" />
                             </button>
-                            <button class="friendChatroom" >
+                            <button @onclick="@(() => { enterPrivateChatroom(item._id); })" class="friendChatroom" >
                                 chat
                             </button>
                         </div>
@@ -228,6 +228,11 @@
         return check;
     }
 
+    private async void enterPrivateChatroom(string id)
+    {
+        await ChatroomService.EnterPrivateChatroom(storedUser._id,id);
+        NavigationManager.NavigateTo("");
+    }
     private async void FilterChats()
     {
         try
@@ -270,7 +275,7 @@
     private async Task JoinChatroom(string id)
     {
         await ChatroomService.JoinChatRoom(id, storedUser._id);
-        Console.Out.WriteLine($"CHATROOOOM : : : {id}");
+       // Console.Out.WriteLine($"CHATROOOOM : : : {id}");
         await EnterChatroom(id);
     }
 

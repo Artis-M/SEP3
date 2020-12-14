@@ -16,4 +16,5 @@ public interface ChatroomDAO {
     ArrayList<Chatroom> getChatroomByUserId(String userId);
     void deleteUserFromChatrooms(String userId);
     ArrayList<Chatroom> getChatroomsByTopic(String topic);
+    Chatroom getPrivateChatroom(String userId1,String userId2);
 }
