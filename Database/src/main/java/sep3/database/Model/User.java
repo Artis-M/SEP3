@@ -15,7 +15,7 @@ public class User {
         Username = username;
         Fname = fname;
         Lname = lname;
-        PictureURL = PictureURL;
+        this.PictureURL = PictureURL;
     }
 
     public User(String username, String fname, String lname) {
