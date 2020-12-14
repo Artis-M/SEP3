@@ -263,6 +263,13 @@ public class ChatroomDAOImpl implements ChatroomDAO {
 
     }
 
+    @Override
+    public void removeChatroom(String id) {
+        ObjectId _id = new ObjectId(id);
+        BasicDBObject remove = new BasicDBObject("_id",_id);
+        collection.deleteOne(remove);
+    }
+
 
     @Override
     public ArrayList<Chatroom> getChatroomByUserId(String userId) {
