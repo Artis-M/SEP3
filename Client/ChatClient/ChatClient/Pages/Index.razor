@@ -87,7 +87,10 @@
                                             <p>
                                                 @if (currentChatroom != null & isConnectedToChatRoom)
                                                 {
-                                                    @item.username
+                                                    @if (currentChatroom != null)
+                                                    {
+                                                        <img class="img-fluid chatProfileImageMessage" src="@currentChatroom.participants.First((user => user._id.Equals(item.authorID))).PictureURL"/><b>@item.username</b>
+                                                    }
                                                 }
                                                 : @item.message
                                             </p>
@@ -102,14 +105,15 @@
                                 {
                                     @foreach (var item in MessageFragments)
                                     {
-                                        <p>
-                                            User
-                                            @if (currentChatroom != null)
-                                            {
-                                                @item.username
-                                            }
-                                            is typing: @item.message ......
-                                        </p>
+                                        <div>
+                                <p>
+                                    @if (currentChatroom != null)
+                                    {
+                                        <img class="img-fluid chatProfileImageMessage" src="@currentChatroom.participants.First((user => user._id.Equals(item.authorIdString))).PictureURL"/><b>@item.username</b>
+                                    }
+                                    is typing: <p class="messageFragmentMessage">@item.message ......</p>
+                                </p>
+                                </div>
                                     }
                                 }
                             </div>
@@ -303,6 +307,7 @@
         }
         await InvokeAsync(() => StateHasChanged());
         await JsRuntime.InvokeVoidAsync("scroll", "messageFragments");
+        await JsRuntime.InvokeVoidAsync("scrollMessageFragment", "messageFragmentMessage");
     }
 
     protected void KeyDown(KeyboardEventArgs e)

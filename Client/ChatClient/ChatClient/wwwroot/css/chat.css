@@ -1,9 +1,20 @@
 
 .chatProfileImage{
     object-fit: cover;
-    height: auto;
     width: 50px;
     height: 50px;
+}
+.chatProfileImageMessage{
+    border-radius: 5px;
+    margin-right: 2pt;
+    margin-top: 2pt;
+    margin-bottom: 2pt;
+    object-fit: cover;
+    border-style: solid;
+    border-width: 2pt;
+    border-color: #0B9EF0;
+    width: 30px;
+    height: 30px;
 }
 .username{
     display: inline;
@@ -21,6 +32,17 @@
     scrollbar-width: none;
 }
 .userScroll::-webkit-scrollbar {
+    display: none;
+}
+.messageFragmentMessage{
+    height: 60px;
+    max-height: 36px;
+    width: 80vw;
+    overflow: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+.messageFragmentMessage::-webkit-scrollbar {
     display: none;
 }
 

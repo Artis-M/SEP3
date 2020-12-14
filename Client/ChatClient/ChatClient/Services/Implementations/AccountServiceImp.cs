@@ -38,7 +38,6 @@ namespace Services
             http.DefaultRequestHeaders.Add("username", username);
             http.DefaultRequestHeaders.Add("password", hashedPassword);
 
-
             HttpResponseMessage responseMessage = await http.GetAsync(request);
             //Console.Out.WriteLine(responseMessage.StatusCode);
             Account account = null;
