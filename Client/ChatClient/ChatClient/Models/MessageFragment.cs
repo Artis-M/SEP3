@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace ChatClient.Models
+namespace Models
 {
     public class MessageFragment
     {

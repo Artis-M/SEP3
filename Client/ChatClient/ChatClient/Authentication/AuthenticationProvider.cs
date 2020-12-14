@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Application.Models;
  using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
  using Models;
  using Services;
 
- namespace Application.Authentication
+ namespace Models.Authentication
 {
     public class AuthenticationProvider : AuthenticationStateProvider
     {

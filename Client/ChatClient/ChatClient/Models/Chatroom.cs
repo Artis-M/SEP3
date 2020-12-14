@@ -1,25 +1,24 @@
-﻿﻿﻿using System.Collections.Generic;
-  using System.Threading.Tasks;
-  using Application.Models;
-  using Models;
-  using MongoDB.Bson;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
- namespace Tier2.Model
+namespace Models
 {
     public class Chatroom
     {
         public string _id { get; set; }
+        
+        public string type { get; set; }
+        public string owner { get; set; }
         public string name { get; set; }
         public List<Topic> topics { get; set; }
         public List<Message> messages { get; set; }
         public List<User> participants { get; set; }
-        public string owner { get; set; }
-        public string type { get; set; } = "public";
+
         public Chatroom()
         {
-            participants = new List<User>();
-            messages = new List<Message>();
             topics = new List<Topic>();
+            messages = new List<Message>();
+            participants = new List<User>();
         }
 
         public Chatroom(string id, string name, List<User> participants, List<Message> messages)
