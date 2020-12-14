@@ -142,5 +142,10 @@ namespace Services
                 Console.Out.WriteLine(Chatrooms.Count);
                 return Chatrooms;
         }
+
+        public Task EnterPrivateChatroom(string user, string user1)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

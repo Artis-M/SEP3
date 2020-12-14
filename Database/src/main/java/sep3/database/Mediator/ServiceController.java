@@ -288,7 +288,7 @@ public class ServiceController implements Runnable
 
                 }
                 else if(requestCommand.getCommand().equals("DELETE-PrivateChatroom")){
-                    chatroomDAO.removeChatroom(requestCommand.getSpecificOrder(),requestCommand.getVariableUser());
+                    chatroomDAO.deletePrivateChatroom(requestCommand.getSpecificOrder(),requestCommand.getVariableUser());
                 }
             }
         } catch (IOException e)
