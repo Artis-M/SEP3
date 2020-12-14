@@ -49,13 +49,24 @@
     height: 50px;
 }
 .menuButton{
-    margin: auto;
-    height: 50px;
+    margin: 0 0 0 15px;
+    height: 32px;
     width: auto;
     border-width: 0px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     background-color: #0B9EF0;
     color: #fff;
+    border-radius: 5px;
+}
+.menuButton:hover{
+
+    color:#0B9EF0;
+    background-color: #b0d8ee;
+}
+.menuButton:active{
+    border:1px solid #0B9EF0;
+    color:#0B9EF0;
+    background-color: #b0d8ee;
 }
 .leaveButton{
     margin: auto;
@@ -65,6 +76,18 @@
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     background-color: #c03333;
     color: #fff;
+}
+.leaveButton:hover
+{
+    background-color: #fab9be;
+    color:#D32240;
+}
+.leaveButton:active
+{
+    outline:none;
+    border:1px solid #D32240;
+    background-color: #fab9be;
+    color:#D32240;
 }
 .chatroomTitle{
     font-size: 25pt;
@@ -136,6 +159,16 @@
     background-color: #70cf7e;
     color: #fff;
 }
+.backButton:hover
+{
+    background-color: #c6f2d3;
+    color:#70cf7e;
+}
+.backButton:active{
+    border:1px solid #70cf7e;
+    background-color: #c6f2d3;
+    color:#70cf7e;
+}
 .sendButton{
     margin: auto;
     height: 50px;
@@ -146,3 +179,14 @@
     background-color:rgb(77, 136, 101);
     color: #fff;
 }
+.sendButton:hover
+{
+    background-color: #c6f2d3;
+    color:rgb(77, 136, 101);
+}
+.sendButton:active{
+    border:1px solid rgb(77, 136, 101);
+    background-color: #c6f2d3;
+    color:rgb(77, 136, 101);
+}
+
