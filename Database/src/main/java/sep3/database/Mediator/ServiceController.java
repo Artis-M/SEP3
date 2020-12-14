@@ -24,8 +24,6 @@ public class ServiceController implements Runnable
     private UserDAO userDAO;
     private TopicDAO topicDAO;
     private ChatroomDAO chatroomDAO;
-    private BufferedReader in;
-    private PrintWriter out;
     private Gson gson;
 
     public ServiceController() throws IOException
@@ -53,12 +51,14 @@ public class ServiceController implements Runnable
             Socket socket = welcomeSocket.accept();
             InputStream inputStream = socket.getInputStream();
             OutputStream outputStream = socket.getOutputStream();
-
-            out = new PrintWriter(socket.getOutputStream(), true);
             System.out.println("Client Connected");
             while (running)
             {
-                byte[] lenbytes = new byte[1024];
+                byte[] length = new byte[4];
+                inputStream.read(length, 0, 4);
+                int len = (((length[3] & 0xff) << 24) | ((length[2] & 0xff) << 16) |
+                        ((length[1] & 0xff) << 8) | (length[0] & 0xff));
+                byte[] lenbytes = new byte[len];
                 int read = inputStream.read(lenbytes, 0, lenbytes.length);
                 String request = new String(lenbytes, 0, read);
 
@@ -66,7 +66,6 @@ public class ServiceController implements Runnable
                 CommandLine requestCommand = gson.fromJson(request, CommandLine.class);
                // System.out.println(requestCommand.getSpecificOrder());
                 CommandLine responseCommand = new CommandLine();
-               // System.out.println(requestCommand.getCommand());
                 if (requestCommand.getCommand().equals("REQUEST-UserCredentials"))
                 {
 
@@ -77,8 +76,17 @@ public class ServiceController implements Runnable
                    // System.out.println(response);
                     commandLine1.setCommand("UserCredentials");
                     String sendBack = gson.toJson(commandLine1);
+                    byte[] toSendBytes = sendBack.getBytes();
+                    int toSendLen = toSendBytes.length;
+                    byte[] toSendLenBytes = new byte[4];
+                    toSendLenBytes[0] = (byte)(toSendLen & 0xff);
+                    toSendLenBytes[1] = (byte)((toSendLen >> 8) & 0xff);
+                    toSendLenBytes[2] = (byte)((toSendLen >> 16) & 0xff);
+                    toSendLenBytes[3] = (byte)((toSendLen >> 24) & 0xff);
                     byte[] responseAsBytes = sendBack.getBytes();
+                    outputStream.write(toSendLenBytes);
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
+
 
                 } else if (requestCommand.getCommand().equals("REQUEST-User"))
                 {
@@ -88,8 +96,17 @@ public class ServiceController implements Runnable
                     responseCommand.setSpecificOrder(response);
                     responseCommand.setCommand("OneUserCredential");
                     String sendBack = gson.toJson(responseCommand);
+                    byte[] toSendBytes = sendBack.getBytes();
+                    int toSendLen = toSendBytes.length;
+                    byte[] toSendLenBytes = new byte[4];
+                    toSendLenBytes[0] = (byte)(toSendLen & 0xff);
+                    toSendLenBytes[1] = (byte)((toSendLen >> 8) & 0xff);
+                    toSendLenBytes[2] = (byte)((toSendLen >> 16) & 0xff);
+                    toSendLenBytes[3] = (byte)((toSendLen >> 24) & 0xff);
                     byte[] responseAsBytes = sendBack.getBytes();
+                    outputStream.write(toSendLenBytes);
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
+
 
                 } else if (requestCommand.getCommand().equals("REQUEST-UserByID"))
                 {
@@ -98,7 +115,15 @@ public class ServiceController implements Runnable
                     responseCommand.setSpecificOrder(response);
                     responseCommand.setCommand("OneUserCredentialByID");
                     String sendBack = gson.toJson(responseCommand);
+                    byte[] toSendBytes = sendBack.getBytes();
+                    int toSendLen = toSendBytes.length;
+                    byte[] toSendLenBytes = new byte[4];
+                    toSendLenBytes[0] = (byte)(toSendLen & 0xff);
+                    toSendLenBytes[1] = (byte)((toSendLen >> 8) & 0xff);
+                    toSendLenBytes[2] = (byte)((toSendLen >> 16) & 0xff);
+                    toSendLenBytes[3] = (byte)((toSendLen >> 24) & 0xff);
                     byte[] responseAsBytes = sendBack.getBytes();
+                    outputStream.write(toSendLenBytes);
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
 
                 } else if (requestCommand.getCommand().equals("UserNew"))
@@ -113,7 +138,15 @@ public class ServiceController implements Runnable
                     responseCommand.setSpecificOrder(response);
                     responseCommand.setCommand("AllChatrooms");
                     String sendBack = gson.toJson(responseCommand);
+                    byte[] toSendBytes = sendBack.getBytes();
+                    int toSendLen = toSendBytes.length;
+                    byte[] toSendLenBytes = new byte[4];
+                    toSendLenBytes[0] = (byte)(toSendLen & 0xff);
+                    toSendLenBytes[1] = (byte)((toSendLen >> 8) & 0xff);
+                    toSendLenBytes[2] = (byte)((toSendLen >> 16) & 0xff);
+                    toSendLenBytes[3] = (byte)((toSendLen >> 24) & 0xff);
                     byte[] responseAsBytes = sendBack.getBytes();
+                    outputStream.write(toSendLenBytes);
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
 
                 } else if (requestCommand.getCommand().equals("REQUEST-ChatroomByUser"))
@@ -124,7 +157,15 @@ public class ServiceController implements Runnable
                     responseCommand.setSpecificOrder(response);
                     responseCommand.setCommand("ChatroomByUser");
                     String sendBack = gson.toJson(responseCommand);
+                    byte[] toSendBytes = sendBack.getBytes();
+                    int toSendLen = toSendBytes.length;
+                    byte[] toSendLenBytes = new byte[4];
+                    toSendLenBytes[0] = (byte)(toSendLen & 0xff);
+                    toSendLenBytes[1] = (byte)((toSendLen >> 8) & 0xff);
+                    toSendLenBytes[2] = (byte)((toSendLen >> 16) & 0xff);
+                    toSendLenBytes[3] = (byte)((toSendLen >> 24) & 0xff);
                     byte[] responseAsBytes = sendBack.getBytes();
+                    outputStream.write(toSendLenBytes);
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
 
                 } else if (requestCommand.getCommand().equals("JOIN-Chatroom"))
@@ -202,7 +243,15 @@ public class ServiceController implements Runnable
                    // System.out.println(response);
                     responseCommand.setCommand("ChatroomsByTopic");
                     String sendBack = gson.toJson(responseCommand);
+                    byte[] toSendBytes = sendBack.getBytes();
+                    int toSendLen = toSendBytes.length;
+                    byte[] toSendLenBytes = new byte[4];
+                    toSendLenBytes[0] = (byte)(toSendLen & 0xff);
+                    toSendLenBytes[1] = (byte)((toSendLen >> 8) & 0xff);
+                    toSendLenBytes[2] = (byte)((toSendLen >> 16) & 0xff);
+                    toSendLenBytes[3] = (byte)((toSendLen >> 24) & 0xff);
                     byte[] responseAsBytes = sendBack.getBytes();
+                    outputStream.write(toSendLenBytes);
                     outputStream.write(responseAsBytes, 0, responseAsBytes.length);
 
                 }

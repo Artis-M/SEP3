@@ -94,6 +94,7 @@
               <e p="bootstrap.min.js" t="Include" />
               <e p="bootstrap.min.js.map" t="Include" />
             </e>
+            <e p="chat.js" t="Include" />
           </e>
         </e>
       </e>

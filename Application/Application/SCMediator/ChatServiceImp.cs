@@ -43,8 +43,14 @@ namespace Application.SCMediator
         {
             string upsdelivery = JsonSerializer.Serialize(command);
             stream = Client.GetStream();
-            byte[] dataToServer = Encoding.ASCII.GetBytes(upsdelivery);
-            stream.Write(dataToServer, 0, dataToServer.Length);
+           // byte[] dataToServer = Encoding.ASCII.GetBytes(upsdelivery);
+           //stream.Write(dataToServer, 0, dataToServer.Length);
+           int toSendLen = System.Text.Encoding.ASCII.GetByteCount(upsdelivery);
+           byte[] toSendBytes = System.Text.Encoding.ASCII.GetBytes(upsdelivery);
+           byte[] toSendLenBytes = System.BitConverter.GetBytes(toSendLen);
+           stream.Write(toSendLenBytes);
+           stream.Write(toSendBytes,0,toSendLen);
+
         }
 
         // ------------------- //
@@ -164,8 +170,12 @@ namespace Application.SCMediator
         {
             CommandLine command = new CommandLine {Command = "REQUEST-UserCredentials"};
             await Send(command);
-
-            byte[] dataFromServer = new byte[4048];
+            
+            
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
@@ -187,7 +197,10 @@ namespace Application.SCMediator
 
             await Send(command);
             /* move out */
-            byte[] dataFromServer = new byte[4048];
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
@@ -209,7 +222,10 @@ namespace Application.SCMediator
             CommandLine command = new CommandLine {Command = "REQUEST-User", variableUser = username};
             await Send(command);
 
-            byte[] dataFromServer = new byte[4048];
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
@@ -229,7 +245,10 @@ namespace Application.SCMediator
             CommandLine command = new CommandLine {Command = "REQUEST-UserByID", variableUser = userID};
             await Send(command);
 
-            byte[] dataFromServer = new byte[4048];
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
@@ -249,7 +268,10 @@ namespace Application.SCMediator
             CommandLine command = new CommandLine {Command = "REQUEST-Chatroom-ALL"};
             await Send(command);
 
-            byte[] dataFromServer = new byte[4048];
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
@@ -295,7 +317,10 @@ namespace Application.SCMediator
                 SpecificOrder = topic
             };
             await Send(commandLine);
-            byte[] dataFromServer = new byte[4048];
+            byte[] rcvLenBytes = new byte[4];
+            stream.Read(rcvLenBytes);
+            int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            byte[] dataFromServer = new byte[rcvLen];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
