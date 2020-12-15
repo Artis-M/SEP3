@@ -2,7 +2,6 @@
 @using Microsoft.AspNetCore.Authorization
 @using Services
 @using System.Text.Json
-@using MongoDB.Bson
 @inject IChatroomService chatroomService;
 @inject IJSRuntime JsRuntime;
 @inject IAccountService AccountService;
@@ -14,13 +13,13 @@
     <div class="row">
         <div class="col-12">
             <h1>Admin Tools</h1>
-            <button class="redirectButton" @onclick="goBack">Go back to hub</button>
+            <button class="redirectButton" @onclick="GoBack">Go back to hub</button>
         </div>
     </div>
     <div class="row">
         <div class="col-6">
             <h3>All Users</h3>
-            <button class="redirectButton" @onclick="getAllusers">Get All Users</button>
+            <button class="redirectButton" @onclick="GetAllusers">Get All Users</button>
             <div class="row">
                 <div class="col-12">
                     @if (AllUsers.Any())
@@ -28,7 +27,7 @@
                         @foreach (var item in AllUsers)
                         {
                             <p>
-                                @item.Username (@item._id) <button class="redirectButton" @onclick="() => deleteUser(item._id, item.Username)">Delete User</button>
+                                @item.Username (@item._id) <button class="redirectButton" @onclick="() => DeleteUser(item._id, item.Username)">Delete User</button>
                             </p>
                         }
                     }
@@ -37,7 +36,7 @@
         </div>
         <div class="col-6">
             <h3>All Chatrooms</h3>
-            <button class="redirectButton" @onclick="getAllChatrooms">Get Chatrooms</button>
+            <button class="redirectButton" @onclick="GetAllChatrooms">Get Chatrooms</button>
             <div class="row">
                 <div class="col-12">
                     @if (AllChatrooms.Any())
@@ -46,15 +45,15 @@
                         {
                             <p>
                                 @item.name (@item._id)
-                                  @if (!item.type.Equals("private"))
-                                                                {
-                                                                    <button class="redirectButton" @onclick="() => deleteChatroom(item._id, item.name)">Delete Chatroom</button>                    
-                                                                }
+                                @if (!item.type.Equals("private"))
+                                {
+                                    <button class="redirectButton" @onclick="() => DeleteChatroom(item._id, item.name)">Delete Chatroom</button>
+                                }
                                 @if (item.participants.FirstOrDefault() != null)
                                 {
                                     @if (item.participants.Exists(users => users._id.Equals(user._id)))
                                     {
-                                        <button class="redirectButton" @onclick="() => enterPrivateChatroom(item._id)">Enter Chatroom</button>  
+                                        <button class="redirectButton" @onclick="() => EnterPrivateChatroom(item._id)">Enter Chatroom</button>
                                     }
 @if (!(item.participants.Exists(users => users._id.Equals(user._id))))
 {
@@ -89,7 +88,7 @@
         }
     }
 
-    public async Task getAllusers()
+    public async Task GetAllusers()
     {
         HttpClient http = new HttpClient
         {
@@ -105,7 +104,7 @@
         }
     }
 
-    public async Task getAllChatrooms()
+    public async Task GetAllChatrooms()
     {
         HttpClient http = new HttpClient
         {
@@ -122,7 +121,7 @@
         }
     }
 
-    private async Task deleteUser(string userID, string username)
+    private async Task DeleteUser(string userID, string username)
     {
         try
         {
@@ -131,12 +130,12 @@
             if (response)
             {
                 List<Chatroom> chatroomBuffer = await chatroomService.GetUsersChatrooms(userID);
-                User userBuffer = await AccountService.getUser(username);
+                User userBuffer = await AccountService.GetUser(username);
                 await AccountService.DeleteProfile(userID);
                 await ChatService.ConnectToServer();
                 await ChatService.UpdateChatRooms(chatroomBuffer, userBuffer);
                 await ChatService.DisconnectFromHub();
-                await getAllusers();
+                await GetAllusers();
             }
         }
         catch (Exception e)
@@ -145,7 +144,7 @@
         }
     }
 
-    private async Task deleteChatroom(string chatroomID, string name)
+    private async Task DeleteChatroom(string chatroomID, string name)
     {
         bool response = await JsRuntime.InvokeAsync<bool>("confirmationPromt",
             $"Are you sure you want to delete the chatroom: {name}, ({chatroomID})? \n This action cannot be undone!");
@@ -153,7 +152,7 @@
         {
             Console.WriteLine("Deleting");
             await chatroomService.DeleteChatRoom(chatroomID);
-            await getAllChatrooms();
+            await GetAllChatrooms();
         }
     }
 
@@ -169,12 +168,12 @@
         Nav.NavigateTo("");
     }
 
-    private async Task goBack()
+    private async Task GoBack()
     {
         Nav.NavigateTo("main", true);
     }
-    
-    private async void enterPrivateChatroom(string chatroomID)
+
+    private async void EnterPrivateChatroom(string chatroomID)
     {
         HttpClient http = new HttpClient
         {
@@ -190,6 +189,6 @@
         {
             Console.Out.WriteLine(e);
         }
-  
     }
+
 }

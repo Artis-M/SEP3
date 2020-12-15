@@ -1,14 +1,13 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
- using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
- using Models;
- using Services;
+using Services;
 
- namespace Models.Authentication
+namespace Models.Authentication
 {
     public class AuthenticationProvider : AuthenticationStateProvider
     {
@@ -74,7 +73,7 @@ using Microsoft.JSInterop;
             jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", null);
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
-        
+
         private ClaimsIdentity SetupClaimsForUser(Account user)
         {
             List<Claim> claims = new List<Claim>();
@@ -85,7 +84,7 @@ using Microsoft.JSInterop;
 
         public async Task ReCacheUser()
         {
-            Account newAccount  = await accountService.getUser(cachedUser.Username);
+            Account newAccount = await accountService.GetUser(cachedUser.Username);
             string serialisedData = JsonSerializer.Serialize(newAccount);
             await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
         }

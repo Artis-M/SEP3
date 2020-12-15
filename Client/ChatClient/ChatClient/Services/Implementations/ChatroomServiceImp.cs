@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -13,47 +12,32 @@ namespace Services
 {
     public class ChatroomServiceImp : IChatroomService
     {
-        
         private string uri = "https://localhost:5004/chatrooms/";
         private readonly IJSRuntime jsRuntime;
         public Chatroom currentlySelectedChatroom;
-        
-        
+
+
         public async Task<List<Chatroom>> GetUsersChatrooms(string userId)
         {
-            
             HttpClient http = new HttpClient
             {
                 BaseAddress = new Uri(uri)
             };
-            
-            Console.WriteLine("Doing the call");
             HttpResponseMessage responseMessage = await http.GetAsync($"user/chatrooms/{userId}");
-            //Console.Out.WriteLine(responseMessage.StatusCode);
             List<Chatroom> Chatrooms = new List<Chatroom>();
             if (responseMessage.StatusCode == HttpStatusCode.OK)
             {
                 string json = await responseMessage.Content.ReadAsStringAsync();
                 Chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(json);
-
             }
+
             if (responseMessage.StatusCode == HttpStatusCode.NotFound)
             {
-
                 Console.WriteLine(responseMessage.ToString());
-
             }
+
             return Chatrooms;
         }
-
-        /*public async Task<List<Chatroom>> GetAllChatrooms()
-        {
-            HttpClient http = new HttpClient
-            {
-                BaseAddress = new Uri(uri)
-            };
-        }*/
-
 
         public async Task CreateChatRoom(Chatroom chatroom)
         {
@@ -61,22 +45,23 @@ namespace Services
             {
                 BaseAddress = new Uri(uri)
             };
-            
+
             Console.WriteLine(JsonSerializer.Serialize(chatroom));
-            StringContent content = new StringContent(JsonSerializer.Serialize(chatroom),Encoding.UTF8,"application/json");
-            
-            http.PostAsync("add", content);
+            StringContent content =
+                new StringContent(JsonSerializer.Serialize(chatroom), Encoding.UTF8, "application/json");
+
+            await http.PostAsync("add", content);
         }
 
-        public async Task JoinChatRoom(string chatroomId,string userID)
+        public async Task JoinChatRoom(string chatroomId, string userID)
         {
             HttpClient http = new HttpClient
             {
                 BaseAddress = new Uri(uri)
             };
             string request = $"addUser/{chatroomId}";
-            Console.Out.WriteLine($"{chatroomId},{userID}");
-            StringContent content = new StringContent(JsonSerializer.Serialize(userID), Encoding.UTF8,"application/json");
+            StringContent content =
+                new StringContent(JsonSerializer.Serialize(userID), Encoding.UTF8, "application/json");
             await http.PatchAsync(request, content);
         }
 
@@ -89,7 +74,8 @@ namespace Services
             HttpResponseMessage responseMessage = await http.GetAsync($"{chatroomId}");
             if (responseMessage.StatusCode == HttpStatusCode.OK)
             {
-                Chatroom chatroom = JsonSerializer.Deserialize<Chatroom>(await responseMessage.Content.ReadAsStringAsync());
+                Chatroom chatroom =
+                    JsonSerializer.Deserialize<Chatroom>(await responseMessage.Content.ReadAsStringAsync());
                 currentlySelectedChatroom = chatroom;
             }
         }
@@ -100,9 +86,10 @@ namespace Services
         }
 
         public async Task RemoveCurrentChatroom()
-        { 
+        {
             currentlySelectedChatroom = null;
         }
+
         public async Task LeaveChatRoom(string userID, string chatroomID)
         {
             HttpClient http = new HttpClient
@@ -110,8 +97,9 @@ namespace Services
                 BaseAddress = new Uri(uri)
             };
             string request = $"removeUser/{chatroomID}";
-            StringContent content = new StringContent(JsonSerializer.Serialize(userID), Encoding.UTF8,"application/json");
-            http.PatchAsync(request, content);
+            StringContent content =
+                new StringContent(JsonSerializer.Serialize(userID), Encoding.UTF8, "application/json");
+            await http.PatchAsync(request, content);
         }
 
         public async Task KickFromChatroom(string targetUserID, string chatroomID)
@@ -121,24 +109,23 @@ namespace Services
                 BaseAddress = new Uri(uri)
             };
             string request = $"removeUser/{chatroomID}";
-            
-            StringContent content = new StringContent(JsonSerializer.Serialize(targetUserID), Encoding.UTF8,"application/json");
-            
-            http.PatchAsync(request, content);
+
+            StringContent content =
+                new StringContent(JsonSerializer.Serialize(targetUserID), Encoding.UTF8, "application/json");
+
+            await http.PatchAsync(request, content);
         }
 
-        public async Task<List<Chatroom>> getChatroomByTopic(string topic)
+        public async Task<List<Chatroom>> GetChatroomByTopic(string topic)
         {
             HttpClient http = new HttpClient
             {
                 BaseAddress = new Uri(uri)
             };
             String responseMessage = await http.GetStringAsync($"chatrooms/topic/{topic}");
-            //Console.Out.WriteLine(responseMessage.StatusCode);
             List<Chatroom> Chatrooms = new List<Chatroom>();
             Chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(responseMessage);
-                Console.Out.WriteLine(Chatrooms.Count);
-                return Chatrooms;
+            return Chatrooms;
         }
 
         public async Task EnterPrivateChatroom(string user, string user1)
@@ -152,7 +139,6 @@ namespace Services
             {
                 Chatroom chatroom =
                     JsonSerializer.Deserialize<Chatroom>(await responseMessage.Content.ReadAsStringAsync());
-                // currentlySelectedChatroom = chatroom;
                 await SetCurrentChatroom(chatroom._id);
             }
         }
@@ -163,7 +149,7 @@ namespace Services
             {
                 BaseAddress = new Uri(uri)
             };
-            
+
             await http.DeleteAsync($"{ChatroomID}");
         }
     }

@@ -1,5 +1,4 @@
 ﻿@page "/EditProfile"
-@using global::Models
 @using System.Text.Json
 @using Microsoft.AspNetCore.Authorization
 @using MongoDB.Bson
@@ -12,11 +11,11 @@
 <div class="EditWrapper">
     <EditForm Model="@updatedAccount" OnValidSubmit="@UpdateAccount">
         <DataAnnotationsValidator/>
-        
+
         <div class="EditForm">
             <div class="divToMain">
-                <a @onclick="@backToMenu" href="#">Return to main page</a>
-                </div>
+                <a @onclick="@BackToMenu" href="#">Return to main page</a>
+            </div>
             <h3>Edit Profile</h3>
             <div class="Edit-Flex">
                 <div class="Edit_right">
@@ -59,11 +58,11 @@
                     </div>
                 </div>
                 <div class="Edit_Left">
-                     <div class="form-group">
-                                            Profile Picture:<br/>
-                    
-                                            <InputText type="text" class="topicInput" rows="1"cols="50" @bind-Value="updatedAccount.PictureURL"/>
-                                        </div>
+                    <div class="form-group">
+                        Profile Picture:<br/>
+
+                        <InputText type="text" class="topicInput" rows="1"cols="50" @bind-Value="updatedAccount.PictureURL"/>
+                    </div>
                     <div class="form-group">
                         Topics:<br/>
 
@@ -71,8 +70,8 @@
                     </div>
                     <p class="topicError">@topicError</p>
                     <div class="topicButtons">
-                        <button @onclick="@addTopic" class="addTopic">Add</button>
-                        <button @onclick="@removeTopic" class="removeTopic">Remove</button>
+                        <button @onclick="@AddTopic" class="addTopic">Add</button>
+                        <button @onclick="@RemoveTopic" class="removeTopic">Remove</button>
                     </div>
                     <ul>
                         @if (topics != null)
@@ -90,19 +89,20 @@
                 <button type="submit">Update</button>
             </div>
         </div>
-            
-        </EditForm>
-    
+
+    </EditForm>
+
 </div>
 
 
 @code {
-    private List<Topic> topics=new List<Topic>();
+    private List<Topic> topics = new List<Topic>();
     private Account updatedAccount = new Account();
     private string error = "";
     private string topic = "";
     private string defaultUsername = "";
     private string topicError = "";
+
     protected override async Task OnInitializedAsync()
     {
         string userAsJson = await JsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
@@ -112,7 +112,7 @@
         }
         defaultUsername = updatedAccount.Username;
         Console.Out.WriteLine(updatedAccount.Username);
-        Account check =  await AccountService.getUser(updatedAccount.Username);
+        Account check = await AccountService.GetUser(updatedAccount.Username);
         updatedAccount.Pass = "";
         StateHasChanged();
         if (check.topics != null)
@@ -128,12 +128,12 @@
         error = "Username already in use";
         try
         {
-             await AccountService.getUser(updatedAccount.Username);
+            await AccountService.GetUser(updatedAccount.Username);
             if (updatedAccount.Username == defaultUsername)
             {
                 error = "";
-                await AccountService.editProfile(updatedAccount);
-                // NavigationManager.NavigateTo("Main");
+                await AccountService.EditProfile(updatedAccount);
+    // NavigationManager.NavigateTo("Main");
                 Console.WriteLine(updatedAccount.ToJson());
             }
             else
@@ -144,21 +144,17 @@
         catch (Exception e)
         {
             error = "";
-            await AccountService.editProfile(updatedAccount);
+            await AccountService.EditProfile(updatedAccount);
         }
-        
-        
-        
-        
     }
 
-    private  void addTopic()
+    private void AddTopic()
     {
-        if (topic.Length!=0)
+        if (topic.Length != 0)
         {
             topicError = "";
             topics.Add(new Topic(topic));
-            AccountService.addTopicToProfile(topic,updatedAccount._id);
+            AccountService.AddTopicToProfile(topic, updatedAccount._id);
         }
         else
         {
@@ -168,7 +164,7 @@
         StateHasChanged();
     }
 
-    private void removeTopic()
+    private void RemoveTopic()
     {
         topicError = "";
         List<Topic> removed = topics;
@@ -180,7 +176,7 @@
                 if (topic1.name.ToLower().Equals(topic.ToLower()))
                 {
                     removed.Remove(topic1);
-                    AccountService.removeTopicFromProfile(topic,updatedAccount._id);
+                    AccountService.RemoveTopicFromProfile(topic, updatedAccount._id);
                     countRemoved++;
                 }
             }
@@ -198,8 +194,9 @@
         StateHasChanged();
     }
 
-    private void backToMenu()
+    private void BackToMenu()
     {
-        NavigationManager.NavigateTo("Main",true);
+        NavigationManager.NavigateTo("Main", true);
     }
+
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -52,7 +51,7 @@ namespace Services
             return account;
         }
 
-        public async Task<Account> getUser(string username)
+        public async Task<Account> GetUser(string username)
         {
             HttpClient http = new HttpClient
             {
@@ -90,7 +89,7 @@ namespace Services
             HttpResponseMessage responseMessage = await http.PostAsync(uri + "register", content);
         }
 
-        public async Task removeFriend(string userId, string friendId)
+        public async Task RemoveFriend(string userId, string friendId)
         {
             HttpClient http = new HttpClient
             {
@@ -138,15 +137,13 @@ namespace Services
             await http.DeleteAsync(request);
         }
 
-        public async Task addTopicToProfile(string topic, string userId)
+        public async Task AddTopicToProfile(string topic, string userId)
         {
             HttpClient http = new HttpClient
             {
                 BaseAddress = new Uri(uri)
             };
             string response = uri + $"topic/add/{userId}";
-            Console.Out.WriteLine($"Topic {topic} UserId {userId}");
-            Console.Out.WriteLine(response);
             try
             {
                 string serialized = JsonSerializer.Serialize(topic);
@@ -161,7 +158,7 @@ namespace Services
             }
         }
 
-        public async Task removeTopicFromProfile(string topic, string userId)
+        public async Task RemoveTopicFromProfile(string topic, string userId)
         {
             HttpClient http = new HttpClient
             {
@@ -170,7 +167,6 @@ namespace Services
             string response = uri + $"topic/remove/{userId}/{topic}";
             try
             {
-                Console.Out.WriteLine($"Topic {topic} UserId {userId}");
                 HttpResponseMessage responseMessage = await http.DeleteAsync(response);
             }
             catch (Exception e)
@@ -180,7 +176,7 @@ namespace Services
             }
         }
 
-        public async Task editProfile(Account account)
+        public async Task EditProfile(Account account)
         {
             HttpClient http = new HttpClient
             {
@@ -194,7 +190,6 @@ namespace Services
             string serialized = JsonSerializer.Serialize(account);
             StringContent content = new StringContent(serialized, Encoding.UTF8, "application/json");
             HttpResponseMessage responseMessage = await http.PatchAsync(response, content);
-            Console.Out.WriteLine(responseMessage);
         }
     }
 }

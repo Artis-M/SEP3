@@ -14,11 +14,12 @@ namespace Services
     {
         string url = "https://localhost:5004/chathub";
         private string uri = "https://localhost:5004/chatrooms/";
-        
+
         HubConnection _hubConnection = null;
         public Action<Message> newMessage { get; set; }
         public Action<MessageFragment> newMessageFragment { get; set; }
         public Action<Chatroom> chatroomUpdate { get; set; }
+
         public async Task ConnectToServer()
         {
             _hubConnection = new HubConnectionBuilder().WithUrl(url).Build();
@@ -34,15 +35,11 @@ namespace Services
                 Console.WriteLine($"Received message: {message.message}");
                 newMessage?.Invoke(message);
             });
-            _hubConnection.On<MessageFragment>("ReceiveChatRoomMessageFragment", messageFragment =>
-            {
-                newMessageFragment?.Invoke(messageFragment);
-            });
-            _hubConnection.On<Chatroom>("ReceiveChatroomUpdate", chatroom =>
-            {   
-                chatroomUpdate.Invoke(chatroom);
-            });
+            _hubConnection.On<MessageFragment>("ReceiveChatRoomMessageFragment",
+                messageFragment => { newMessageFragment?.Invoke(messageFragment); });
+            _hubConnection.On<Chatroom>("ReceiveChatroomUpdate", chatroom => { chatroomUpdate.Invoke(chatroom); });
         }
+
         public async Task SendMessage(Message message, string activeChatRoomId)
         {
             await _hubConnection.SendAsync("SendMessage", message, activeChatRoomId);
@@ -52,11 +49,13 @@ namespace Services
                 BaseAddress = new Uri(uri)
             };
 
-            StringContent content = new StringContent(JsonSerializer.Serialize(message),Encoding.UTF8,"application/json");
+            StringContent content =
+                new StringContent(JsonSerializer.Serialize(message), Encoding.UTF8, "application/json");
             string request = $"sendMessage/{activeChatRoomId}";
             Console.Out.WriteLine(content);
-            http.PostAsync(request, content);
+            await http.PostAsync(request, content);
         }
+
         public async Task SendMessageFragment(MessageFragment messageFragment, string activeChatRoomId)
         {
             await _hubConnection.SendAsync("SendMessageFragment", messageFragment, activeChatRoomId);
@@ -66,6 +65,7 @@ namespace Services
         {
             await _hubConnection.SendAsync("JoinChatRoom", ChatRoomId);
         }
+
         public async Task LeaveChatRoom(string ChatRoomId)
         {
             await _hubConnection.SendAsync("LeaveChatRoom", ChatRoomId);

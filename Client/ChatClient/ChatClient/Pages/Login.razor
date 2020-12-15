@@ -2,8 +2,6 @@
 @namespace LoginComponent
 @using Microsoft.AspNetCore.Components.Authorization
 @using Models.Authentication
-@using Models
-@using System.Text.Json
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager navigation;
 @inject IJSRuntime JsRuntime;
@@ -23,7 +21,7 @@
                 </div>
                 <div>
 
-                    Not registred? <a @onclick="@register" href="#">Sign up now</a>
+                    Not registred? <a @onclick="@Register" href="#">Sign up now</a>
                 </div>
             </div>
         </NotAuthorized>
@@ -48,7 +46,7 @@
     private string password;
     private string errorMessage = "";
 
-    public async Task LoginRequest()
+    private async Task LoginRequest()
     {
         errorMessage = "";
         try
@@ -66,7 +64,7 @@
         password = "";
     }
 
-    public async Task register()
+    private async Task Register()
     {
         navigation.NavigateTo("Register", true);
     }

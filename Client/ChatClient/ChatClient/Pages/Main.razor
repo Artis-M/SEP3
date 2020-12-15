@@ -73,7 +73,7 @@
                 {
                     @foreach (var chatroom in filtered)
                     {
-                        if (verifyIfUserParticipant(chatroom))
+                        if (VerifyIfUserParticipant(chatroom))
                         {
                             <div class="filteredRoom">
                                 <p class="align-self-center">
@@ -96,7 +96,7 @@
 
         <h3>Chatrooms</h3>
         <div class="buttons">
-            <AuthorizeView Roles = "Admin">
+            <AuthorizeView Roles="Admin">
                 <button class="adminButton" @onclick="@((() => NavigationManager.NavigateTo("AdminTools")))">
                     Admin Tools
                 </button>
@@ -163,7 +163,7 @@
                                 <button class="friendRemove" @onclick="@((() => RemoveFriend(item._id)))">
                                     <i class="oi oi-minus"/>
                                 </button>
-                                <button @onclick="@(() => { enterPrivateChatroom(item._id); })" class="friendChatroom">
+                                <button @onclick="@(() => { EnterPrivateChatroom(item._id); })" class="friendChatroom">
                                     chat
                                 </button>
                             </div>
@@ -202,7 +202,7 @@
             storedUser = JsonSerializer.Deserialize<Account>(userAsJson);
         }
         Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
-        Account user = await AccountService.getUser(storedUser.Username);
+        Account user = await AccountService.GetUser(storedUser.Username);
         topics = user.topics;
         foreach (var VARIABLE in topics)
         {
@@ -211,7 +211,7 @@
         friends = user.friends;
     }
 
-    private bool verifyIfUserParticipant(Chatroom chatroom)
+    private bool VerifyIfUserParticipant(Chatroom chatroom)
     {
         bool check = true;
 
@@ -234,7 +234,7 @@
         return check;
     }
 
-    private async void enterPrivateChatroom(string id)
+    private async void EnterPrivateChatroom(string id)
     {
         await ChatroomService.EnterPrivateChatroom(storedUser._id, id);
         NavigationManager.NavigateTo("");
@@ -244,7 +244,7 @@
     {
         try
         {
-            filtered = await ChatroomService.getChatroomByTopic(filterOption);
+            filtered = await ChatroomService.GetChatroomByTopic(filterOption);
 
             filterCount = filtered.Count;
             if (filterCount == 0)
@@ -284,7 +284,7 @@
                 friends.Remove(friend);
             }
         }
-        await AccountService.removeFriend(storedUser._id, id);
+        await AccountService.RemoveFriend(storedUser._id, id);
     }
 
     public async Task EditProfile()

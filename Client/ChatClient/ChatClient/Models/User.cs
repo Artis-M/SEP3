@@ -1,5 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Models
@@ -7,23 +6,26 @@ namespace Models
     public class User
     {
         public string _id { get; set; }
-        [Required,MinLength(3,ErrorMessage = "Please Enter Username with at least 3 characters")]
+
+        [Required, MinLength(3, ErrorMessage = "Please Enter Username with at least 3 characters")]
         [JsonPropertyName("Username")]
         public string Username { get; set; }
-        [Required,MinLength(1,ErrorMessage = "Please Enter First Name")]
+
+        [Required, MinLength(1, ErrorMessage = "Please Enter First Name")]
         [JsonPropertyName("Fname")]
         public string Fname { get; set; }
-        [Required,MinLength(1,ErrorMessage = "Please Enter Last Name")]
+
+        [Required, MinLength(1, ErrorMessage = "Please Enter Last Name")]
         [JsonPropertyName("Lname")]
         public string Lname { get; set; }
-        [JsonPropertyName("pictureURL")]
-        public string PictureURL{get;set;}
+
+        [JsonPropertyName("pictureURL")] public string PictureURL { get; set; }
 
         public User()
         {
-            
         }
-        public User(string _id, string username, string fname, string lname,string pictureURL)
+
+        public User(string _id, string username, string fname, string lname, string pictureURL)
         {
             this._id = _id;
             this.Username = username;
@@ -31,9 +33,9 @@ namespace Models
             this.Lname = lname;
             this.PictureURL = pictureURL;
         }
-        public User( string username, string fname, string lname)
+
+        public User(string username, string fname, string lname)
         {
-         
             this.Username = username;
             this.Fname = fname;
             this.Lname = lname;

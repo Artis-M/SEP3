@@ -4,7 +4,6 @@
 @using System.Text.Json
 @using Microsoft.AspNetCore.Components.Authorization
 @using Models.Authentication
-@using MongoDB.Bson
 @inject IChatService chatService;
 @inject IChatroomService chatroomService;
 @inject IJSRuntime JsRuntime;
@@ -142,7 +141,7 @@
                                     <label>Message too long, max 1000 characters.</label>
                                 }
                                 <textarea class="chatInput" type="text" @onkeyup="@KeyDown" @bind:event="oninput" @bind="@messageText"></textarea>
-                                <button class="sendButton" @onclick="@sendMessage">Send</button>
+                                <button class="sendButton" @onclick="@SendMessage">Send</button>
                             </div>
                         </div>
                     </div>
@@ -178,7 +177,7 @@
         {
             Nav.NavigateTo("main", true);
         }
-      
+
         if (currentChatroom == null)
         {
             Nav.NavigateTo("main", true);
@@ -187,7 +186,7 @@
         {
             user = JsonSerializer.Deserialize<Account>(userAsJson);
             await chatService.ConnectToServer();
-            Console.WriteLine("Connected to server");
+            Console.WriteLine("Connected to chatroom.");
         }
         chatService.newMessage += this.DisplayNewMessage;
         chatService.newMessageFragment += this.DisplayNewMessageFragment;
@@ -198,7 +197,7 @@
         await JsRuntime.InvokeVoidAsync("scroll", "messages");
     }
 
-    public async Task AddFriend(string userID, string username)
+    private async Task AddFriend(string userID, string username)
     {
         await AccountService.AddFriend(userID, user);
         await ((AuthenticationProvider) AuthenticationStateProvider).ReCacheUser();
@@ -209,7 +208,7 @@
         }
     }
 
-    public async Task BackToHub()
+    private async Task BackToHub()
     {
         await chatService.LeaveChatRoom(chatRoomIDBuffer);
         currentChatroom = null;
@@ -222,7 +221,7 @@
         Nav.NavigateTo("main");
     }
 
-    public async void ChatroomUpdate(Chatroom chatroom)
+    private async void ChatroomUpdate(Chatroom chatroom)
     {
         currentChatroom = chatroom;
         if (chatroom == null)
@@ -250,24 +249,23 @@
         }
     }
 
-    public async Task RemoveFromChatroom(string UserId)
+    private async Task RemoveFromChatroom(string UserId)
     {
         bool response = await JsRuntime.InvokeAsync<bool>("confirmationPromt",
             $"Are you sure that you want to kick the {currentChatroom.participants.First(user1 => user1._id.Equals(UserId)).Username}?");
         if (response)
         {
-            await chatroomService.KickFromChatroom(UserId, currentChatroom._id); 
+            await chatroomService.KickFromChatroom(UserId, currentChatroom._id);
         }
     }
 
-    public async Task GetUsersChatRooms()
+    private async Task GetUsersChatRooms()
     {
         Chatrooms = await chatroomService.GetUsersChatrooms(user._id);
-        Console.WriteLine(Chatrooms.ToJson());
         await InvokeAsync(() => StateHasChanged());
     }
 
-    public async Task LeaveChatroom()
+    private async Task LeaveChatroom()
     {
         bool response = await JsRuntime.InvokeAsync<bool>("confirmationPromt",
             $"Are you sure you want to leave the chatroom: {currentChatroom.name}? \n You can go back to the main hub by clicking the [Back To Hub] button.");
@@ -281,14 +279,14 @@
         }
     }
 
-    public async Task ConnectToChatRoom()
+    private async Task ConnectToChatRoom()
     {
         await chatService.JoinChatRoom(chatroomService.GetCurrentChatroom()._id);
         isConnectedToChatRoom = true;
         Messages = currentChatroom.messages;
     }
 
-    public async Task sendMessage()
+    private async Task SendMessage()
     {
         if (isConnectedToChatRoom)
         {
@@ -303,11 +301,11 @@
             messageText = "";
             newMessage.message = "";
             newMessageFragment.message = "";
-            sendMessageFragment();
+            SendMessageFragment();
         }
     }
 
-    public async Task DeleteChatroom()
+    private async Task DeleteChatroom()
     {
         bool response = await JsRuntime.InvokeAsync<bool>("confirmationPromt",
             $"Are you sure you want to delete the chatroom: {currentChatroom.name}? \n This action cannot be undone!");
@@ -317,7 +315,7 @@
         }
     }
 
-    public void sendMessageFragment()
+    private void SendMessageFragment()
     {
         if (isConnectedToChatRoom)
         {
@@ -331,14 +329,14 @@
         }
     }
 
-    public async void DisplayNewMessage(Message message)
+    private async void DisplayNewMessage(Message message)
     {
         Messages.Add(message);
         await InvokeAsync(() => StateHasChanged());
         await JsRuntime.InvokeVoidAsync("scroll", "messages");
     }
 
-    public async void DisplayNewMessageFragment(MessageFragment messageFragment)
+    private async void DisplayNewMessageFragment(MessageFragment messageFragment)
     {
         try
         {
@@ -363,15 +361,15 @@
         await JsRuntime.InvokeVoidAsync("scrollMessageFragment", "messageFragmentMessage");
     }
 
-    protected void KeyDown(KeyboardEventArgs e)
+    private void KeyDown(KeyboardEventArgs e)
     {
         if (e.Key.Equals("Enter"))
         {
-            sendMessage();
+            SendMessage();
         }
         else
         {
-            sendMessageFragment();
+            SendMessageFragment();
         }
     }
 }

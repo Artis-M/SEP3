@@ -7,81 +7,80 @@
 <div class="SignUpWrapper">
 
     <EditForm Model="@newAccount" OnValidSubmit="@RegisterNewAccount">
-    <DataAnnotationsValidator/>
-        <div class = "SignUpForm">
-        <h3>Sign Up</h3>
-        <div class="form-group">
-            E-mail: <br/>
-            <InputText  @bind-Value="newAccount.email"/>
-             <div class="validate_div">
-                            <ValidationMessage For="@(() => newAccount.email)"/>
-                            </div>
-        </div>
-        <div class="form-group">
-            Username: <br/>
-            <InputText  @bind-Value="newAccount.Username"/>
-            <div class="validate_div validate_div_username">
-                <ValidationMessage For="@(() => error)"/>
-                <ValidationMessage For="@(() => newAccount.Username)"/>
+        <DataAnnotationsValidator/>
+        <div class="SignUpForm">
+            <h3>Sign Up</h3>
+            <div class="form-group">
+                E-mail: <br/>
+                <InputText @bind-Value="newAccount.email"/>
+                <div class="validate_div">
+                    <ValidationMessage For="@(() => newAccount.email)"/>
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                Username: <br/>
+                <InputText @bind-Value="newAccount.Username"/>
+                <div class="validate_div validate_div_username">
+                    <ValidationMessage For="@(() => error)"/>
+                    <ValidationMessage For="@(() => newAccount.Username)"/>
+                </div>
+            </div>
 
-        <div class="form-group">
-            First name:<br/>
-            <InputText  @bind-Value="newAccount.Fname"/>
-             <div class="validate_div">
-                            <ValidationMessage For="@(() => newAccount.Fname)"/>
-                            </div>
-        </div>
-        <div class="form-group">
-            Last name:<br/>
-            <InputText  rows="1"cols="50" @bind-Value="newAccount.Lname"/>
-             <div class="validate_div">
-                            <ValidationMessage For="@(() => newAccount.Lname)"/>
-                            </div>
-        </div>
+            <div class="form-group">
+                First name:<br/>
+                <InputText @bind-Value="newAccount.Fname"/>
+                <div class="validate_div">
+                    <ValidationMessage For="@(() => newAccount.Fname)"/>
+                </div>
+            </div>
+            <div class="form-group">
+                Last name:<br/>
+                <InputText rows="1"cols="50" @bind-Value="newAccount.Lname"/>
+                <div class="validate_div">
+                    <ValidationMessage For="@(() => newAccount.Lname)"/>
+                </div>
+            </div>
 
             <div class="form-group">
                 Password:<br/>
-                <InputText type="password"  rows="1"cols="50" @bind-Value="newAccount.Pass"/>
+                <InputText type="password" rows="1"cols="50" @bind-Value="newAccount.Pass"/>
                 <div class="validate_div">
                     <ValidationMessage For="@(() => newAccount.Pass)"/>
                 </div>
             </div>
             <p style="margin: 0;font-size: 14px;color: red;height: 16px;">@error</p>
             <div class="SignUpButton">
-                <button  type="submit">Sign Up</button>
+                <button type="submit">Sign Up</button>
             </div>
             <div>
-                            
-                           Already have an account? <a @onclick="@RedirectLogin" href="#">Sign in</a>
-                        </div>
-        
+
+                Already have an account? <a @onclick="@RedirectLogin" href="#">Sign in</a>
+            </div>
+
         </div>
     </EditForm>
 </div>
 
 @code {
     private string error = "";
-    private Account newAccount=new Account();
+    private Account newAccount = new Account();
 
-    private async  void RegisterNewAccount()
+    private async void RegisterNewAccount()
     {
         try
         {
-            
             newAccount.role = "User";
             newAccount._id = ObjectId.GenerateNewId().ToString();
             newAccount.friends = new List<User>();
-            newAccount.topics= new List<Topic>();
+            newAccount.topics = new List<Topic>();
             newAccount.PictureURL = "https://assets.digitalocean.com/articles/alligator/css/object-fit/example-object-fit.jpg";
             error = "";
-            Account check =  await AccountService.getUser(newAccount.Username);
-            
-            if (check==null)
+            Account check = await AccountService.GetUser(newAccount.Username);
+
+            if (check == null)
             {
                 error = "";
-                AccountService.Register(newAccount);
+                await AccountService.Register(newAccount);
                 NavigationManager.NavigateTo("login");
             }
             else
@@ -92,11 +91,11 @@
         catch (Exception e)
         {
             error = "";
-            AccountService.Register(newAccount);
+            await AccountService.Register(newAccount);
             NavigationManager.NavigateTo("login");
         }
         Console.Out.WriteLine(error);
-      // NavigationManager.NavigateTo("login", true);
+    // NavigationManager.NavigateTo("login", true);
     }
 
     private void RedirectLogin()

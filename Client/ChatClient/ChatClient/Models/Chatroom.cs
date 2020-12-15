@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Models
 {
     public class Chatroom
     {
         public string _id { get; set; }
-        
+
         public string type { get; set; }
         public string owner { get; set; }
         public string name { get; set; }
