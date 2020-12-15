@@ -65,7 +65,7 @@
         </div>
         <div class="col-10">
             <div class="row h-100">
-                <div style="height: 10%;" class="row align-self-start titlebar w-100">
+                <div style="height: 5%;" class="row align-self-start titlebar w-100">
                     <div class="col-12 align-self-center">
                         <div class="chatroomTitle">
                             @if (currentChatroom != null)
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                <div style="height: 90%; max-height: 85vh;" class="row w-100">
+                <div style="height: 95%; max-height: 85vh;" class="row w-100">
                     <div style="height: 100%;" class="col-12">
                         <div style="height: 50%; max-height: 50%;"class="row w-100">
                             <div id="messages" class="messageBox w-100">
@@ -164,7 +164,15 @@
     {
         string userAsJson = await JsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
         currentChatroom = chatroomService.GetCurrentChatroom();
-        chatRoomIDBuffer = currentChatroom._id;
+        try
+        {
+            chatRoomIDBuffer = currentChatroom._id;
+        }
+        catch
+        {
+            Nav.NavigateTo("main", true);
+        }
+      
         if (currentChatroom == null)
         {
             Nav.NavigateTo("main", true);

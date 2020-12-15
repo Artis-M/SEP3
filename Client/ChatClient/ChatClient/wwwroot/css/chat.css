@@ -45,6 +45,7 @@
     width: 75vw;
     overflow: auto;
     white-space: nowrap;
+    -ms-overflow-style: none;
     scrollbar-width: none;
 }
 .messageFragmentMessage::-webkit-scrollbar {
@@ -117,12 +118,21 @@
     color:#D32240;
 }
 .chatroomTitle{
-    font-size: 25pt;
+    font-size: 2vw;
     font-weight: bold;
+    font-style: italic;
+    color: rgb(212, 212, 212);
+    max-width: 90vw;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
+.chatroomTitle::-webkit-scrollbar {
+    display: none;
+}
+
 .titlebar{
     background-color: #7a7a7a;
-    height: 10%;
 }
 .messageBox{
     overflow-y: auto;
