@@ -311,4 +311,44 @@
     align-content: center;
     flex-direction: row;
 }
+.redirectButton{
+    border-radius: 10px;
+    outline: none;
+    margin: 5px 0 15px 0;
+    width: fit-content;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #117c94;
+    height: 33px;
+}
+.redirectButton:hover{
+    background-color: #16a7c6;
+}
+.redirectButton:active{
+    background-color: #53e0ff;
+}
+
+.adminButton{
+    border-radius: 10px;
+    outline: none;
+    margin: 5px 0 15px 0;
+    width: fit-content;
+    border-width: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #fff;
+    background-color: #c03333;
+    height: 33px;
+}
+.adminButton:hover{
+    background-color: #fab9be;
+    color:#D32240;
+}
+.adminButton:active{
+    outline:none;
+    border:1px solid #D32240;
+    background-color: #fab9be;
+    color:#D32240;
+}
+
 

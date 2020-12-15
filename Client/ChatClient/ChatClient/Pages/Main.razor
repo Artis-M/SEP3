@@ -2,6 +2,7 @@
 @using Services
 @using System.Text.Json
 @using global::Models.Authentication
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager NavigationManager;
 @inject IAccountService AccountService;
@@ -9,169 +10,174 @@
 @inject IChatService ChatService;
 @inject IJSRuntime JsRuntime;
 @inject AuthenticationStateProvider AuthenticationStateProvider;
+@attribute [Authorize]
 
 <div class="wholePage">
-<div class="arrange">
-    <div class="userProfile">
-        <div style="width:300px;margin-bottom: 10px;">
-            <h3 class="ProfileText">Profile</h3>
-            <div>
-                <h5>Username: @storedUser.Username</h5>
+    <div class="arrange">
+        <div class="userProfile">
+            <div style="width:300px;margin-bottom: 10px;">
+                <h3 class="ProfileText">Profile</h3>
+                <div>
+                    <h5>Username: @storedUser.Username</h5>
+                </div>
+
+                <div>
+                    <h5>First Name: @storedUser.Fname</h5>
+                </div>
+                <div>
+                    <h5>Last Name: @storedUser.Lname</h5>
+                </div>
+                <div>
+                    <h5>Email: @storedUser.email</h5>
+                </div>
             </div>
 
-            <div>
-                <h5>First Name: @storedUser.Fname</h5>
+
+            <div class="buttons">
+                <button class="editButton"@onclick="@((() => EditProfile()))">
+                    Edit profile
+                </button>
+                <button class="deleteButton" @onclick="@((() => DeleteProfile()))">
+                    Delete profile
+                </button>
             </div>
-            <div>
-                <h5>Last Name: @storedUser.Lname</h5>
-            </div>
-            <div>
-                <h5>Email: @storedUser.email</h5>
-            </div>
+
+
         </div>
+        <div class="topicsCard">
+            <div>
+                <h3>Chatrooms by topic</h3>
+            </div>
 
-
-        <div class="buttons">
-            <button class="editButton"@onclick="@((() => EditProfile()))">
-                Edit profile
-            </button>
-            <button class="deleteButton" @onclick="@((() => DeleteProfile()))">
-                Delete profile
-            </button>
-        </div>
-
-
-    </div>
-    <div class="topicsCard">
-        <div>
-            <h3>Chatrooms by topic</h3>
-        </div>
-        
             @if (topics == null || topics.Count == 0)
             {
                 <p>You don't have any topics</p>
-                <p>Topics can be added in edit page</p>
+                <p>Topics can be added in <button class="redirectButton" @onclick="@((() => AddChatroom()))">edit page</button></p>
             }
             else
             {
                 <div class="flex-row d-flex">
-                <select class="form-control selectpicker" @bind="@filterOption" style="width: 200px;margin-right: 20px">
-                    @foreach (var item in topics)
-                    {
-                        <option>@item.name</option>
-                    }
-                </select>
+                    <select class="form-control selectpicker" @bind="@filterOption" style="width: 200px;margin-right: 20px">
+                        @foreach (var item in topics)
+                        {
+                            <option>@item.name</option>
+                        }
+                    </select>
                     <button @onclick="@FilterChats" class="chatroomSearch">Search</button>
-                    </div>
-            }
-
-        
-        <div class="filteredChatrooms">
-            @if (filterCount>0)
-            {
-                @foreach (var chatroom in filtered)
-                {
-                    if (verifyIfUserParticipant(chatroom))
-                    {
-                        <div class="filteredRoom">
-                            <p class="align-self-center">
-                                @chatroom.name
-                            </p>
-                            <button @onclick="@(() => { JoinChatroom(chatroom._id);})"> Join</button>
-                        </div>
-                    }
-                }
-            }
-            else
-            {
-                <p>@filterError</p>
-            }
-            
-        </div>
-    </div>
-</div>
-<div class="chatrooms">
-
-    <h3>Chatrooms</h3>
-    <div class="buttons">
-        <button class="editButton" @onclick="@((() => AddChatroom()))">
-            Add chatroom
-        </button>
-    </div>
-
-    <div class="chatroomTable">
-        @if (Chatrooms == null)
-        {
-            <p>
-                <em>Loading...</em>
-            </p>
-        }
-        else if (!Chatrooms.Any())
-        {
-            <p>
-                <em>No chatrooms are in the system.</em>
-            </p>
-        }
-        else
-        {
-            @foreach (var item in Chatrooms)
-            {
-                <div >
-                    <button class="chatroomButton" @onclick="@((() => EnterChatroom(@item._id)))">
-                        @item.name
-                    </button>
                 </div>
             }
-        }
-    </div>
-</div>
-<div class="arrange">
 
-    <div class="friendsWrapper">
-        <div>
-            <h3>Friends</h3>
+
+            <div class="filteredChatrooms">
+                @if (filterCount > 0)
+                {
+                    @foreach (var chatroom in filtered)
+                    {
+                        if (verifyIfUserParticipant(chatroom))
+                        {
+                            <div class="filteredRoom">
+                                <p class="align-self-center">
+                                    @chatroom.name
+                                </p>
+                                <button @onclick="@(() => { JoinChatroom(chatroom._id); })"> Join</button>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>@filterError</p>
+                }
+
+            </div>
         </div>
-        <div>
+    </div>
+    <div class="chatrooms">
 
-            @if (friends == null)
+        <h3>Chatrooms</h3>
+        <div class="buttons">
+            <AuthorizeView Roles = "Admin">
+                <button class="adminButton" @onclick="@((() => NavigationManager.NavigateTo("AdminTools")))">
+                    Admin Tools
+                </button>
+            </AuthorizeView>
+
+            <button class="editButton" @onclick="@((() => AddChatroom()))">
+                Add chatroom
+            </button>
+        </div>
+
+        <div class="chatroomTable">
+            @if (Chatrooms == null)
             {
                 <p>
                     <em>Loading...</em>
                 </p>
             }
-            else if (!friends.Any())
+            else if (!Chatrooms.Any())
             {
                 <p>
-                    <em>No friends, chat and make some!</em>
+                    <em>No chatrooms are in the system.</em>
                 </p>
             }
             else
             {
-                
-                <div class="FriendsList">
-                    @foreach (var item in friends)
-                    {
-                        <div class="friend d-flex flex-row" >
-                            <h5 class="align-self-center friendName">@item.Fname @item.Lname</h5>
-                            <button class="friendRemove" @onclick="@((() => RemoveFriend(item._id)))">
-                                <i class="oi oi-minus" />
-                            </button>
-                            <button @onclick="@(() => { enterPrivateChatroom(item._id); })" class="friendChatroom" >
-                                chat
-                            </button>
-                        </div>
-
-                    }
+                @foreach (var item in Chatrooms)
+                {
+                    <div >
+                        <button class="chatroomButton" @onclick="@((() => EnterChatroom(@item._id)))">
+                            @item.name
+                        </button>
                     </div>
+                }
             }
         </div>
     </div>
-    <div>
-        <button class="logoutButton" @onclick="@((() => Logout()))">
-            Log out
-        </button>
+    <div class="arrange">
+
+        <div class="friendsWrapper">
+            <div>
+                <h3>Friends</h3>
+            </div>
+            <div>
+
+                @if (friends == null)
+                {
+                    <p>
+                        <em>Loading...</em>
+                    </p>
+                }
+                else if (!friends.Any())
+                {
+                    <p>
+                        <em>No friends, chat and make some!</em>
+                    </p>
+                }
+                else
+                {
+                    <div class="FriendsList">
+                        @foreach (var item in friends)
+                        {
+                            <div class="friend d-flex flex-row">
+                                <h5 class="align-self-center friendName">@item.Fname @item.Lname</h5>
+                                <button class="friendRemove" @onclick="@((() => RemoveFriend(item._id)))">
+                                    <i class="oi oi-minus"/>
+                                </button>
+                                <button @onclick="@(() => { enterPrivateChatroom(item._id); })" class="friendChatroom">
+                                    chat
+                                </button>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+        <div>
+            <button class="logoutButton" @onclick="@((() => Logout()))">
+                Log out
+            </button>
+        </div>
     </div>
-</div>
 </div>
 
 @code {
@@ -183,7 +189,7 @@
     private List<Chatroom> filtered = new List<Chatroom>();
     private string chatRoomID;
     private List<Topic> topics = new List<Topic>();
-    private string filterError="";
+    private string filterError = "";
     private int filterCount = 0;
     private List<User> friends = new List<User>();
 
@@ -204,13 +210,12 @@
             Console.Out.WriteLine(VARIABLE.name);
         }
         friends = user.friends;
-
     }
 
     private bool verifyIfUserParticipant(Chatroom chatroom)
     {
         bool check = true;
-        
+
         foreach (var participant in chatroom.participants)
         {
             if (participant._id.Equals(storedUser._id))
@@ -219,40 +224,35 @@
                 filterCount--;
             }
         }
-        if (filterCount== 0)
+        if (filterCount == 0)
         {
             InvokeAsync(() =>
             {
                 filterError = "There is no such chatroom with this topic";
                 StateHasChanged();
             });
-
-
         }
         return check;
     }
 
     private async void enterPrivateChatroom(string id)
     {
-        await ChatroomService.EnterPrivateChatroom(storedUser._id,id);
+        await ChatroomService.EnterPrivateChatroom(storedUser._id, id);
         NavigationManager.NavigateTo("");
     }
+
     private async void FilterChats()
     {
         try
         {
             filtered = await ChatroomService.getChatroomByTopic(filterOption);
-            
+
             filterCount = filtered.Count;
             if (filterCount == 0)
             {
-                
-                    filterError = "There is no such chatroom with this topic";
-                    
-               
+                filterError = "There is no such chatroom with this topic";
             }
             StateHasChanged();
-            
         }
         catch (Exception e)
         {
@@ -279,7 +279,7 @@
     private async Task JoinChatroom(string id)
     {
         await ChatroomService.JoinChatRoom(id, storedUser._id);
-       // Console.Out.WriteLine($"CHATROOOOM : : : {id}");
+    // Console.Out.WriteLine($"CHATROOOOM : : : {id}");
         await EnterChatroom(id);
     }
 
@@ -302,7 +302,7 @@
             }
         }
         await AccountService.removeFriend(storedUser._id, id);
-       // StateHasChanged();
+    // StateHasChanged();
     }
 
     public async Task EditProfile()
@@ -314,9 +314,14 @@
     {
         try
         {
-            await AccountService.DeleteProfile(storedUser._id);
-            ((AuthenticationProvider) AuthenticationStateProvider).Logout();
-            NavigationManager.NavigateTo("login");
+            bool response = await JsRuntime.InvokeAsync<bool>("confirmationPromt",
+                $"Are you sure that you want to delete your account? \n ***WARNING!*** \n This action cannot be undone!");
+            if (response)
+            {
+                await AccountService.DeleteProfile(storedUser._id);
+                ((AuthenticationProvider) AuthenticationStateProvider).Logout();
+                NavigationManager.NavigateTo("login");
+            }
         }
         catch (Exception e)
         {

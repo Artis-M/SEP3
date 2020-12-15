@@ -29,6 +29,7 @@
         </e>
         <e p="Pages" t="Include">
           <e p="AddChatroom.razor" t="Include" />
+          <e p="AdminTools.razor" t="Include" />
           <e p="EditProfile.razor" t="Include" />
           <e p="Index.razor" t="Include" />
           <e p="Login.razor" t="Include" />

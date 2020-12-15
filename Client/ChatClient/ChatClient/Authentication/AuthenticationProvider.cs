@@ -15,7 +15,7 @@ using Microsoft.JSInterop;
         private readonly IJSRuntime jsRuntime;
         private readonly IAccountService accountService;
 
-        private User cachedUser;
+        private Account cachedUser;
 
         public AuthenticationProvider(IJSRuntime jsRuntime, IAccountService accountService)
         {
@@ -31,7 +31,7 @@ using Microsoft.JSInterop;
                 string userAsJson = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
                 if (!string.IsNullOrEmpty(userAsJson))
                 {
-                    cachedUser = JsonSerializer.Deserialize<User>(userAsJson);
+                    cachedUser = JsonSerializer.Deserialize<Account>(userAsJson);
 
                     identity = SetupClaimsForUser(cachedUser);
                 }
@@ -75,9 +75,10 @@ using Microsoft.JSInterop;
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
         
-        private ClaimsIdentity SetupClaimsForUser(User user)
+        private ClaimsIdentity SetupClaimsForUser(Account user)
         {
             List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Role, user.role));
             ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth_type");
             return identity;
         }

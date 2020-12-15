@@ -1,10 +1,13 @@
 ﻿@page "/EditProfile"
 @using global::Models
 @using System.Text.Json
+@using Microsoft.AspNetCore.Authorization
+@using MongoDB.Bson
 @using Services
 @inject IJSRuntime JsRuntime;
 @inject IAccountService AccountService;
 @inject NavigationManager NavigationManager;
+@attribute [Authorize]
 
 <div class="EditWrapper">
     <EditForm Model="@updatedAccount" OnValidSubmit="@UpdateAccount">
@@ -130,7 +133,8 @@
             {
                 error = "";
                 await AccountService.editProfile(updatedAccount);
-                NavigationManager.NavigateTo("Main");
+                // NavigationManager.NavigateTo("Main");
+                Console.WriteLine(updatedAccount.ToJson());
             }
             else
             {

@@ -19,3 +19,7 @@ function scrollMessageFragment(className) {
         });
     }
 }
+function confirmationPromt(message){
+   let response = confirm(message);
+   return response;
+}

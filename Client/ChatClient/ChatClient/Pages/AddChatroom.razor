@@ -2,17 +2,17 @@
 @using Services
 @using System.Text.Json
 @using MongoDB.Bson
+@using Microsoft.AspNetCore.Authorization
 @inject IAccountService AccountService;
 @inject IChatroomService ChatroomService;
 @inject NavigationManager NavigationManager;
 @inject IJSRuntime JsRuntime;
+@attribute [Authorize]
+
 <div class="SignUpWrapper">
-    <div class="divToMain">
-        <a @onclick="@Back" href="#">Return to main page</a>
-    </div>
     <div class="chatroomForm">
         <EditForm Model="@newChatroom" OnValidSubmit="@AddNewChatRoom">
-            <h3>New chatroom</h3>
+            <h3>New Chatroom Creation</h3>
             <div class="AddchatroomField">
                 Name: <br/>
                 <InputText @bind-Value="newChatroom.name"/>
@@ -22,10 +22,28 @@
             <button class="ChatroomAdding" type="submit">Add chatroom</button>
         </EditForm>
         <div class="AddchatroomField">
+            <p>
+                Currently added topics:
+                @if (Topics != null)
+                {
+                    <div class="listWrapper">
+                        <ul>
+                            @foreach (var item in Topics)
+                            {
+                                <li>
+                                    <b>@item.name</b> <button class="removeA" @onclick="() => RemoveTopic(item.name)">Remove</button>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </p>
+            <label style="color:#c03333">@errorMessage</label>
             Topic name: <br/>
             <input type="text" @bind:event="oninput" @bind="@topicName"></input>
         </div>
         <button class="ChatroomAdding" @onclick="@AddTopic">Add topic</button>
+        <button class="redirectButton" @onclick="@Back">Return to main page</button>
     </div>
 </div>
 
@@ -35,6 +53,7 @@
     private User storedUser = new Account();
     private List<Topic> Topics = new List<Topic>();
     private string topicName = "";
+    private string errorMessage = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -66,13 +85,32 @@
 
     private async Task AddTopic()
     {
-        Topic _topic = new Topic
+        if (topicName.Length < 1 || topicName.Length > 20)
         {
-            _id = ObjectId.GenerateNewId().ToString(),
-            name = topicName
-        };
-        Topics.Add(_topic);
-        topicName = "";
+            errorMessage = "Topic has to be between 1 and 20 characters long";
+        }
+        else
+        {
+            Topic _topic = new Topic
+            {
+                _id = ObjectId.GenerateNewId().ToString(),
+                name = topicName
+            };
+            Topics.Add(_topic);
+            errorMessage = "";
+            topicName = ""; 
+        }
+    }
+
+    private async Task RemoveTopic(string name)
+    {
+        try
+        {
+            Topics.Remove(Topics.First(topic => topic.name.Equals(name)));
+        }
+        catch
+        {
+        }
     }
 
     private async Task Back()

@@ -32,12 +32,12 @@
                                                     </button>
                                                     <div class="dropdown-menu">
                                                         <button type="button" class="menuButton" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
-                                                        @if (currentChatroom.owner.Equals(user._id) || user.role.Equals("admin"))
+                                                        @if (currentChatroom.owner.Equals(user._id) || user.role.Equals("Admin"))
                                                         {
                                                             <button type="button" class="menuButton" @onclick="(() => RemoveFromChatroom(item._id))">kick User</button>
                                                         }
                                                     </div>
-                                                </div>  
+                                                </div>
                                             }
                                         </div>
                                     </div>
@@ -55,7 +55,7 @@
                         {
                             <button class="leaveButton" @onclick="LeaveChatroom">Leave Chatroom</button>
                         }
-                        @if ((currentChatroom.owner.Equals(user._id) || user.role.Equals("admin")) && !(currentChatroom.type.Equals("private")))
+                        @if ((currentChatroom.owner.Equals(user._id) || user.role.Equals("Admin")) && !(currentChatroom.type.Equals("private")))
                         {
                             <button class="leaveButton" @onclick="DeleteChatroom">Delete Chatroom</button>
                         }
@@ -87,17 +87,18 @@
                                             <p>
                                                 @if (currentChatroom != null & isConnectedToChatRoom)
                                                 {
-                                                     @if (currentChatroom != null)
-                                                     {
-                                                       @if(currentChatroom.participants.Exists((user => user._id.Equals(item.authorID)))){
-                                                           
-                                                            <img class="img-fluid chatProfileImageMessage" src="@currentChatroom.participants.First((user => user._id.Equals(item.authorID))).PictureURL"/><b>@item.username</b>
+                                                    @if (currentChatroom != null)
+                                                    {
+                                                        @if (currentChatroom.participants.Exists((user => user._id.Equals(item.authorID))))
+                                                        {
+                                                            <img class="img-fluid chatProfileImageMessage" src="@currentChatroom.participants.First((user => user._id.Equals(item.authorID))).PictureURL"/>
+                                                            <b>@item.username</b>
                                                         }
                                                         else
                                                         {
-                                                            <img class="img-fluid chatProfileImageMessage" src="https://mineblocks.com/1/wiki/images/c/cc/Barrier.png"/><b>@item.username</b>
+                                                            <img class="img-fluid chatProfileImageMessage" src="https://mineblocks.com/1/wiki/images/c/cc/Barrier.png"/>
+                                                            <b>@item.username</b>
                                                         }
-                                                        
                                                     }
                                                 }
                                                 : @item.message
@@ -114,14 +115,16 @@
                                     @foreach (var item in MessageFragments)
                                     {
                                         <div>
-                                <p>
-                                    @if (currentChatroom != null)
-                                    {
-                                        <img class="img-fluid chatProfileImageMessage" src="@currentChatroom.participants.First((user => user._id.Equals(item.authorIdString))).PictureURL"/><b>@item.username</b>
-                                    }
-                                    is typing: <p class="messageFragmentMessage">@item.message ......</p>
-                                </p>
-                                </div>
+                                            <p>
+                                                @if (currentChatroom != null)
+                                                {
+                                                    <img class="img-fluid chatProfileImageMessage" src="@currentChatroom.participants.First((user => user._id.Equals(item.authorIdString))).PictureURL"/>
+                                                    <b>@item.username</b>
+                                                }
+                                                is typing:
+                                                <p class="messageFragmentMessage">@item.message ......</p>
+                                            </p>
+                                        </div>
                                     }
                                 }
                             </div>
@@ -130,10 +133,10 @@
                             <div class="chatBox w-100">
                                 @if (messageText.Length > charLimit)
                                 {
-                                    <label>Message too long, max 1000 characters.</label>  
+                                    <label>Message too long, max 1000 characters.</label>
                                 }
                                 <textarea class="chatInput" type="text" @onkeyup="@KeyDown" @bind:event="oninput" @bind="@messageText"></textarea>
-                                 <button class="sendButton" @onclick="@sendMessage">Send</button>
+                                <button class="sendButton" @onclick="@sendMessage">Send</button>
                             </div>
                         </div>
                     </div>
@@ -229,7 +232,12 @@
 
     public async Task RemoveFromChatroom(string UserId)
     {
-        await chatroomService.KickFromChatroom(UserId, currentChatroom._id);
+        bool response = await JsRuntime.InvokeAsync<bool>("confirmationPromt",
+            $"Are you sure that you want to kick the {currentChatroom.participants.First(user1 => user1._id.Equals(UserId)).Username}?");
+        if (response)
+        {
+            await chatroomService.KickFromChatroom(UserId, currentChatroom._id); 
+        }
     }
 
     public async Task GetUsersChatRooms()
@@ -241,11 +249,16 @@
 
     public async Task LeaveChatroom()
     {
-        chatroomService.LeaveChatRoom(user._id, currentChatroom._id);
-        currentChatroom = null;
-        isConnectedToChatRoom = false;
-        MessageFragments = new List<MessageFragment>();
-        Messages = new List<Message>();
+        bool response = await JsRuntime.InvokeAsync<bool>("confirmationPromt",
+            $"Are you sure you want to leave the chatroom: {currentChatroom.name}? \n You can go back to the main hub by clicking the [Back To Hub] button.");
+        if (response)
+        {
+            chatroomService.LeaveChatRoom(user._id, currentChatroom._id);
+            currentChatroom = null;
+            isConnectedToChatRoom = false;
+            MessageFragments = new List<MessageFragment>();
+            Messages = new List<Message>();
+        }
     }
 
     public async Task ConnectToChatRoom()
@@ -276,7 +289,12 @@
 
     public async Task DeleteChatroom()
     {
-        await chatroomService.DeleteChatRoom(currentChatroom._id);
+        bool response = await JsRuntime.InvokeAsync<bool>("confirmationPromt",
+            $"Are you sure you want to delete the chatroom: {currentChatroom.name}? \n This action cannot be undone!");
+        if (response)
+        {
+            await chatroomService.DeleteChatRoom(currentChatroom._id);
+        }
     }
 
     public void sendMessageFragment()
@@ -288,7 +306,7 @@
                 newMessageFragment.message = messageText;
                 newMessageFragment.authorIdString = user._id;
                 newMessageFragment.username = user.Username;
-                chatService.SendMessageFragment(newMessageFragment, currentChatroom._id);  
+                chatService.SendMessageFragment(newMessageFragment, currentChatroom._id);
             }
         }
     }
