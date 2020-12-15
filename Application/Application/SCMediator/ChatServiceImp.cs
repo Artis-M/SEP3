@@ -139,7 +139,9 @@ namespace Application.SCMediator
         // ------------------- //
         public async Task DeleteChatroom(string chatroomID)
         {
+            Console.Out.WriteLine(chatroomID);
             CommandLine command = new CommandLine {Command = "DELETE-Chatroom", SpecificOrder = chatroomID};
+            
             await Send(command);
         }
 

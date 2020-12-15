@@ -57,14 +57,10 @@ namespace Application.Services.Implementations
 
         public async Task DeleteChatRoom(string ChatroomID)
         {
-            foreach (var VARIABLE in Chatrooms)
-            {
-                if (VARIABLE._id.Equals(ChatroomID))
-                {
-                    Chatrooms.Remove(VARIABLE);
+            
+                    
                     await model.DeleteChatroom(ChatroomID);
-                }
-            }
+              
 
            
         }
