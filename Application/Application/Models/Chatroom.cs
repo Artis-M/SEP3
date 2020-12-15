@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Models;
-using MongoDB.Bson;
 
 namespace Application.Models
 {

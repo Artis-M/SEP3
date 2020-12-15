@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Models;
-using Application.SCMediator;
 using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using MongoDB.Bson;
 using WebApplication.SignalR;
 
 namespace Application.Controllers
@@ -44,12 +41,12 @@ namespace Application.Controllers
         [Route("chatrooms/topic/{topic}")]
         public async Task<ActionResult<List<Chatroom>>> GetChatroomsByTopic([FromRoute] string topic)
         {
-            List<Chatroom> chatrooms = await chatroomService.getChatroomsByTopic(topic);
-            Console.Out.WriteLine("COntroller");
+            List<Chatroom> chatrooms = await chatroomService.GetChatroomsByTopic(topic);
             foreach (var VARIABLE in chatrooms)
             {
                 Console.Out.WriteLine(VARIABLE.name);
             }
+
             try
             {
                 if (chatrooms == null)
@@ -70,8 +67,8 @@ namespace Application.Controllers
         [Route("{chatRoomId}")]
         public async Task<ActionResult<Chatroom>> GetChatRoomById([FromRoute] string chatRoomId)
         {
-           // Console.WriteLine("Getting chat room:" + chatRoomId);
-            Chatroom chatroom = await chatroomService.GetChatroomByID(chatRoomId);
+            // Console.WriteLine("Getting chat room:" + chatRoomId);
+            Chatroom chatroom = await chatroomService.GetChatroomById(chatRoomId);
             try
             {
                 if (chatroom == null)
@@ -87,12 +84,13 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-        
+
         [HttpGet]
         [Route("private/{userId}/{userId1}")]
-        public async Task<ActionResult<Chatroom>> GetPrivateChatroom([FromRoute] string userId,[FromRoute] string userId1)
+        public async Task<ActionResult<Chatroom>> GetPrivateChatroom([FromRoute] string userId,
+            [FromRoute] string userId1)
         {
-            Chatroom chatroom = await chatroomService.getPrivateChatroom(userId,userId1);
+            Chatroom chatroom = await chatroomService.GetPrivateChatroom(userId, userId1);
             try
             {
                 if (chatroom == null)
@@ -113,9 +111,7 @@ namespace Application.Controllers
         [Route("user/chatrooms/{id}")]
         public async Task<ActionResult<List<Chatroom>>> GetChatRoomsByUserId([FromRoute] string id)
         {
-            //Console.WriteLine("Chatrooms requested.");
-          
-            List<Chatroom> chatrooms = await chatroomService.GetChatroomByUserID(id);
+            List<Chatroom> chatrooms = await chatroomService.GetChatroomByUserId(id);
 
             try
             {
@@ -145,7 +141,6 @@ namespace Application.Controllers
 
             try
             {
-               // Console.WriteLine($"Creating new chatroom {chatroom.name}");
                 await chatroomService.AddNewChatroom(chatroom);
                 return Created($"/{chatroom._id}", chatroom);
             }
@@ -180,9 +175,7 @@ namespace Application.Controllers
         {
             try
             {
-               // Console.Out.WriteLine(message.message);
                 await chatroomService.SendMessage(chatRoomId, message);
-                //Console.WriteLine("got a message from the client");
                 return Ok("message sent: " + message.message);
             }
             catch (Exception e)
@@ -198,9 +191,8 @@ namespace Application.Controllers
         {
             try
             {
-                Console.WriteLine($"{userID}, {chatRoomId}");
                 await chatroomService.AddUser(chatRoomId, userID);
-                Chatroom chatroom = await chatroomService.GetChatroomByID(chatRoomId);
+                Chatroom chatroom = await chatroomService.GetChatroomById(chatRoomId);
                 await _hubContext.Clients.Group(chatRoomId).SendAsync("ReceiveChatroomUpdate", chatroom);
                 return Ok("user added: " + userID);
             }
@@ -211,18 +203,16 @@ namespace Application.Controllers
             }
         }
 
-       
-        
-        
+
         [HttpPatch]
         [Route("removeUser/{chatRoomId}")]
         public async Task<ActionResult<Message>> LeaveChatroom([FromBody] string userID, [FromRoute] string chatRoomId)
         {
             try
             {
-               // Console.Out.WriteLine(userID+" SFDGFGFSDDFGDBFCF"+chatRoomId);
+                // Console.Out.WriteLine(userID+" SFDGFGFSDDFGDBFCF"+chatRoomId);
                 await chatroomService.RemoveUser(chatRoomId, userID);
-                Chatroom chatroom = await chatroomService.GetChatroomByID(chatRoomId);
+                Chatroom chatroom = await chatroomService.GetChatroomById(chatRoomId);
                 await _hubContext.Clients.Group(chatRoomId).SendAsync("ReceiveChatroomUpdate", chatroom);
                 return Ok("user removed: " + userID);
             }

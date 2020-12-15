@@ -68,12 +68,12 @@ namespace Application.Services
 
         public async Task<Account> RequestAccount(string username)
         {
-            return await model.requestAccount(username);
+            return await model.RequestAccount(username);
         }
 
         public async Task<Account> RequestAccountById(string userID)
         {
-            return await model.requestAccountByID(userID);
+            return await model.RequestAccountByID(userID);
         }
 
         public async Task AddFriend(List<User> users)
@@ -85,21 +85,21 @@ namespace Application.Services
         {
             await model.EditAccount(account);
         }
-        public async Task removeTopicFromUser(string userId, string topic)
+        public async Task RemoveTopicFromUser(string userId, string topic)
         {
             Console.Out.WriteLine(userId);
             Console.Out.WriteLine(topic);
-            model.removeTopicFromUser(userId,topic);
+            model.RemoveTopicFromUser(userId,topic);
         }
 
-        public async Task addTopicToUser(string userId, string topic)
+        public async Task AddTopicToUser(string userId, string topic)
         {
-            model.addTopicToUser(userId,topic);
+            model.AddTopicToUser(userId,topic);
         }
 
-        public async Task removeFriend(string userId, string friendId)
+        public async Task RemoveFriend(string userId, string friendId)
         {
-            await model.removeFriend(userId, friendId);
+            await model.RemoveFriend(userId, friendId);
             await model.DeletePrivateChatroom(userId, friendId);
         }
     }

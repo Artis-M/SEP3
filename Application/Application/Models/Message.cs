@@ -1,6 +1,4 @@
-﻿using MongoDB.Bson;
-
-namespace Application.Models
+﻿namespace Application.Models
 {
     public class Message
     {

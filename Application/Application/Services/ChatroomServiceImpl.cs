@@ -17,9 +17,9 @@ namespace Application.Services.Implementations
             this.model = modelManager;
         }
 
-        public async Task<Chatroom> GetChatroomByID(string ID)
+        public async Task<Chatroom> GetChatroomById(string ID)
         {
-            await requestChatrooms();
+            await RequestChatrooms();
             foreach (var VARIABLE in Chatrooms)
             {
                 if (VARIABLE._id.Equals(ID))
@@ -31,21 +31,21 @@ namespace Application.Services.Implementations
             return null;
         }
 
-        public async Task requestChatrooms()
+        public async Task RequestChatrooms()
         {
             Chatrooms = await model.RequestChatrooms();
         }
 
-        public async Task<List<Chatroom>> GetChatroomByUserID(string id)
+        public async Task<List<Chatroom>> GetChatroomByUserId(string id)
         {
             
-            List<Chatroom> UsersChatrooms = await model.requestChatroom(id);
+            List<Chatroom> UsersChatrooms = await model.RequestChatroom(id);
             return UsersChatrooms;
         }
 
         public async Task<IList<Chatroom>> GetAllChatrooms()
         {
-            await requestChatrooms();
+            await RequestChatrooms();
             return Chatrooms;
         }
 
@@ -86,14 +86,14 @@ namespace Application.Services.Implementations
                 
         }
 
-        public async Task<List<Chatroom>> getChatroomsByTopic(string topic)
+        public async Task<List<Chatroom>> GetChatroomsByTopic(string topic)
         {
-            return await model.getChatroomsByTopic(topic);
+            return await model.GetChatroomsByTopic(topic);
         }
 
-        public async Task<Chatroom> getPrivateChatroom(string user1, string user2)
+        public async Task<Chatroom> GetPrivateChatroom(string user1, string user2)
         {
-            return await model.getPrivateChatroom(user1, user2);
+            return await model.GetPrivateChatroom(user1, user2);
         }
     }
 }

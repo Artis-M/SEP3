@@ -86,7 +86,5 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-
-
     }
 }

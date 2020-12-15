@@ -9,7 +9,7 @@ namespace WebApplication.SignalR
 {
     public class ChatHub : Hub
     {
-        
+        //The methods are actually used.
         public Task JoinChatRoom(string ChatRoomId)
         {
             Console.WriteLine($"User:{Context.ConnectionId} joined the chatroom:{ChatRoomId}");
@@ -21,17 +21,14 @@ namespace WebApplication.SignalR
         }
         public Task SendMessage(Message message, string activeChatRoomId)
         {
-            Console.WriteLine("message sent?");
             return Clients.Group(activeChatRoomId).SendAsync("ReceiveChatRoomMessage", message);
         }
         public Task SendMessageFragment(MessageFragment messageFragment, string activeChatRoomId)
         {
-            Console.WriteLine("messageFragment sent?");
             return Clients.Group(activeChatRoomId).SendAsync("ReceiveChatRoomMessageFragment", messageFragment);
         }
         public Task UpdateChatroom(Chatroom chatroom)
         {
-            Console.WriteLine("Chatroom update.");
             return Clients.Group(chatroom._id).SendAsync("ReceiveChatroomUpdate", chatroom);
         }
     }

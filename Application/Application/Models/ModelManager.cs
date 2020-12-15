@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using Application.Models;
 using Application.SCMediator;
 using Application.Services;
 using Application.Services.Implementations;
-using Microsoft.AspNetCore.Identity;
 
 namespace Application.Models
 {
@@ -28,32 +24,26 @@ namespace Application.Models
 
         public async Task<List<Chatroom>> RequestChatrooms()
         {
-            return await chatServiceImp.requestChatrooms();
+            return await chatServiceImp.RequestChatrooms();
         }
 
         public async Task<List<Account>> RequestUsers()
         {
-            return await chatServiceImp.requestUsers();
+            return await chatServiceImp.RequestUsers();
         }
-
-        /*public async Task<List<Topic>> RequestTopics() {
-            return await chatServiceImp.requestTopics();
-        }*/
-
         public async Task SendMessage(Message message, string chatroomId)
-        { 
-            await chatServiceImp.sendMessage(message, chatroomId);
-           
+        {
+            await chatServiceImp.SendMessage(message, chatroomId);
         }
 
         public async Task AddNewChatroom(Chatroom chatroom)
         {
-            await chatServiceImp.sendNewChatroom(chatroom);
+            await chatServiceImp.SendNewChatroom(chatroom);
         }
 
         public async Task UpdateChatroom(Chatroom chatroom)
         {
-            await chatServiceImp.sendChatroomUpdate(chatroom);
+            await chatServiceImp.SendChatroomUpdate(chatroom);
         }
 
         public async Task LeaveChatroom(string userID, string chatroomID)
@@ -88,7 +78,7 @@ namespace Application.Models
 
         public async Task Register(Account account)
         {
-            await chatServiceImp.sendNewUser(account);
+            await chatServiceImp.SendNewUser(account);
         }
 
         public async Task AddFriend(List<User> users)
@@ -100,60 +90,49 @@ namespace Application.Models
         {
             accountService.SetListOfAccounts(JsonSerializer.Deserialize<List<Account>>(credentialsJson));
         }
-
-        public void ProcessChatrooms(string credentialsJson)
+        public async Task<Account> RequestAccount(string username)
         {
-            //chatroomService.Chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(credentialsJson);
+            return await chatServiceImp.RequestUser(username);
         }
 
-        public void ProcessTopics(string credentialsJson)
+        public async Task<Account> RequestAccountByID(string userID)
         {
-            //topicService.Topics = JsonSerializer.Deserialize<List<Topic>>(credentialsJson);
+            return await chatServiceImp.RequestUserById(userID);
         }
 
-        public async Task<Account> requestAccount(string username)
+        public async Task<List<Chatroom>> RequestChatroom(string userID)
         {
-            return await chatServiceImp.requestUser(username);
-        }
-
-        public async Task<Account> requestAccountByID(string userID)
-        {
-            return await chatServiceImp.requestUserByID(userID);
-        }
-
-        public async Task<List<Chatroom>> requestChatroom(string userID)
-        {
-            return await chatServiceImp.requestUsersChatroom(userID);
+            return await chatServiceImp.RequestUsersChatroom(userID);
         }
 
         public async Task EditAccount(Account account)
         {
-            await chatServiceImp.sendUserUpdate(account);
+            await chatServiceImp.SendUserUpdate(account);
         }
 
-        public void removeTopicFromUser(string userId, string topic)
+        public async void RemoveTopicFromUser(string userId, string topic)
         {
-            chatServiceImp.removeTopicfromUser(userId, topic);
+           await chatServiceImp.RemoveTopicfromUser(userId, topic);
         }
 
-        public void addTopicToUser(string userId, string topic)
+        public async void AddTopicToUser(string userId, string topic)
         {
-            chatServiceImp.addTopicToUser(userId, topic);
+            await chatServiceImp.AddTopicToUser(userId, topic);
         }
 
-        public async Task<List<Chatroom>> getChatroomsByTopic(string topic)
+        public async Task<List<Chatroom>> GetChatroomsByTopic(string topic)
         {
-           return await chatServiceImp.requestChatroomsByTopic(topic);
+            return await chatServiceImp.RequestChatroomsByTopic(topic);
         }
 
-        public async Task removeFriend(string userId, string friendId)
+        public async Task RemoveFriend(string userId, string friendId)
         {
-            await chatServiceImp.removeFriend(userId, friendId);
+            await chatServiceImp.RemoveFriend(userId, friendId);
         }
 
-        public async Task<Chatroom> getPrivateChatroom(string user, string user1)
+        public async Task<Chatroom> GetPrivateChatroom(string user, string user1)
         {
-           return await chatServiceImp.getPrivateChatroom(user, user1);
+            return await chatServiceImp.GetPrivateChatroom(user, user1);
         }
     }
 }

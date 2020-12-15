@@ -13,7 +13,7 @@ namespace Application.Models
 
         public TopicList()
         {
-            this.Topics=new List<Topic>();
+            this.Topics = new List<Topic>();
         }
 
         public void addTopic(Topic topic)

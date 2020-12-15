@@ -43,15 +43,5 @@ namespace Application.Services
 
             return null;
         }
-
-        public Task removeTopicFromUser(string userId, string topic)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task addTopicToUser(string userId, string topic)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Application.Models;
-using Application.SCMediator;
 using Application.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 
 namespace Application.Controllers
 {
@@ -59,9 +56,7 @@ namespace Application.Controllers
         {
             try
             {
-                Console.Out.WriteLine(username);
                 Account account = await AccountService.RequestAccount(username);
-                Console.Out.WriteLine("username");
                 return Ok(account);
             }
             catch (Exception e)
@@ -93,10 +88,6 @@ namespace Application.Controllers
             {
                 return NotFound();
             }
-
-           // Console.Out.WriteLine(account.Pass);
-           // Console.Out.WriteLine(password);
-           // Console.Out.WriteLine(account.Pass == password);
             if (account.Pass != password)
             {
                 return NotFound();
@@ -118,13 +109,11 @@ namespace Application.Controllers
 
             try
             {
-                Console.Out.WriteLine(account.email);
                 await AccountService.Register(account);
                 return Created($"/{account._id}", account);
             }
             catch (Exception e)
             {
-                Console.WriteLine("wat");
                 Console.WriteLine(e);
                 return StatusCode(500, e.Message);
             }
@@ -137,7 +126,6 @@ namespace Application.Controllers
             try
             {
                 await AccountService.RemoveAccount(accountID);
-                Console.Out.WriteLine(accountID+"DELETE ME");
                 return Ok();
             }
             catch (Exception e)
@@ -171,11 +159,11 @@ namespace Application.Controllers
         }
         [HttpPatch]
         [Route("user/removeFriend/{userId}")]
-        public async Task<ActionResult> removeFriend([FromRoute] string userId, [FromBody] string friendId)
+        public async Task<ActionResult> RemoveFriend([FromRoute] string userId, [FromBody] string friendId)
         {
             try
             {
-                await AccountService.removeFriend(userId, friendId);
+                await AccountService.RemoveFriend(userId, friendId);
                 
                 return Ok();
             }
@@ -209,13 +197,12 @@ namespace Application.Controllers
         }
         [HttpPost]
         [Route("topic/add/{userId}")]
-        public async Task<ActionResult> addTopicToUser([FromBody] string topic, [FromRoute] string userId)
+        public async Task<ActionResult> AddTopicToUser([FromBody] string topic, [FromRoute] string userId)
         {
-            Console.Out.WriteLine();
             try
             {
                 Console.Out.WriteLine("topic:" + topic + " UserId" + "  " + userId);
-                await AccountService.addTopicToUser(userId, topic);
+                await AccountService.AddTopicToUser(userId, topic);
                 Console.Out.WriteLine("Topic added");
                 return Ok();
             }
@@ -226,11 +213,11 @@ namespace Application.Controllers
         }
         [HttpDelete]
         [Route("topic/remove/{userId}/{topic}")]
-        public async Task<ActionResult> removeTopicFromUser([FromRoute] string topic, [FromRoute] string userId)
+        public async Task<ActionResult> RemoveTopicFromUser([FromRoute] string topic, [FromRoute] string userId)
         {
             try
             {
-                await AccountService.removeTopicFromUser(userId, topic);
+                await AccountService.RemoveTopicFromUser(userId, topic);
                 return Ok();
             }
             catch (Exception e)
