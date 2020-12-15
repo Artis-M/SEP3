@@ -2,10 +2,13 @@
 @using Services
 @using Microsoft.AspNetCore.Authorization
 @using System.Text.Json
+@using Microsoft.AspNetCore.Components.Authorization
+@using Models.Authentication
 @using MongoDB.Bson
 @inject IChatService chatService;
 @inject IChatroomService chatroomService;
 @inject IJSRuntime JsRuntime;
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IAccountService AccountService;
 @inject NavigationManager Nav;
 @attribute [Authorize]
@@ -31,7 +34,10 @@
                                                     <button type="button" class="optionsButton dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <button type="button" class="menuButton" @onclick="(() => AddFriend(item._id))">Add as Friend</button>
+                                                        @if (!user.friends.Exists(user1 => user1._id.Equals(item._id)))
+                                                        {
+                                                            <button type="button" class="menuButton" @onclick="(() => AddFriend(item._id, item.Username))">Add as Friend</button>
+                                                        }
                                                         @if (currentChatroom.owner.Equals(user._id) || user.role.Equals("Admin"))
                                                         {
                                                             <button type="button" class="menuButton" @onclick="(() => RemoveFromChatroom(item._id))">kick User</button>
@@ -51,7 +57,7 @@
                     <button class="backButton" @onclick="BackToHub">Back to Hub</button>
                     @if (currentChatroom != null)
                     {
-                        @if ((currentChatroom.type.Equals("private") || !(currentChatroom.owner.Equals(user._id))) && !(currentChatroom.type.Equals("private")))
+                        @if ((!currentChatroom.owner.Equals(user._id) && !currentChatroom.type.Equals("private")) || (user.role.Equals("Admin") && !currentChatroom.owner.Equals(user._id)))
                         {
                             <button class="leaveButton" @onclick="LeaveChatroom">Leave Chatroom</button>
                         }
@@ -192,9 +198,15 @@
         await JsRuntime.InvokeVoidAsync("scroll", "messages");
     }
 
-    public async Task AddFriend(string userID)
+    public async Task AddFriend(string userID, string username)
     {
         await AccountService.AddFriend(userID, user);
+        await ((AuthenticationProvider) AuthenticationStateProvider).ReCacheUser();
+        string userAsJson = await JsRuntime.InvokeAsync<string>("sessionStorage.getItem", "currentUser");
+        if (!string.IsNullOrEmpty(userAsJson))
+        {
+            user = JsonSerializer.Deserialize<Account>(userAsJson);
+        }
     }
 
     public async Task BackToHub()

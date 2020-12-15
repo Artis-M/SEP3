@@ -33,17 +33,15 @@ namespace Services
             List<Chatroom> Chatrooms = new List<Chatroom>();
             if (responseMessage.StatusCode == HttpStatusCode.OK)
             {
-                
-                Chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(await responseMessage.Content.ReadAsStringAsync());
-                //Console.Out.WriteLine("Chatrooms");
-                //Console.Out.WriteLine(Chatrooms.Count);
-               
+                string json = await responseMessage.Content.ReadAsStringAsync();
+                Chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(json);
+
             }
             if (responseMessage.StatusCode == HttpStatusCode.NotFound)
             {
-                
-                throw new Exception("Incorrect user id");
-                
+
+                Console.WriteLine(responseMessage.ToString());
+
             }
             return Chatrooms;
         }
@@ -154,7 +152,8 @@ namespace Services
             {
                 Chatroom chatroom =
                     JsonSerializer.Deserialize<Chatroom>(await responseMessage.Content.ReadAsStringAsync());
-                currentlySelectedChatroom = chatroom;
+                // currentlySelectedChatroom = chatroom;
+                await SetCurrentChatroom(chatroom._id);
             }
         }
 

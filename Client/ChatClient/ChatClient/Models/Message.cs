@@ -22,10 +22,5 @@ namespace Models
         {
             
         }
-
-        public string toString()
-        {
-            return "Message ID: " + messageId + ", Author ID: " + authorID + "Content of message: " + message+"Username: "+username;
-        }
     }
 }

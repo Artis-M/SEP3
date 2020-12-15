@@ -29,10 +29,10 @@ namespace WebApplication.SignalR
             Console.WriteLine("messageFragment sent?");
             return Clients.Group(activeChatRoomId).SendAsync("ReceiveChatRoomMessageFragment", messageFragment);
         }
-        // public Task UpdateChatroom(Chatroom chatroom)
-        // {
-        //     Console.WriteLine("Chatroom update.");
-        //     return Clients.Group(chatroom._id).SendAsync("ReceiveChatroomUpdate", chatroom);
-        // }
+        public Task UpdateChatroom(Chatroom chatroom)
+        {
+            Console.WriteLine("Chatroom update.");
+            return Clients.Group(chatroom._id).SendAsync("ReceiveChatroomUpdate", chatroom);
+        }
     }
 }

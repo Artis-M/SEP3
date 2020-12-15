@@ -6,20 +6,21 @@
 @inject IChatroomService chatroomService;
 @inject IJSRuntime JsRuntime;
 @inject IAccountService AccountService;
+@inject IChatService ChatService;
 @inject NavigationManager Nav;
 @attribute [Authorize(Roles = "Admin")]
 
-<div class="container-fluid">
+<div class="container-fluid mr-3 ml-3">
     <div class="row">
         <div class="col-12">
             <h1>Admin Tools</h1>
-            <button @onclick="goBack">Go back to hub</button>
+            <button class="redirectButton" @onclick="goBack">Go back to hub</button>
         </div>
     </div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-6">
             <h3>All Users</h3>
-            <button @onclick="getAllusers">Get All Users</button>
+            <button class="redirectButton" @onclick="getAllusers">Get All Users</button>
             <div class="row">
                 <div class="col-12">
                     @if (AllUsers.Any())
@@ -27,16 +28,16 @@
                         @foreach (var item in AllUsers)
                         {
                             <p>
-                                @item.Username (@item._id) <button @onclick="() => deleteUser(item._id, item.Username)">Delete User</button>
+                                @item.Username (@item._id) <button class="redirectButton" @onclick="() => deleteUser(item._id, item.Username)">Delete User</button>
                             </p>
                         }
                     }
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-6">
             <h3>All Chatrooms</h3>
-            <button @onclick="getAllChatrooms">Get Chatrooms</button>
+            <button class="redirectButton" @onclick="getAllChatrooms">Get Chatrooms</button>
             <div class="row">
                 <div class="col-12">
                     @if (AllChatrooms.Any())
@@ -44,17 +45,25 @@
                         @foreach (var item in AllChatrooms)
                         {
                             <p>
-                                @item.name (@item._id) <button @onclick="() => deleteChatroom(item._id, item.name)">Delete Chatroom</button>
+                                @item.name (@item._id)
+                                  @if (!item.type.Equals("private"))
+                                                                {
+                                                                    <button class="redirectButton" @onclick="() => deleteChatroom(item._id, item.name)">Delete Chatroom</button>                    
+                                                                }
                                 @if (item.participants.FirstOrDefault() != null)
                                 {
+                                    @if (item.participants.Exists(users => users._id.Equals(user._id)))
+                                    {
+                                        <button class="redirectButton" @onclick="() => enterPrivateChatroom(item._id)">Enter Chatroom</button>  
+                                    }
 @if (!(item.participants.Exists(users => users._id.Equals(user._id))))
 {
-    <button @onclick="() => JoinChatroom(item._id)">Join Chatroom</button>
+    <button class="redirectButton" @onclick="() => JoinChatroom(item._id)">Join Chatroom</button>
 }
                                 }
                                 else
                                 {
-                                    <button @onclick="() => JoinChatroom(item._id)">Join Chatroom</button>
+                                    <button class="redirectButton" @onclick="() => JoinChatroom(item._id)">Join Chatroom</button>
                                 }
                             </p>
                         }
@@ -113,7 +122,7 @@
         }
     }
 
-    private async Task deleteUser(string userID, string user)
+    private async Task deleteUser(string userID, string username)
     {
         try
         {
@@ -121,7 +130,13 @@
                 $"Are you sure that you want to delete this account ({user}, {userID})? \n ***WARNING!*** \n This action cannot be undone!");
             if (response)
             {
+                List<Chatroom> chatroomBuffer = await chatroomService.GetUsersChatrooms(userID);
+                User userBuffer = await AccountService.getUser(username);
                 await AccountService.DeleteProfile(userID);
+                await ChatService.ConnectToServer();
+                await ChatService.UpdateChatRooms(chatroomBuffer, userBuffer);
+                await ChatService.DisconnectFromHub();
+                await getAllusers();
             }
         }
         catch (Exception e)
@@ -158,5 +173,23 @@
     {
         Nav.NavigateTo("main", true);
     }
-
+    
+    private async void enterPrivateChatroom(string chatroomID)
+    {
+        HttpClient http = new HttpClient
+        {
+            BaseAddress = new Uri("https://localhost:5004/chatrooms/")
+        };
+        try
+        {
+            Chatroom chatroom = JsonSerializer.Deserialize<Chatroom>(await http.GetStringAsync(chatroomID));
+            await chatroomService.SetCurrentChatroom(chatroom._id);
+            Nav.NavigateTo("");
+        }
+        catch (Exception e)
+        {
+            Console.Out.WriteLine(e);
+        }
+  
+    }
 }

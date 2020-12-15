@@ -71,7 +71,7 @@ using Microsoft.JSInterop;
         {
             cachedUser = null;
             var user = new ClaimsPrincipal(new ClaimsIdentity());
-             jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", null);
+            jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", null);
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
         
@@ -81,6 +81,13 @@ using Microsoft.JSInterop;
             claims.Add(new Claim(ClaimTypes.Role, user.role));
             ClaimsIdentity identity = new ClaimsIdentity(claims, "apiauth_type");
             return identity;
+        }
+
+        public async Task ReCacheUser()
+        {
+            Account newAccount  = await accountService.getUser(cachedUser.Username);
+            string serialisedData = JsonSerializer.Serialize(newAccount);
+            await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
         }
     }
 }

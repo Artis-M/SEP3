@@ -52,30 +52,5 @@ namespace Models
             this.name = name;
             this.participants = participants;
         }
-
-        public async Task removeUser(User user)
-        {
-
-        }
-
-        public void addUser(User user)
-        {
-            
-        }
-
-        public void addTopic(Topic topic)
-        {
-            
-        }
-
-        public void removeTopic(Topic topic)
-        {
-            
-        }
-
-        public void addMessage(Message message)
-        {
-            messages.Add(message);
-        }
     }
 }

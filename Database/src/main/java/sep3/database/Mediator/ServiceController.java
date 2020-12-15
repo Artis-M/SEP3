@@ -16,6 +16,7 @@ import java.lang.reflect.Type;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ServiceController implements Runnable
 {
@@ -140,7 +141,9 @@ public class ServiceController implements Runnable
                     responseCommand.setCommand("AllChatrooms");
                     String sendBack = gson.toJson(responseCommand);
                     byte[] toSendBytes = sendBack.getBytes();
+                    System.out.println(Arrays.toString(toSendBytes));
                     int toSendLen = toSendBytes.length;
+                    System.out.println(toSendLen);
                     byte[] toSendLenBytes = new byte[4];
                     toSendLenBytes[0] = (byte)(toSendLen & 0xff);
                     toSendLenBytes[1] = (byte)((toSendLen >> 8) & 0xff);

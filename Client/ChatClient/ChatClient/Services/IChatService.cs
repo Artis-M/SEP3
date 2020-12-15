@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Models;
 
@@ -23,6 +24,8 @@ namespace Services
         public Task LeaveChatRoom(string ChatRoomId);
 
         public Task DisconnectFromHub();
-        
+
+        public Task UpdateChatRooms(List<Chatroom> chatrooms, User userToRemove);
+
     }
 }

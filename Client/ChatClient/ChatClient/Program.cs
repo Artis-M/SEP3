@@ -24,7 +24,6 @@ namespace Models
             builder.RootComponents.Add<App>("app");
             builder.Services.AddSingleton<IChatService, ChatService>();
             builder.Services.AddSingleton<IAccountService, AccountService>();
-            builder.Services.AddScoped<ITopicService, TopicServiceImpl>();
             builder.Services.AddSingleton<IChatroomService, ChatroomServiceImp>();
             builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProvider>();
             builder.Services.AddAuthorizationCore();

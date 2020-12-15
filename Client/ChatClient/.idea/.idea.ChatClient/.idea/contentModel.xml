@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\jambo\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\jambo\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_ChatClient.-427898982.00" t="ExcludeRecursive" />
-    <e p="C:\Users\jambo\AppData\Roaming\JetBrains\Rider2020.2\consoles\db" t="IncludeRecursive" />
-    <e p="C:\Users\jambo\AppData\Roaming\JetBrains\Rider2020.2\extensions" t="IncludeRecursive" />
-    <e p="C:\Users\jambo\Desktop\School\Semester 3\SEP3\SEP3\Client\ChatClient" t="IncludeFlat">
+    <e p="C:\Users\mundu\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\mundu\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_ChatClient.1949581662.00" t="ExcludeRecursive" />
+    <e p="H:\SEP3 Code\SEP3\Client\ChatClient" t="IncludeFlat">
       <e p="ChatClient" t="IncludeRecursive">
         <e p="_Imports.razor" t="Include" />
         <e p="App.razor" t="Include" />
@@ -51,9 +49,7 @@
             <e p="AccountServiceImp.cs" t="Include" />
             <e p="ChatroomServiceImp.cs" t="Include" />
             <e p="ChatService.cs" t="Include" />
-            <e p="TopicServiceImpl.cs" t="Include" />
           </e>
-          <e p="ITopicService.cs" t="Include" />
         </e>
         <e p="Shared" t="Include">
           <e p="MainLayout.razor" t="Include" />

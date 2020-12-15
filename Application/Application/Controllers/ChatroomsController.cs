@@ -90,9 +90,8 @@ namespace Application.Controllers
         
         [HttpGet]
         [Route("private/{userId}/{userId1}")]
-        public async Task<ActionResult<Chatroom>> getPrivateCHatroom([FromRoute] string userId,[FromRoute] string userId1)
+        public async Task<ActionResult<Chatroom>> GetPrivateChatroom([FromRoute] string userId,[FromRoute] string userId1)
         {
-            // Console.WriteLine("Getting chat room:" + chatRoomId);
             Chatroom chatroom = await chatroomService.getPrivateChatroom(userId,userId1);
             try
             {

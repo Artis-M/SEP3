@@ -32,14 +32,12 @@ namespace Services
             byte[] passwordBytes = Encoding.ASCII.GetBytes(password);
             byte[] hashedBytes = sha.ComputeHash(passwordBytes);
             string hashedPassword = Convert.ToBase64String(hashedBytes);
-            Console.WriteLine($"HashedPass:{hashedPassword}");
             string request = $"login";
 
             http.DefaultRequestHeaders.Add("username", username);
             http.DefaultRequestHeaders.Add("password", hashedPassword);
 
             HttpResponseMessage responseMessage = await http.GetAsync(request);
-            //Console.Out.WriteLine(responseMessage.StatusCode);
             Account account = null;
             if (responseMessage.StatusCode == HttpStatusCode.OK)
             {
@@ -66,15 +64,13 @@ namespace Services
                 string json = await http.GetStringAsync(uri + $"user/username/{username}");
                 account = JsonSerializer.Deserialize<Account>(json);
             }
-            catch(Exception e)
+            catch (Exception e)
 
             {
-                throw new Exception("Username Already in Use");
+                Console.WriteLine(e.Message);
             }
 
-        return account;
-
-
+            return account;
         }
 
         public async Task Register(Account account)
@@ -88,11 +84,10 @@ namespace Services
             byte[] passwordBytes = Encoding.ASCII.GetBytes(account.Pass);
             byte[] hashedBytes = sha.ComputeHash(passwordBytes);
             account.Pass = Convert.ToBase64String(hashedBytes);
-            
+
             string serialized = JsonSerializer.Serialize(account);
             StringContent content = new StringContent(serialized, Encoding.UTF8, "application/json");
             HttpResponseMessage responseMessage = await http.PostAsync(uri + "register", content);
-            Console.WriteLine(responseMessage.ToString());
         }
 
         public async Task removeFriend(string userId, string friendId)
@@ -106,7 +101,7 @@ namespace Services
                 new StringContent(JsonSerializer.Serialize(friendId), Encoding.UTF8, "application/json");
             await http.PatchAsync(request, content);
         }
-        
+
         public async Task AddFriend(string UserID, Account userAccount)
         {
             HttpClient http = new HttpClient
@@ -117,15 +112,8 @@ namespace Services
 
             string userJson = await http.GetStringAsync(request);
             User targetUser = JsonSerializer.Deserialize<User>(userJson);
-            
+
             userAccount.friends.Add(targetUser);
-            // User theOneThatsAdding = new User
-            // {
-            //     _id = userAccount._id,
-            //     Fname = userAccount.Fname,
-            //     Lname = userAccount.Lname,
-            //     Username = userAccount.Username
-            // };
             User theOneThatsAdding = userAccount;
 
             await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser",
@@ -147,16 +135,16 @@ namespace Services
                 BaseAddress = new Uri(uri)
             };
             string request = $"{userID}";
-            Console.Out.WriteLine(request + "USER TO BE DELETED");
             await http.DeleteAsync(request);
         }
+
         public async Task addTopicToProfile(string topic, string userId)
         {
             HttpClient http = new HttpClient
             {
                 BaseAddress = new Uri(uri)
             };
-            string response = uri +  $"topic/add/{userId}";
+            string response = uri + $"topic/add/{userId}";
             Console.Out.WriteLine($"Topic {topic} UserId {userId}");
             Console.Out.WriteLine(response);
             try
@@ -171,7 +159,6 @@ namespace Services
                 Console.WriteLine(e);
                 throw;
             }
-            
         }
 
         public async Task removeTopicFromProfile(string topic, string userId)
@@ -180,10 +167,9 @@ namespace Services
             {
                 BaseAddress = new Uri(uri)
             };
-            string response = uri+ $"topic/remove/{userId}/{topic}";
+            string response = uri + $"topic/remove/{userId}/{topic}";
             try
             {
-                
                 Console.Out.WriteLine($"Topic {topic} UserId {userId}");
                 HttpResponseMessage responseMessage = await http.DeleteAsync(response);
             }
@@ -200,7 +186,7 @@ namespace Services
             {
                 BaseAddress = new Uri(uri)
             };
-            string response = uri +  $"editAccount";
+            string response = uri + $"editAccount";
             SHA384CryptoServiceProvider sha = new SHA384CryptoServiceProvider();
             byte[] passwordBytes = Encoding.ASCII.GetBytes(account.Pass);
             byte[] hashedBytes = sha.ComputeHash(passwordBytes);

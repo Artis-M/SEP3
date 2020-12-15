@@ -211,6 +211,7 @@ namespace Application.SCMediator
             byte[] dataFromServer = new byte[rcvLen];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
+            Console.WriteLine(response);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
             /* to here */
             if (upsdelivery.Command.Equals("ChatroomByUser"))
@@ -299,6 +300,7 @@ namespace Application.SCMediator
             byte[] rcvLenBytes = new byte[4];
             stream.Read(rcvLenBytes);
             int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
+            Console.WriteLine(rcvLen);
             byte[] dataFromServer = new byte[rcvLen];
             int bytesRead = stream.Read(dataFromServer, 0, dataFromServer.Length);
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);

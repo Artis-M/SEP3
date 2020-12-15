@@ -203,7 +203,6 @@
         }
         Chatrooms = await ChatroomService.GetUsersChatrooms(storedUser._id);
         Account user = await AccountService.getUser(storedUser.Username);
-        Console.Out.WriteLine(user.Username);
         topics = user.topics;
         foreach (var VARIABLE in topics)
         {
@@ -259,17 +258,6 @@
         }
     }
 
-    /*private async Task RemoveTopic(string id)
-    {
-    //call method to remove topic
-    }
-
-    private async Task AddTopic()
-    {
-    //new page to add a topic?
-        NavigationManager.NavigateTo("");
-    }*/
-
     private async Task EnterChatroom(string id)
     {
         await ChatroomService.SetCurrentChatroom(id);
@@ -279,17 +267,12 @@
     private async Task JoinChatroom(string id)
     {
         await ChatroomService.JoinChatRoom(id, storedUser._id);
-    // Console.Out.WriteLine($"CHATROOOOM : : : {id}");
         await EnterChatroom(id);
     }
 
     public async Task AddChatroom()
     {
         NavigationManager.NavigateTo("AddChatroom");
-    }
-
-    public async Task LeaveRoom(string id)
-    {
     }
 
     public async Task RemoveFriend(string id)
@@ -302,7 +285,6 @@
             }
         }
         await AccountService.removeFriend(storedUser._id, id);
-    // StateHasChanged();
     }
 
     public async Task EditProfile()

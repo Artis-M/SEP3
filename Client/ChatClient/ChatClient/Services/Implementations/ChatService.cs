@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -72,6 +74,15 @@ namespace Services
         public async Task DisconnectFromHub()
         {
             await _hubConnection.StopAsync();
+        }
+
+        public async Task UpdateChatRooms(List<Chatroom> chatrooms, User userToRemove)
+        {
+            foreach (var item in chatrooms)
+            {
+                item.participants.Remove(item.participants.First((user => user._id.Equals(userToRemove._id))));
+                await _hubConnection.SendAsync("UpdateChatroom", item);
+            }
         }
     }
 }
