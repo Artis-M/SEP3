@@ -17,7 +17,6 @@ public interface UserDAO {
     void addTopicToUser(String Topic,String userId);
     void removeUserTopic(String Topic,String userId);
     void addAccount(Account account);
-    Account getUserByName(String firstName,String LastName);
     ArrayList<Account> getAllAccount();
     void deleteFriendFromUsers(String friend);
     void deleteAccount(String userID);

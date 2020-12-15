@@ -18,17 +18,33 @@ public class TopicDAOImpl implements TopicDAO {
     private MongoCollection<Document> collection;
     private DBConnection connection;
     private Gson gson;
+
+    /**
+     * Constructor initiate connection to collection Topics
+     */
     public TopicDAOImpl()
     {
         connection = DBConnection.setConnection();
         collection = connection.getDatabase().getCollection("Topics");
         gson = new Gson();
     }
+
+    /**
+     * Private method that create a Document based on a query
+     * @param key name of field in database
+     * @param obj what to search
+     * @return Document from database
+     */
     private MongoCursor<Document> cursor(String key, Object obj) {
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.append(key, obj);
         return collection.find(whereQuery).iterator();
     }
+
+    /**
+     * Add topic to the database
+     * @param topic
+     */
     public void addTopic(Topic topic)
     {
         collection = connection.getDatabase().getCollection("Topics");
@@ -41,6 +57,11 @@ public class TopicDAOImpl implements TopicDAO {
 
     }
 
+    /**
+     * Get topic based on id
+     * @param id id of topic
+     * @return topic
+     */
     public Topic getTopic(ObjectId id)
     {
         collection = connection.getDatabase().getCollection("Topics");
@@ -50,6 +71,12 @@ public class TopicDAOImpl implements TopicDAO {
         Topic topic = new Topic(document.get("_id").toString(), document.getString("name"));
         return topic;
     }
+
+    /**
+     * Get all topics for a user based on id of user
+     * @param userId id of user
+     * @return list of topics
+     */
     public ArrayList<Topic> getUserTopics(ObjectId userId)
     {
 
@@ -87,6 +114,11 @@ public class TopicDAOImpl implements TopicDAO {
         return topicList;
     }
 
+    /**
+     * Get topic based on topic name
+     * @param topic topic name
+     * @return Topic
+     */
     @Override
     public Topic getTopic(String topic) {
         collection = connection.getDatabase().getCollection("Topics");

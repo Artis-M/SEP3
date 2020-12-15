@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+
 import static com.mongodb.client.model.Projections.include;
 
 public class ChatroomDAOImpl implements ChatroomDAO {
@@ -28,6 +30,10 @@ public class ChatroomDAOImpl implements ChatroomDAO {
     private UserDAO userDAO;
     private TopicDAO topicDAO;
 
+    /**
+     * parameterless constructor that initiate the connection
+     */
+
     public ChatroomDAOImpl() {
         connection = DBConnection.setConnection();
         collection = connection.getDatabase().getCollection("Chatrooms");
@@ -36,6 +42,11 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         topicDAO = new TopicDAOImpl();
     }
 
+    /**
+     * Getting a document from database and create chatroom
+     * @param document
+     * @return chatroom
+     */
     private Chatroom createChatroom(Document document) {
         Chatroom room = new Chatroom();
         String id = document.get("_id").toString();
@@ -63,6 +74,11 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         return room;
     }
 
+    /**
+     * get topics of chatroom based on id as string
+     * @param id id of a topic
+     * @return list of chatrooms
+     */
     private ArrayList<Topic> getChatroomTopic(String id) {
         ArrayList<Topic> topicList = new ArrayList<>();
         BasicDBObject whereQuery = new BasicDBObject();
@@ -88,6 +104,11 @@ public class ChatroomDAOImpl implements ChatroomDAO {
     }
 
 
+    /**
+     * Get All users of a specific chatroom
+     * @param id id of chatroom
+     * @return list of Users
+     */
     private ArrayList<User> getChatroomUsers(String id) {
         ArrayList<User> users = new ArrayList<>();
         BasicDBObject whereQuery = new BasicDBObject();
@@ -108,6 +129,10 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         return users;
     }
 
+    /**
+     * Get all chatrooms from database
+     * @return list of chatrooms
+     */
     @Override
     public ArrayList<Chatroom> getAllChatrooms() {
         ArrayList<Chatroom> chatrooms = new ArrayList<>();
@@ -125,6 +150,10 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         return chatrooms;
     }
 
+    /**
+     * Add a chatroom in the database
+     * @param chatroom chatroom to add
+     */
     @Override
     public void AddChatroom(Chatroom chatroom) {
         Document add = new Document();
@@ -173,12 +202,12 @@ public class ChatroomDAOImpl implements ChatroomDAO {
 
     }
 
-    @Override
-    public void deleteChatroom(Chatroom chatroom) {
 
-    }
-
-
+    /**
+     * Add a message to a chatroom
+     * @param chatroomId id of specific chatroom
+     * @param message message information to add
+     */
     @Override
     public void addMessageToChatroom(String chatroomId, Message message) {
         BasicDBObject chatroomObject = new BasicDBObject();
@@ -198,6 +227,12 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         collection.updateOne(chatroomObject,updateMessage);
     }
 
+
+    /**
+     * Add a user to a chatroom
+     * @param userId id of user
+     * @param chatroomId id of chatroom
+     */
     @Override
     public void joinChatroom(String userId, String chatroomId) {
         BasicDBObject chatroomObject = new BasicDBObject();
@@ -215,6 +250,12 @@ public class ChatroomDAOImpl implements ChatroomDAO {
 
     }
 
+
+    /**
+     * delete user from a chatroom
+     * @param userId id of user
+     * @param chatroomId id of chatroom
+     */
     @Override
     public void leaveChatroom(String userId, String chatroomId) {
         System.out.println(chatroomId);
@@ -231,18 +272,24 @@ public class ChatroomDAOImpl implements ChatroomDAO {
 
     }
 
+    /**
+     * Get a private chatroom between two participants
+     * @param userId1 one of the participants
+     * @param userId2 another one of the participants
+     * @return private chatroom
+     */
     public Chatroom getPrivateChatroom(String userId1,String userId2)
     {
         BasicDBObject object = new BasicDBObject();
-      ObjectId user1 = new ObjectId(userId1);
+        ObjectId user1 = new ObjectId(userId1);
         object.append("participantId",user1);
         BasicDBObject object1 = new BasicDBObject();
         ObjectId user2 = new ObjectId(userId2);
-       object1.append("participantId",user2);
+        object1.append("participantId",user2);
         Bson users = Filters.and(Filters.eq("participants",object),
                 Filters.eq("participants",object1),
                 Filters.eq("type","private")
-                );
+        );
         Document document = collection.find(users).first();
 
         assert document != null;
@@ -250,6 +297,11 @@ public class ChatroomDAOImpl implements ChatroomDAO {
 
     }
 
+    /**
+     * Get a chatroom based on a id
+     * @param id id of chatroom
+     * @return chatroom
+     */
     @Override
     public Chatroom getChatroom(String id) {
         BasicDBObject whereQuery = new BasicDBObject();
@@ -267,6 +319,10 @@ public class ChatroomDAOImpl implements ChatroomDAO {
 
     }
 
+    /**
+     * Delete a chatroom from database
+     * @param id id of chatroom
+     */
     @Override
     public void removeChatroom(String id) {
         ObjectId _id = new ObjectId(id);
@@ -274,6 +330,11 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         collection.deleteOne(remove);
     }
 
+    /**
+     * Delete a private chatroom based on participants from database
+     * @param userId1 first participant
+     * @param userId2  second participant
+     */
     @Override
     public void deletePrivateChatroom(String userId1, String userId2) {
         BasicDBObject object = new BasicDBObject();
@@ -290,6 +351,11 @@ public class ChatroomDAOImpl implements ChatroomDAO {
     }
 
 
+    /**
+     * Get chatrooms where a specific user is participant
+     * @param userId id of user
+     * @return list of chatrooms
+     */
     @Override
     public ArrayList<Chatroom> getChatroomByUserId(String userId) {
         ArrayList<Chatroom> chatRooms = new ArrayList<>();
@@ -311,6 +377,10 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         return chatRooms;
     }
 
+    /**
+     * Delete user from all chatrooms where it is as participant from database
+     * @param userId id of user
+     */
     @Override
     public void deleteUserFromChatrooms(String userId) {
         BasicDBObject whereQuery = new BasicDBObject();
@@ -321,13 +391,19 @@ public class ChatroomDAOImpl implements ChatroomDAO {
         collection.updateMany(new BasicDBObject(),whereQuery);
     }
 
+
+    /**
+     * Get chatrooms by topic name
+     * @param topic name of topic
+     * @return list of chatrooms
+     */
     @Override
     public ArrayList<Chatroom> getChatroomsByTopic(String topic) {
         ArrayList<Chatroom> chatRooms = new ArrayList<>();
         BasicDBObject whereQuery = new BasicDBObject();
         BasicDBObject participant = new BasicDBObject();
 
-       Topic topicObject = topicDAO.getTopic(topic.toLowerCase());
+        Topic topicObject = topicDAO.getTopic(topic.toLowerCase());
         participant.append("topics",new ObjectId(topicObject.get_id()));
         whereQuery.append("topics", participant);
         MongoCursor<Document> documents = collection.find(whereQuery).iterator();

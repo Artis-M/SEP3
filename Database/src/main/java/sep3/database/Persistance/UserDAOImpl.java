@@ -18,6 +18,9 @@ import java.util.NoSuchElementException;
 import static com.mongodb.client.model.Projections.exclude;
 import static com.mongodb.client.model.Projections.include;
 
+/**
+ * Class that implement UserDAO interface
+ */
 public class UserDAOImpl implements UserDAO
 {
     private MongoCollection<Document> collection;
@@ -26,6 +29,9 @@ public class UserDAOImpl implements UserDAO
     private TopicDAO topicDAO;
 
 
+    /**
+     * Parameterless constructor that initiate the connection to Users collection
+     */
     public UserDAOImpl()
     {
         connection = DBConnection.setConnection();
@@ -35,6 +41,13 @@ public class UserDAOImpl implements UserDAO
 
     }
 
+
+    /**
+     * Private method that create a Document based on a query
+     * @param key name of field in database
+     * @param obj what to search
+     * @return Document from database
+     */
     private MongoCursor<Document> cursor(String key, Object obj)
     {
         BasicDBObject whereQuery = new BasicDBObject();
@@ -42,6 +55,12 @@ public class UserDAOImpl implements UserDAO
         return collection.find(whereQuery).iterator();
     }
 
+
+    /**
+     * Create an account based on a document from database
+     * @param document document from database
+     * @return Account
+     */
     public Account createAccount(Document document)
     {
         ObjectId _id = new ObjectId(document.get("_id").toString());
@@ -57,6 +76,11 @@ public class UserDAOImpl implements UserDAO
 
     }
 
+    /**
+     * Get an account based on id of a user
+     * @param userId id of user
+     * @return Account
+     */
     @Override
     public Account getAccount(ObjectId userId)
     {
@@ -65,6 +89,11 @@ public class UserDAOImpl implements UserDAO
         return createAccount(document);
     }
 
+    /**
+     * Get an account based on username of an account
+     * @param username account username
+     * @return Account
+     */
     @Override
     public Account getAccount(String username)
     {
@@ -82,6 +111,10 @@ public class UserDAOImpl implements UserDAO
         return createAccount(document);
     }
 
+    /**
+     * Get all accounts from database
+     * @return list of accounts
+     */
     public ArrayList<Account> getAllAccount()
     {
         ArrayList<Account> accounts = new ArrayList<>();
@@ -103,6 +136,11 @@ public class UserDAOImpl implements UserDAO
 
     }
 
+
+    /**
+     * Delete a specific friend from all users
+     * @param friend id of user that should be deleted
+     */
     @Override
     public void deleteFriendFromUsers(String friend) {
         BasicDBObject friendQuery = new BasicDBObject();
@@ -114,6 +152,10 @@ public class UserDAOImpl implements UserDAO
         collection.updateMany(new BasicDBObject(),friendQuery);
     }
 
+    /**
+     * Delete an account from database
+     * @param userID account id
+     */
     @Override
     public void deleteAccount(String userID) {
         ObjectId _id = new ObjectId(userID);
@@ -122,6 +164,10 @@ public class UserDAOImpl implements UserDAO
         collection.deleteOne(delete);
     }
 
+    /**
+     * Edit an existing account from database
+     * @param account edited account
+     */
     @Override
     public void EditAccount(Account account) {
         BasicDBObject edit = new BasicDBObject();
@@ -139,6 +185,12 @@ public class UserDAOImpl implements UserDAO
         collection.updateOne(toEdit,update);
     }
 
+
+    /**
+     * Get User based on id
+     * @param userID user id
+     * @return User
+     */
     @Override
     public User getUser(String userID)
     {
@@ -159,6 +211,11 @@ public class UserDAOImpl implements UserDAO
     }
 
 
+    /**
+     * Get all friend for a specific account based on id
+     * @param userId account id
+     * @return list of users
+     */
     @Override
     public ArrayList<User> getUserFriends(String userId)
     {
@@ -188,6 +245,11 @@ public class UserDAOImpl implements UserDAO
         return list;
     }
 
+    /**
+     * Add friend to an existing account
+     * @param friend friend id
+     * @param userId account id
+     */
     @Override
     public void addFriend(String friend,String userId)
     {
@@ -202,6 +264,11 @@ public class UserDAOImpl implements UserDAO
 
     }
 
+    /**
+     * remove friend from a specific account
+     * @param user account id
+     * @param friendId friend id
+     */
     @Override
     public void removeFriend(String user, String friendId)
     {
@@ -214,6 +281,12 @@ public class UserDAOImpl implements UserDAO
         collection.updateOne(searchQuery, new BasicDBObject("$pull", update));
     }
 
+
+    /**
+     * Add topic to an Account based on topic name
+     * @param Topic topic name
+     * @param userId account id
+     */
     @Override
     public void addTopicToUser(String Topic, String userId)
     {
@@ -227,6 +300,11 @@ public class UserDAOImpl implements UserDAO
 
     }
 
+    /**
+     * remove topic from an account
+     * @param Topic topic name
+     * @param userId account id
+     */
     @Override
     public void removeUserTopic(String Topic, String userId)
     {
@@ -239,6 +317,10 @@ public class UserDAOImpl implements UserDAO
         collection.updateOne(searchQuery, newDocument);
     }
 
+    /**
+     * Add an account to the database
+     * @param account account to add
+     */
     @Override
     public void addAccount(Account account)
     {
@@ -258,10 +340,5 @@ public class UserDAOImpl implements UserDAO
         collection.insertOne(add);
     }
 
-    @Override
-    public Account getUserByName(String firstName, String LastName)
-    {
-        return null;
-    }
 
 }

@@ -13,12 +13,20 @@ public class DBConnection {
     private MongoClientURI uri;
     private MongoDatabase database;
 
+    /**
+     * Constructor that initiate the connection to database
+     */
     private DBConnection()
     {
         mongoClient = MongoClients.create(
                 "mongodb+srv://admin:admin@sep.b0aui.mongodb.net/ChatSystem?retryWrites=true&w=majority");
         database = mongoClient.getDatabase("ChatSystem");
     }
+
+    /**
+     * Get connection as singleton
+     * @return connection to database
+     */
     public static DBConnection setConnection()
     {
     if(connection == null)
@@ -28,6 +36,10 @@ public class DBConnection {
     return connection;
     }
 
+    /**
+     * Get database
+     * @return MongoDatabase
+     */
     public MongoDatabase getDatabase() {
         return database;
     }
