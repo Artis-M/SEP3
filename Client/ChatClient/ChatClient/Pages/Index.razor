@@ -311,7 +311,7 @@
             $"Are you sure you want to delete the chatroom: {currentChatroom.name}? \n This action cannot be undone!");
         if (response)
         {
-            await chatroomService.DeleteChatRoom(currentChatroom._id);
+            await chatroomService.DeleteChatroom(currentChatroom._id);
         }
     }
 

@@ -143,7 +143,7 @@ namespace Services
             }
         }
 
-        public async Task DeleteChatRoom(string ChatroomID)
+        public async Task DeleteChatroom(string ChatroomID)
         {
             HttpClient http = new HttpClient
             {

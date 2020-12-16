@@ -12,7 +12,7 @@ namespace Services
         public Task AddTopicToProfile(string topic, string userId);
         public Task RemoveTopicFromProfile(string topic, string userId);
         public Task EditProfile(Account account);
-        Task<Account> GetUser(string username);
+        public Task<Account> GetUser(string username);
         public Task RemoveFriend(string userId, string friendId);
     }
 }

@@ -151,7 +151,7 @@
         if (response)
         {
             Console.WriteLine("Deleting");
-            await chatroomService.DeleteChatRoom(chatroomID);
+            await chatroomService.DeleteChatroom(chatroomID);
             await GetAllChatrooms();
         }
     }
