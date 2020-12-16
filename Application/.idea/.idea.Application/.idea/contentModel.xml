@@ -40,7 +40,6 @@
         <e p="SCMediator" t="Include">
           <e p="ChatServiceImp.cs" t="Include" />
           <e p="CommandLine.cs" t="Include" />
-          <e p="ServiceImpl.cs" t="Include" />
         </e>
         <e p="Services" t="Include">
           <e p="AccountsServiceImpl.cs" t="Include" />
