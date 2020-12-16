@@ -84,7 +84,15 @@ namespace Models.Authentication
 
         public async Task ReCacheUser()
         {
+            
             Account newAccount = await accountService.GetUser(cachedUser.Username);
+            string serialisedData = JsonSerializer.Serialize(newAccount);
+            await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
+        }
+        public async Task ReCacheUser(string username)
+        {
+            
+            Account newAccount = await accountService.GetUser(username);
             string serialisedData = JsonSerializer.Serialize(newAccount);
             await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "currentUser", serialisedData);
         }

@@ -49,19 +49,19 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/ChatClient/Pages/Index.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Pages/Login.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Pages/Register.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Services/Implementations/AccountServiceImp.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Services/IAccountService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/obj/Debug/netstandard2.1/Razor/Pages/EditProfile.razor.g.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Pages/Index.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Services/Implementations/ChatroomServiceImp.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Services/IChatroomService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ChatClient/Models/Message.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Services/Implementations/AccountServiceImp.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/obj/Debug/netstandard2.1/Razor/Pages/EditProfile.razor.g.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Authentication/AuthenticationProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Services/IChatroomService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Services/IAccountService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ChatClient/Models/User.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Models/Message.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ChatClient/Pages/Register.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -84,7 +84,6 @@
         <option value="$PROJECT_DIR$/ChatClient/wwwroot/css/mainpage.css" />
         <option value="$PROJECT_DIR$/ChatClient/wwwroot/css/chat.css" />
         <option value="$PROJECT_DIR$/ChatClient/Program.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/AccountServiceImp.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/MessageFragment.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/LoginRedirect.razor" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/Register.razor" />
@@ -95,7 +94,6 @@
         <option value="$PROJECT_DIR$/ChatClient/Models/User.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/Message.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Models/Chatroom.cs" />
-        <option value="$PROJECT_DIR$/ChatClient/Authentication/AuthenticationProvider.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Services/IAccountService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Services/IChatroomService.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/AddChatroom.razor" />
@@ -104,6 +102,8 @@
         <option value="$PROJECT_DIR$/ChatClient/Pages/Main.razor" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/Login.razor" />
         <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/ChatroomServiceImp.cs" />
+        <option value="$PROJECT_DIR$/ChatClient/Services/Implementations/AccountServiceImp.cs" />
+        <option value="$PROJECT_DIR$/ChatClient/Authentication/AuthenticationProvider.cs" />
         <option value="$PROJECT_DIR$/ChatClient/Pages/EditProfile.razor" />
       </list>
     </option>
@@ -228,6 +228,7 @@
       <workItem from="1608115665904" duration="2910000" />
       <workItem from="1608119462928" duration="13142000" />
       <workItem from="1608150562439" duration="1482000" />
+      <workItem from="1608152270893" duration="1826000" />
     </task>
     <servers />
   </component>
@@ -260,35 +261,35 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607018705663" />
-    <state width="1877" height="120" key="GridCell.Tab.0.bottom" timestamp="1608150961055">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1493" height="208" key="GridCell.Tab.0.bottom" timestamp="1608154122190">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1877" height="121" key="GridCell.Tab.0.bottom/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1608057567792" />
-    <state width="1493" height="263" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608026220947" />
+    <state width="1493" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608154122190" />
     <state width="914" height="120" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1608134402051" />
     <state width="1877" height="120" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608150961055" />
     <state width="1877" height="210" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607447988553" />
-    <state width="1877" height="120" key="GridCell.Tab.0.center" timestamp="1608150961055">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1493" height="208" key="GridCell.Tab.0.center" timestamp="1608154122190">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1877" height="121" key="GridCell.Tab.0.center/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1608057567792" />
-    <state width="1493" height="263" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1608026220947" />
+    <state width="1493" height="208" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1608154122190" />
     <state width="914" height="120" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1608134402051" />
     <state width="1877" height="120" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608150961055" />
     <state width="1877" height="210" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607447988553" />
-    <state width="1877" height="120" key="GridCell.Tab.0.left" timestamp="1608150961054">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1493" height="208" key="GridCell.Tab.0.left" timestamp="1608154122190">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1877" height="121" key="GridCell.Tab.0.left/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1608057567792" />
-    <state width="1493" height="263" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1608026220947" />
+    <state width="1493" height="208" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1608154122190" />
     <state width="914" height="120" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1608134402050" />
     <state width="1877" height="120" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608150961054" />
     <state width="1877" height="210" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607447988553" />
-    <state width="1877" height="120" key="GridCell.Tab.0.right" timestamp="1608150961055">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1493" height="208" key="GridCell.Tab.0.right" timestamp="1608154122190">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1877" height="121" key="GridCell.Tab.0.right/-1920.0.1920.1040/0.0.1920.1040@0.0.1920.1040" timestamp="1608057567792" />
-    <state width="1493" height="263" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1608026220947" />
+    <state width="1493" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1608154122190" />
     <state width="914" height="120" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1608134402051" />
     <state width="1877" height="120" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1608150961055" />
     <state width="1877" height="210" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607447988553" />
@@ -325,12 +326,6 @@
           <line>170</line>
           <properties documentPath="H:\SEP3 Code\SEP3\Client\ChatClient\ChatClient\Pages\AdminTools.razor" initialLine="170" isMultiMethodBreakpoint="true">
             <option name="multiMethodBreakpoint" value="true" />
-            <startOffsets>
-              <option value="-1" />
-            </startOffsets>
-            <endOffsets>
-              <option value="-1" />
-            </endOffsets>
           </properties>
           <option name="timeStamp" value="1" />
         </line-breakpoint>

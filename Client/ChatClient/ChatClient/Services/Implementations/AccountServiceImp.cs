@@ -62,11 +62,12 @@ namespace Services
             {
                 string json = await http.GetStringAsync(uri + $"user/username/{username}");
                 account = JsonSerializer.Deserialize<Account>(json);
+                
             }
             catch (Exception e)
 
             {
-                Console.WriteLine(e.Message);
+                return null;
             }
 
             return account;

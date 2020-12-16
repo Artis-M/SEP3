@@ -1,11 +1,14 @@
 ﻿@page "/EditProfile"
 @using System.Text.Json
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Models.Authentication
 @using MongoDB.Bson
 @using Services
 @inject IJSRuntime JsRuntime;
 @inject IAccountService AccountService;
 @inject NavigationManager NavigationManager;
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @attribute [Authorize]
 
 <div class="EditWrapper">
@@ -128,12 +131,14 @@
         error = "Username already in use";
         try
         {
-            await AccountService.GetUser(updatedAccount.Username);
-            if (updatedAccount.Username == defaultUsername)
+            Account check = await AccountService.GetUser(updatedAccount.Username);
+            Console.Out.WriteLine(updatedAccount.Username == defaultUsername || check==null);
+            if (updatedAccount.Username == defaultUsername || check==null)
             {
                 error = "";
                 await AccountService.EditProfile(updatedAccount);
-                Console.WriteLine(updatedAccount.ToJson());
+                await ((AuthenticationProvider) AuthenticationStateProvider).ReCacheUser(updatedAccount.Username);
+                NavigationManager.NavigateTo("/main",true);
             }
             else
             {
