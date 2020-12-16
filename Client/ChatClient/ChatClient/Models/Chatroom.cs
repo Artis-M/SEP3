@@ -19,37 +19,5 @@ namespace Models
             messages = new List<Message>();
             participants = new List<User>();
         }
-
-        public Chatroom(string id, string name, List<User> participants, List<Message> messages)
-        {
-            this._id = id;
-            this.name = name;
-            this.participants = participants;
-            this.messages = messages;
-        }
-
-        public Chatroom(string id, string name, List<User> participants, List<Topic> topics)
-        {
-            this._id = id;
-            this.name = name;
-            this.participants = participants;
-            this.topics = new List<Topic>();
-        }
-
-        public Chatroom(string id, string name, List<User> participants, List<Message> messages, List<Topic> topics)
-        {
-            this._id = id;
-            this.name = name;
-            this.participants = participants;
-            this.messages = messages;
-            this.topics = new List<Topic>();
-        }
-
-        public Chatroom(string id, string name, List<User> participants)
-        {
-            this._id = id;
-            this.name = name;
-            this.participants = participants;
-        }
     }
 }
