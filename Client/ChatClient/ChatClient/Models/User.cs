@@ -20,25 +20,5 @@ namespace Models
         public string Lname { get; set; }
 
         [JsonPropertyName("pictureURL")] public string PictureURL { get; set; }
-
-        public User()
-        {
-        }
-
-        public User(string _id, string username, string fname, string lname, string pictureURL)
-        {
-            this._id = _id;
-            this.Username = username;
-            this.Fname = fname;
-            this.Lname = lname;
-            this.PictureURL = pictureURL;
-        }
-
-        public User(string username, string fname, string lname)
-        {
-            this.Username = username;
-            this.Fname = fname;
-            this.Lname = lname;
-        }
     }
 }

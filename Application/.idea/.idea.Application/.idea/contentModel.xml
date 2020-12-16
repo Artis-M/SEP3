@@ -12,7 +12,6 @@
         <e p="Controllers" t="Include">
           <e p="AccountsController.cs" t="Include" />
           <e p="ChatroomsController.cs" t="Include" />
-          <e p="TopicsController.cs" t="Include" />
         </e>
         <e p="Models" t="Include">
           <e p="Account.cs" t="Include" />
