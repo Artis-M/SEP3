@@ -21,9 +21,7 @@
           <e p="Model.cs" t="Include" />
           <e p="ModelManager.cs" t="Include" />
           <e p="Topic.cs" t="Include" />
-          <e p="TopicList.cs" t="Include" />
           <e p="User.cs" t="Include" />
-          <e p="UserList.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">

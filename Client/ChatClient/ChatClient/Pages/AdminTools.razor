@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-6">
             <h3>All Users</h3>
-            <button class="redirectButton" @onclick="GetAllusers">Get All Users</button>
+            <button class="redirectButton" @onclick="GetAllUsers">Get All Users</button>
             <div class="row">
                 <div class="col-12">
                     @if (AllUsers.Any())
@@ -88,7 +88,7 @@
         }
     }
 
-    public async Task GetAllusers()
+    private async Task GetAllUsers()
     {
         HttpClient http = new HttpClient
         {
@@ -104,7 +104,7 @@
         }
     }
 
-    public async Task GetAllChatrooms()
+    private async Task GetAllChatrooms()
     {
         HttpClient http = new HttpClient
         {
@@ -135,7 +135,7 @@
                 await ChatService.ConnectToServer();
                 await ChatService.UpdateChatRooms(chatroomBuffer, userBuffer);
                 await ChatService.DisconnectFromHub();
-                await GetAllusers();
+                await GetAllUsers();
             }
         }
         catch (Exception e)

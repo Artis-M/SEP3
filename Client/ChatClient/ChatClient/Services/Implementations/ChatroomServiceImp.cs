@@ -14,7 +14,7 @@ namespace Services
     {
         private string uri = "https://localhost:5004/chatrooms/";
         private readonly IJSRuntime jsRuntime;
-        public Chatroom currentlySelectedChatroom;
+        private Chatroom currentlySelectedChatroom;
 
 
         public async Task<List<Chatroom>> GetUsersChatrooms(string userId)

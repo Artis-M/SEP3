@@ -14,7 +14,7 @@
 
         <div class="EditForm">
             <div class="divToMain">
-                <a @onclick="@BackToMenu" href="#">Return to main page</a>
+                <a @oncliEditPrck="@BackToMenu" href="#">Return to main page</a>
             </div>
             <h3>Edit Profile</h3>
             <div class="Edit-Flex">
@@ -123,7 +123,7 @@
         Console.Out.WriteLine(updatedAccount._id);
     }
 
-    public async void UpdateAccount()
+    private async void UpdateAccount()
     {
         error = "Username already in use";
         try
@@ -133,7 +133,6 @@
             {
                 error = "";
                 await AccountService.EditProfile(updatedAccount);
-    // NavigationManager.NavigateTo("Main");
                 Console.WriteLine(updatedAccount.ToJson());
             }
             else

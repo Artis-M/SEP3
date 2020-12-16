@@ -153,7 +153,6 @@
 
 @code
 {
-    private List<Chatroom> Chatrooms = new List<Chatroom>();
     private Chatroom currentChatroom = null;
     private string chatRoomIDBuffer = "";
     private string messageText = "";
@@ -261,7 +260,7 @@
 
     private async Task GetUsersChatRooms()
     {
-        Chatrooms = await chatroomService.GetUsersChatrooms(user._id);
+        await chatroomService.GetUsersChatrooms(user._id);
         await InvokeAsync(() => StateHasChanged());
     }
 
