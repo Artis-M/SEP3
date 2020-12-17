@@ -9,23 +9,29 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Controllers
 {
+    /// <summary>
+    /// Controller class to publish and receive data from Tier 1 regarding users/accounts
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class AccountsController : ControllerBase
     {
         private IAccountService AccountService;
-        
+
         public AccountsController(IAccountService accountService)
         {
             this.AccountService = accountService;
         }
 
+        /// <summary>
+        /// Publishing all the accounts present
+        /// </summary>
+        /// <returns>List of accounts in the system</returns>
         [HttpGet]
         public async Task<ActionResult<IList<Account>>> GetAllAccounts()
         {
             try
             {
-                
                 IList<Account> accounts = await AccountService.GetAllAccounts();
                 return Ok(accounts);
             }
@@ -35,6 +41,12 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        /// <summary>
+        /// Sending a user that has a matching ID to the given one
+        /// </summary>
+        /// <param name="userID">ID of User requested and published</param>
+        /// <returns>Account with corresponding ID</returns>
         [HttpGet]
         [Route("user/{userID}")]
         public async Task<ActionResult<Account>> GetUserById([FromRoute] string userID)
@@ -50,6 +62,12 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        /// <summary>
+        /// Getting a user by its username
+        /// </summary>
+        /// <param name="username">Username of requested user</param>
+        /// <returns>Account that has the matching username</returns>
         [HttpGet]
         [Route("user/username/{username}")]
         public async Task<ActionResult<Account>> GetUserByUsername([FromRoute] string username)
@@ -66,6 +84,10 @@ namespace Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Logging in ->getting the account info of a user
+        /// </summary>
+        /// <returns>An account that has matching password and username</returns>
         [HttpGet]
         [Route("login")]
         public async Task<ActionResult<Account>> GetAccount()
@@ -83,11 +105,13 @@ namespace Application.Controllers
             {
                 return BadRequest();
             }
+
             Account account = await AccountService.RequestAccount(username);
             if (account == null)
             {
                 return NotFound();
             }
+
             if (account.Pass != password)
             {
                 return NotFound();
@@ -96,11 +120,15 @@ namespace Application.Controllers
             return Ok(account);
         }
 
+        /// <summary>
+        /// Registering a user ->Adding it to the system
+        /// </summary>
+        /// <param name="account">Account to be registered</param>
+        /// <returns>Action result</returns>
         [HttpPost]
         [Route("register")]
         public async Task<ActionResult> Register([FromBody] Account account)
         {
-            
             if (!ModelState.IsValid)
             {
                 Console.WriteLine("Bad Object");
@@ -119,6 +147,11 @@ namespace Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Deleting an account
+        /// </summary>
+        /// <param name="accountID">ID of account to be deleted</param>
+        /// <returns>Action result</returns>
         [HttpDelete]
         [Route("{accountID}")]
         public async Task<ActionResult> DeleteAccount([FromRoute] string accountID)
@@ -135,6 +168,11 @@ namespace Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Adding a friend
+        /// </summary>
+        /// <param name="users">List of 2 users to be added as each others friends</param>
+        /// <returns>Action result</returns>
         [HttpPatch]
         [Route("addFriend")]
         public async Task<ActionResult> AddFriend([FromBody] List<User> users)
@@ -157,6 +195,13 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        /// <summary>
+        /// Removing a friend from each other's friends list
+        /// </summary>
+        /// <param name="userId">Friend 1</param>
+        /// <param name="friendId">Friend 2</param>
+        /// <returns>Action result</returns>
         [HttpPatch]
         [Route("user/removeFriend/{userId}")]
         public async Task<ActionResult> RemoveFriend([FromRoute] string userId, [FromBody] string friendId)
@@ -164,7 +209,7 @@ namespace Application.Controllers
             try
             {
                 await AccountService.RemoveFriend(userId, friendId);
-                
+
                 return Ok();
             }
             catch (Exception e)
@@ -174,6 +219,11 @@ namespace Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Editing an account
+        /// </summary>
+        /// <param name="account">New account information</param>
+        /// <returns>Action result</returns>
         [HttpPatch]
         [Route("editAccount")]
         public async Task<ActionResult> EditAccount([FromBody] Account account)
@@ -195,6 +245,13 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        /// <summary>
+        /// Adding a topic to a user
+        /// </summary>
+        /// <param name="topic">Topic to be added</param>
+        /// <param name="userId">ID of user the topic should be added to</param>
+        /// <returns>Action result</returns>
         [HttpPost]
         [Route("topic/add/{userId}")]
         public async Task<ActionResult> AddTopicToUser([FromBody] string topic, [FromRoute] string userId)
@@ -211,6 +268,13 @@ namespace Application.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        /// <summary>
+        /// Removing a topic from a user
+        /// </summary>
+        /// <param name="topic">Topic to be removed</param>
+        /// <param name="userId">ID of user the topic should be removed from</param>
+        /// <returns>Action result</returns>
         [HttpDelete]
         [Route("topic/remove/{userId}/{topic}")]
         public async Task<ActionResult> RemoveTopicFromUser([FromRoute] string topic, [FromRoute] string userId)

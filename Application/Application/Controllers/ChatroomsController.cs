@@ -9,11 +9,18 @@ using WebApplication.SignalR;
 
 namespace Application.Controllers
 {
+    /// <summary>
+    /// Controller class to publish and receive data from Tier 1 regarding chat rooms
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class ChatroomsController : ControllerBase
     {
+        /// <summary>
+        /// Injection of a service through constructor and a Hub of SignalR
+        /// </summary>
         private IChatroomService chatroomService;
+
         private readonly IHubContext<ChatHub> _hubContext;
 
         public ChatroomsController(IHubContext<ChatHub> hubContext, IChatroomService chatroomService)
@@ -22,6 +29,10 @@ namespace Application.Controllers
             _hubContext = hubContext;
         }
 
+        /// <summary>
+        /// Publishing all the chat rooms present
+        /// </summary>
+        /// <returns>List of all chat rooms</returns>
         [HttpGet]
         public async Task<ActionResult<IList<Chatroom>>> GetAllChatrooms()
         {
@@ -37,6 +48,11 @@ namespace Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Publishing all chat rooms by a given topic
+        /// </summary>
+        /// <param name="topic">Topic provided via route from Tier 1</param>
+        /// <returns>List of chat rooms with the topic given</returns>
         [HttpGet]
         [Route("chatrooms/topic/{topic}")]
         public async Task<ActionResult<List<Chatroom>>> GetChatroomsByTopic([FromRoute] string topic)
@@ -63,6 +79,11 @@ namespace Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Publishing a chat room object by a provided chat room ID
+        /// </summary>
+        /// <param name="chatRoomId">Id of chat room to be sent, the ID is gotten via route</param>
+        /// <returns>Chat room with given ID</returns>
         [HttpGet]
         [Route("{chatRoomId}")]
         public async Task<ActionResult<Chatroom>> GetChatRoomById([FromRoute] string chatRoomId)
@@ -85,6 +106,12 @@ namespace Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Publishing a private chat room between two friends
+        /// </summary>
+        /// <param name="userId">Friend 1 from route</param>
+        /// <param name="userId1">Friend 2 from body</param>
+        /// <returns>Private chat room</returns>
         [HttpGet]
         [Route("private/{userId}/{userId1}")]
         public async Task<ActionResult<Chatroom>> GetPrivateChatroom([FromRoute] string userId,
@@ -107,6 +134,11 @@ namespace Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Publishing a list of chat rooms that have a specific user in them
+        /// </summary>
+        /// <param name="id">Participant in the chat rooms</param>
+        /// <returns>List of chat rooms the user participates in</returns>
         [HttpGet]
         [Route("user/chatrooms/{id}")]
         public async Task<ActionResult<List<Chatroom>>> GetChatRoomsByUserId([FromRoute] string id)
@@ -129,6 +161,11 @@ namespace Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Adding a new chat room
+        /// </summary>
+        /// <param name="chatroom">Chat room to be added</param>
+        /// <returns>Action result</returns>
         [HttpPost]
         [Route("add")]
         public async Task<ActionResult> AddNewChatroom([FromBody] Chatroom chatroom)
@@ -151,6 +188,11 @@ namespace Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Deleting a chat room
+        /// </summary>
+        /// <param name="id">ID of chat room that should be deleted</param>
+        /// <returns>Action result</returns>
         [HttpDelete]
         [Route("{id}")]
         public async Task<ActionResult> DeleteChatroom([FromRoute] string id)
@@ -169,6 +211,12 @@ namespace Application.Controllers
             }
         }
 
+        /// <summary>
+        /// Sending a new message to a chat room
+        /// </summary>
+        /// <param name="message">Message to be sent</param>
+        /// <param name="chatRoomId">ID of chat room the message should be sent to</param>
+        /// <returns>Action message</returns>
         [HttpPost]
         [Route("sendMessage/{chatRoomId}")]
         public async Task<ActionResult<Message>> SendMessage([FromBody] Message message, [FromRoute] string chatRoomId)
@@ -185,6 +233,12 @@ namespace Application.Controllers
             }
         }
 
+        /// <summary>
+        /// User wanting to join a chat room
+        /// </summary>
+        /// <param name="userID">User's ID that is wanting to join</param>
+        /// <param name="chatRoomId">Chat room ID, the chat room the User wants to join to</param>
+        /// <returns>Action message</returns>
         [HttpPatch]
         [Route("addUser/{chatRoomId}")]
         public async Task<ActionResult<Message>> JoinChatroom([FromBody] string userID, [FromRoute] string chatRoomId)
@@ -203,7 +257,12 @@ namespace Application.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Leaving a chatroom
+        /// </summary>
+        /// <param name="userID">User ID to be leaving gotten via body</param>
+        /// <param name="chatRoomId">Chat room ID to be left gotten via route</param>
+        /// <returns>Action message</returns>
         [HttpPatch]
         [Route("removeUser/{chatRoomId}")]
         public async Task<ActionResult<Message>> LeaveChatroom([FromBody] string userID, [FromRoute] string chatRoomId)
