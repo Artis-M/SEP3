@@ -9,7 +9,6 @@ namespace WebApplication.SignalR
 {
     public class ChatHub : Hub
     {
-        //The methods are actually used.
         public Task JoinChatRoom(string ChatRoomId)
         {
             Console.WriteLine($"User:{Context.ConnectionId} joined the chatroom:{ChatRoomId}");

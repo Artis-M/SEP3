@@ -171,7 +171,6 @@ namespace Application.SCMediator
             }
             else
             {
-                //wait again for data from server, check again
                 return null;
             }
         }
@@ -181,7 +180,7 @@ namespace Application.SCMediator
             CommandLine command = new CommandLine {Command = "REQUEST-ChatroomByUser", variableUser = id};
 
             await Send(command);
-            /* move out */
+
             byte[] rcvLenBytes = new byte[4];
             stream.Read(rcvLenBytes);
             int rcvLen = System.BitConverter.ToInt32(rcvLenBytes, 0);
@@ -190,7 +189,7 @@ namespace Application.SCMediator
             string response = Encoding.ASCII.GetString(dataFromServer, 0, bytesRead);
             Console.WriteLine(response);
             CommandLine upsdelivery = JsonSerializer.Deserialize<CommandLine>(response);
-            /* to here */
+
             if (upsdelivery.Command.Equals("ChatroomByUser"))
             {
                 List<Chatroom> chatrooms = JsonSerializer.Deserialize<List<Chatroom>>(upsdelivery.SpecificOrder);

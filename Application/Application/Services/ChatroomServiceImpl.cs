@@ -38,7 +38,6 @@ namespace Application.Services.Implementations
 
         public async Task<List<Chatroom>> GetChatroomByUserId(string id)
         {
-            
             List<Chatroom> UsersChatrooms = await model.RequestChatroom(id);
             return UsersChatrooms;
         }
@@ -57,12 +56,7 @@ namespace Application.Services.Implementations
 
         public async Task DeleteChatRoom(string ChatroomID)
         {
-            
-                    
-                    await model.DeleteChatroom(ChatroomID);
-              
-
-           
+            await model.DeleteChatroom(ChatroomID);
         }
 
         public async Task SendMessage(string ChatroomID, Message message)
@@ -70,20 +64,14 @@ namespace Application.Services.Implementations
             await model.SendMessage(message, ChatroomID);
         }
 
-        public async Task AddUser(string ChatRoomID,  string userID)
+        public async Task AddUser(string ChatRoomID, string userID)
         {
-           
-                    // here the chatroom should update so that the user is inside, the one that is sent to all users somehow
-                    await model.JoinChatroom(userID,ChatRoomID);
-                
+            await model.JoinChatroom(userID, ChatRoomID);
+        }
 
-    }
-
-        public async Task RemoveUser(string ChatRoomID,  string userID)
+        public async Task RemoveUser(string ChatRoomID, string userID)
         {
-            // the chatroom should update so that the user is not inside it anymore
-                    await model.LeaveChatroom(userID,ChatRoomID);
-                
+            await model.LeaveChatroom(userID, ChatRoomID);
         }
 
         public async Task<List<Chatroom>> GetChatroomsByTopic(string topic)

@@ -11,15 +11,12 @@ namespace Application.Models
     {
         private ChatServiceImp chatServiceImp;
         private IAccountService accountService;
-        private IChatroomService chatroomService;
-        private ITopicsService topicService;
+
 
         public ModelManager()
         {
             this.chatServiceImp = new ChatServiceImp(this);
             this.accountService = new AccountsServiceImpl(this);
-            this.topicService = new TopicsService(this);
-            this.chatroomService = new ChatroomServiceImpl(this);
         }
 
         public async Task<List<Chatroom>> RequestChatrooms()
@@ -31,6 +28,7 @@ namespace Application.Models
         {
             return await chatServiceImp.RequestUsers();
         }
+
         public async Task SendMessage(Message message, string chatroomId)
         {
             await chatServiceImp.SendMessage(message, chatroomId);
@@ -90,6 +88,7 @@ namespace Application.Models
         {
             accountService.SetListOfAccounts(JsonSerializer.Deserialize<List<Account>>(credentialsJson));
         }
+
         public async Task<Account> RequestAccount(string username)
         {
             return await chatServiceImp.RequestUser(username);
@@ -112,7 +111,7 @@ namespace Application.Models
 
         public async void RemoveTopicFromUser(string userId, string topic)
         {
-           await chatServiceImp.RemoveTopicfromUser(userId, topic);
+            await chatServiceImp.RemoveTopicfromUser(userId, topic);
         }
 
         public async void AddTopicToUser(string userId, string topic)
